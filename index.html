@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Marco PÃ©rez: landing pages premium, catÃ¡logos web, sistemas QMS/ERP y software operativo a medida. Portafolio profesional de desarrollo web." />
+    <meta name="theme-color" content="#15110f" />
+    <title>Marco PÃ©rez | Portafolio Premium de Web y Sistemas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+    <a href="#" class="floating-brand" onclick="window.scrollTo(0,0); return false;">
+        MP<span class="dot">.</span>
+    </a>
+
+    <main class="grid-container">
+        <section id="hero" class="hero-section anim-up" data-section-key="hero">
+            <div class="hero-inner-card" id="hero-card-container">
+                <canvas id="hero-canvas"></canvas>
+                <div class="hero-overlay"></div>
+
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="status-badge">
+                            <span class="pulse-dot"></span>
+                            <span id="hero-status-text">Disponible 2026</span>
+                        </div>
+                        <p class="hero-kicker">Web premium &middot; ITERA QMS &middot; ERP &middot; Normativa ARCSA &amp; ACESS</p>
+                        <h1 class="hero-name" id="hero-name">MARCO PÃ‰REZ</h1>
+                        <h2 class="hero-role" id="hero-role">LANDINGS PREMIUM <span class="slash">//</span> QMS <span class="slash">//</span> ERP</h2>
+                        <p class="hero-desc" id="hero-desc">
+                            DiseÃ±o experiencias web de alto valor y construyo sistemas operativos a medida para negocios que necesitan claridad, control y presencia premium. Incluye diseÃ±o de empaques y soporte documental bajo normativas <strong>ARCSA</strong> y <strong>ACESS</strong>.
+                        </p>
+                        <div class="hero-btns">
+                            <a href="#webs" class="btn btn-primary" id="hero-cta-primary">Explorar portafolio</a>
+                            <a href="#servicios" class="btn btn-outline-dark" id="hero-cta-secondary">Ver sistemas</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="hero-visual-stack">
+                            <div class="profile-circle">
+                                <img src="images/foto-hq.jpg" alt="Marco PÃ©rez" id="hero-image" />
+                            </div>
+                            <div class="hero-visual-badge">
+                                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                    <span style="font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-gold);font-weight:700;">RegulaciÃ³n</span>
+                                    <span style="font-size:0.65rem;color:rgba(226,232,238,0.3);">|</span>
+                                    <span style="font-size:0.72rem;color:var(--text-soft);font-weight:500;line-height:1.4;">DiseÃ±o de empaques &amp; soporte documental bajo normativas ARCSA y ACESS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+
+        <section id="servicios" class="section-block anim-up" data-section-key="servicios">
+            <div class="section-header"><h3 class="section-title"><i class="fas fa-briefcase"></i> Sistemas a medida</h3><div class="section-line"></div></div>
+            <div class="cards-grid" id="servicios-grid"></div>
+        </section>
+
+        <section id="webs" class="section-block anim-up" data-section-key="webs">
+            <div class="section-header"><h3 class="section-title"><i class="fas fa-code"></i> Experiencias web premium</h3><div class="section-line"></div></div>
+            <div class="cards-grid" id="webs-grid"></div>
+        </section>
+
+        <section id="branding" class="section-block anim-up" data-section-key="branding">
+            <div class="section-header"><h3 class="section-title"><i class="fas fa-layer-group"></i> Casos de marca</h3><div class="section-line"></div></div>
+            <div class="cards-grid" id="branding-grid"></div>
+        </section>
+
+        <section id="promo" class="section-block anim-up" data-section-key="promo">
+            <div class="section-header"><h3 class="section-title"><i class="fas fa-bullhorn"></i> Narrativa visual</h3><div class="section-line"></div></div>
+            <div class="cards-grid" id="promo-grid"></div>
+        </section>
+
+        <section id="ciencia" class="section-block anim-up" data-section-key="ciencia">
+            <div class="section-header"><h3 class="section-title"><i class="fas fa-microscope"></i> IlustraciÃ³n cientÃ­fica</h3><div class="section-line"></div></div>
+            <div class="cards-grid" id="ciencia-grid"></div>
+        </section>
+
+        <section id="planes" class="section-block anim-up" data-section-key="planes">
+            <div class="section-header"><h3 class="section-title"><i class="fas fa-tags"></i> InversiÃ³n estratÃ©gica</h3><div class="section-line"></div></div>
+            <div class="trust-card banner-card">
+                <div class="banner-content">
+                    <h4 id="planes-title">Arquitectura digital para crecer</h4>
+                    <p id="planes-description">Desde una landing premium hasta un sistema operativo completo. Elige el nivel de intervenciÃ³n que necesita tu negocio y avanza con una ruta clara.</p>
+                    <a href="index2.html" class="btn btn-primary" id="planes-cta-link"><span id="planes-cta-text">Ver catÃ¡logo de servicios</span> <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="section-block anim-up" data-section-key="contacto">
+            <div class="section-header"><h3 class="section-title" id="contact-title">Contacto profesional</h3><div class="section-line"></div></div>
+            <div class="contact-box">
+                <p id="contact-description">Listo para elevar tu proyecto con una base sÃ³lida y una direcciÃ³n visual premium.</p>
+                <div class="contact-links">
+                    <a href="https://wa.me/593963036594" target="_blank" class="contact-btn" id="contact-whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="mailto:marcod.pc2021@gmail.com" class="contact-btn" id="contact-email"><i class="fas fa-envelope"></i> Email</a>
+                    <a href="https://www.instagram.com/neckarc" target="_blank" class="contact-btn" id="contact-instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4 id="footer-brand-title">Marco PÃ©rez</h4>
+                <p id="footer-brand-description">Desarrollo experiencias web premium y sistemas operativos a medida para marcas y empresas en crecimiento.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Servicios</h4>
+                <div id="footer-services-links">
+                    <a href="#servicios">Sistemas a medida</a>
+                    <a href="#webs">Experiencias web premium</a>
+                    <a href="#branding">Casos de marca</a>
+                    <a href="#contacto">Contacto estratÃ©gico</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <div id="footer-contact-links">
+                    <a href="https://wa.me/593963036594" target="_blank">WhatsApp</a>
+                    <a href="mailto:marcod.pc2021@gmail.com">marcod.pc2021@gmail.com</a>
+                    <a href="https://www.instagram.com/neckarc" target="_blank">@neckarc</a>
+                </div>
+            </div>
+        </div>
+        <p class="footer-copy" id="footer-copy">&copy; 2026 Marco PÃ©rez - Portafolio premium de experiencias web y sistemas a medida.</p>
+    </footer>
+
+    <div class="fab-wrapper" id="fabMenu">
+        <div class="fab-glass-container">
+            <div class="fab-list">
+                <a href="galerial.html?id=curativa" onclick="closeFab()"><span>GalerÃ­a HD</span><div class="mini-fab"><i class="fas fa-images"></i></div></a>
+                <a href="#servicios" onclick="closeFab()"><span>Sistemas</span><div class="mini-fab"><i class="fas fa-briefcase"></i></div></a>
+                <a href="index2.html"><span>Servicios</span><div class="mini-fab"><i class="fas fa-tags"></i></div></a>
+                <a href="https://www.instagram.com/neckarc" target="_blank"><span>Instagram</span><div class="mini-fab"><i class="fab fa-instagram"></i></div></a>
+                <a href="#contacto" onclick="closeFab()"><span>Contacto</span><div class="mini-fab"><i class="fas fa-paper-plane"></i></div></a>
+                <a href="#branding" onclick="closeFab()"><span>Casos</span><div class="mini-fab"><i class="fas fa-layer-group"></i></div></a>
+            </div>
+        </div>
+        <button class="fab-main-btn" id="fabBtn"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <div id="lightbox" class="modal-overlay">
+        <button class="modal-close" onclick="closeGallery()">&times;</button>
+        <button class="modal-prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="modal-next" onclick="changeSlide(1)">&#10095;</button>
+        <div class="modal-content"><div class="lb-header"><h3 id="lb-title">Proyecto</h3><span class="zoom-hint"><i class="fas fa-search-plus"></i> Doble toque: Zoom</span></div><div class="lb-image-wrapper" id="swipeArea"><img id="lb-img" src="" alt="Cargando..." /></div><div id="lb-counter">1 / 1</div></div>
+    </div>
+    <div id="web-modal" class="modal-overlay web-mode">
+        <div class="web-bar"><span id="web-title">Vista previa</span><div class="web-actions"><a id="web-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a><button onclick="closeWeb()">Cerrar</button></div></div><div class="iframe-box"><iframe id="web-frame" src="" frameborder="0"></iframe></div>
+    </div>
+    <script src="data/portfolio-data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

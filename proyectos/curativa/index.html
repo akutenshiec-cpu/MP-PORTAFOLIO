@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Curativa: cosmética natural. Catálogo por categorías con carrito y pedido por WhatsApp." />
+    <title>CURATIVA · Catálogo 2026</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="glassy-header">
+        <div class="header-container">
+            <span class="header-logo">CURATIVA</span>
+
+            <nav class="header-nav-desktop">
+                <a href="../../index.html" class="nav-link">Portafolio MP</a>
+                <a href="#quienes-somos" class="nav-link">Nosotros</a>
+<a href="#footer-contact" class="nav-link">Contacto</a>
+            </nav>
+
+            <div class="header-actions">
+                <div id="header-cart-btn" class="header-icon-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="cart-badge">0</span>
+                </div>
+                <div id="header-menu-btn" class="header-icon-btn mobile-only-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-nav-overlay" class="mobile-nav-overlay hidden">
+        <div class="mobile-nav-content">
+            <button id="close-mobile-menu" class="close-btn-menu"><i class="fas fa-times"></i></button>
+            <h3>Menú</h3>
+            <a href="../../index.html" class="mobile-link">Portafolio MP</a>
+            <a href="#quienes-somos" class="mobile-link">Nosotros</a>
+<a href="#footer-contact" class="mobile-link">Contacto</a>
+        </div>
+    </div>
+
+    <div class="mobile-category-fab" id="mobile-category-fab">
+        <button type="button" class="mobile-category-toggle" id="mobile-category-toggle" aria-label="Abrir categorias">
+            <i class="fas fa-th-large"></i>
+        </button>
+        <nav class="mobile-category-bar hidden" id="mobile-category-menu" aria-label="Categorias rapidas">
+            <div class="mobile-category-panel">
+                <a href="#rostro-section" class="mobile-category-pill"><span>Rostro</span><div class="mini-fab"><i class="fas fa-spa"></i></div></a>
+                <a href="#ojos-section" class="mobile-category-pill"><span>Ojos</span><div class="mini-fab"><i class="fas fa-eye"></i></div></a>
+                <a href="#capilar-section" class="mobile-category-pill"><span>Capilar</span><div class="mini-fab"><i class="fas fa-wind"></i></div></a>
+                <a href="#desodorantes-section" class="mobile-category-pill"><span>Desodorantes</span><div class="mini-fab"><i class="fas fa-spray-can-sparkles"></i></div></a>
+                <a href="#cuerpo-section" class="mobile-category-pill"><span>Bienestar</span><div class="mini-fab"><i class="fas fa-hand-holding-heart"></i></div></a>
+                <a href="#balsamos-section" class="mobile-category-pill"><span>Balsamos</span><div class="mini-fab"><i class="fas fa-droplet"></i></div></a>
+                <a href="#roll-on-section" class="mobile-category-pill"><span>Roll-ons</span><div class="mini-fab"><i class="fas fa-circle-dot"></i></div></a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="fab-wrapper" id="fabMenu">
+        <div class="fab-glass-container">
+            <div class="fab-list">
+                <a href="../../index.html" onclick="closeFab()"><span>Portafolio MP</span><div class="mini-fab"><i class="fas fa-layer-group"></i></div></a>
+                <a href="#quienes-somos" onclick="closeFab()"><span>Nosotros</span><div class="mini-fab"><i class="fas fa-seedling"></i></div></a>
+                <a href="#rostro-section" onclick="closeFab()"><span>Catálogo</span><div class="mini-fab"><i class="fas fa-store"></i></div></a>
+                <a href="#footer-contact" onclick="closeFab()"><span>Contacto</span><div class="mini-fab"><i class="fas fa-paper-plane"></i></div></a>
+            </div>
+        </div>
+        <button class="fab-main-btn" id="fabBtn" aria-label="Abrir menú">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <section id="hero-carousel" class="hero-carousel">
+        <div class="hero-fog"></div>
+        <div class="carousel-container">
+            <div class="carousel-track-hero">
+                <div class="hero-slide active">
+                    <div class="hero-slide-content">
+                        <div class="hero-text">
+                            <span class="hero-tag"><i class="fas fa-leaf"></i> Cosmética botánica artesanal</span>
+                            <div class="hero-copy-stack">
+                                <h1>CURATIVA</h1>
+                                <h2>Cuerpo y Alma</h2>
+                                <p>Fórmulas naturales con una presencia más editorial, cálida y confiable. Cuidado terapéutico para piel, cabello y bienestar diario.</p>
+                            </div>
+                            <div class="hero-metrics">
+                                <div class="metric-card"><i class="fas fa-seedling"></i><strong>100%</strong><span>Ingredientes de origen natural</span></div>
+                                <div class="metric-card"><i class="fas fa-hand-holding-heart"></i><strong>Manual</strong><span>Producción artesanal en cada lote</span></div>
+                                <div class="metric-card"><i class="fas fa-mortar-pestle"></i><strong>Real</strong><span>Beneficios enfocados en uso cotidiano</span></div>
+                            </div>
+                            <a href="#rostro-section" class="hero-btn">Ver Catálogo <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-img-wrapper">
+                                <img src="image/logo_curativa_hero.svg" alt="Logo Curativa" class="hero-main-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-slide">
+                    <div class="hero-slide-content">
+                        <div class="hero-text">
+                            <span class="hero-tag"><i class="fas fa-seedling"></i> Favorito para piel con imperfecciones</span>
+                            <div class="hero-copy-stack">
+                                <h1>Serum Detox</h1>
+                                <h2>Piel Libre de Impurezas</h2>
+                                <p>Combate bacterias y ayuda a reducir granitos en rostro, espalda y cuello con extractos botánicos de perfil purificante.</p>
+                            </div>
+                            <div class="hero-metrics">
+                                <div class="metric-card"><i class="fas fa-shield-alt"></i><strong>Purificante</strong><span>Acción antibacterial</span></div>
+                                <div class="metric-card"><i class="fas fa-leaf"></i><strong>Botánico</strong><span>Extractos naturales</span></div>
+                                <div class="metric-card"><i class="fas fa-spa"></i><strong>Multi-zona</strong><span>Rostro, cuello, espalda</span></div>
+                            </div>
+                            <button class="hero-btn" onclick="addFromHero('serum-detox')">Agregar <i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-img-wrapper">
+                                <img src="image/serum_detox_premium.png" alt="Serum Detox" class="hero-main-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-slide">
+                    <div class="hero-slide-content">
+                        <div class="hero-text">
+                            <span class="hero-tag"><i class="fas fa-droplet"></i> Hidratación y elasticidad</span>
+                            <div class="hero-copy-stack">
+                                <h1>Crema Facial</h1>
+                                <h2>Hidratación Profunda</h2>
+                                <p>Con Rosa Mosqueta y Ácido Hialurónico. Nutre, suaviza la textura y acompaña una rutina facial más completa.</p>
+                            </div>
+                            <div class="hero-metrics">
+                                <div class="metric-card"><i class="fas fa-tint"></i><strong>Hialurónico</strong><span>Retención de humedad</span></div>
+                                <div class="metric-card"><i class="fas fa-hand-sparkles"></i><strong>Nutritiva</strong><span>Rosa Mosqueta pura</span></div>
+                                <div class="metric-card"><i class="fas fa-sync-alt"></i><strong>Diaria</strong><span>Rutina AM & PM</span></div>
+                            </div>
+                            <button class="hero-btn" onclick="addFromHero('crema-facial')">Agregar <i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="hero-visual">
+                            <div class="hero-img-wrapper">
+                                <img src="image/contorno_ojos.png" alt="Crema Facial" class="hero-main-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-nav">
+                <button class="hero-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="hero-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+                <button class="hero-arrow next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="hero-progress-bar"><div class="progress-fill"></div></div>
+        </div>
+    </section>
+
+    <main class="grid">
+        <section id="quienes-somos" class="section section-clouds">
+            <h2 class="section-title">Nuestra Esencia</h2>
+            <p class="section-intro">Una identidad más premium sin abandonar el ADN cálido de la marca: natural, cercana y terapéutica.</p>
+            <div class="esencia-grid">
+                <div class="cloud-card delay-1"><i class="fas fa-seedling"></i><h3>100% Natural</h3></div>
+                <div class="cloud-card delay-2"><i class="fas fa-hand-holding-heart"></i><h3>Hecho a Mano</h3></div>
+                <div class="cloud-card delay-3"><i class="fas fa-mortar-pestle"></i><h3>Terapéutico</h3></div>
+            </div>
+        </section>
+
+        <section id="rostro-section" class="section">
+            <h2 class="section-title">Rostro y Limpieza</h2>
+            <p class="section-intro">Tratamientos faciales diseñados para limpiar, equilibrar y devolver luminosidad a la piel.</p>
+            <p class="swipe-hint">Desliza para ver más <i class="fas fa-arrow-right"></i></p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="serum-detox" data-name="Serum Detox" data-price="13.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_detox_premium.png" alt="Serum Detox"></div><h4>Serum Detox</h4><span class="price">$13.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="serum-premium" data-name="Serum Premium" data-price="14.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Serum Premium"></div><h4>Serum Premium</h4><span class="price">$14.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="crema-facial" data-name="Crema Facial (30g)" data-price="10.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/contorno_ojos.png" alt="Crema Facial 30g"></div><h4>Crema Facial (30g)</h4><span class="price">$10.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="crema-facial-50" data-name="Crema Facial (50g)" data-price="15.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/contorno_ojos.png" alt="Crema Facial 50g"></div><h4>Crema Facial (50g)</h4><span class="price">$15.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="tonico-facial" data-name="Tónico Facial" data-price="12.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/vinagre_manzana.png" alt="Tónico Facial"></div><h4>Tónico Facial</h4><span class="price">$12.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="limpiador-avena" data-name="Limpiador Avena" data-price="5.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/limpiador_avena.png" alt="Limpiador Avena"></div><h4>Limpiador Avena</h4><span class="price">$5.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="jabon-carbon" data-name="Jabón Carbón" data-price="4.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/jabon_carbon.png" alt="Jabón Carbón"></div><h4>Jabón Carbón</h4><span class="price">$4.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="mascarilla-aclara" data-name="Masc. Aclaradora" data-price="5.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/mascarilla_aclaradora.png" alt="Mascarilla aclaradora"></div><h4>Masc. Aclaradora</h4><span class="price">$5.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="mascarilla-detox" data-name="Masc. Detox" data-price="5.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/mascarilla_detox.png" alt="Mascarilla detox"></div><h4>Masc. Detox</h4><span class="price">$5.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="bloqueador" data-name="Bloqueador Solar" data-price="8.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/bloqueador_solar.png" alt="Bloqueador solar"></div><h4>Bloqueador Solar</h4><span class="price">$8.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="ojos-section" class="section">
+            <h2 class="section-title">Ojos y Maquillaje</h2>
+            <p class="section-intro">Soluciones de cuidado localizado y maquillaje funcional con enfoque natural.</p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="rollon-lineas" data-name="Adiós Líneas de Expresión" data-price="17.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Adiós Líneas"></div><h4>Adiós Líneas</h4><span class="price">$17.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="contorno-ojos" data-name="Contorno de Ojos" data-price="13.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/contorno_ojos.png" alt="Contorno de ojos"></div><h4>Contorno Ojos</h4><span class="price">$13.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="serum-pestanas" data-name="Serum Pestañas y Cejas" data-price="8.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Serum de pestañas y cejas"></div><h4>Serum Pestañas</h4><span class="price">$8.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="pomada-cejas" data-name="Pomada de Cejas" data-price="5.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pomada_cejas.png" alt="Pomada de cejas"></div><h4>Pomada Cejas</h4><span class="price">$5.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="corrector-base" data-name="Corrector Base SPF 50" data-price="4.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/corrector_base.png" alt="Corrector base"></div><h4>Corrector Base</h4><span class="price">$4.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="pads" data-name="Pads Desmaquillantes" data-price="4.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pads_desmaquillantes.png" alt="Pads desmaquillantes"></div><h4>Pads (x5)</h4><span class="price">$4.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="capilar-section" class="section">
+            <h2 class="section-title">Cuidado Capilar</h2>
+            <p class="section-intro">Opciones para fortalecer, peinar y acompañar la salud del cuero cabelludo.</p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="tonico-capilar" data-name="Tónico Capilar" data-price="12.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Tónico capilar"></div><h4>Tónico Capilar</h4><span class="price">$12.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="cera-peinar" data-name="Cera para Peinar" data-price="11.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/cera_peinar.png" alt="Cera para peinar"></div><h4>Cera de Peinar</h4><span class="price">$11.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="cepillo-bambu" data-name="Cepillo de Bambú (Niños)" data-price="2.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/cepillo_bambu.png" alt="Cepillo de bambú"></div><h4>Cepillo Bambú</h4><span class="price">$2.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="desodorantes-section" class="section">
+            <h2 class="section-title">Desodorantes</h2>
+            <p class="section-intro">Formatos prácticos con identidad visual consistente y una lectura más clara del catálogo.</p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="deo-spray" data-name="Desodorante Spray" data-price="6.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/aceite_magnesio.png" alt="Desodorante spray"></div><h4>Spray (Alumbre)</h4><span class="price">$6.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="deo-crema" data-name="Desodorante Cremoso" data-price="8.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/cera_peinar.png" alt="Desodorante cremoso"></div><h4>Cremoso</h4><span class="price">$8.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="cuerpo-section" class="section">
+            <h2 class="section-title">Cuerpo y Bienestar</h2>
+            <p class="section-intro">Productos orientados a alivio, ritual y bienestar integral para uso personal o regalo.</p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="aceite-magnesio" data-name="Aceite de Magnesio" data-price="10.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/aceite_magnesio.png" alt="Aceite de magnesio"></div><h4>Aceite Magnesio</h4><span class="price">$10.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="aguardiente" data-name="Aguardiente Alcanforado" data-price="3.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/aguardiente_alcanforado.png" alt="Aguardiente alcanforado"></div><h4>Aguardiente</h4><span class="price">$3.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="vinagre-300" data-name="Vinagre de Manzana (300ml)" data-price="7.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/vinagre_manzana.png" alt="Vinagre de manzana 300 ml"></div><h4>Vinagre (300ml)</h4><span class="price">$7.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="vinagre-100" data-name="Vinagre de Manzana (100ml)" data-price="3.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/vinagre_manzana.png" alt="Vinagre de manzana 100 ml"></div><h4>Vinagre (100ml)</h4><span class="price">$3.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="sahumerios" data-name="Sahumerios" data-price="2.00"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/sahumerios.png" alt="Sahumerios"></div><h4>Sahumerios</h4><span class="price">$2.00</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="balsamo-corporal" data-name="Bálsamo Corporal" data-price="5.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/aceite_magnesio.png" alt="Bálsamo corporal"></div><h4>Bálsamo Corporal</h4><span class="price">$5.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="balsamos-section" class="section section-balsamos">
+            <h2 class="section-title">Bálsamos Labiales</h2>
+            <p class="section-intro">Sabores y tonos pensados para una compra rápida, visualmente consistente y fácil de comparar.</p>
+            <p class="swipe-hint">Desliza para ver sabores <i class="fas fa-arrow-right"></i></p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="balsamo-rosas" data-name="Bálsamo Rosas" data-price="3.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pomada_cejas.png" alt="Bálsamo rosas"></div><h4>Rosas (Rojo Vino)</h4><span class="price">$3.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="balsamo-cafe" data-name="Bálsamo Café" data-price="3.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pomada_cejas.png" alt="Bálsamo café"></div><h4>Café</h4><span class="price">$3.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="balsamo-pastel" data-name="Bálsamo Rosa Pastel" data-price="3.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pomada_cejas.png" alt="Bálsamo rosa pastel"></div><h4>Rosa Pastel</h4><span class="price">$3.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="balsamo-vainilla" data-name="Bálsamo Vainilla-Canela" data-price="3.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pomada_cejas.png" alt="Bálsamo vainilla canela"></div><h4>Vainilla-Canela</h4><span class="price">$3.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="balsamo-remolacha" data-name="Bálsamo Remolacha" data-price="3.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/pomada_cejas.png" alt="Bálsamo remolacha"></div><h4>Remolacha</h4><span class="price">$3.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <section id="roll-on-section" class="section">
+            <h2 class="section-title">Roll-ons</h2>
+            <p class="section-intro">Aromas funcionales para concentración, calma y energía con lectura más aspiracional de producto.</p>
+            <p class="swipe-hint">Desliza para ver opciones <i class="fas fa-arrow-right"></i></p>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-track">
+                    <div class="carousel-card product-item clickable-card" data-id="rollon-capaz" data-name="Roll-on Soy Capaz" data-price="6.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Roll-on soy capaz"></div><h4>Soy Capaz</h4><span class="price">$6.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="rollon-paz" data-name="Roll-on Soy Paz" data-price="6.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Roll-on soy paz"></div><h4>Soy Paz</h4><span class="price">$6.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                    <div class="carousel-card product-item clickable-card" data-id="rollon-feliz" data-name="Roll-on Soy Feliz" data-price="6.50"><div class="card-thumb"><img loading="lazy" decoding="async" src="image/serum_pestanas.png" alt="Roll-on soy feliz"></div><h4>Soy Feliz</h4><span class="price">$6.50</span><div class="qty-controls"><button class="btn-qty minus"><i class="fas fa-minus"></i></button><span class="qty-display">0</span><button class="btn-qty plus"><i class="fas fa-plus"></i></button></div></div>
+                </div>
+                <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="footer-contact">
+        <div class="footer-content">
+            <div class="footer-col logo-col">
+                <img src="image/logo_curativa_hero.svg" alt="Curativa" class="footer-logo-img">
+                <p>Proyecto de catálogo web diseñado y desarrollado por Marco Pérez · MP Designs.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/593963036594" target="_blank" style="color: inherit; text-decoration: none;">+593 963 036 594</a></p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:marcod.pc2021@gmail.com" style="color: inherit; text-decoration: none;">marcod.pc2021@gmail.com</a></p>
+                <p><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/neckarc" target="_blank" style="color: inherit; text-decoration: none;">@neckarc</a></p>
+            </div>
+            <div class="footer-col">
+                <h4>Portafolio</h4>
+                <ul class="footer-links">
+                    <li><a href="../../index.html">Ver portafolio completo</a></li>
+                    <li><a href="../../index2.html">Catálogo de servicios</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Marco Pérez · MP Designs. Todos los derechos reservados.</p>
+            <p class="dev-credit">Experiencias web premium y sistemas a medida.</p>
+        </div>
+    </footer>
+
+    <div id="product-detail-modal" class="new-modal-overlay hidden">
+        <div class="new-modal-container detail-modal">
+            <button class="close-modal-btn detail-close">&times;</button>
+            <div class="detail-grid">
+                <div class="detail-image-col">
+                    <img id="detail-img" src="" alt="Producto">
+                </div>
+                <div class="detail-info-col">
+                    <h3 id="detail-title">Nombre Producto</h3>
+                    <p id="detail-desc" class="detail-desc">Descripción...</p>
+                    <div class="detail-benefits-box">
+                        <strong>Beneficios:</strong>
+                        <ul id="detail-benefits"></ul>
+                    </div>
+                    <div class="detail-action-row">
+                        <span id="detail-price" class="detail-price">$0.00</span>
+                        <button id="add-to-cart-detail-btn" class="btn btn-primary">Agregar al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="new-modal-overlay hidden">
+        <div class="new-modal-container cart-modal-advanced">
+            <button class="close-modal-btn cart-close">&times;</button>
+            <h3 class="modal-title">Tu Pedido</h3>
+
+            <div class="cart-layout-grid">
+                <div class="cart-list-area">
+                    <div class="cart-actions-header">
+                        <button id="clear-cart-btn" class="btn-text-danger"><i class="fas fa-trash-alt"></i> Vaciar</button>
+                    </div>
+                    <div id="cart-items-list" class="cart-items-container">
+                        <p class="empty-msg">Tu carrito está vacío.</p>
+                    </div>
+                </div>
+
+                <div class="cart-form-area">
+                    <div class="cart-summary-box">
+                        <div class="cart-summary-header">
+                            <span class="cart-summary-eyebrow">Resumen del pedido</span>
+                            <div class="total-row-main">Total: <span id="final-total">$0.00</span></div>
+                        </div>
+
+                        <div class="cart-summary-details">
+                            <div class="summary-line">
+                                <span>Productos</span>
+                                <strong id="summary-items-count">0 items</strong>
+                            </div>
+                            <div class="summary-line">
+                                <span>Subtotal</span>
+                                <strong id="summary-subtotal">$0.00</strong>
+                            </div>
+                            <div class="summary-line">
+                                <span>Envío estimado</span>
+                                <strong id="summary-shipping">Por definir</strong>
+                            </div>
+                            <div class="summary-line summary-line-total">
+                                <span>Total proyectado</span>
+                                <strong id="summary-grand-total">$0.00</strong>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tu Nombre:</label>
+                            <input type="text" id="customer-name" class="modern-input" placeholder="Nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <label>Provincia:</label>
+                            <select id="customer-province" class="modern-input">
+                                <option value="" disabled selected>Selecciona...</option>
+                                <option value="Loja">Loja</option>
+                                <option value="Azuay">Azuay</option>
+                                <option value="Pichincha">Pichincha</option>
+                                <option value="Guayas">Guayas</option>
+                                <option value="El Oro">El Oro</option>
+                                <option value="Manabí">Manabí</option>
+                                <option value="Otra">Otra Provincia</option>
+                            </select>
+                        </div>
+
+                        <div class="payment-info-container demo-payment">
+                            <h4>Pago por transferencia (solo demostración)</h4>
+                            <p class="demo-payment-note">Esta tienda es una <strong>demo del portafolio MP Designs</strong>. Los datos bancarios y la razón social siguientes son <strong>ficticios</strong> (formato Ecuador) para mostrar el flujo de compra; en un proyecto real aquí irían los datos del comercio y métodos de pago habilitados.</p>
+                            <div class="payment-method-badges">
+                                <span class="payment-badge"><i class="fas fa-wallet"></i> Deuna</span>
+                                <span class="payment-badge"><i class="fas fa-bolt"></i> Ahorita</span>
+                                <span class="payment-badge"><i class="fas fa-mobile-screen-button"></i> Claro Pay</span>
+                                <span class="payment-badge"><i class="fas fa-credit-card"></i> PayPhone</span>
+                            </div>
+                            <div class="bank-info-text">
+                                <p><strong>Banco del Pacífico (ejemplo):</strong> Cta. ahorros N.º 3080123456<br>Titular: <strong>Cosmética Andina Demo S.A.</strong> — RUC 1792345678001</p>
+                                <p><strong>Cooperativa JEP (ejemplo):</strong> Cta. corriente N.º 9988776655<br>Titular: <strong>Cosmética Andina Demo S.A.</strong></p>
+                            </div>
+                            <p class="qr-placeholder">En producción: códigos QR (Deuna, billeteras, etc.) enlazados a la cuenta real del negocio.</p>
+                            <p class="shipping-note"><i class="fas fa-truck"></i> Ejemplo envío nacional fuera de la ciudad matriz: +$5.50 (valor ilustrativo).</p>
+                        </div>
+
+                        <button id="preview-cart-btn" class="btn btn-outline-dark btn-block"><i class="fas fa-file-pdf"></i> VISTA PREVIA A4 / PDF</button>
+                        <button id="checkout-btn" class="btn btn-primary btn-block big-btn"><i class="fab fa-whatsapp"></i> ENVIAR PEDIDO</button>
+                        <button id="continue-shopping-btn" class="btn btn-ghost btn-block btn-small">Seguir comprando</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="print-preview-modal" class="new-modal-overlay hidden">
+        <div class="new-modal-container print-preview-modal-box">
+            <button class="close-modal-btn preview-close">&times;</button>
+            <div class="print-preview-header">
+                <div>
+                    <span class="cart-summary-eyebrow">Documento comercial</span>
+                    <h3 class="modal-title preview-title">Vista previa A4 horizontal</h3>
+                </div>
+                <button id="print-preview-btn" class="btn btn-primary">
+                    <i class="fas fa-print"></i> Imprimir / Guardar PDF
+                </button>
+            </div>
+            <iframe id="print-preview-frame" class="print-preview-frame" title="Vista previa del pedido"></iframe>
+        </div>
+    </div>
+
+    <div id="distributor-modal" class="new-modal-overlay hidden">
+        <div class="new-modal-container distributor-modal-box">
+            <button class="close-modal-btn dist-close">&times;</button>
+            <div class="distributor-inner">
+                <i class="fas fa-handshake" style="font-size: 3rem; color: var(--color-secondary); margin-bottom: 1rem;"></i>
+                <h3>Únete a la Familia Curativa</h3>
+                <p>¿Te apasiona la cosmética natural? Buscamos personas comprometidas para distribuir nuestros productos.</p>
+                <ul>
+                    <li><i class="fas fa-check" style="color: green;"></i> Precios especiales al por mayor.</li>
+                    <li><i class="fas fa-check" style="color: green;"></i> Material publicitario de apoyo.</li>
+                    <li><i class="fas fa-check" style="color: green;"></i> Productos de alta rotación.</li>
+                </ul>
+                <a href="https://wa.me/593999913839?text=Hola%20Curativa,%20me%20interesa%20ser%20distribuidor." target="_blank" class="btn btn-primary btn-block">Contactar Ventas</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+

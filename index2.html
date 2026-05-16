@@ -1,0 +1,2273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catálogo de servicios 2026 MP Designs: web, identidad, ITERA QMS, soluciones combinadas, contenido y mantenimiento. Consulta por WhatsApp." />
+    <title>MP Designs | Catálogo de servicios 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-950: #0f1418;
+            --bg-920: #141a1f;
+            --bg-900: #1b2229;
+            --bg-860: rgba(25, 32, 39, 0.88);
+            --bg-820: rgba(33, 41, 49, 0.9);
+            --surface: rgba(20, 26, 32, 0.82);
+            --surface-strong: rgba(15, 20, 25, 0.94);
+            --line: rgba(226, 232, 238, 0.12);
+            --line-strong: rgba(226, 232, 238, 0.2);
+            --text: #eef2f5;
+            --text-soft: #cad3db;
+            --text-muted: #9aa5af;
+            --text-dim: #727d88;
+            --primary: #6f3040;
+            --primary-dark: #592836;
+            --accent: #9daebb;
+            --accent-soft: #d2dde6;
+            --success: #6e8796;
+            --gold: #d7c2a3;
+            --header-bg: rgba(16, 20, 25, 0.76);
+            --border: rgba(226, 232, 238, 0.12);
+            --shadow: 0 22px 60px rgba(0, 0, 0, 0.3);
+            --shadow-deep: 0 32px 90px rgba(0, 0, 0, 0.45);
+            --radius-xl: 30px;
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --radius-pill: 999px;
+            --font-serif: "Cormorant Garamond", Georgia, serif;
+            --font-sans: "Manrope", system-ui, sans-serif;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text);
+            padding-bottom: 120px;
+            min-height: 100vh;
+            line-height: 1.5;
+            background:
+                radial-gradient(circle at top left, rgba(111, 48, 64, 0.2), transparent 30%),
+                radial-gradient(circle at 85% 12%, rgba(157, 174, 187, 0.1), transparent 25%),
+                radial-gradient(circle at 50% 120%, rgba(111, 48, 64, 0.15), transparent 35%),
+                linear-gradient(180deg, #0d1117 0%, #080a0d 100%);
+            background-attachment: fixed;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-strong {
+            background: rgba(10, 14, 18, 0.8);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            border-radius: 999px;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.42;
+        }
+        body::before {
+            width: 320px;
+            height: 320px;
+            top: 10%;
+            left: -90px;
+            background: rgba(111, 48, 64, 0.12);
+        }
+        body::after {
+            width: 420px;
+            height: 420px;
+            right: -130px;
+            bottom: 12%;
+            background: rgba(157, 174, 187, 0.06);
+        }
+
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(194, 138, 87, 0.05); }
+            50% { box-shadow: 0 0 0 10px rgba(194, 138, 87, 0.02); }
+        }
+
+        .site-back-bar,
+        header,
+        .tarifario-intro,
+        .category-section,
+        #cart-bar,
+        .modal-overlay {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card::before,
+        .tarifario-intro::before,
+        .modal-content::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .card::before {
+            background: linear-gradient(135deg, transparent 18%, rgba(194, 138, 87, 0.06) 50%, transparent 76%);
+            z-index: 0;
+        }
+
+        .tooltip-term {
+            border-bottom: 1px dotted rgba(194, 138, 87, 0.8);
+            cursor: help;
+            color: var(--text-soft);
+            position: relative;
+            font-weight: 600;
+        }
+        .tooltip-term::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(13, 17, 22, 0.98);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            width: 220px;
+            text-align: center;
+            border: 1px solid var(--line-strong);
+            box-shadow: var(--shadow);
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.25s;
+            z-index: 1000;
+            pointer-events: none;
+            line-height: 1.35;
+        }
+        .tooltip-term:hover::after, .tooltip-term:active::after { visibility: visible; opacity: 1; }
+
+        /* ── Header sticky (no padding compensation needed) ── */
+        header {
+            background: rgba(12, 16, 20, 0.82);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            padding: 12px 22px;
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            transition: transform 0.38s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+            will-change: transform;
+            box-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 4px 20px rgba(0,0,0,0.3);
+        }
+        header.header-hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .header-container {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .header-brand { display: flex; align-items: baseline; gap: 10px; }
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.22s, color 0.22s, border-color 0.22s;
+            flex-shrink: 0;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border-color: rgba(255,255,255,0.18);
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+            letter-spacing: 0.08em;
+            line-height: 1;
+            color: var(--text);
+            font-weight: 600;
+        }
+        h1 span { color: var(--accent-soft); }
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.66rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-weight: 700;
+        }
+
+        /* ── Floating catalog nav ── */
+        .float-nav-trigger {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 500;
+            display: none; /* shown only in full-view via JS */
+        }
+        .float-nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(18, 22, 28, 0.92);
+            border: 1px solid rgba(194, 138, 87, 0.3);
+            border-radius: 999px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+            cursor: pointer;
+            color: var(--text-soft);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
+            user-select: none;
+        }
+        .float-nav-pill:hover {
+            background: rgba(26, 32, 40, 0.98);
+            border-color: rgba(194, 138, 87, 0.55);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+        .float-nav-pill .pill-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(194, 138, 87, 0.7);
+            flex-shrink: 0;
+        }
+        .float-nav-pill .pill-icon {
+            font-size: 0.85rem;
+            transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .float-nav-pill.open .pill-icon { transform: rotate(180deg); }
+
+        .float-nav-panel {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            right: 0;
+            min-width: 220px;
+            background: rgba(14, 18, 24, 0.97);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 20px;
+            padding: 8px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(194,138,87,0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            opacity: 0;
+            transform: translateY(10px) scale(0.97);
+            pointer-events: none;
+            transition: opacity 0.28s cubic-bezier(0.16,1,0.3,1), transform 0.28s cubic-bezier(0.16,1,0.3,1);
+            transform-origin: bottom right;
+        }
+        .float-nav-panel.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .float-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 11px 14px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-soft);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.18s, color 0.18s;
+        }
+        .float-nav-item:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+        }
+        .float-nav-item.active {
+            background: linear-gradient(135deg, rgba(111,48,64,0.5), rgba(111,48,64,0.18));
+            color: var(--text);
+            border: 1px solid rgba(194,138,87,0.2);
+        }
+        .float-nav-item i {
+            width: 18px;
+            text-align: center;
+            color: var(--accent-soft);
+            font-size: 0.82rem;
+            flex-shrink: 0;
+        }
+        .float-nav-item.active i { color: rgba(194,138,87,0.9); }
+        .float-nav-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+            margin: 4px 8px;
+        }
+        /* hide old nav-shell everywhere */
+        .nav-shell { display: none !important; }
+
+        /* Survey Styles */
+        .survey-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 32px;
+            border-radius: var(--radius-xl);
+            text-align: center;
+            opacity: 1;
+            transition: var(--transition);
+        }
+        .survey-step { display: none; animation: fadeIn 0.5s ease; }
+        .survey-step.active { display: block; }
+        .survey-title {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        .survey-desc {
+            color: var(--text-soft);
+            margin-bottom: 22px;
+            font-size: 0.96rem;
+        }
+        .survey-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .survey-option {
+            padding: 18px 16px;
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--line);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .survey-option i { font-size: 1.6rem; color: var(--accent-soft); transition: var(--transition); }
+        .survey-option:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .survey-option:hover i { color: var(--primary); transform: scale(1.1); }
+        .survey-option span { font-weight: 700; font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .recommendation-badge {
+            position: absolute;
+            top: -1px;
+            right: 12px;
+            background: linear-gradient(135deg, #d7c2a3, #b8a68a);
+            color: #1a1008;
+            padding: 3px 10px;
+            border-radius: 0 0 10px 10px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: none;
+            letter-spacing: 0.08em;
+        }
+        .recommendation-badge i { margin-right: 4px; }
+
+        /* Multi-View Layouts: full-height views */
+        #survey-view, #results-view, #full-view { display: none; }
+        #survey-view.active-view, #results-view.active-view, #full-view.active-view { display: flex; flex-direction: column; }
+        #survey-view.active-view {
+            min-height: calc(100vh - 54px);
+            justify-content: center;
+            align-items: center;
+            padding: 24px 16px 80px;
+        }
+        #results-view.active-view {
+            min-height: calc(100vh - 54px);
+        }
+        #full-view.active-view {
+            min-height: calc(100vh - 54px);
+        }
+
+        /* Results View Specifics */
+        .results-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+            display: flex;
+            gap: 30px;
+        }
+        .results-main { flex: 1; }
+        .results-sidebar {
+            width: 280px;
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        .results-sidebar h4 {
+            font-family: var(--font-serif);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        .sidebar-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            color: var(--text-soft);
+            text-align: left;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: var(--transition);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .sidebar-btn:hover { background: rgba(111, 48, 64, 0.2); color: var(--text); border-color: var(--primary); }
+        .sidebar-btn i { margin-right: 8px; }
+
+        .rec-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-top: 10px;
+        }
+        .rec-header h2 { font-family: var(--font-serif); font-size: 1.9rem; margin-bottom: 8px; }
+        .rec-header p { color: var(--text-soft); font-size: 0.88rem; }
+
+        /* Card Thumbnails */
+        .card-thumb {
+            width: 100%;
+            height: 110px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 1px solid var(--line);
+            position: relative;
+            flex-shrink: 0;
+        }
+        .card-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top left;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        .card-thumb:hover img { transform: scale(1.08); }
+        .card-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(10,14,18,0.7) 100%);
+            pointer-events: none;
+        }
+
+        /* Floating Quiz Button */
+        .floating-quiz-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 100px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 10px 25px rgba(111, 48, 64, 0.4);
+            transition: var(--transition);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        .floating-quiz-btn:hover { transform: scale(1.1) rotate(15deg); }
+        .floating-quiz-btn .tooltip {
+            position: absolute;
+            right: 75px;
+            background: var(--surface-strong);
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+            border: 1px solid var(--line);
+        }
+        .floating-quiz-btn:hover .tooltip { opacity: 1; transform: translateX(-10px); }
+
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+        .hamburger span { display: block; width: 24px; height: 2px; background-color: var(--text); border-radius: 3px; transition: 0.3s; }
+
+        .tarifario-intro {
+            padding: 24px 22px 10px;
+        }
+        .tarifario-intro-inner {
+            position: relative;
+            max-width: 1180px;
+            margin: 0 auto;
+            font-size: 0.96rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            padding: 28px 30px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(24, 31, 38, 0.9), rgba(15, 20, 25, 0.92));
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(20px);
+        }
+        .tarifario-intro-inner::before {
+            background:
+                radial-gradient(circle at 0 0, rgba(194, 138, 87, 0.14), transparent 30%),
+                linear-gradient(90deg, rgba(194, 138, 87, 0), rgba(194, 138, 87, 0.26), rgba(194, 138, 87, 0));
+            height: 1px;
+            top: 0;
+            bottom: auto;
+        }
+        .tarifario-intro-inner strong { color: var(--text); }
+
+        .prose-block {
+            background: linear-gradient(180deg, rgba(24, 31, 38, 0.82), rgba(15, 20, 25, 0.9));
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 22px 24px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-soft);
+            line-height: 1.7;
+            box-shadow: var(--shadow);
+        }
+        .prose-block strong,
+        .prose-block em,
+        .prose-block code { color: var(--text); }
+        .prose-block p + p { margin-top: 12px; }
+
+        /* ── Full-view: all sections visible, collapsible ── */
+        .category-section {
+            display: none;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 8px 22px 32px;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: var(--transition);
+        }
+        .category-section.active-section {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* In full-view, ALL sections show, cards always visible */
+        #full-view .category-section {
+            display: block;
+            opacity: 1;
+            transform: none;
+        }
+        #full-view .category-section .card { display: flex; }
+        /* Collapsed state — just the pill header, grid hidden */
+        #full-view .category-section.section-collapsed .section-body {
+            display: none;
+        }
+        #full-view .category-section.section-collapsed {
+            padding-bottom: 0;
+        }
+        .section-collapsed-pill {
+            display: none;
+        }
+        #full-view .section-collapsed .section-collapsed-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            width: fit-content;
+            margin-bottom: 28px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        #full-view .section-collapsed .section-collapsed-pill:hover {
+            background: rgba(255,255,255,0.07);
+            border-color: rgba(194,138,87,0.3);
+        }
+        #full-view .section-collapsed .section-collapsed-pill span {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+        #full-view .section-collapsed .section-collapsed-pill i {
+            color: var(--accent-soft);
+            font-size: 0.8rem;
+        }
+        /* Section separator */
+        #full-view .category-section + .category-section {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 8px;
+            padding-top: 24px;
+        }
+        /* Focused section title pops more */
+        #full-view .category-section.section-focused .category-title {
+            border-left-color: rgba(194,138,87,0.9);
+            color: var(--text);
+        }
+        
+        @keyframes cardEntry {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .category-title {
+            color: var(--text);
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 2.2vw, 2rem);
+            margin-bottom: 10px;
+            border-left: 2px solid rgba(194, 138, 87, 0.6);
+            padding-left: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .section-note {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin: -2px 0 14px;
+            line-height: 1.6;
+            max-width: 680px;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+        .card {
+            background: linear-gradient(180deg, rgba(24, 31, 38, 0.84), rgba(15, 20, 25, 0.96));
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            border: 1px solid var(--line);
+            cursor: pointer;
+            transition: box-shadow 0.25s, border-color 0.25s, transform 0.25s, background 0.25s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            min-width: 0;
+            backdrop-filter: blur(16px);
+        }
+        .card.active {
+            overflow: visible;
+            z-index: 3;
+        }
+        .card:hover {
+            border-color: rgba(194, 138, 87, 0.34);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-deep);
+        }
+
+        .card.featured {
+            border: 1px solid rgba(194, 138, 87, 0.44);
+            background: linear-gradient(165deg, rgba(32, 39, 46, 0.94) 0%, rgba(16, 21, 26, 0.98) 100%);
+            animation: subtlePulse 5s ease-in-out infinite;
+        }
+        .card.decoy { border: 1px dashed rgba(244, 228, 210, 0.24); opacity: 0.92; }
+
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; pointer-events: none; position: relative; z-index: 2; }
+        .card-title {
+            font-family: var(--font-serif);
+            font-size: 1.28rem;
+            font-weight: 600;
+            color: var(--text);
+            width: 100%;
+            line-height: 1.06;
+            letter-spacing: 0.02em;
+        }
+        .card-price { font-size: 1.25rem; color: var(--accent-soft); font-weight: 800; pointer-events: none; }
+        .featured .card-price { color: var(--gold); }
+
+        .card-preview {
+            color: var(--text-soft);
+            font-size: 0.9rem;
+            margin-top: 4px;
+            line-height: 1.65;
+            pointer-events: none;
+            position: relative;
+            z-index: 2;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-shrink: 0;
+            min-width: 0;
+        }
+        .card-tap-hint {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            margin-top: 12px;
+            pointer-events: none;
+            position: relative;
+            z-index: 2;
+        }
+        .card.active .card-tap-hint { display: none; }
+        .expand-icon { text-align: center; color: var(--accent-soft); font-size: 1.2rem; margin-top: 4px; transition: transform 0.25s; pointer-events: none; position: relative; z-index: 2; }
+
+        .card-details {
+            display: none;
+            margin-top: 18px;
+            padding-top: 18px;
+            border-top: 1px solid var(--line);
+            position: relative;
+            z-index: 2;
+            flex-shrink: 0;
+            min-width: 0;
+        }
+        .card-details code {
+            font-size: 0.78em;
+            overflow-wrap: break-word;
+            word-break: normal;
+        }
+        .card.active .card-details { display: block; animation: slideDown 0.28s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+        .card.active .expand-icon { transform: rotate(180deg); }
+
+        .fine-print-details { margin: 0 0 16px; }
+        .fine-print-details > summary {
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.82rem;
+            color: var(--accent-soft);
+            padding: 8px 0;
+            user-select: none;
+            list-style: none;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .fine-print-details > summary::-webkit-details-marker { display: none; }
+        .fine-print-details > summary::before {
+            content: "+ ";
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .fine-print-details[open] > summary::before { content: "− "; }
+
+        .detail-list { list-style: none; margin-bottom: 14px; pointer-events: auto; }
+        .detail-list li {
+            margin-bottom: 7px;
+            font-size: 0.84rem;
+            color: var(--text-soft);
+            position: relative;
+            padding-left: 1.1em;
+            line-height: 1.55;
+        }
+        .detail-list li::before {
+            content: "›";
+            color: var(--accent-soft);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0.08em;
+        }
+        .highlight { color: var(--text) !important; font-weight: 700; }
+        .warning { color: var(--accent-soft); font-style: italic; }
+
+        .conditions-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            padding: 14px 16px;
+            border: 1px solid rgba(244, 228, 210, 0.08);
+            margin-bottom: 14px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+        }
+        .conditions-title {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .conditions-list { list-style: none; padding: 0; }
+        .conditions-list li {
+            font-size: 0.78rem;
+            color: var(--text-soft);
+            margin-bottom: 5px;
+            line-height: 1.55;
+            position: relative;
+            padding-left: 1em;
+        }
+        .conditions-list li::before {
+            content: "•";
+            color: var(--accent-soft);
+            position: absolute;
+            left: 0;
+            top: 0.12em;
+        }
+
+        .select-btn {
+            display: block;
+            width: 100%;
+            padding: 13px;
+            margin-top: auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            color: var(--text);
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.76rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            pointer-events: auto;
+            z-index: 10;
+            position: relative;
+            transition: background 0.25s, color 0.25s, border-color 0.25s, transform 0.25s;
+        }
+        .select-btn:hover {
+            background: linear-gradient(135deg, rgba(111, 48, 64, 0.82), rgba(76, 90, 102, 0.24));
+            border-color: rgba(157, 174, 187, 0.32);
+            color: var(--text);
+            transform: translateY(-1px);
+        }
+        .card.featured .select-btn { background: linear-gradient(135deg, rgba(124, 41, 53, 0.92), rgba(99, 32, 43, 0.92)); color: #fff; border-color: rgba(194, 138, 87, 0.3); }
+        .card.featured .select-btn:hover { background: linear-gradient(135deg, rgba(144, 54, 68, 0.96), rgba(121, 41, 54, 0.96)); }
+        .card.selected { border-color: rgba(194, 138, 87, 0.44); background: linear-gradient(180deg, rgba(31, 38, 45, 0.94), rgba(16, 21, 26, 0.98)); }
+        .card.selected .select-btn { background: rgba(194, 138, 87, 0.16); border-color: rgba(194, 138, 87, 0.34); color: var(--text); }
+
+        .bundle-save { font-size: 0.78rem; color: var(--accent-soft); font-weight: 700; margin-top: 10px; }
+
+        /* ── Compact base adjustments ── */
+        body { padding-bottom: 100px; }
+        .tarifario-intro { padding: 16px 18px 8px; }
+        .tarifario-intro-inner { padding: 22px 24px; font-size: 0.9rem; }
+        #full-view .category-section { padding: 6px 18px 22px; }
+        #full-view .category-section + .category-section { margin-top: 4px; padding-top: 18px; }
+
+        /* ── MOBILE: screen-by-screen cards ── */
+        @media (max-width: 768px) {
+            /* Removed padding-top override — header is now sticky, no compensation needed */
+
+            /* Compact survey */
+            .survey-container { margin: 16px auto; padding: 24px 18px; border-radius: 20px; }
+            .survey-title { font-size: 1.25rem !important; margin-bottom: 10px; }
+            .survey-desc { font-size: 0.82rem !important; margin-bottom: 18px; }
+            .survey-options { gap: 10px; }
+            .survey-option { padding: 14px 16px; border-radius: 14px; gap: 10px; }
+            .survey-option i { font-size: 1.1rem; }
+            .survey-option span { font-size: 0.84rem; }
+
+            /* Compact section headings */
+            .category-title { font-size: 1.1rem; padding-left: 10px; margin-bottom: 8px; }
+            .section-note { font-size: 0.78rem; margin-bottom: 10px; }
+            .tarifario-intro { padding: 12px 12px 6px; }
+            .tarifario-intro-inner { font-size: 0.8rem; padding: 14px 16px; border-radius: 16px; }
+            #full-view .category-section { padding: 4px 12px 16px; }
+
+            /* ── Horizontal snap carousel for cards ── */
+            .grid {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 12px;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding: 4px 12px 16px;
+                margin: 0 -12px;
+            }
+            .grid::-webkit-scrollbar { display: none; }
+            .card {
+                flex: 0 0 calc(85vw);
+                max-width: 340px;
+                min-width: 260px;
+                scroll-snap-align: center;
+                padding: 16px;
+                border-radius: 18px;
+                /* Subtle "active" feel for center card */
+            }
+            /* Snap progress dots hint via padding */
+            .grid::after {
+                content: '';
+                flex: 0 0 12px;
+                pointer-events: none;
+            }
+
+            /* Card interior compact */
+            .card-title { font-size: 1.1rem; }
+            .card-preview { font-size: 0.8rem; -webkit-line-clamp: 2; }
+            .card-tap-hint { font-size: 0.6rem; margin-top: 8px; }
+            .expand-icon { font-size: 1rem; margin-top: 2px; }
+            .card-thumb { height: 130px; margin-bottom: 10px; }
+            .card-thumb img { border-radius: 12px; }
+
+            .detail-list li { font-size: 0.76rem; margin-bottom: 4px; }
+            .conditions-box { padding: 10px 12px; }
+            .conditions-list li { font-size: 0.7rem; }
+            .select-btn { padding: 10px; font-size: 0.72rem; }
+
+            /* Float nav: center bottom on mobile */
+            .float-nav-trigger {
+                bottom: 20px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+            .float-nav-panel {
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+                min-width: 240px;
+            }
+            .float-nav-panel.open {
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+
+            /* Results-view compact */
+            .results-container {
+                flex-direction: column;
+                gap: 0;
+                padding: 12px 12px 40px;
+            }
+            .results-main { padding: 0; }
+            .results-sidebar {
+                padding: 14px;
+                width: 100%;
+                position: static;
+                border-radius: 14px;
+                margin-top: 8px;
+            }
+            .results-sidebar h4 { font-size: 0.8rem; margin-bottom: 10px; }
+            .sidebar-btn { padding: 9px 14px; font-size: 0.74rem; }
+            .rec-header { margin-bottom: 16px; padding-top: 4px; }
+            .rec-header h2 { font-size: 1.2rem; margin-bottom: 6px; }
+            .rec-header p { font-size: 0.8rem; }
+
+            /* ── Results grid: vertical stack (NOT carousel) ── */
+            #results-view { overflow-x: hidden; }
+            #results-grid.grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                flex-direction: unset;
+                flex-wrap: unset;
+                overflow-x: visible;
+                scroll-snap-type: none;
+                margin: 0;
+                padding: 0;
+                gap: 12px;
+            }
+            #results-grid .card {
+                flex: unset;
+                max-width: 100%;
+                min-width: 0;
+                width: 100%;
+                scroll-snap-align: none;
+            }
+
+            /* Modal compact */
+            .modal-content { width: 95%; max-width: none; padding: 18px; border-radius: 20px; }
+            .cart-items-list { max-height: 45vh; }
+
+            /* Cart bar */
+            #cart-bar { width: 94%; bottom: 14px; padding: 9px 16px; }
+        }
+
+        @media (max-width: 600px) {
+            .card { flex: 0 0 calc(88vw); max-width: 320px; }
+            .card-thumb { height: 110px; }
+            .card-title { font-size: 1rem; }
+            .card-preview { font-size: 0.76rem; }
+            .select-btn { font-size: 0.7rem; }
+            h1 { font-size: 1rem; }
+            .subtitle { font-size: 0.6rem; letter-spacing: 0.12em; }
+            .float-nav-pill { padding: 10px 16px; font-size: 0.72rem; }
+        }
+
+        #cart-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 520px;
+            background: rgba(14, 18, 23, 0.9);
+            border: 1px solid rgba(194, 138, 87, 0.28);
+            border-radius: 999px;
+            padding: 12px 22px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-deep);
+            z-index: 1000;
+            backdrop-filter: blur(18px);
+        }
+        .cart-total { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+        .view-cart-btn {
+            background: linear-gradient(135deg, rgba(124, 41, 53, 0.92), rgba(99, 32, 43, 0.92));
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 8, 8, 0.7);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(24, 31, 38, 0.96), rgba(14, 18, 23, 0.98));
+            width: 92%;
+            max-width: 460px;
+            border-radius: 22px;
+            border: 1px solid var(--line);
+            padding: 24px;
+            position: relative;
+            box-shadow: var(--shadow-deep);
+        }
+        .modal-content::before {
+            background: linear-gradient(90deg, rgba(194, 138, 87, 0), rgba(194, 138, 87, 0.28), rgba(194, 138, 87, 0));
+            height: 1px;
+            top: 0;
+            bottom: auto;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+        .modal-header h3 { font-family: var(--font-serif); font-size: 1.5rem; color: var(--text); font-weight: 600; letter-spacing: 0.04em; }
+        .close-modal { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
+        .cart-items-list { max-height: 300px; overflow-y: auto; margin-bottom: 18px; }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(244, 228, 210, 0.08); font-size: 0.88rem; color: var(--text-soft); }
+        .remove-btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-soft);
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+        .whatsapp-btn-final {
+            background: linear-gradient(135deg, rgba(124, 41, 53, 0.96), rgba(99, 32, 43, 0.96));
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .site-back-bar { display: none; }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="header-container">
+            <a href="index.html" class="back-btn" title="Volver al portafolio" aria-label="Volver al portafolio">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-brand">
+                <h1>Marco <span>Pérez</span></h1>
+                <span class="subtitle">Catálogo 2026</span>
+            </div>
+            <div style="width:34px;"></div><!-- spacer para centrar branding -->
+        </div>
+    </header>
+
+    <!-- Floating catalog nav (shown only in full-view) -->
+    <div class="float-nav-trigger" id="float-nav-trigger">
+        <div class="float-nav-panel" id="float-nav-panel">
+            <button class="float-nav-item active" id="fnav-web" onclick="floatNavGo('web-ecosystem', this)"><i class="fas fa-laptop-code"></i> Web premium</button>
+            <button class="float-nav-item" id="fnav-branding" onclick="floatNavGo('branding', this)"><i class="fas fa-pen-nib"></i> Branding</button>
+            <button class="float-nav-item" id="fnav-itera" onclick="floatNavGo('itera-qms', this)"><i class="fas fa-microchip"></i> Sistemas ITERA</button>
+            <button class="float-nav-item" id="fnav-bundles" onclick="floatNavGo('bundles', this)"><i class="fas fa-layer-group"></i> Soluciones combinadas</button>
+            <div class="float-nav-divider"></div>
+            <button class="float-nav-item" id="fnav-social" onclick="floatNavGo('social', this)"><i class="fas fa-share-alt"></i> Contenido</button>
+            <button class="float-nav-item" id="fnav-mto" onclick="floatNavGo('mto', this)"><i class="fas fa-tools"></i> Soporte</button>
+        </div>
+        <div class="float-nav-pill" id="float-nav-pill" onclick="toggleFloatNav()">
+            <span class="pill-dot"></span>
+            <span id="float-nav-label">Catálogo</span>
+            <i class="fas fa-chevron-up pill-icon"></i>
+        </div>
+    </div>
+
+    <div id="survey-view" class="active-view">
+        <div id="survey-section" class="survey-container glass">
+            <!-- Step 1: Profile -->
+            <div id="step-1" class="survey-step active">
+                <h2 class="survey-title">¿Cuál es el perfil de tu negocio?</h2>
+                <p class="survey-desc">Entender tu etapa me permite filtrar las herramientas con mejor retorno de inversión para ti.</p>
+                <div class="survey-options">
+                    <div class="survey-option" onclick="nextStep('idea')">
+                        <i class="fas fa-seedling"></i>
+                        <span>Emprendimiento / Idea Nueva</span>
+                    </div>
+                    <div class="survey-option" onclick="nextStep('operating')">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Negocio Operativo / Creciendo</span>
+                    </div>
+                    <div class="survey-option" onclick="nextStep('corporate')">
+                        <i class="fas fa-building"></i>
+                        <span>Empresa / Visión Corporativa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Main Need -->
+            <div id="step-2" class="survey-step">
+                <h2 class="survey-title">¿Cuál es tu prioridad inmediata?</h2>
+                <p class="survey-desc">Selecciona el área donde necesitas más apoyo hoy.</p>
+                <div class="survey-options">
+                    <div class="survey-option" onclick="branchStep('web')">
+                        <i class="fas fa-desktop"></i>
+                        <span>Presencia & Ventas Web</span>
+                    </div>
+                    <div class="survey-option" onclick="branchStep('branding')">
+                        <i class="fas fa-bezier-curve"></i>
+                        <span>Identidad & Marca</span>
+                    </div>
+                    <div class="survey-option" onclick="branchStep('qms')">
+                        <i class="fas fa-cogs"></i>
+                        <span>Sistemas & Control (QMS)</span>
+                    </div>
+                    <div class="survey-option" onclick="branchStep('social')">
+                        <i class="fas fa-camera-retro"></i>
+                        <span>Contenido & Redes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Web Branch -->
+            <div id="step-web" class="survey-step">
+                <h2 class="survey-title">¿Qué tipo de sitio necesitas?</h2>
+                <div class="survey-options">
+                    <div class="survey-option" onclick="finishSurvey('landing')">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Landing de una sola página</span>
+                    </div>
+                    <div class="survey-option" onclick="finishSurvey('catalog')">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Catálogo con carrito WhatsApp</span>
+                    </div>
+                    <div class="survey-option" onclick="finishSurvey('ecosystem')">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Ecosistema Web Completo</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: QMS Branch -->
+            <div id="step-qms" class="survey-step">
+                <h2 class="survey-title">¿Qué buscas resolver en planta?</h2>
+                <div class="survey-options">
+                    <div class="survey-option" onclick="finishSurvey('traceability')">
+                        <i class="fas fa-barcode"></i>
+                        <span>Trazabilidad de lotes</span>
+                    </div>
+                    <div class="survey-option" onclick="finishSurvey('quality')">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Gestión de documentos / Calidad</span>
+                    </div>
+                    <div class="survey-option" onclick="finishSurvey('full-qms')">
+                        <i class="fas fa-microchip"></i>
+                        <span>Implementación Completa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results View -->
+    <div id="results-view">
+        <div class="results-container">
+            <main class="results-main">
+                <header class="rec-header">
+                    <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,rgba(194,138,87,0.2),rgba(194,138,87,0.06));border:1px solid rgba(194,138,87,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(194,138,87,0.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <h2>Propuesta Personalizada</h2>
+                    <p id="rec-intro-text">He seleccionado estas soluciones basadas en tus respuestas.</p>
+                </header>
+                <div id="results-grid" class="grid">
+                    <!-- Cards will be injected here -->
+                </div>
+            </main>
+            <aside class="results-sidebar">
+                <h4>Opciones adicionales</h4>
+                <button class="sidebar-btn" onclick="switchView('full-view')"><i class="fas fa-th-large"></i> Ver todos los planos</button>
+                <button class="sidebar-btn" onclick="resetSurvey()"><i class="fas fa-redo"></i> Repetir encuesta</button>
+                <div class="prose-block" style="font-size: 0.75rem; margin-top: 20px;">
+                    <p>Estas recomendaciones están pensadas para optimizar tu inversión inicial.</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Full Catalog View -->
+    <div id="full-view">
+        <div id="catalog-content">
+
+    <div class="tarifario-intro">
+        <div class="tarifario-intro-inner glass">
+            <p><i class="fas fa-arrow-right" style="margin-right: 10px; color: var(--accent-soft);"></i> Cada sección tiene un objetivo concreto: <strong>Web</strong> para captar y vender, <strong>Branding</strong> para que la marca sostenga el precio, <strong>ITERA</strong> para ordenar trazabilidad y documentos sin planillas frágiles. Elige por dónde empieza el problema real.</p>
+        </div>
+    </div>
+
+    <section id="web-ecosystem" class="category-section">
+        <h2 class="category-title"><i class="fas fa-globe-americas"></i> 1. Validación &amp; conversión web</h2>
+        <p class="section-note">Tres formatos para lanzar, vender y consolidar presencia digital sin fricción operativa.</p>
+
+
+        <div class="grid">
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Landing de Validación</span></div>
+                <div class="card-thumb"><img src="images/thumb_landing_validacion.png" alt="Landing de validación premium"></div>
+                <p class="card-preview">La forma más rápida de salir con una oferta clara y empezar a captar interés real.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Oferta clara y lista para captar leads o abrir conversaciones por WhatsApp.</li>
+                        <li>Presencia profesional sin depender de un desarrollo largo.</li>
+                        <li>Estructura enfocada en explicar valor, prueba social y acción inmediata.</li>
+                        <li>Ideal para validar un producto, servicio o nueva unidad comercial.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Condiciones y plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Entrega:</strong> 3 a 5 días hábiles desde contenido aprobado.</li>
+                            <li><strong>Revisiones:</strong> 2 rondas incluidas sobre la misma estructura.</li>
+                            <li><strong>No incluye:</strong> producción fotográfica ni redacción extensa.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Landing de Validación', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Catálogo Pro WhatsApp</span></div>
+                <div class="card-thumb"><img src="images/thumb_catalogo_whatsapp.png" alt="Catálogo Pro con carrito WhatsApp"></div>
+                <p class="card-preview">Inventario dinámico pensado para mostrar producto, ordenar pedido y cerrar por chat.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Inventario dinámico listo para cerrar pedidos por WhatsApp.</li>
+                        <li>Carrito con cantidades, subtotales y flujo de compra claro.</li>
+                        <li>Hasta <strong>20 productos</strong> cargados en la entrega inicial.</li>
+                        <li>Catálogo preparado para vender mejor sin depender de marketplaces externos.</li>
+                        <li>Capacitación breve para actualizar precios y stock básico.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Condiciones y plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Entrega:</strong> 10 a 15 días hábiles.</li>
+                            <li><strong>Revisiones:</strong> 2 rondas sobre UI; cambios mayores se cotizan aparte.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Catálogo Pro WhatsApp', this)">Me interesa</button>
+            </div>
+
+            <div class="card featured" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Ecosistema Premium</span></div>
+                <div class="card-thumb"><img src="images/thumb_ecosistema_premium.png" alt="Ecosistema web premium multi-página"></div>
+                <p class="card-preview">La opción recomendada para marcas que necesitan vender, verse sólidas y operar con coherencia.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Incluye el alcance de <strong>Catálogo Pro WhatsApp</strong>.</li>
+                        <li>Web corporativa, catálogo y dirección visual alineados en una sola experiencia.</li>
+                        <li>Hasta <strong>15 piezas</strong> de apoyo para fichas, banners y lanzamiento.</li>
+                        <li class="highlight">Recomendado para negocios que ya no están validando: necesitan una herramienta comercial seria.</li>
+                        <li>Soporte prioritario por <strong>6 meses</strong> vía canal acordado.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Condiciones y plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Entrega:</strong> 20 a 25 días hábiles.</li>
+                            <li><strong>Dependencias:</strong> inventario, precios e identidad base definidos antes de cerrar UI.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Ecosistema Premium Curarte', this)">Me interesa</button>
+            </div>
+        </div>
+        <p class="section-note">Dominio, hosting y contenido final se definen aparte según el alcance comercial y técnico del proyecto.</p>
+    </section>
+
+    <section id="branding" class="category-section">
+        <h2 class="category-title"><i class="fas fa-swatchbook"></i> 2. Identidad visual &amp; packaging</h2>
+        <p class="section-note">Marca lista para redes, empaque e imprenta (PDF/X cuando aplique).</p>
+
+        <div class="grid">
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Plan esencial</span></div>
+                <div class="card-thumb"><img src="images/thumb_branding_identidad.png" alt="Branding identidad visual esencial"></div>
+                <p class="card-preview">Logo sólido para quien necesita empezar ya con presencia profesional.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Logo principal en color y versión monocroma.</li>
+                        <li>Dos propuestas creativas iniciales; una se desarrolla a versión final.</li>
+                        <li>Paleta en HEX/CMYK y tipografía sugerida (Google Fonts o fuentes con licencia clara).</li>
+                        <li>Archivos PNG, PDF vectorial embebido y SVG cuando aplique.</li>
+                        <li>Mini guía de “no hacer” (proporciones mínimas, fondos prohibidos).</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Tiempo:</strong> 3 días hábiles desde brief.</li>
+                            <li><strong>Revisiones:</strong> 2 rondas sobre la propuesta elegida.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Branding Esencial', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Plan aplicado</span></div>
+                <div class="card-thumb"><img src="images/tinymeltsbrandboard-thumb.png" alt="Branding aplicado con archivos editables"></div>
+                <p class="card-preview">Para quien ya necesita editable y más de una propuesta seria antes de decidir.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Tres propuestas de logo con criterios distintos (geométrico, tipográfico, mixto).</li>
+                        <li>Archivos fuente .AI o .SVG editables para tu equipo de diseño.</li>
+                        <li>Cesión de uso comercial para Ecuador (contrato corto de cesión).</li>
+                        <li>Variante horizontal y vertical cuando el trazo lo permita.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Tiempo:</strong> 5–7 días hábiles.</li>
+                            <li><strong>Revisiones:</strong> 2 rondas globales.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Branding Aplicado', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Plan profesional</span></div>
+                <div class="card-thumb"><img src="images/Manual1-thumb.png" alt="Plan profesional brandbook y mockup"></div>
+                <p class="card-preview">Sistema visual corto pero completo: manual mini + mockup para validar en contexto real.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Mini manual de imagen PDF (4–6 páginas) con reglas claras.</li>
+                        <li>Guía de color, tipografía, márgenes y versiones permitidas del logo.</li>
+                        <li>Logo + sello o isotipo + variante invertida si aplica.</li>
+                        <li>Un <span class="tooltip-term" data-tip="Aplicación del logo en objeto físico o digital fotorrealista.">mockup premium</span> incluido; extras según alcance.</li>
+                        <li>Exportación de assets para redes (avatars, portadas base).</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Tiempo:</strong> 7–12 días hábiles.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Branding Profesional', this)">Me interesa</button>
+            </div>
+
+            <div class="card featured" style="border-color: var(--accent);" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Plan integral</span></div>
+                <div class="card-thumb"><img src="images/Manual6-thumb.png" alt="Plan integral brandbook técnico completo"></div>
+                <p class="card-preview">Brandbook técnico para lanzamientos serios, franquicias o marcas que van a imprenta y retail.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Manual 10–12 páginas con arquitectura de marca y tono de comunicación sugerido.</li>
+                        <li>Sistema de color con referencias <span class="tooltip-term" data-tip="Cuando la marca lo requiere para packaging premium o exportación.">Pantone</span> y conversión a CMYK.</li>
+                        <li>Recomendaciones de imprenta y resolución mínima por soporte.</li>
+                        <li>Sesión de asesoría post-entrega (60–90 min) para dudas de proveedores.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Condiciones</span>
+                        <ul class="conditions-list">
+                            <li><strong>Tiempo:</strong> 20+ días hábiles según complejidad.</li>
+                            <li><strong>Bocetos:</strong> iteración ilimitada en fase exploratoria; luego revisiones acotadas al manual.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Branding Integral', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Línea de producto (etiquetas)</span></div>
+                <div class="card-thumb"><img src="images/etiqueta1.png" alt="Etiquetas y packaging técnico"></div>
+                <p class="card-preview">Diseño de etiquetas y envases con foco regulatorio básico y salida para imprenta.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Hasta <strong>6 variantes</strong> de etiqueta (sabores, concentraciones, formatos).</li>
+                        <li>Archivos PDF/X-4 con perfiles acordados (<span class="tooltip-term" data-tip="Perfil FOGRA u homólogo según imprenta; se valida con el proveedor.">Fogra39</span> u otro definido con la imprenta).</li>
+                        <li>Mockups de previsualización para aprobación interna.</li>
+                        <li>Tabla de contenidos y textos legales los valida el cliente con asesoría nutricional/legal si aplica.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Plazos</span>
+                        <ul class="conditions-list">
+                            <li><strong>Tiempo:</strong> ~3 semanas con feedback ágil.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Diseño Etiquetas', this)">Me interesa</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="itera-qms" class="category-section">
+        <h2 class="category-title"><i class="fas fa-database"></i> 3. ITERA QMS · Trazabilidad &amp; operación</h2>
+
+        <details class="fine-print-details">
+            <summary>Qué es ITERA y cómo se implementa</summary>
+            <div class="prose-block" style="margin-top: 12px;">
+                <p><strong>ITERA</strong> es el producto de software que desarrollo bajo el repositorio <em>itera-qms-web</em>: una aplicación <strong>Next.js + React</strong> con <strong>Prisma</strong> y base de datos relacional, pensada para empresas que necesitan <strong>orden documental</strong>, <strong>trazabilidad de lotes</strong>, <strong>ventas y CRM</strong>, y <strong>documentos técnicos</strong> impresos (fichas, actas, certificados) sin depender de planillas frágiles.</p>
+                <p>El sistema se despliega en ediciones <strong>LITE</strong> y <strong>PREMIUM</strong> (variables de entorno <code>ITERA_EDITION</code>): la versión ligera acelera adopción en equipos pequeños; la premium habilita el panel completo con módulos avanzados. En la práctica convive un <strong>panel QMS</strong> con rutas como trazabilidad, recepciones, lotes, productos elaborados, catálogo, ventas, documentos emitidos, comercial, proveedores, reportes, auditoría, usuarios y administración, además de flujos de impresión bajo <code>/qms/(print)/...</code> para formatos regulados.</p>
+                <p>Mi trabajo al implementarlo en tu empresa no es solo “instalar”: incluye <strong>levantamiento de procesos</strong>, parametrización inicial, plantillas de documentos alineadas a tu norma (ISO u otra), migración razonable de maestros, y <strong>capacitación hasta go-live</strong>. Los montos de esta sección son <strong>estimados</strong>; el alcance se cierra por escrito tras diagnóstico.</p>
+            </div>
+        </details>
+
+        <div class="conditions-box">
+            <span class="conditions-title">Qué suele influir en el precio final</span>
+            <ul class="conditions-list">
+                <li>Número de sedes, usuarios concurrentes y roles (calidad, bodega, ventas).</li>
+                <li>Cantidad de tipos de documento a emitir y niveles de aprobación.</li>
+                <li>Si hay integración con contabilidad externa o solo exportaciones CSV/PDF.</li>
+                <li>Hosting: servidor propio, VPS o despliegue asistido en tu nube.</li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <div class="card featured" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Implementación ITERA LITE</span></div>
+                <div class="card-thumb"><img src="images/itera_dashboard.png" alt="Panel ITERA LITE - Dashboard operativo"></div>
+                <p class="card-preview">ITERA en modo ligero: equipos chicos que empiezan trazabilidad seria.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Instancia configurada (build <strong>lite</strong>), usuarios base y permisos.</li>
+                        <li>Carga inicial de catálogo reducido y plantillas de documento estándar.</li>
+                        <li>Flujo de recepciones y lotes según tu operación real (hasta 2 iteraciones de ajuste).</li>
+                        <li>Capacitación remota <strong>4 h</strong> fragmentadas + manual de pantallas clave.</li>
+                        <li class="highlight">Soporte corrección 30 días post go-live (canal acordado).</li>
+                    </ul>
+
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'ITERA LITE — Implementación', this)">Me interesa</button>
+            </div>
+
+            <div class="card featured" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Implementación ITERA PREMIUM</span></div>
+                <div class="card-thumb"><img src="images/itera_ventas_crm.png" alt="Panel ITERA PREMIUM - CRM y ventas"></div>
+                <p class="card-preview">Panel completo: trazabilidad, documentos, ventas y reportes para operación B2B/B2C.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Build <strong>premium</strong> con módulos amplios (ventas, CRM/comercial, gobierno documental avanzado según rol).</li>
+                        <li>Diseño de flujos de aprobación y auditoría básica sobre documentos.</li>
+                        <li>Personalización de formatos de impresión prioritarios (hasta 3 familias de documento).</li>
+                        <li>Migración asistida de maestros (productos, clientes, proveedores) desde Excel/CSV.</li>
+                        <li>Capacitación <strong>8 h</strong> + grabaciones cortas por módulo crítico.</li>
+                        <li class="highlight">60 días de soporte correctivo prioritario.</li>
+                    </ul>
+
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'ITERA PREMIUM — Implementación', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Módulo foco: Trazabilidad &amp; lotes</span></div>
+                <div class="card-thumb"><img src="images/itera_trazabilidad.png" alt="Módulo de trazabilidad y lotes ITERA"></div>
+                <p class="card-preview">Cadena recepción → lote → elaborado → venta, con reglas claras.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Mapa de estados de lote y validaciones (no borrar si ya hay venta vinculada, etc.).</li>
+                        <li>Reportes de trazabilidad para auditoría interna.</li>
+                        <li>Ajuste de pantallas de <code>trazabilidad</code>, <code>lotes</code>, <code>recepciones</code> según tu vocabulario.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'ITERA módulo Trazabilidad', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Módulo foco: Documentos &amp; calidad</span></div>
+                <div class="card-thumb"><img src="images/itera_documentos.png" alt="Módulo de documentos controlados ITERA"></div>
+                <p class="card-preview">Documentos bajo control e impresión para formatos regulatorios.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Parametrización de tipos de documento y numeración.</li>
+                        <li>Vínculo a productos elaborados y lotes cuando aplique.</li>
+                        <li>Revisión de plantillas bajo <code>documentos</code> / <code>print</code>.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'ITERA módulo Documentos', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Módulo foco: Comercial &amp; CRM</span></div>
+                <div class="card-thumb"><img src="images/itera_ventas_crm.png" alt="Módulo CRM y ventas ITERA"></div>
+                <p class="card-preview">Ventas, clientes y pipeline operativo alineado a lo que ya producís en planta.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Configuración de flujo comercial y datos mínimos por cliente.</li>
+                        <li>Vínculo ventas ↔ documentos emitidos cuando corresponda.</li>
+                        <li>Capacitación corta para fuerza de ventas.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'ITERA módulo Comercial', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Capacitación &amp; go-live extra</span></div>
+                <div class="card-thumb"><img src="images/itera_dashboard.png" alt="ITERA Dashboard overview"></div>
+                <p class="card-preview">Paquete adicional de 8 h de taller + mesa de ayuda el día de corte.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Simulacros con datos reales anonimizados.</li>
+                        <li>Checklist de “día cero” y contacto de escalamiento.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'ITERA capacitación go-live', this)">Me interesa</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="bundles" class="category-section">
+        <h2 class="category-title"><i class="fas fa-box-open"></i> 4. Soluciones combinadas</h2>
+        <p class="section-note">Paquetes con precio cerrado; ahorro vs sumar ítems sueltos. Variaciones por WhatsApp.</p>
+
+        <div class="grid">
+            <div class="card featured" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Mix “Presencia + QMS base”</span></div>
+                <div class="card-thumb"><img src="images/thumb_bundle_soluciones.png" alt="Bundle presencia web más QMS base"></div>
+                <p class="card-preview">Landing + branding esencial + implementación ITERA LITE.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Pensado para marcas nuevas en retail o servicios que ya necesitan control de calidad desde el inicio.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mix Presencia + QMS base', this)">Me interesa</button>
+            </div>
+
+            <div class="card featured" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Mix “Retail serio”</span></div>
+                <div class="card-thumb"><img src="images/thumb_catalogo_whatsapp.png" alt="Bundle retail catálogo más branding más ITERA"></div>
+                <p class="card-preview">Catálogo con carrito + branding aplicado + ITERA LITE.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Para quien vende catálogo por WhatsApp pero ya gestiona inventario y documentos en planta.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mix Retail serio', this)">Me interesa</button>
+            </div>
+
+            <div class="card featured" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Mix “Imagen + operación premium”</span></div>
+                <div class="card-thumb"><img src="images/thumb_ecosistema_premium.png" alt="Bundle imagen premium más ITERA Premium"></div>
+                <p class="card-preview">Ecosistema Premium + branding profesional + ITERA PREMIUM.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Para empresas en escalada que necesitan storytelling fuerte y panel completo.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mix Imagen + ITERA Premium', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Mix “ITERA + contenido 3 meses”</span></div>
+                <div class="card-thumb"><img src="images/thumb_social_contenido.png" alt="Bundle ITERA más estrategia social 3 meses"></div>
+                <p class="card-preview">ITERA LITE + tres meses del plan educativo en redes.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Útil para lanzar sistema interno y explicar producto en redes en el mismo trimestre.</li>
+                    </ul>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mix ITERA + redes 3 meses', this)">Me interesa</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="social" class="category-section">
+        <h2 class="category-title" style="border-left-color: var(--accent);">5. Estrategia visual (mensual)</h2>
+        <p class="section-note">Valores mensuales; vos mandás insumos y claims de producto (validación en tu equipo).</p>
+
+        <div class="grid">
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Plan mantenimiento</span></div>
+                <div class="card-thumb"><img src="images/thumb_social_contenido.png" alt="Plan mantenimiento redes sociales"></div>
+                <p class="card-preview">Ritmo constante sin video: ideal para marcas que deben “mostrar vida” en el feed.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>1 carrusel educativo (hasta 10 slides según guion acordado).</li>
+                        <li>4 posts estáticos (feed) con adaptación a plantillas de marca.</li>
+                        <li>4 historias con CTA claro (WhatsApp, link en bio, promoción).</li>
+                        <li class="warning">No incluye edición de video largo; solo microanimaciones si aplican.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title"><span class="tooltip-term" data-tip="Acuerdo de nivel de servicio: plazos de respuesta y entrega.">SLA</span></span>
+                        <ul class="conditions-list">
+                            <li><strong>Revisión gráfica:</strong> 1 ronda por pieza.</li>
+                            <li><strong>Entrega:</strong> calendario acordado el día 1 del mes.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Marketing Mantenimiento', this)">Me interesa</button>
+            </div>
+
+            <div class="card featured" style="border-color: var(--accent);" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Plan educativo</span></div>
+                <div class="card-thumb"><img src="images/thumb_social_contenido.png" alt="Plan educativo carruseles y reels"></div>
+                <p class="card-preview">Explicás tu catálogo con carruseles profundos y un reel editado.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li><span class="highlight">4 carruseles maestros</span> con copy sugerido y diagramas simples.</li>
+                        <li>2 posts estáticos de soporte.</li>
+                        <li>1 reel con post-producción (música libre de derechos, subtítulos).</li>
+                        <li><span class="highlight">6 historias</span> enlazadas a esos contenidos.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">SLA</span>
+                        <ul class="conditions-list">
+                            <li><strong>Cambios gráficos:</strong> 2 rondas.</li>
+                            <li><strong>Video:</strong> 1 ronda de corrección (corte corto).</li>
+                            <li><strong>Entrega:</strong> dentro de los 4 días hábiles posteriores a recibir insumos.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Marketing Educativo', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Catálogo Pro (redes)</span></div>
+                <div class="card-thumb"><img src="images/thumb_social_contenido.png" alt="Plan catálogo pro alto volumen de contenido"></div>
+                <p class="card-preview">Alto volumen para marcas con muchas referencias o campañas simultáneas.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>6 carruseles técnicos (tablas, comparativas, “mitos y verdades”).</li>
+                        <li>4 posts estáticos.</li>
+                        <li>2 reels editados.</li>
+                        <li>10 historias.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">SLA</span>
+                        <ul class="conditions-list">
+                            <li><strong>Prioridad:</strong> primera franja del calendario mensual.</li>
+                            <li><strong>Cambios:</strong> 2 rondas por pieza salvo video (1 ronda).</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Marketing Catálogo Pro', this)">Me interesa</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="mto" class="category-section">
+        <h2 class="category-title" style="border-left-color: var(--primary);">6. Mantenimiento web</h2>
+        <p class="section-note">Mensual. Solo sitios entregados por MP o auditados antes. Sin secciones grandes ni integraciones nuevas sin cotizar.</p>
+
+        <div class="grid">
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Básico</span></div>
+                <div class="card-thumb"><img src="images/thumb_mantenimiento_web.png" alt="Plan mantenimiento web básico"></div>
+                <p class="card-preview">Para sitios que cambian poco pero no pueden quedar obsoletos.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>1 cambio liviano por semana (texto, banner, imagen hero).</li>
+                        <li>Revisión de enlaces rotos reportados.</li>
+                        <li>Checklist de seguridad básica en dependencias estáticas.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Respuesta</span>
+                        <ul class="conditions-list">
+                            <li><strong>Objetivo:</strong> 48 h hábiles.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mantenimiento Básico', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Dinámico</span></div>
+                <div class="card-thumb"><img src="images/thumb_mantenimiento_web.png" alt="Plan mantenimiento web dinámico"></div>
+                <p class="card-preview">Tiendas con precios o promociones que cambian cada semana.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Actualización semanal de precios o fichas acotadas (lista acordada).</li>
+                        <li>Cambio de banners promocionales.</li>
+                        <li>Respaldo mensual del proyecto fuente.</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Respuesta</span>
+                        <ul class="conditions-list">
+                            <li><strong>Objetivo:</strong> 24–48 h hábiles.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mantenimiento Dinámico', this)">Me interesa</button>
+            </div>
+
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header"><span class="card-title">Integral SEO</span></div>
+                <p class="card-preview">Máxima prioridad + ajustes SEO on-page recurrentes.</p>
+                <p class="card-tap-hint">Ver alcance</p>
+                <div class="expand-icon">▼</div>
+                <div class="card-details">
+                    <ul class="detail-list">
+                        <li>Cambios de contenido razonables sin rediseño (según criterio conjunto).</li>
+                        <li>Optimización <span class="tooltip-term" data-tip="Títulos, meta, estructura de encabezados, datos estructurados básicos.">SEO on-page</span> mensual.</li>
+                        <li>Informe breve de tráfico (fuente: Analytics o Search Console si está configurado).</li>
+                    </ul>
+                    <div class="conditions-box">
+                        <span class="conditions-title">Prioridad</span>
+                        <ul class="conditions-list">
+                            <li><strong>Nivel:</strong> máximo entre clientes de mantenimiento.</li>
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="select-btn" onclick="addToCart(event, 'Mantenimiento Integral', this)">Me interesa</button>
+            </div>
+        </div>
+    </section>
+
+        </div> <!-- Close catalog-content -->
+    </div> <!-- Close full-view -->
+
+    <div id="cart-bar">
+        <div class="cart-info" onclick="openModal()">
+            <span class="cart-label">Tu lista de interés</span>
+            <div class="cart-total"><span id="bar-count">0 servicios</span></div>
+        </div>
+        <button type="button" class="view-cart-btn" onclick="openModal()">Revisar lista</button>
+    </div>
+
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Lista de interés</h3>
+                <button type="button" class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="cart-items-list" id="cartList"></div>
+            <button type="button" class="whatsapp-btn-final" onclick="sendToWhatsApp()">Enviar por WhatsApp <span>➤</span></button>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId, btn) {
+            // Only operate inside the full-view catalog
+            document.querySelectorAll('#catalog-content .category-section').forEach(sec => {
+                sec.classList.remove('active-section');
+                // In full-view mode, reset card visibility too
+                sec.querySelectorAll('.card').forEach(c => { c.style.display = 'flex'; c.style.opacity = '1'; });
+            });
+            document.querySelectorAll('#full-view .nav-btn').forEach(b => b.classList.remove('active'));
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.classList.add('active-section');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            if (btn) btn.classList.add('active');
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (menu) menu.classList.toggle('open');
+            if (hamburger) hamburger.classList.toggle('active');
+        }
+        function closeMenu() {
+            const menu = document.getElementById('nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            if (menu) menu.classList.remove('open');
+            if (hamburger) hamburger.classList.remove('active');
+        }
+
+        const PHONE_NUMBER = "593963036594";
+        let interestList = [];
+
+        function toggleCard(card) {
+            card.classList.toggle('active');
+        }
+
+        function resetSelectBtn(btn, card) {
+            btn.innerText = "Me interesa";
+            btn.style.background = "";
+            btn.style.color = "";
+            if (card.classList.contains('featured')) {
+                btn.style.background = "var(--primary)";
+                btn.style.color = "#fff";
+            }
+        }
+
+        function addToCart(event, name, btn) {
+            event.stopPropagation();
+            const card = btn.closest('.card');
+            const index = interestList.findIndex(item => item.name === name);
+
+            if (index === -1) {
+                interestList.push({ name });
+                card.classList.add('selected');
+                btn.innerText = "Quitar";
+                btn.style.background = "rgba(184, 141, 99, 0.18)";
+                btn.style.color = "#fff";
+            } else {
+                interestList.splice(index, 1);
+                card.classList.remove('selected');
+                resetSelectBtn(btn, card);
+            }
+            updateCartUI();
+        }
+
+        function removeFromModal(index) {
+            const item = interestList[index];
+            document.querySelectorAll('.card').forEach(c => {
+                if (c.innerText.includes(item.name)) {
+                    c.classList.remove('selected');
+                    const btn = c.querySelector('.select-btn');
+                    if (btn) resetSelectBtn(btn, c);
+                }
+            });
+            interestList.splice(index, 1);
+            updateCartUI();
+            renderCartItems();
+        }
+
+        function updateCartUI() {
+            const bar = document.getElementById('cart-bar');
+            const countEl = document.getElementById('bar-count');
+            if (countEl) {
+                const count = interestList.length;
+                countEl.innerText = `${count} servicio${count === 1 ? '' : 's'}`;
+            }
+            if (interestList.length > 0) {
+                bar.style.display = 'flex';
+            } else {
+                bar.style.display = 'none';
+                closeModal();
+            }
+        }
+
+        function openModal() { renderCartItems(); document.getElementById('cartModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('cartModal').style.display = 'none'; }
+
+        function renderCartItems() {
+            const list = document.getElementById('cartList');
+            list.innerHTML = '';
+            if (!interestList.length) {
+                list.innerHTML = '<div class="cart-item-row"><span class="item-name">Aún no seleccionas servicios.</span></div>';
+                return;
+            }
+            interestList.forEach((item, index) => {
+                list.innerHTML += `
+                    <div class="cart-item-row">
+                        <span class="item-name">${item.name}</span>
+                        <div>
+                            <button type="button" class="remove-btn" onclick="removeFromModal(${index})" aria-label="Quitar">×</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function getIcon(name) {
+            name = name.toLowerCase();
+            if (name.includes('itera') || name.includes('qms') || name.includes('trazabilidad')) return '📊';
+            if (name.includes('mix')) return '🧩';
+            if (name.includes('web') || name.includes('landing')) return '💻';
+            if (name.includes('catálogo') || name.includes('curativa') || name.includes('tienda')) return '🛒';
+            if (name.includes('branding') || name.includes('identidad') || name.includes('logo') || name.includes('diseño') || name.includes('etiquetas')) return '🎨';
+            if (name.includes('marketing') || name.includes('educativo') || name.includes('mantenimiento')) return '🚀';
+            if (name.includes('módulo')) return '⚙️';
+            return '🔹';
+        }
+
+        function sendToWhatsApp() {
+            if (interestList.length === 0) return;
+            let message = "Hola Marco, revisé tu catálogo de servicios y me interesan estas soluciones:\n\n";
+
+            interestList.forEach(item => {
+                const icon = getIcon(item.name);
+                message += `${icon} *${item.name}*\n`;
+            });
+
+            message += "\n¿Podemos conversar sobre alcance, prioridad y una cotización personalizada?";
+
+            const url = `https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        // View Manager
+        function switchView(viewId) {
+            document.querySelectorAll('.active-view').forEach(v => v.classList.remove('active-view'));
+            document.getElementById(viewId).classList.add('active-view');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Updated Survey & Results Logic
+        let userProfile = { stage: '', mainNeed: '', specific: '' };
+
+        function nextStep(stage) {
+            userProfile.stage = stage;
+            showSurveyStep('step-2');
+        }
+
+        function branchStep(need) {
+            userProfile.mainNeed = need;
+            if (need === 'web') showSurveyStep('step-web');
+            else if (need === 'qms') showSurveyStep('step-qms');
+            else finishSurvey('direct');
+        }
+
+        function showSurveyStep(stepId) {
+            document.querySelectorAll('.survey-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function finishSurvey(specific) {
+            userProfile.specific = specific;
+            renderResults();
+            switchView('results-view');
+        }
+
+        function renderResults() {
+            const grid = document.getElementById('results-grid');
+            grid.innerHTML = ''; // Clear previous
+
+            const matches = []; 
+            
+            // Re-use filter logic but extract HTML instead of just toggling
+            if (userProfile.mainNeed === 'web') {
+                if (userProfile.specific === 'landing') matches.push('Landing de Validación');
+                if (userProfile.specific === 'catalog') matches.push('Catálogo Pro WhatsApp');
+                if (userProfile.specific === 'ecosystem') matches.push('Ecosistema Premium');
+                if (userProfile.stage === 'idea') matches.push('Plan esencial');
+            }
+            if (userProfile.mainNeed === 'branding') {
+                if (userProfile.stage === 'idea') matches.push('Plan esencial', 'Plan aplicado');
+                else if (userProfile.stage === 'operating') matches.push('Plan profesional', 'Línea de producto');
+                else matches.push('Plan integral', 'Línea de producto');
+            }
+            if (userProfile.mainNeed === 'qms') {
+                if (userProfile.specific === 'traceability') matches.push('Módulo foco: Trazabilidad');
+                if (userProfile.specific === 'quality') matches.push('Módulo foco: Documentos');
+                if (userProfile.specific === 'full-qms') {
+                    matches.push(userProfile.stage === 'operating' ? 'Implementación ITERA LITE' : 'Implementación ITERA PREMIUM');
+                }
+            }
+            if (userProfile.mainNeed === 'social') {
+                matches.push(userProfile.stage === 'idea' ? 'Plan mantenimiento' : 'Plan educativo');
+            }
+
+            // Find matching cards in the hidden full-view and clone them
+            document.querySelectorAll('#full-view .card').forEach(originalCard => {
+                const title = originalCard.querySelector('.card-title').innerText;
+                if (matches.some(m => title.includes(m))) {
+                    const clone = originalCard.cloneNode(true);
+                    clone.classList.add('match');
+                    clone.style.display = 'flex'; // Ensure it's visible in results
+                    
+                    // Add badge
+                    const badge = document.createElement('div');
+                    badge.className = 'recommendation-badge';
+                    badge.innerHTML = '<i class="fas fa-star"></i> Recomendado';
+                    badge.style.display = 'block';
+                    clone.appendChild(badge);
+                    
+                    grid.appendChild(clone);
+                }
+            });
+
+            // Failsafe
+            if (grid.innerHTML === '') {
+                grid.innerHTML = '<p class="survey-desc">No encontré una coincidencia exacta, pero revisa estas soluciones generales.</p>';
+                // Add some default bundles
+            }
+        }
+
+        function resetSurvey() {
+            userProfile = { stage: '', mainNeed: '', specific: '' };
+            showSurveyStep('step-1');
+            switchView('survey-view');
+        }
+
+        function revealAll() {
+            switchView('full-view');
+            // Show the first section by default
+            showSection('web-ecosystem', document.querySelector('#full-view .nav-btn'));
+        }
+
+        function scrollToSurvey() {
+            document.getElementById('survey-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function scrollToFirstRecommendation() {
+            const firstRec = document.querySelector('.card.match');
+            if (firstRec) {
+                firstRec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstRec.style.animation = 'subtlePulse 2s ease infinite';
+                setTimeout(() => firstRec.style.animation = '', 6000);
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('cartModal')) closeModal();
+        };
+
+        /* ── Auto-hide header on scroll ── */
+        (function() {
+            const header = document.getElementById('main-header');
+            let lastY = 0;
+            let ticking = false;
+            window.addEventListener('scroll', function() {
+                if (!ticking) {
+                    requestAnimationFrame(function() {
+                        const y = window.scrollY;
+                        if (y > lastY && y > 80) {
+                            header.classList.add('header-hidden');
+                        } else {
+                            header.classList.remove('header-hidden');
+                        }
+                        lastY = y;
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            }, { passive: true });
+        })();
+
+        /* ── Floating nav + section expand/collapse ── */
+        const _floatTrigger = document.getElementById('float-nav-trigger');
+        const _floatPanel   = document.getElementById('float-nav-panel');
+        const _floatPill    = document.getElementById('float-nav-pill');
+        const _floatLabel   = document.getElementById('float-nav-label');
+
+        const _sectionMeta = {
+            'web-ecosystem': { label: 'Web',       icon: 'fa-laptop-code' },
+            'branding':      { label: 'Branding',  icon: 'fa-pen-nib' },
+            'itera-qms':     { label: 'ITERA',     icon: 'fa-microchip' },
+            'bundles':       { label: 'Packs',     icon: 'fa-layer-group' },
+            'social':        { label: 'Contenido', icon: 'fa-share-alt' },
+            'mto':           { label: 'Soporte',   icon: 'fa-tools' }
+        };
+
+        // Wrap section content in .section-body and prepend a collapsed pill (once)
+        function _initSections() {
+            var sections = document.querySelectorAll('#full-view .category-section');
+            sections.forEach(function(sec) {
+                if (sec.querySelector('.section-body')) return;
+                var id = sec.id;
+                var meta = _sectionMeta[id] || { label: id, icon: 'fa-circle' };
+
+                var pill = document.createElement('div');
+                pill.className = 'section-collapsed-pill';
+                pill.innerHTML = '<i class="fas ' + meta.icon + '"></i><span>' + meta.label + '</span><i class="fas fa-chevron-right" style="margin-left:auto;font-size:0.7rem;opacity:0.5;"></i>';
+                pill.addEventListener('click', function() { _expandSection(id); });
+                sec.insertBefore(pill, sec.firstChild);
+
+                var body = document.createElement('div');
+                body.className = 'section-body';
+                var children = Array.from(sec.children).slice(1);
+                children.forEach(function(child) { body.appendChild(child); });
+                sec.appendChild(body);
+            });
+        }
+
+        // Collapse all except activeId
+        function _focusSection(activeId) {
+            var sections = document.querySelectorAll('#full-view .category-section');
+            sections.forEach(function(sec) {
+                if (sec.id === activeId) {
+                    sec.classList.remove('section-collapsed');
+                    sec.classList.add('section-focused');
+                } else {
+                    sec.classList.add('section-collapsed');
+                    sec.classList.remove('section-focused');
+                }
+            });
+            var meta = _sectionMeta[activeId] || {};
+            _floatLabel.textContent = meta.label || 'Catálogo';
+            document.querySelectorAll('.float-nav-item[id]').forEach(function(b) {
+                var sid = b.id.replace('fnav-', '');
+                var map = { web: 'web-ecosystem', branding: 'branding', itera: 'itera-qms', bundles: 'bundles', social: 'social', mto: 'mto' };
+                b.classList.toggle('active', (map[sid] || sid) === activeId);
+            });
+        }
+
+        function _expandSection(id) {
+            _focusSection(id);
+            var el = document.getElementById(id);
+            if (el) setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
+        }
+
+        function _resetAllSections() {
+            var sections = document.querySelectorAll('#full-view .category-section');
+            sections.forEach(function(sec) { sec.classList.remove('section-collapsed', 'section-focused'); });
+            _floatLabel.textContent = 'Todo';
+            document.querySelectorAll('.float-nav-item').forEach(function(b) { b.classList.remove('active'); });
+        }
+
+        function _updateFloatNavVisibility() {
+            var inFull = document.getElementById('full-view').classList.contains('active-view');
+            _floatTrigger.style.display = inFull ? 'block' : 'none';
+        }
+
+        function toggleFloatNav() {
+            var open = _floatPanel.classList.toggle('open');
+            _floatPill.classList.toggle('open', open);
+        }
+
+        function floatNavGo(sectionId, btn) {
+            _floatPanel.classList.remove('open');
+            _floatPill.classList.remove('open');
+            _focusSection(sectionId);
+            var el = document.getElementById(sectionId);
+            if (el) setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+        }
+
+        document.addEventListener('click', function(e) {
+            if (_floatTrigger && !_floatTrigger.contains(e.target)) {
+                _floatPanel.classList.remove('open');
+                _floatPill.classList.remove('open');
+            }
+        });
+
+        // Add "Ver todas" to floating panel
+        (function() {
+            var div2 = document.createElement('div');
+            div2.className = 'float-nav-divider';
+            var allBtn = document.createElement('button');
+            allBtn.className = 'float-nav-item';
+            allBtn.innerHTML = '<i class="fas fa-th-large"></i> Ver todas';
+            allBtn.addEventListener('click', function() {
+                _floatPanel.classList.remove('open');
+                _floatPill.classList.remove('open');
+                _resetAllSections();
+                window.scrollTo({ top: 64, behavior: 'smooth' });
+            });
+            _floatPanel.appendChild(div2);
+            _floatPanel.appendChild(allBtn);
+        })();
+
+        // Patch switchView
+        var _origSwitchView = switchView;
+        switchView = function(viewId) {
+            _origSwitchView(viewId);
+            _updateFloatNavVisibility();
+            if (viewId === 'full-view') { _initSections(); _resetAllSections(); }
+        };
+
+        // Patch revealAll: show full-view with all sections expanded
+        revealAll = function() {
+            document.querySelectorAll('.active-view').forEach(function(v) { v.classList.remove('active-view'); });
+            document.getElementById('full-view').classList.add('active-view');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            _initSections();
+            _resetAllSections();
+            _updateFloatNavVisibility();
+        };
+
+        _updateFloatNavVisibility();
+    </script>
+</body>
+</html>
+
