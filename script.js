@@ -632,10 +632,12 @@ const pageLoadingOverlay = document.getElementById("page-loading-overlay");
 
 if (clientAccessLink && pageLoadingOverlay) {
     clientAccessLink.addEventListener("click", () => {
+        pageLoadingOverlay.hidden = false;
         pageLoadingOverlay.classList.add("active");
     });
     window.addEventListener("pageshow", () => {
         pageLoadingOverlay.classList.remove("active");
+        pageLoadingOverlay.hidden = true;
     });
 }
 
