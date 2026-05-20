@@ -2555,4 +2555,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Boot default category initially (Perfumería & Cosmética)
     loadCategoryPresets("perfumeria");
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            document.body.classList.remove("brief-loading");
+        });
+    });
 });

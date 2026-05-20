@@ -627,6 +627,18 @@ document.addEventListener('click', (e) => {
     if(lightbox && e.target === lightbox) closeGallery();
 });
 
+const clientAccessLink = document.getElementById("hero-cta-itera");
+const pageLoadingOverlay = document.getElementById("page-loading-overlay");
+
+if (clientAccessLink && pageLoadingOverlay) {
+    clientAccessLink.addEventListener("click", () => {
+        pageLoadingOverlay.classList.add("active");
+    });
+    window.addEventListener("pageshow", () => {
+        pageLoadingOverlay.classList.remove("active");
+    });
+}
+
 window.openGallery = openGallery; 
 window.closeGallery = closeGallery; 
 window.openWeb = openWeb; 

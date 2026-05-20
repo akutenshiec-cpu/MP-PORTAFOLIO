@@ -16,7 +16,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="brief-loading">
+
+    <div class="brief-loader" id="brief-loader" aria-hidden="true">
+        <div class="brief-loader-card">
+            <div class="brief-loader-spinner"></div>
+            <strong>Preparando tu brief</strong>
+            <span>Cargando recursos y estructura de cocreación...</span>
+        </div>
+    </div>
 
     <!-- Floating Background Canvas for Aroma Particles -->
     <canvas id="aroma-particles"></canvas>

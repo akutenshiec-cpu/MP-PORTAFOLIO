@@ -42,13 +42,78 @@
     -webkit-font-smoothing: antialiased;
 }
 
+html {
+    background: #183a2c;
+    overscroll-behavior-y: none;
+}
+
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     overflow-x: hidden;
     min-height: 100vh;
+    min-height: 100dvh;
+    overscroll-behavior-y: none;
     display: flex;
     flex-direction: column;
+}
+
+.brief-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: linear-gradient(180deg, rgba(11, 17, 14, 0.8), rgba(12, 21, 17, 0.96));
+    backdrop-filter: blur(12px);
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.brief-loader-card {
+    min-width: min(92vw, 320px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 20px;
+    border-radius: 24px;
+    border: 1px solid rgba(138, 154, 134, 0.16);
+    background: rgba(15, 20, 18, 0.94);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+}
+
+.brief-loader-card strong {
+    color: var(--gold-light);
+    font-size: 0.92rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.brief-loader-card span {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.brief-loader-spinner {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 3px solid rgba(138, 154, 134, 0.16);
+    border-top-color: var(--gold-primary);
+    animation: loaderSpin 0.85s linear infinite;
+}
+
+body:not(.brief-loading) .brief-loader {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes loaderSpin {
+    to { transform: rotate(360deg); }
 }
 
 /* Web Fonts Utilities */
@@ -2462,6 +2527,55 @@ body {
 }
 
 @media (max-width: 768px) {
+    .glass-header {
+        background: rgba(10, 11, 14, 0.84);
+    }
+
+    .header-container {
+        padding: 10px 14px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "back back"
+            "brand status";
+        gap: 8px 10px;
+        align-items: center;
+    }
+
+    .back-portfolio-btn {
+        grid-area: back;
+        width: fit-content;
+        padding: 5px 10px;
+        font-size: 0.74rem;
+    }
+
+    .brand-logo-compact {
+        grid-area: brand;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .logo-text-compact {
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        line-height: 1.2;
+    }
+
+    .header-status {
+        grid-area: status;
+        justify-self: end;
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+        text-align: right;
+        line-height: 1.2;
+        max-width: 118px;
+    }
+
+    .compact-flask {
+        width: 24px;
+        height: 24px;
+    }
+
     .welcome-card {
         padding: 35px 20px;
     }
@@ -2653,6 +2767,11 @@ body {
         font-size: 0.78rem;
         padding: 12px 14px;
         margin-bottom: 22px;
+    }
+
+    .brief-loader-card {
+        min-width: min(92vw, 300px);
+        padding: 18px 16px;
     }
 }
 
