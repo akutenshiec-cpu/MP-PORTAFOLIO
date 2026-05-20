@@ -238,6 +238,7 @@ body {
 
 .tab-pane-content {
     display: none;
+    overflow: visible;
 }
 
 .tab-pane-content.active {
@@ -258,6 +259,7 @@ body {
     box-shadow: var(--card-shadow);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+    overflow: visible;
 }
 
 .glass-subcard {
@@ -285,9 +287,21 @@ body {
     grid-template-columns: 1fr 360px;
     gap: 30px;
     align-items: start;
+    min-width: 0;
+    width: 100%;
 }
 
-.main-proposal-card { padding: 40px; }
+.wizard-form-area {
+    min-width: 0;
+    width: 100%;
+}
+
+.tabs-contents-wrapper {
+    min-width: 0;
+    width: 100%;
+}
+
+.main-proposal-card { padding: 40px; overflow: visible; }
 .proposal-intro { margin-bottom: 35px; }
 
 .sector-lab-kicker {
@@ -298,6 +312,9 @@ body {
     color: var(--gold-primary);
     font-weight: 800;
     margin-bottom: 8px;
+    max-width: 100%;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
 }
 
 .proposal-intro h1 {
@@ -305,6 +322,10 @@ body {
     font-weight: 600;
     letter-spacing: 0.01em;
     margin-bottom: 12px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
 }
 
 .proposal-intro-inner {
@@ -312,6 +333,8 @@ body {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 .proposal-intro--hero {
     text-align: center;
@@ -329,6 +352,9 @@ body {
     line-height: 1.62;
     color: var(--text-muted);
     margin: 0 0 0.85rem 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
 }
 .proposal-intro-inner .intro-desc:last-child { margin-bottom: 0; }
 .proposal-intro-inner .intro-lead {
@@ -456,6 +482,8 @@ body {
     font-size: 0.72rem;
     color: var(--text-muted);
     font-weight: 500;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
 }
 .item-badge-status.accent-badge { color: var(--gold-primary); }
 
@@ -518,7 +546,7 @@ body {
 }
 
 .proposal-item-accordion.open-panel .accordion-content {
-    max-height: 600px;
+    max-height: 4800px;
     opacity: 1;
     margin-top: 20px;
 }
@@ -904,13 +932,18 @@ body {
 }
 
 @media (max-width: 768px) {
+    html {
+        overflow-x: hidden;
+    }
+
     .wizard-sidebar-area {
         display: none;
     }
 
     body {
-        /* Taller floating bar (métricas + WA) + home indicator */
-        padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+        /* Taller floating bar (métricas + WA) + home indicator + margen de lectura */
+        overflow-x: hidden;
+        padding-bottom: calc(132px + env(safe-area-inset-bottom, 0px));
     }
     
     /* Optimize CPU/GPU performance on mobile */
@@ -943,9 +976,33 @@ body {
         font-size: 0.68rem;
     }
 
-    .main-proposal-card { padding: 24px 15px; border-radius: 16px; }
-    .proposal-intro { margin-bottom: 25px; }
-    .proposal-intro h1 { font-size: 1.65rem; line-height: 1.25; }
+    .main-proposal-card {
+        padding: 24px 15px 28px;
+        border-radius: 16px;
+        overflow: visible;
+    }
+    .proposal-intro { margin-bottom: 22px; }
+    .proposal-intro h1 { font-size: 1.65rem; line-height: 1.28; }
+    .proposal-intro-inner {
+        max-width: none;
+        text-align: left;
+        padding: 0 2px;
+    }
+    .proposal-intro--hero {
+        text-align: left;
+    }
+    .proposal-intro--hero .sector-lab-kicker {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .proposal-intro--hero h1 {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .sector-lab-kicker {
+        letter-spacing: 0.12em;
+        font-size: 0.62rem;
+    }
     .intro-desc { font-size: 0.85rem; }
     
     /* Tabs Navigation compact scroll */
@@ -1054,11 +1111,6 @@ body {
         font-size: 0.78rem;
     }
 
-    /* Long copy in accordions: avoid clipping (desktop cap is 600px) */
-    .proposal-item-accordion.open-panel .accordion-content {
-        max-height: 4800px;
-    }
-    
     /* Sidebar Details when stacked at bottom */
     .live-formula-card {
         padding: 24px 16px;
@@ -1238,7 +1290,17 @@ body {
         display: none; /* Hide status in very small viewports to avoid wrap */
     }
     
-    .proposal-intro h1 { font-size: 1.45rem; }
+    .proposal-intro h1 {
+        font-size: 1.35rem;
+        line-height: 1.3;
+    }
+    .proposal-intro-inner .intro-lead {
+        font-size: 0.88rem;
+    }
+    .main-proposal-card {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
     
     .switch-container {
         width: 34px;
