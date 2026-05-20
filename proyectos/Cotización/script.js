@@ -165,15 +165,21 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     }
 
-    function exportQuotationPdf() {
-        if (!quotationPrint || !buildQuotationPrintSnapshot()) return;
+    function openQuotationPrintDialog(onAfterPrint) {
+        if (!quotationPrint || !buildQuotationPrintSnapshot()) return false;
         quotationPrint.removeAttribute("hidden");
-        const onAfterPrint = () => {
+        const handler = () => {
             quotationPrint.setAttribute("hidden", "");
-            window.removeEventListener("afterprint", onAfterPrint);
+            window.removeEventListener("afterprint", handler);
+            if (typeof onAfterPrint === "function") onAfterPrint();
         };
-        window.addEventListener("afterprint", onAfterPrint);
+        window.addEventListener("afterprint", handler);
         requestAnimationFrame(() => window.print());
+        return true;
+    }
+
+    function exportQuotationPdf() {
+        openQuotationPrintDialog();
     }
 
     if (exportPdfBtn) {
@@ -391,8 +397,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // 4. WHATSAPP DATA COMPOSE OUT-BOUND
     // ==========================================
-    function processAndSendWhatsApp() {
-        const phone = EMITENTE_COTIZACION.whatsappE164;
+    function buildWhatsAppProposalMessage() {
         const currentNet = parseFloat(sendWaBtn.getAttribute("data-current-net"));
         const currentMonthly = parseFloat(sendWaBtn.getAttribute("data-current-monthly"));
         const year1MaintenanceMonthly = parseFloat(sendWaBtn.getAttribute("data-year1-maintenance-monthly") || "0");
@@ -403,18 +408,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentTimeline = sendWaBtn.getAttribute("data-current-timeline");
         const webModuleActiveWa = sendWaBtn.getAttribute("data-web-module-active") === "1";
         const postYearTotalMes13Wa = parseFloat(sendWaBtn.getAttribute("data-post-year-total-mes13") || "0");
-        
-        if (currentNet <= 0) {
-            alert("Por favor active al menos un módulo operativo para generar la propuesta.");
-            return;
-        }
 
         let message = `🧪 *PROPUESTA DE INTEGRACIÓN MODULAR - MAFER*\n`;
         message += `=========================================\n\n`;
         message += `Hola Marco, te comparto el desglose de la arquitectura tecnológica de ITERA QMS & E-commerce, desarrollada a la medida de tu planta y flujos de negocio:\n\n`;
 
         let itemNumber = 1;
-        modules.forEach(module => {
+        modules.forEach((module) => {
             const checkbox = module.querySelector(".module-toggle-checkbox");
             if (checkbox.checked) {
                 const moduleName = module.querySelector(".item-title-block h3").textContent;
@@ -459,13 +459,29 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             message += `• *Mes 13+:* ~*$${postYearTotalMes13Wa.toLocaleString("en-US", { minimumFractionDigits: 2 })}* USD / mes ref. (*solo* núcleo QMS; sin partida web mientras el módulo no esté en el proyecto).\n\n`;
         }
-        
+
         message += `🛡️ *Gobernanza de Soporte & Telemetría:*\n`;
         message += `• ITERA incluye auditorías integradas y monitoreo de logs de acciones por ruta (PageActionLogsPanel). Dispones de telemetría automática en tiempo real; ante cualquier reporte o incidencia, intervengo el código para estabilizar la plataforma de inmediato.\n\n`;
+        message += `📄 *Adjunto:* cotización en PDF generada desde el configurador (guardar desde el diálogo de impresión).\n\n`;
         message += `✨ _Simulación oficial generada bajo el entorno de MP Designs (2026)_`;
 
+        return message;
+    }
+
+    function processAndSendWhatsApp() {
+        const currentNet = parseFloat(sendWaBtn.getAttribute("data-current-net"));
+        if (currentNet <= 0) {
+            alert("Por favor active al menos un módulo operativo para generar la propuesta.");
+            return;
+        }
+
+        const phone = EMITENTE_COTIZACION.whatsappE164;
+        const message = buildWhatsAppProposalMessage();
         const finalUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-        window.open(finalUrl, "_blank");
+
+        openQuotationPrintDialog(() => {
+            window.open(finalUrl, "_blank");
+        });
     }
 
     sendWaBtn.addEventListener("click", processAndSendWhatsApp);
