@@ -1,0 +1,341 @@
+/* Cotización — solo impresión / exportar PDF (línea gráfica MP Designs) */
+
+.quotation-print {
+    display: none;
+}
+
+@media print {
+    /* Sangrado a borde de hoja: sin margen de página (el blanco venía del @page) */
+    @page {
+        size: A4;
+        margin: 0;
+        /* Evita “parches” blancos entre páginas en motores que lo soportan */
+        background-color: #0a0b0e;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    html,
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        min-height: 100% !important;
+        background: #0a0b0e !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .quotation-print[hidden] {
+        display: block !important;
+    }
+
+    .quotation-print {
+        display: block !important;
+        position: relative;
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        padding: 8mm 10mm;
+        background: #0a0b0e !important;
+        color: #f4f6f9;
+        font-family: "Manrope", system-ui, sans-serif;
+        font-size: 9.5pt;
+        line-height: 1.38;
+    }
+
+    .qp-sheet {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .qp-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px 16px;
+        padding-bottom: 10px;
+        margin-bottom: 12px;
+        border-bottom: 2px solid #d4af37;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .qp-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .qp-brand-mark {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border: 2px solid #d4af37;
+        border-radius: 8px;
+        background: linear-gradient(145deg, rgba(212, 175, 55, 0.14), rgba(10, 11, 14, 0.95));
+        box-shadow:
+            0 0 0 1px rgba(212, 175, 55, 0.12),
+            0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .qp-brand-initials {
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 11pt;
+        letter-spacing: 0.02em;
+        color: #f3e5ab;
+        line-height: 1;
+    }
+
+    .qp-brand-text {
+        font-family: "Cinzel", serif;
+        font-weight: 700;
+        font-size: 12pt;
+        letter-spacing: 0.06em;
+        color: #f4f6f9;
+    }
+
+    .qp-brand-text span {
+        color: #d4af37;
+        font-weight: 500;
+    }
+
+    .qp-brand-sub {
+        font-size: 7.5pt;
+        color: #8e9bae;
+        margin-top: 3px;
+        letter-spacing: 0.03em;
+        line-height: 1.3;
+        max-width: 16rem;
+    }
+
+    .qp-doc-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 13pt;
+        font-weight: 600;
+        color: #f3e5ab;
+        text-align: right;
+        line-height: 1.15;
+        flex: 1 1 160px;
+        min-width: 0;
+    }
+
+    .qp-doc-sub {
+        font-size: 8pt;
+        color: #8e9bae;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        margin-top: 4px;
+        text-align: right;
+    }
+
+    .qp-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 20px;
+        margin-bottom: 10px;
+        font-size: 8.5pt;
+        color: #8e9bae;
+    }
+
+    .qp-meta strong {
+        color: #b8c4b5;
+        font-weight: 600;
+    }
+
+    /* Bloque emisor compacto: 4 columnas (etiqueta · valor · etiqueta · valor) = 3 filas en vez de 6 */
+    .qp-emitente {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 6px;
+        padding: 6px 10px 8px;
+        margin-bottom: 12px;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .qp-emitente h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 9pt;
+        color: #d4af37;
+        margin: 0 0 5px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+    }
+
+    .qp-emitente-grid {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 2px 10px;
+        font-size: 7.5pt;
+        line-height: 1.28;
+    }
+
+    .qp-emitente-grid dt {
+        color: #8e9bae;
+        font-weight: 600;
+        margin: 0;
+        padding-top: 2px;
+    }
+
+    .qp-emitente-grid dd {
+        margin: 0;
+        color: #f4f6f9;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        padding-bottom: 2px;
+    }
+
+    .qp-section-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 10.5pt;
+        color: #f3e5ab;
+        margin: 10px 0 6px;
+        padding-bottom: 4px;
+        border-bottom: 1px solid rgba(138, 154, 134, 0.35);
+    }
+
+    .qp-table-wrap {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 6px;
+        overflow: visible;
+        margin-bottom: 10px;
+        break-inside: auto;
+    }
+
+    .qp-table {
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        font-size: 8.5pt;
+    }
+
+    .qp-table th:first-child,
+    .qp-table td:first-child {
+        width: 2.2rem;
+    }
+
+    .qp-table th:nth-child(2),
+    .qp-table td:nth-child(2) {
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+        hyphens: auto;
+    }
+
+    .qp-table th {
+        background: rgba(212, 175, 55, 0.12);
+        color: #f3e5ab;
+        text-align: left;
+        padding: 6px 8px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 7pt;
+    }
+
+    .qp-table td {
+        padding: 5px 8px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        vertical-align: top;
+    }
+
+    .qp-table td:last-child,
+    .qp-table th:last-child {
+        text-align: right;
+        font-family: "Space Grotesk", monospace;
+        white-space: normal;
+        width: 26%;
+    }
+
+    .qp-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .qp-totals {
+        margin-top: 4px;
+        margin-left: auto;
+        max-width: min(260px, 100%);
+        font-size: 8.5pt;
+        break-inside: avoid;
+    }
+
+    .qp-totals-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 3px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        gap: 8px 12px;
+    }
+
+    .qp-totals-row > span:first-child {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding-right: 6px;
+    }
+
+    .qp-totals-row > span:last-child {
+        flex: 0 1 auto;
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .qp-totals-row strong {
+        color: #b8c4b5;
+    }
+
+    .qp-totals-row.qp-grand {
+        font-size: 10pt;
+        font-weight: 700;
+        color: #d4af37;
+        border-bottom: none;
+        margin-top: 4px;
+        padding-top: 6px;
+        border-top: 2px solid rgba(212, 175, 55, 0.35);
+    }
+
+    .qp-notes {
+        margin-top: 10px;
+        padding: 8px 10px;
+        background: rgba(138, 154, 134, 0.08);
+        border: 1px solid rgba(138, 154, 134, 0.2);
+        border-radius: 6px;
+        font-size: 7.5pt;
+        color: #b8c4b5;
+        line-height: 1.35;
+    }
+
+    .qp-notes ul {
+        margin: 5px 0 0 1em;
+        padding: 0;
+    }
+
+    .qp-notes li {
+        margin-bottom: 2px;
+    }
+
+    .qp-footer {
+        margin-top: 14px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(212, 175, 55, 0.25);
+        font-size: 7pt;
+        color: #8e9bae;
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    .qp-footer strong {
+        color: #d4af37;
+    }
+}
