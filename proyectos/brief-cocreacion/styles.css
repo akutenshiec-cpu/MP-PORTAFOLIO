@@ -389,16 +389,40 @@ body:not(.brief-loading) .brief-loader {
 }
 
 .step-badge-mini {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     padding: 8px 16px;
-    border-radius: 30px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--text-muted);
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.step-badge-mini i {
+    font-size: 1.1rem;
+    color: var(--gold-primary);
+}
+
+.step-badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.step-badge-text .step-num {
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+.step-badge-text .step-txt {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
 }
 
 .btn {
@@ -2860,10 +2884,24 @@ body:not(.brief-loading) .brief-loader {
     
     .step-badge-mini {
         padding: 6px 8px;
-        font-size: 0.65rem;
-        justify-content: center;
+        gap: 6px;
+        border-radius: 8px;
+        justify-content: flex-start;
         width: auto;
-        white-space: nowrap; /* Prevent vertical wrapping */
+    }
+    
+    .step-badge-mini i {
+        font-size: 0.9rem;
+    }
+    
+    .step-badge-text .step-num {
+        font-size: 0.48rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .step-badge-text .step-txt {
+        font-size: 0.64rem;
+        white-space: nowrap;
     }
 
     #badge-step-1 {
