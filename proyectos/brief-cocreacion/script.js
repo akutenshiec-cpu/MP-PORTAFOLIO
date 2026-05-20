@@ -1126,18 +1126,29 @@ document.addEventListener("DOMContentLoaded", () => {
             const val = parseInt(e.target.value);
             brandData.personality[s.key] = val;
             
-            document.getElementById(s.displayId).textContent = val;
-            document.getElementById(s.liveId).textContent = `${val}%`;
+            const liveEl = document.getElementById(s.liveId);
+            if (liveEl) {
+                liveEl.textContent = `${val}%`;
+            }
             
             const textDisplay = sliderEl.parentElement.querySelector(".slider-value-display");
-            if (val === 50) {
-                textDisplay.textContent = `${s.balancedText} (50%)`;
-            } else if (val < 45) {
-                textDisplay.textContent = `Orientado al polo izquierdo (${100 - val}%)`;
-            } else if (val > 55) {
-                textDisplay.textContent = `Orientado al polo derecho (${val}%)`;
-            } else {
-                textDisplay.textContent = `Centrado (${val}%)`;
+            if (textDisplay) {
+                let label = "";
+                let percentage = val;
+                if (val === 50) {
+                    label = s.balancedText;
+                    percentage = 50;
+                } else if (val < 45) {
+                    label = `Orientado al polo izquierdo`;
+                    percentage = 100 - val;
+                } else if (val > 55) {
+                    label = `Orientado al polo derecho`;
+                    percentage = val;
+                } else {
+                    label = `Centrado`;
+                    percentage = val;
+                }
+                textDisplay.innerHTML = `${label} (<span id="${s.displayId}">${percentage}</span>%)`;
             }
         });
     });
@@ -1299,7 +1310,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Reset personality sliders to 50
         sliders.forEach(s => {
             const sliderEl = document.getElementById(s.id);
-            const displayEl = document.getElementById(s.displayId);
             if (!sliderEl) {
                 console.warn(`Slider no encontrado: ${s.id}`);
                 return;
@@ -1307,15 +1317,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             sliderEl.value = 50;
 
-            if (displayEl) {
-                displayEl.textContent = "50";
-            } else {
-                console.warn(`Display de slider no encontrado: ${s.displayId}`);
-            }
-
             const textDisplay = sliderEl.parentElement?.querySelector(".slider-value-display");
             if (textDisplay) {
-                textDisplay.textContent = `${s.balancedText} (${sliderEl.value}%)`;
+                textDisplay.innerHTML = `${s.balancedText} (<span id="${s.displayId}">50</span>%)`;
             }
             brandData.personality[s.key] = 50;
         });
