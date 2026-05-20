@@ -1955,15 +1955,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const exportPdfBtn = document.getElementById("export-pdf-btn");
     const successOverlay = document.getElementById("success-overlay");
     
-    sendWhatsappBtn.addEventListener("click", () => sendToWhatsApp());
-    exportPdfBtn.addEventListener("click", () => generateTechnicalPDF());
+    sendWhatsappBtn.addEventListener("click", () => sendToWhatsApp(true));
+    exportPdfBtn.addEventListener("click", () => generateTechnicalPDF(false));
 
-    document.getElementById("success-pdf-btn").addEventListener("click", () => generateTechnicalPDF());
-    document.getElementById("success-whatsapp-btn").addEventListener("click", () => sendToWhatsApp());
+    document.getElementById("success-pdf-btn").addEventListener("click", () => generateTechnicalPDF(false));
+    document.getElementById("success-whatsapp-btn").addEventListener("click", () => sendToWhatsApp(false));
     document.getElementById("close-success-btn").addEventListener("click", () => successOverlay.classList.add("hidden"));
 
     // WhatsApp Message Composer (Ecuador local standard hook)
-    function sendToWhatsApp() {
+    function sendToWhatsApp(downloadPdf = true) {
+        if (downloadPdf) {
+            generateTechnicalPDF(true);
+        }
+        
         const phone = "593963036594"; // Marco Pérez Designs Ecuador number
         const preset = brandingPresets[selectedCategory];
         
@@ -2208,7 +2212,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } : null;
     }
 
-    function generateTechnicalPDF() {
+    function generateTechnicalPDF(isSilent = false) {
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
         const preset = brandingPresets[selectedCategory];
@@ -2384,9 +2388,9 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.text((brandData.slogan || fallbackSlogans[selectedCategory]).toUpperCase(), 20, 42);
 
         pdf.setFillColor(255, 255, 255);
-        pdf.roundedRect(20, 72, 82, 118, 6, 6, "F");
+        pdf.roundedRect(20, 72, 82, 148, 6, 6, "F");
         pdf.setDrawColor(235, 235, 235);
-        pdf.roundedRect(20, 72, 82, 118, 6, 6, "S");
+        pdf.roundedRect(20, 72, 82, 148, 6, 6, "S");
         pdf.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(11);
@@ -2397,33 +2401,33 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.text(pdf.splitTextToSize(brandData.valueProp || preset.fallbackStory, 70), 26, 92);
 
         pdf.setFont("Helvetica", "bold");
-        pdf.text("Paleta seleccionada", 26, 120);
+        pdf.text("Paleta seleccionada", 26, 135);
         let swatchX = 26;
         brandData.paletteColors.forEach(color => {
             const rgb = hexToRgb(color);
             pdf.setFillColor(rgb.r, rgb.g, rgb.b);
-            pdf.roundedRect(swatchX, 125, 12, 12, 2, 2, "F");
+            pdf.roundedRect(swatchX, 140, 12, 12, 2, 2, "F");
             pdf.setDrawColor(215, 215, 215);
-            pdf.roundedRect(swatchX, 125, 12, 12, 2, 2, "S");
+            pdf.roundedRect(swatchX, 140, 12, 12, 2, 2, "S");
             swatchX += 15;
         });
         pdf.setFont("Helvetica", "normal");
-        pdf.text(brandData.paletteName, 26, 144);
+        pdf.text(brandData.paletteName, 26, 159);
 
         pdf.setFont("Helvetica", "bold");
-        pdf.text("Firma y sistema", 26, 156);
+        pdf.text("Firma y sistema", 26, 171);
         pdf.setFont("Helvetica", "normal");
-        pdf.text(pdf.splitTextToSize(`${brandData.visualDirection.signatureTemplate || "Direccion tipografica"} | ${brandData.visualDirection.finish || "Acabado por definir"}`, 70), 26, 162);
+        pdf.text(pdf.splitTextToSize(`${brandData.visualDirection.signatureTemplate || "Direccion tipografica"} | ${brandData.visualDirection.finish || "Acabado por definir"}`, 70), 26, 177);
 
         pdf.setFont("Helvetica", "bold");
-        pdf.text("Valores eje", 26, 178);
+        pdf.text("Valores eje", 26, 193);
         pdf.setFont("Helvetica", "normal");
-        pdf.text(pdf.splitTextToSize(brandData.values.join(" | "), 70), 26, 184);
+        pdf.text(pdf.splitTextToSize(brandData.values.join(" | "), 70), 26, 199);
 
         pdf.setFillColor(255, 255, 255);
-        pdf.roundedRect(108, 72, 82, 118, 6, 6, "F");
+        pdf.roundedRect(108, 72, 82, 148, 6, 6, "F");
         pdf.setDrawColor(235, 235, 235);
-        pdf.roundedRect(108, 72, 82, 118, 6, 6, "S");
+        pdf.roundedRect(108, 72, 82, 148, 6, 6, "S");
         pdf.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(11);
@@ -2433,23 +2437,13 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.setTextColor(70, 70, 70);
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(8);
-        pdf.text("TIPOGRAFIA", 114, 178);
+        pdf.text("TIPOGRAFIA", 114, 192);
         pdf.setFont("Helvetica", "normal");
-        pdf.text(`${brandData.fontFamily} / ${brandData.fontType}`, 114, 183);
+        pdf.text(`${brandData.fontFamily} / ${brandData.fontType}`, 114, 197);
         pdf.setFont("Helvetica", "bold");
-        pdf.text("LOGOTIPO", 114, 191);
+        pdf.text("LOGOTIPO", 114, 205);
         pdf.setFont("Helvetica", "normal");
-        pdf.text(pdf.splitTextToSize(brandData.logoStyle || "Tipografico minimalista", 64), 114, 196);
-
-        pdf.setFillColor(accentColor.r, accentColor.g, accentColor.b);
-        pdf.roundedRect(20, 204, 170, 34, 5, 5, "F");
-        pdf.setTextColor(darkColor.r, darkColor.g, darkColor.b);
-        pdf.setFont("Helvetica", "bold");
-        pdf.setFontSize(10);
-        pdf.text("Aclaracion importante", 26, 216);
-        pdf.setFont("Helvetica", "normal");
-        pdf.setFontSize(8.5);
-        pdf.text(pdf.splitTextToSize(referenceDisclaimer, 158), 26, 223);
+        pdf.text(pdf.splitTextToSize(brandData.logoStyle || "Tipografico minimalista", 64), 114, 210);
 
         pdf.setTextColor(120, 120, 120);
         pdf.setFont("Helvetica", "normal");
@@ -2474,8 +2468,8 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.roundedRect(20, 34, 82, 92, 6, 6, "F");
         pdf.roundedRect(108, 34, 82, 92, 6, 6, "F");
         pdf.roundedRect(20, 134, 170, 56, 6, 6, "F");
-        pdf.roundedRect(20, 198, 82, 56, 6, 6, "F");
-        pdf.roundedRect(108, 198, 82, 56, 6, 6, "F");
+        pdf.roundedRect(20, 198, 82, 35, 6, 6, "F");
+        pdf.roundedRect(108, 198, 82, 35, 6, 6, "F");
 
         pdf.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
         pdf.setFont("Helvetica", "bold");
@@ -2513,23 +2507,34 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(11);
-        pdf.text("Prioridades y canales", 26, 210);
+        pdf.text("Prioridades y canales", 26, 205);
         pdf.setTextColor(60, 60, 60);
         pdf.setFont("Helvetica", "normal");
         pdf.setFontSize(8.2);
         const regulatoryText = brandData.regulatory.length ? brandData.regulatory.join(" | ") : "Sin prioridades definidas";
-        pdf.text(pdf.splitTextToSize(regulatoryText, 70), 26, 218);
-        pdf.text(pdf.splitTextToSize(brandData.channels.join(", ") || "Canales por definir", 70), 26, 240);
+        pdf.text(pdf.splitTextToSize(regulatoryText, 70), 26, 210);
+        pdf.text(pdf.splitTextToSize(brandData.channels.join(", ") || "Canales por definir", 70), 26, 222);
 
         pdf.setTextColor(primaryColor.r, primaryColor.g, primaryColor.b);
         pdf.setFont("Helvetica", "bold");
         pdf.setFontSize(11);
-        pdf.text("Siguiente etapa creativa", 114, 210);
+        pdf.text("Siguiente etapa creativa", 114, 205);
         pdf.setTextColor(60, 60, 60);
         pdf.setFont("Helvetica", "normal");
         pdf.setFontSize(8.4);
-        const nextStageText = `Con esta base, MP Designs puede desarrollar rutas de identidad, exploraciones de logotipo, packaging y sistema visual. ${referenceDisclaimer}`;
-        pdf.text(pdf.splitTextToSize(nextStageText, 70), 114, 218);
+        const nextStageText = "Con esta base, MP Designs puede desarrollar rutas de identidad, exploraciones de logotipo, packaging y sistema visual.";
+        pdf.text(pdf.splitTextToSize(nextStageText, 70), 114, 210);
+
+        // Warning Banner / Aclaracion Importante en la pagina 2 al final
+        pdf.setFillColor(accentColor.r, accentColor.g, accentColor.b);
+        pdf.roundedRect(20, 238, 170, 22, 4, 4, "F");
+        pdf.setTextColor(darkColor.r, darkColor.g, darkColor.b);
+        pdf.setFont("Helvetica", "bold");
+        pdf.setFontSize(8.5);
+        pdf.text("Advertencia / Aclaracion importante", 25, 243.5);
+        pdf.setFont("Helvetica", "normal");
+        pdf.setFontSize(7.5);
+        pdf.text(pdf.splitTextToSize(referenceDisclaimer, 160), 25, 248.5);
 
         pdf.setDrawColor(200, 200, 200);
         pdf.line(30, 268, 85, 268);
@@ -2546,7 +2551,9 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.text("Pagina 2 de 2", 172, 286);
 
         pdf.save(`Brief_Marca_${brandData.name.replace(/\s+/g, "_")}.pdf`);
-        triggerCelebration();
+        if (!isSilent) {
+            triggerCelebration();
+        }
     }
 
     // Initialize animation loops

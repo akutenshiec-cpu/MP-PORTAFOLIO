@@ -2654,6 +2654,9 @@ body:not(.brief-loading) .brief-loader {
         padding-bottom: 8px;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
+        /* Premium right edge fade mask indicating more cards */
+        -webkit-mask-image: linear-gradient(to right, #000 0%, #000 80%, transparent 98%);
+        mask-image: linear-gradient(to right, #000 0%, #000 80%, transparent 98%);
     }
 
     .interactive-grid-select > *,
@@ -2665,7 +2668,7 @@ body:not(.brief-loading) .brief-loader {
     .visual-option-grid > *,
     .finish-chip-grid > *,
     .channels-grid > * {
-        flex: 0 0 86vw;
+        flex: 0 0 78vw;
         scroll-snap-align: start;
     }
 
@@ -2698,7 +2701,7 @@ body:not(.brief-loading) .brief-loader {
     }
 
     .finish-chip {
-        min-width: 86vw;
+        min-width: 78vw;
     }
 
     .typo-sample-display {
@@ -2845,5 +2848,115 @@ body:not(.brief-loading) .brief-loader {
     
     .category-card-select span {
         font-size: 0.7rem;
+    }
+
+    /* Welcome screen steps 3-2 layout */
+    .welcome-steps-overview {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        margin-bottom: 25px;
+    }
+    
+    .step-badge-mini {
+        padding: 6px 8px;
+        font-size: 0.65rem;
+        justify-content: center;
+        width: auto;
+        white-space: nowrap; /* Prevent vertical wrapping */
+    }
+
+    #badge-step-1 {
+        grid-column: span 2;
+    }
+    #badge-step-2 {
+        grid-column: span 2;
+    }
+    #badge-step-3 {
+        grid-column: span 2;
+    }
+    #badge-step-4 {
+        grid-column: 2 / span 2;
+    }
+    #badge-step-5 {
+        grid-column: 4 / span 2;
+    }
+
+    /* Mobile scroll helper swipe guides on labels */
+    #label-products-group::after,
+    #label-target-group::after,
+    #label-tone-group::after,
+    #label-palette-group::after,
+    #label-typo-group::after,
+    #label-logo-style-group::after,
+    #label-channels-group::after,
+    .compact-group:has(.visual-option-grid) label::after,
+    .compact-group:has(.finish-chip-grid) label::after {
+        content: " ↔ DESLIZAR";
+        display: inline-block;
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: #fff;
+        background: rgba(212, 175, 55, 0.25);
+        border: 1px solid var(--gold-primary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 8px;
+        vertical-align: middle;
+        letter-spacing: 0.8px;
+        box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+        animation: pulseHorizontal 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseHorizontal {
+        0%, 100% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        50% {
+            transform: scale(1.04);
+            opacity: 1;
+        }
+    }
+
+    /* Explicit premium webkit scrollbars on mobile horizontal containers */
+    .interactive-grid-select::-webkit-scrollbar,
+    .target-grid::-webkit-scrollbar,
+    .tone-selectors::-webkit-scrollbar,
+    .palettes-container::-webkit-scrollbar,
+    .typo-previews-grid::-webkit-scrollbar,
+    .logo-style-container::-webkit-scrollbar,
+    .visual-option-grid::-webkit-scrollbar,
+    .finish-chip-grid::-webkit-scrollbar,
+    .channels-grid::-webkit-scrollbar {
+        height: 4px;
+        display: block;
+    }
+
+    .interactive-grid-select::-webkit-scrollbar-track,
+    .target-grid::-webkit-scrollbar-track,
+    .tone-selectors::-webkit-scrollbar-track,
+    .palettes-container::-webkit-scrollbar-track,
+    .typo-previews-grid::-webkit-scrollbar-track,
+    .logo-style-container::-webkit-scrollbar-track,
+    .visual-option-grid::-webkit-scrollbar-track,
+    .finish-chip-grid::-webkit-scrollbar-track,
+    .channels-grid::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+    }
+
+    .interactive-grid-select::-webkit-scrollbar-thumb,
+    .target-grid::-webkit-scrollbar-thumb,
+    .tone-selectors::-webkit-scrollbar-thumb,
+    .palettes-container::-webkit-scrollbar-thumb,
+    .typo-previews-grid::-webkit-scrollbar-thumb,
+    .logo-style-container::-webkit-scrollbar-thumb,
+    .visual-option-grid::-webkit-scrollbar-thumb,
+    .finish-chip-grid::-webkit-scrollbar-thumb,
+    .channels-grid::-webkit-scrollbar-thumb {
+        background: rgba(212, 175, 55, 0.35);
+        border-radius: 10px;
     }
 }
