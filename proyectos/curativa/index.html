@@ -12,7 +12,10 @@
 <body>
     <header class="glassy-header">
         <div class="header-container">
-            <span class="header-logo">CURATIVA</span>
+            <span class="header-logo">
+                <img src="image/logo_curativa_hero.svg" alt="Curativa" class="header-logo-mark">
+                <span class="header-logo-text">CURATIVA</span>
+            </span>
 
             <nav class="header-nav-desktop">
                 <a href="../../index.html" class="nav-link">Portafolio MP</a>
@@ -381,8 +384,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Tu Nombre:</label>
-                            <input type="text" id="customer-name" class="modern-input" placeholder="Nombre completo">
+                            <label>Nombres:</label>
+                            <input type="text" id="customer-name" class="modern-input" placeholder="Tus nombres">
+                        </div>
+                        <div class="form-group">
+                            <label>Apellidos:</label>
+                            <input type="text" id="customer-lastname" class="modern-input" placeholder="Tus apellidos">
                         </div>
                         <div class="form-group">
                             <label>Provincia:</label>
@@ -390,12 +397,34 @@
                                 <option value="" disabled selected>Selecciona...</option>
                                 <option value="Loja">Loja</option>
                                 <option value="Azuay">Azuay</option>
+                                <option value="Bolívar">Bolívar</option>
+                                <option value="Cañar">Cañar</option>
+                                <option value="Carchi">Carchi</option>
+                                <option value="Chimborazo">Chimborazo</option>
+                                <option value="Cotopaxi">Cotopaxi</option>
                                 <option value="Pichincha">Pichincha</option>
                                 <option value="Guayas">Guayas</option>
                                 <option value="El Oro">El Oro</option>
+                                <option value="Esmeraldas">Esmeraldas</option>
+                                <option value="Galápagos">Galápagos</option>
+                                <option value="Imbabura">Imbabura</option>
+                                <option value="Los Ríos">Los Ríos</option>
                                 <option value="Manabí">Manabí</option>
-                                <option value="Otra">Otra Provincia</option>
+                                <option value="Morona Santiago">Morona Santiago</option>
+                                <option value="Napo">Napo</option>
+                                <option value="Orellana">Orellana</option>
+                                <option value="Pastaza">Pastaza</option>
+                                <option value="Santa Elena">Santa Elena</option>
+                                <option value="Santo Domingo de los Tsáchilas">Santo Domingo de los Tsáchilas</option>
+                                <option value="Sucumbíos">Sucumbíos</option>
+                                <option value="Tungurahua">Tungurahua</option>
+                                <option value="Zamora Chinchipe">Zamora Chinchipe</option>
+                                <option value="Manabí">Manabí</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección de envío:</label>
+                            <input type="text" id="customer-address" class="modern-input" placeholder="Calle principal, referencia, sector">
                         </div>
 
                         <div class="payment-info-container demo-payment">
@@ -415,8 +444,47 @@
                             <p class="shipping-note"><i class="fas fa-truck"></i> Ejemplo envío nacional fuera de la ciudad matriz: +$5.50 (valor ilustrativo).</p>
                         </div>
 
+                        <div class="payment-info-container technical-checkout-panel">
+                            <h4>Resumen t&eacute;cnico de confirmaci&oacute;n</h4>
+                            <p class="demo-payment-note">Este bloque prioriza lectura r&aacute;pida y validaci&oacute;n operativa. Al confirmar, el sistema genera un <strong>PDF descargable</strong> con el detalle del pedido y totales estimados.</p>
+                            <div class="payment-method-badges">
+                                <span class="payment-badge"><i class="fas fa-file-lines"></i> Orden digital</span>
+                                <span class="payment-badge"><i class="fas fa-boxes-stacked"></i> Detalle trazable</span>
+                                <span class="payment-badge"><i class="fas fa-calculator"></i> Totales claros</span>
+                            </div>
+                            <div class="bank-info-text technical-points">
+                                <p><strong>Salida:</strong> PDF listo para descarga desde navegador.</p>
+                                <p><strong>Incluye:</strong> cliente, provincia, &iacute;tems, cantidades, subtotal, env&iacute;o y total.</p>
+                                <p><strong>Env&iacute;o:</strong> Loja sin recargo. Otras provincias con estimado nacional.</p>
+                            </div>
+                        </div>
+
+                        <div class="payment-info-container payment-panel-live">
+                            <h4>Medios de pago</h4>
+                            <div class="payment-method-badges">
+                                <span class="payment-badge"><i class="fas fa-wallet"></i> Deuna</span>
+                                <span class="payment-badge"><i class="fas fa-building-columns"></i> Transferencia</span>
+                            </div>
+                            <div class="payment-qr-grid">
+                                <figure class="payment-qr-card">
+                                    <img src="image/deuna_pichincha.jpg" alt="QR Deuna" class="payment-qr-image">
+                                    <figcaption>QR Deuna</figcaption>
+                                </figure>
+                                <figure class="payment-qr-card">
+                                    <img src="image/deuna_pichincha.jpg" alt="Deuna Banco Pichincha" class="payment-qr-image">
+                                    <figcaption>Deuna Banco Pichincha</figcaption>
+                                </figure>
+                            </div>
+                            <div class="bank-info-text payment-compact-data">
+                                <p><strong>Banco:</strong> Banco Pichincha</p>
+                                <p><strong>Tipo:</strong> Cuenta de ahorro transaccional</p>
+                                <p><strong>Cuenta:</strong> 2210381726</p>
+                            </div>
+                            <p class="shipping-note"><i class="fas fa-truck"></i> Envío: Loja sin recargo. Otras provincias con estimado nacional.</p>
+                        </div>
+
                         <button id="preview-cart-btn" class="btn btn-outline-dark btn-block"><i class="fas fa-file-pdf"></i> VISTA PREVIA A4 / PDF</button>
-                        <button id="checkout-btn" class="btn btn-primary btn-block big-btn"><i class="fab fa-whatsapp"></i> ENVIAR PEDIDO</button>
+                        <button id="checkout-btn" class="btn btn-primary btn-block big-btn"><i class="fas fa-file-arrow-down"></i> CONFIRMAR Y DESCARGAR PDF</button>
                         <button id="continue-shopping-btn" class="btn btn-ghost btn-block btn-small">Seguir comprando</button>
                     </div>
                 </div>
@@ -452,11 +520,14 @@
                     <li><i class="fas fa-check" style="color: green;"></i> Material publicitario de apoyo.</li>
                     <li><i class="fas fa-check" style="color: green;"></i> Productos de alta rotación.</li>
                 </ul>
-                <a href="https://wa.me/593999913839?text=Hola%20Curativa,%20me%20interesa%20ser%20distribuidor." target="_blank" class="btn btn-primary btn-block">Contactar Ventas</a>
+                <a href="https://wa.me/593963036594?text=Hola%20Curativa,%20me%20interesa%20ser%20distribuidor." target="_blank" class="btn btn-primary btn-block">Contactar Ventas</a>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

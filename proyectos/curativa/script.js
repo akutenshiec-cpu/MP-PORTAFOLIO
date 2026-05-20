@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const WHATSAPP_NUMBER = "593999913839";
+    const WHATSAPP_NUMBER = "593963036594";
     const productsDB = {
         "serum-detox": {
             desc: "Tratamiento efectivo para disminuir y eliminar granitos, espinillas y puntos negros en rostro, cuello y espalda. Sus aceites combaten bacterias y hongos. También funciona como detox para eliminar mal olor en axilas y pies.",
@@ -378,6 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const track = wrapper.querySelector(".carousel-track");
         const prevBtn = wrapper.querySelector(".prev-btn");
         const nextBtn = wrapper.querySelector(".next-btn");
+        const desktopQuery = window.matchMedia("(min-width: 1081px)");
 
         if (track && prevBtn && nextBtn) {
             nextBtn.addEventListener("click", () => track.scrollBy({ left: 260, behavior: "smooth" }));
@@ -389,14 +390,53 @@ document.addEventListener("DOMContentLoaded", () => {
             let hasDragged = false;
             let startX = 0;
             let startScrollLeft = 0;
+            let currentTargetScrollLeft = 0;
+            let rafId = null;
+            let wheelReleaseTimer = null;
             const dragThreshold = 8;
+            const clampScroll = (value) => Math.max(0, Math.min(value, track.scrollWidth - track.clientWidth));
+            const isDesktopCarousel = () => desktopQuery.matches;
+
+            const stopTrackAnimation = () => {
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+            };
+
+            const animateTrackToTarget = () => {
+                const nextScrollLeft = track.scrollLeft + (currentTargetScrollLeft - track.scrollLeft) * 0.18;
+                if (Math.abs(currentTargetScrollLeft - track.scrollLeft) < 0.5) {
+                    track.scrollLeft = currentTargetScrollLeft;
+                    rafId = null;
+                    return;
+                }
+                track.scrollLeft = nextScrollLeft;
+                rafId = requestAnimationFrame(animateTrackToTarget);
+            };
+
+            const queueTrackAnimation = () => {
+                if (rafId) return;
+                rafId = requestAnimationFrame(animateTrackToTarget);
+            };
+
+            const releaseWheelMode = () => {
+                if (wheelReleaseTimer) {
+                    clearTimeout(wheelReleaseTimer);
+                }
+                wheelReleaseTimer = window.setTimeout(() => {
+                    track.classList.remove("is-wheel-scrolling");
+                }, 140);
+            };
 
             track.addEventListener("pointerdown", (event) => {
                 if (event.pointerType === "mouse" && event.button !== 0) return;
+                stopTrackAnimation();
                 isDragging = true;
                 hasDragged = false;
                 startX = event.clientX;
                 startScrollLeft = track.scrollLeft;
+                currentTargetScrollLeft = track.scrollLeft;
             });
 
             track.addEventListener("pointermove", (event) => {
@@ -408,7 +448,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     track.classList.add("is-dragging");
                     track.setPointerCapture(event.pointerId);
                 }
-                track.scrollLeft = startScrollLeft - delta;
+                currentTargetScrollLeft = clampScroll(startScrollLeft - delta);
+                if (isDesktopCarousel()) {
+                    queueTrackAnimation();
+                } else {
+                    track.scrollLeft = currentTargetScrollLeft;
+                }
             });
 
             const stopDragging = (event) => {
@@ -420,6 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (event.pointerId !== undefined && track.hasPointerCapture(event.pointerId)) {
                     track.releasePointerCapture(event.pointerId);
                 }
+                currentTargetScrollLeft = track.scrollLeft;
                 if (wasDragging) {
                     track.dataset.dragged = "true";
                     setTimeout(() => {
@@ -434,6 +480,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!isDragging) return;
                 isDragging = false;
                 track.classList.remove("is-dragging");
+                currentTargetScrollLeft = track.scrollLeft;
+            });
+
+            track.addEventListener("scroll", () => {
+                if (!isDragging && !track.classList.contains("is-wheel-scrolling")) {
+                    currentTargetScrollLeft = track.scrollLeft;
+                }
+            }, { passive: true });
+
+            track.addEventListener("wheel", (event) => {
+                if (!isDesktopCarousel()) return;
+                if (track.scrollWidth <= track.clientWidth) return;
+
+                const dominantDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+                if (!dominantDelta) return;
+
+                event.preventDefault();
+                stopTrackAnimation();
+                track.classList.add("is-wheel-scrolling");
+                currentTargetScrollLeft = clampScroll(currentTargetScrollLeft + dominantDelta * 1.15);
+                queueTrackAnimation();
+                releaseWheelMode();
+            }, { passive: false });
+
+            desktopQuery.addEventListener("change", (event) => {
+                if (event.matches) return;
+                stopTrackAnimation();
+                track.classList.remove("is-wheel-scrolling");
             });
         }
     });
@@ -526,6 +600,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const previewCartBtn = document.getElementById("preview-cart-btn");
     const printPreviewBtn = document.getElementById("print-preview-btn");
     const printPreviewFrame = document.getElementById("print-preview-frame");
+    const orderRefCodeEl = document.getElementById("order-ref-code");
+    const orderDateLabelEl = document.getElementById("order-date-label");
+    const orderDeliveryLabelEl = document.getElementById("order-delivery-label");
     const CONTACTS = {
         brand: "CURATIVA",
         studio: "MP Designs · Marco Pérez",
@@ -549,6 +626,35 @@ document.addEventListener("DOMContentLoaded", () => {
             .replace(/'/g, "&#39;");
     }
 
+    function getOrderReference() {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = String(now.getMonth() + 1).padStart(2, "0");
+        const d = String(now.getDate()).padStart(2, "0");
+        const hh = String(now.getHours()).padStart(2, "0");
+        const mm = String(now.getMinutes()).padStart(2, "0");
+        return `CUR-${y}${m}${d}-${hh}${mm}`;
+    }
+
+    function getOrderDateLabel() {
+        return new Date().toLocaleDateString("es-EC", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+    }
+
+    function getDeliveryLabel(province) {
+        if (!province) return "Pendiente";
+        return province === "Loja" ? "Local" : "Nacional";
+    }
+
+    function updateOrderMeta(province = "") {
+        if (orderRefCodeEl) orderRefCodeEl.textContent = getOrderReference();
+        if (orderDateLabelEl) orderDateLabelEl.textContent = getOrderDateLabel();
+        if (orderDeliveryLabelEl) orderDeliveryLabelEl.textContent = getDeliveryLabel(province);
+    }
+
     function getShippingForProvince(province) {
         if (!province) return null;
         return province === "Loja" ? 0 : 5.5;
@@ -564,13 +670,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getCustomerOrderData(requireProvince = true) {
         const nameInput = document.getElementById("customer-name");
+        const lastNameInput = document.getElementById("customer-lastname");
         const provinceSelect = document.getElementById("customer-province");
+        const addressInput = document.getElementById("customer-address");
         const customerName = nameInput ? nameInput.value.trim() : "";
+        const customerLastName = lastNameInput ? lastNameInput.value.trim() : "";
         const province = provinceSelect ? provinceSelect.value : "";
+        const customerAddress = addressInput ? addressInput.value.trim() : "";
 
         if (!customerName) {
-            alert("Por favor escribe tu nombre.");
+            alert("Por favor escribe tus nombres.");
             if (nameInput) nameInput.focus();
+            return null;
+        }
+
+        if (!customerLastName) {
+            alert("Por favor escribe tus apellidos.");
+            if (lastNameInput) lastNameInput.focus();
             return null;
         }
 
@@ -580,7 +696,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return null;
         }
 
-        return { customerName, province };
+        if (!customerAddress) {
+            alert("Escribe tu dirección de envío.");
+            if (addressInput) addressInput.focus();
+            return null;
+        }
+
+        return {
+            customerName,
+            customerLastName,
+            customerFullName: `${customerName} ${customerLastName}`.trim(),
+            province,
+            customerAddress
+        };
     }
 
     function buildPrintableDocument(orderData, totals) {
@@ -702,6 +830,596 @@ document.addEventListener("DOMContentLoaded", () => {
 </html>`;
     }
 
+    function normalizePdfText(value) {
+        return String(value ?? "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^\x20-\x7E]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+    function escapePdfText(value) {
+        return normalizePdfText(value)
+            .replace(/\\/g, "\\\\")
+            .replace(/\(/g, "\\(")
+            .replace(/\)/g, "\\)");
+    }
+
+    function wrapPdfLine(text, maxLength = 72) {
+        const words = normalizePdfText(text).split(" ");
+        const lines = [];
+        let currentLine = "";
+
+        words.forEach((word) => {
+            const nextLine = currentLine ? `${currentLine} ${word}` : word;
+            if (nextLine.length > maxLength && currentLine) {
+                lines.push(currentLine);
+                currentLine = word;
+            } else {
+                currentLine = nextLine;
+            }
+        });
+
+        if (currentLine) lines.push(currentLine);
+        return lines.length ? lines : [""];
+    }
+
+    function buildOrderPdfLines(orderData, totals) {
+        const shippingLabel = totals.shipping === 0 ? "Envio local" : "Envio nacional estimado";
+        const lines = [
+            { text: "CURATIVA", size: 20 },
+            { text: "Documento tecnico de pedido", size: 11 },
+            { text: "", size: 10 },
+            { text: `Orden: ${getOrderReference()}`, size: 10 },
+            { text: `Fecha: ${getOrderDateLabel()}`, size: 10 },
+            { text: `Cliente: ${orderData.customerName}`, size: 10 },
+            { text: `Provincia: ${orderData.province}`, size: 10 },
+            { text: "", size: 10 },
+            { text: "Detalle del pedido", size: 13 },
+            { text: "", size: 10 }
+        ];
+
+        cart.forEach((item, index) => {
+            lines.push({
+                text: `${index + 1}. ${item.qty} x ${item.name} | Unitario ${formatCurrency(item.price)} | Total ${formatCurrency(item.qty * item.price)}`,
+                size: 10
+            });
+        });
+
+        lines.push(
+            { text: "", size: 10 },
+            { text: "Resumen", size: 13 },
+            { text: `Items: ${totals.totalItems}`, size: 10 },
+            { text: `Subtotal: ${formatCurrency(totals.subtotal)}`, size: 10 },
+            { text: `${shippingLabel}: ${totals.shipping == null ? "Por definir" : formatCurrency(totals.shipping)}`, size: 10 },
+            { text: `Total estimado: ${formatCurrency(totals.total)}`, size: 12 },
+            { text: "", size: 10 },
+            { text: "Salida generada desde el checkout digital de Curativa.", size: 9 }
+        );
+
+        return lines;
+    }
+
+    function createPdfDocument(lineSpecs) {
+        const pageWidth = 595;
+        const pageHeight = 842;
+        const marginX = 52;
+        const topStart = 790;
+        const bottomLimit = 54;
+        const pages = [];
+        let commands = [];
+        let currentY = topStart;
+
+        const pushPage = () => {
+            pages.push(commands.join("\n"));
+            commands = [];
+            currentY = topStart;
+        };
+
+        lineSpecs.forEach((spec) => {
+            const wrappedLines = wrapPdfLine(spec.text, spec.size >= 13 ? 54 : 78);
+            wrappedLines.forEach((line) => {
+                const lineHeight = (spec.size || 10) + 6;
+                if (currentY - lineHeight < bottomLimit) {
+                    pushPage();
+                }
+                commands.push(`BT /F1 ${spec.size || 10} Tf 1 0 0 1 ${marginX} ${currentY} Tm (${escapePdfText(line)}) Tj ET`);
+                currentY -= lineHeight;
+            });
+        });
+
+        if (commands.length) pushPage();
+
+        const objects = [];
+        const addObject = (body) => {
+            objects.push(body);
+            return objects.length;
+        };
+
+        addObject("<< /Type /Catalog /Pages 2 0 R >>");
+        const pagesObjectIndex = addObject("<< /Type /Pages /Kids [] /Count 0 >>");
+        const fontObjectIndex = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+        const pageRefs = [];
+
+        pages.forEach((content) => {
+            const contentObjectIndex = addObject(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
+            const pageObjectIndex = addObject(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 ${fontObjectIndex} 0 R >> >> /Contents ${contentObjectIndex} 0 R >>`);
+            pageRefs.push(`${pageObjectIndex} 0 R`);
+        });
+
+        objects[pagesObjectIndex - 1] = `<< /Type /Pages /Kids [${pageRefs.join(" ")}] /Count ${pageRefs.length} >>`;
+
+        let pdf = "%PDF-1.4\n";
+        const offsets = [0];
+
+        objects.forEach((body, index) => {
+            offsets.push(pdf.length);
+            pdf += `${index + 1} 0 obj\n${body}\nendobj\n`;
+        });
+
+        const xrefStart = pdf.length;
+        pdf += `xref\n0 ${objects.length + 1}\n`;
+        pdf += "0000000000 65535 f \n";
+        offsets.slice(1).forEach((offset) => {
+            pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+        });
+        pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
+        return pdf;
+    }
+
+    function buildLandscapePdfSections(orderData, totals) {
+        const rows = cart.map((item, index) =>
+            `${index + 1}. ${item.name} | ${item.qty} u | ${formatCurrency(item.price)} | ${formatCurrency(item.qty * item.price)}`
+        );
+
+        return [
+            { text: "Detalle del pedido", size: 13 },
+            { text: "", size: 8 },
+            ...rows.map((row) => ({ text: row, size: 10 })),
+            { text: "", size: 10 },
+            { text: "Resumen", size: 13 },
+            { text: `Cliente: ${orderData.customerName}`, size: 10 },
+            { text: `Provincia: ${orderData.province}`, size: 10 },
+            { text: `Items: ${totals.totalItems}`, size: 10 },
+            { text: `Subtotal: ${formatCurrency(totals.subtotal)}`, size: 10 },
+            { text: `Envio: ${totals.shipping === 0 ? "Loja sin recargo" : formatCurrency(totals.shipping)}`, size: 10 },
+            { text: `Total: ${formatCurrency(totals.total)}`, size: 12 },
+            { text: "", size: 10 },
+            { text: "Medios de pago: Deuna y transferencia Banco Pichincha.", size: 9 }
+        ];
+    }
+
+    function createLandscapeOrderPdf(orderData, totals) {
+        const pageWidth = 842;
+        const pageHeight = 595;
+        const marginX = 44;
+        const topStart = 500;
+        const bottomLimit = 72;
+        const contentLines = buildLandscapePdfSections(orderData, totals);
+        const rawPages = [];
+        let commands = [];
+        let currentY = topStart;
+
+        const flushPage = () => {
+            rawPages.push(commands.join("\n"));
+            commands = [];
+            currentY = topStart;
+        };
+
+        contentLines.forEach((spec) => {
+            const wrapped = wrapPdfLine(spec.text, spec.size >= 13 ? 72 : 104);
+            wrapped.forEach((line) => {
+                const lineHeight = (spec.size || 10) + 5;
+                if (currentY - lineHeight < bottomLimit) {
+                    flushPage();
+                }
+                commands.push(`BT /F1 ${spec.size || 10} Tf 1 0 0 1 ${marginX} ${currentY} Tm (${escapePdfText(line)}) Tj ET`);
+                currentY -= lineHeight;
+            });
+        });
+
+        if (commands.length) flushPage();
+
+        const today = getOrderDateLabel();
+        const orderRef = getOrderReference();
+        const objects = [];
+        const addObject = (body) => {
+            objects.push(body);
+            return objects.length;
+        };
+
+        addObject("<< /Type /Catalog /Pages 2 0 R >>");
+        const pagesObjectIndex = addObject("<< /Type /Pages /Kids [] /Count 0 >>");
+        const fontObjectIndex = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+        const pageRefs = [];
+
+        rawPages.forEach((bodyContent, pageIndex) => {
+            const headerCommands = [
+                "0.8 w 44 544 m 798 544 l S",
+                `BT /F1 22 Tf 1 0 0 1 44 560 Tm (${escapePdfText("CURATIVA")}) Tj ET`,
+                `BT /F1 11 Tf 1 0 0 1 44 544 Tm (${escapePdfText("Catalogo comercial · Pedido digital A4 horizontal")}) Tj ET`,
+                `BT /F1 10 Tf 1 0 0 1 620 560 Tm (${escapePdfText(`Orden ${orderRef}`)}) Tj ET`,
+                `BT /F1 10 Tf 1 0 0 1 620 546 Tm (${escapePdfText(`Fecha ${today}`)}) Tj ET`
+            ].join("\n");
+
+            const footerCommands = [
+                "0.8 w 44 44 m 798 44 l S",
+                `BT /F1 9 Tf 1 0 0 1 44 28 Tm (${escapePdfText("WhatsApp +593 963 036 594 · Curativa Cosmetica Natural")}) Tj ET`,
+                `BT /F1 9 Tf 1 0 0 1 470 28 Tm (${escapePdfText("Pago Deuna · Transferencia Banco Pichincha")}) Tj ET`,
+                `BT /F1 9 Tf 1 0 0 1 744 28 Tm (${escapePdfText(`Pag ${pageIndex + 1}`)}) Tj ET`
+            ].join("\n");
+
+            const pageStream = `${headerCommands}\n${bodyContent}\n${footerCommands}`;
+            const contentObjectIndex = addObject(`<< /Length ${pageStream.length} >>\nstream\n${pageStream}\nendstream`);
+            const pageObjectIndex = addObject(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWidth} ${pageHeight}] /Resources << /Font << /F1 ${fontObjectIndex} 0 R >> >> /Contents ${contentObjectIndex} 0 R >>`);
+            pageRefs.push(`${pageObjectIndex} 0 R`);
+        });
+
+        objects[pagesObjectIndex - 1] = `<< /Type /Pages /Kids [${pageRefs.join(" ")}] /Count ${pageRefs.length} >>`;
+
+        let pdf = "%PDF-1.4\n";
+        const offsets = [0];
+        objects.forEach((body, index) => {
+            offsets.push(pdf.length);
+            pdf += `${index + 1} 0 obj\n${body}\nendobj\n`;
+        });
+
+        const xrefStart = pdf.length;
+        pdf += `xref\n0 ${objects.length + 1}\n`;
+        pdf += "0000000000 65535 f \n";
+        offsets.slice(1).forEach((offset) => {
+            pdf += `${String(offset).padStart(10, "0")} 00000 n \n`;
+        });
+        pdf += `trailer\n<< /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefStart}\n%%EOF`;
+        return pdf;
+    }
+
+    function downloadOrderPdf(orderData, totals) {
+        const pdf = createLandscapeOrderPdf(orderData, totals);
+        const blob = new Blob([pdf], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${getOrderReference()}-${normalizePdfText(orderData.customerFullName || "pedido").replace(/\s+/g, "-").toLowerCase()}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1500);
+    }
+
+    function loadSvgLogoDataUrl() {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                try {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = img.naturalWidth || 900;
+                    canvas.height = img.naturalHeight || 320;
+                    const ctx = canvas.getContext("2d");
+                    if (!ctx) {
+                        resolve(null);
+                        return;
+                    }
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    resolve(canvas.toDataURL("image/png"));
+                } catch {
+                    resolve(null);
+                }
+            };
+            img.onerror = () => resolve(null);
+            img.src = "image/logo_curativa_hero.svg";
+        });
+    }
+
+    function drawStyledPdfFrame(doc, pageWidth, pageHeight, orderData, totals, pageNumber, pageCount, logoDataUrl) {
+        doc.setDrawColor(205, 191, 174);
+        doc.setLineWidth(0.5);
+        doc.roundedRect(12, 10, pageWidth - 24, pageHeight - 20, 5, 5, "S");
+        doc.setFillColor(247, 242, 235);
+        doc.rect(12, 10, pageWidth - 24, 26, "F");
+        doc.line(12, 36, pageWidth - 12, 36);
+        doc.line(12, pageHeight - 24, pageWidth - 12, pageHeight - 24);
+
+        if (logoDataUrl) {
+            doc.addImage(logoDataUrl, "PNG", 18, 14, 28, 18, undefined, "FAST");
+        }
+
+        doc.setTextColor(61, 45, 32);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(18);
+        doc.text("CURATIVA", 52, 21);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.text("Catalogo comercial · Pedido A4 horizontal", 52, 28);
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9.5);
+        doc.text(`ORDEN ${getOrderReference()}`, pageWidth - 18, 18, { align: "right" });
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8.5);
+        doc.text(`Fecha ${getOrderDateLabel()}`, pageWidth - 18, 24, { align: "right" });
+        doc.text(`Cliente ${normalizePdfText(orderData.customerName)}`, pageWidth - 18, 30, { align: "right" });
+
+        doc.setFillColor(250, 247, 242);
+        doc.roundedRect(pageWidth - 92, 46, 72, 40, 4, 4, "FD");
+        doc.setDrawColor(212, 198, 181);
+        doc.roundedRect(pageWidth - 92, 46, 72, 40, 4, 4, "S");
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9.5);
+        doc.setTextColor(125, 96, 67);
+        doc.text("RESUMEN", pageWidth - 86, 54);
+        doc.setTextColor(61, 45, 32);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8.4);
+        doc.text(`Items: ${totals.totalItems}`, pageWidth - 86, 62);
+        doc.text(`Subtotal: ${formatCurrency(totals.subtotal)}`, pageWidth - 86, 68);
+        doc.text(`Envio: ${totals.shipping === 0 ? "Loja sin recargo" : formatCurrency(totals.shipping)}`, pageWidth - 86, 74);
+        doc.setFont("helvetica", "bold");
+        doc.text(`Total: ${formatCurrency(totals.total)}`, pageWidth - 86, 80);
+
+        doc.setTextColor(93, 79, 66);
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(8.2);
+        doc.text("WhatsApp +593 963 036 594", 18, pageHeight - 15);
+        doc.text("Pago Deuna · Transferencia Banco Pichincha", pageWidth / 2, pageHeight - 15, { align: "center" });
+        doc.text(`Pagina ${pageNumber} de ${pageCount}`, pageWidth - 18, pageHeight - 15, { align: "right" });
+    }
+
+    function buildPaymentSheetHtml(orderData, totals, logoDataUrl) {
+        const rows = cart.map((item) => `
+            <tr>
+                <td>
+                    <strong>${escapeHtml(item.name)}</strong><br>
+                    <span style="font-size: 8.5pt; color: #64748b;">Producto Curativa</span>
+                </td>
+                <td class="text-center">${item.qty}</td>
+                <td class="text-right">${formatCurrency(item.price)}</td>
+                <td class="text-right">${formatCurrency(item.qty * item.price)}</td>
+            </tr>
+        `).join("");
+
+        const shippingValue = totals.shipping == null ? "$0.00" : formatCurrency(totals.shipping);
+        const logoBlock = logoDataUrl
+            ? `<img src="${logoDataUrl}" alt="Curativa" style="height: 24mm; width: auto; display:block; margin-bottom: 4px;">`
+            : `<div class="logo-title">curativa</div>`;
+
+        return `
+            <style>
+                .pdf-sheet-root, .pdf-sheet-root * { box-sizing: border-box; }
+                .pdf-sheet-root {
+                    width: 297mm;
+                    min-height: 210mm;
+                    position: relative;
+                    padding: 16mm 15mm;
+                    background-color: #f8fafc;
+                    color: #1e293b;
+                    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                }
+                .pdf-sheet-root .header { border-bottom: 2px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 18px; }
+                .pdf-sheet-root .header-table, .pdf-sheet-root .info-section, .pdf-sheet-root .details-table, .pdf-sheet-root .totals-table { width: 100%; border-collapse: collapse; }
+                .pdf-sheet-root .header-table td { vertical-align: top; }
+                .pdf-sheet-root .logo-title { font-size: 24pt; font-weight: bold; color: #0f172a; letter-spacing: -0.5px; }
+                .pdf-sheet-root .logo-subtitle { font-size: 10pt; color: #64748b; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+                .pdf-sheet-root .meta-title { text-align: right; font-size: 14pt; font-weight: bold; color: #0284c7; text-transform: uppercase; letter-spacing: 0.5px; }
+                .pdf-sheet-root .meta-details { text-align: right; font-size: 9.5pt; color: #334155; margin-top: 6px; line-height: 1.45; }
+                .pdf-sheet-root .info-section { margin-bottom: 18px; }
+                .pdf-sheet-root .info-section td {
+                    width: 50%;
+                    vertical-align: top;
+                    padding: 12px 15px;
+                    background-color: #ffffff;
+                    border: 1px solid #e2e8f0;
+                }
+                .pdf-sheet-root .info-section td:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; border-right: none; }
+                .pdf-sheet-root .info-section td:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+                .pdf-sheet-root .info-label { font-size: 8.5pt; text-transform: uppercase; color: #64748b; font-weight: bold; margin-bottom: 4px; letter-spacing: 0.5px; }
+                .pdf-sheet-root .info-value { font-size: 10pt; color: #0f172a; line-height: 1.45; }
+                .pdf-sheet-root .details-box {
+                    background-color: #ffffff;
+                    border: 1px solid #e2e8f0;
+                    border-radius: 8px;
+                    margin-bottom: 18px;
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+                    overflow: hidden;
+                }
+                .pdf-sheet-root .details-title {
+                    font-size: 11pt;
+                    font-weight: bold;
+                    color: #0f172a;
+                    padding: 15px 20px;
+                    border-bottom: 1px solid #e2e8f0;
+                    margin: 0;
+                    background-color: #f1f5f9;
+                }
+                .pdf-sheet-root .details-table th {
+                    background-color: #ffffff;
+                    color: #64748b;
+                    font-size: 8.5pt;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    padding: 12px 20px;
+                    text-align: left;
+                    border-bottom: 1px solid #e2e8f0;
+                    letter-spacing: 0.5px;
+                }
+                .pdf-sheet-root .details-table td {
+                    padding: 13px 20px;
+                    font-size: 10pt;
+                    color: #334155;
+                    border-bottom: 1px solid #f1f5f9;
+                    vertical-align: middle;
+                }
+                .pdf-sheet-root .details-table tr:last-child td { border-bottom: none; }
+                .pdf-sheet-root .text-right { text-align: right !important; }
+                .pdf-sheet-root .text-center { text-align: center !important; }
+                .pdf-sheet-root .totals-container {
+                    border-top: 2px solid #e2e8f0;
+                    background-color: #f8fafc;
+                    padding: 15px 20px;
+                }
+                .pdf-sheet-root .totals-table {
+                    width: 100%;
+                    max-width: 110mm;
+                    margin-left: auto;
+                }
+                .pdf-sheet-root .totals-table td { padding: 4px 0; font-size: 10pt; color: #475569; }
+                .pdf-sheet-root .grand-total-label { font-size: 11pt; font-weight: bold; color: #0f172a; padding-top: 8px; }
+                .pdf-sheet-root .grand-total-value { font-size: 13pt; font-weight: bold; color: #0284c7; padding-top: 8px; }
+                .pdf-sheet-root .instructions {
+                    background-color: #f0fdf4;
+                    border: 1px solid #bbf7d0;
+                    border-radius: 6px;
+                    padding: 15px;
+                    margin-bottom: 22px;
+                }
+                .pdf-sheet-root .instructions-title { font-size: 9.5pt; font-weight: bold; color: #166534; margin-bottom: 5px; }
+                .pdf-sheet-root .instructions-text { font-size: 9pt; color: #14532d; line-height: 1.5; margin: 0; }
+                .pdf-sheet-root .footer {
+                    position: absolute;
+                    bottom: 16mm;
+                    left: 15mm;
+                    right: 15mm;
+                    border-top: 1px solid #e2e8f0;
+                    padding-top: 12px;
+                    text-align: center;
+                }
+                .pdf-sheet-root .footer-text { font-size: 8.5pt; color: #94a3b8; line-height: 1.5; margin: 0; }
+                .pdf-sheet-root .footer-bold { color: #64748b; font-weight: 600; }
+            </style>
+            <div class="pdf-sheet-root">
+                <div class="header">
+                    <table class="header-table">
+                        <tr>
+                            <td>
+                                ${logoBlock}
+                                <div class="logo-subtitle">Bienestar Integral</div>
+                            </td>
+                            <td>
+                                <div class="meta-title">Ficha de Pago</div>
+                                <div class="meta-details">
+                                    <strong>Nro. Control:</strong> ${escapeHtml(getOrderReference())}<br>
+                                    <strong>Fecha de Emisión:</strong> ${escapeHtml(getOrderDateLabel())}<br>
+                                    <strong>Estado:</strong> Pendiente de Validación
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <table class="info-section">
+                    <tr>
+                        <td>
+                            <div class="info-label">Preparado para</div>
+                            <div class="info-value">
+                                <strong>${escapeHtml(orderData.customerFullName)}</strong><br>
+                                Provincia: ${escapeHtml(orderData.province)}<br>
+                                Dirección: ${escapeHtml(orderData.customerAddress)}<br>
+                                Canal de confirmación: WhatsApp
+                            </div>
+                        </td>
+                        <td>
+                            <div class="info-label">Método de Pago Solicitado</div>
+                            <div class="info-value">
+                                <strong>Transferencia / QR digital</strong><br>
+                                Deuna o transferencia Banco Pichincha<br>
+                                Envío: ${totals.shipping === 0 ? "Loja sin recargo" : `Estimado ${shippingValue}`}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="details-box">
+                    <h2 class="details-title">Tu Pedido</h2>
+                    <table class="details-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 55%;">Descripción del Artículo</th>
+                                <th style="width: 15%;" class="text-center">Cant.</th>
+                                <th style="width: 15%;" class="text-right">Precio Unit.</th>
+                                <th style="width: 15%;" class="text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                    <div class="totals-container">
+                        <table class="totals-table">
+                            <tr>
+                                <td class="text-right">Subtotal:</td>
+                                <td class="text-right" style="width: 35%; font-weight: 500;">${formatCurrency(totals.subtotal)}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">Envío:</td>
+                                <td class="text-right" style="font-weight: 500;">${shippingValue}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right">IVA (0%):</td>
+                                <td class="text-right" style="font-weight: 500;">$0.00</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right grand-total-label">Total a Pagar:</td>
+                                <td class="text-right grand-total-value">${formatCurrency(totals.total)}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="instructions">
+                    <div class="instructions-title">Instrucciones para reportar su pago:</div>
+                    <p class="instructions-text">
+                        1. Descargue esta ficha y conserve el PDF generado.<br>
+                        2. Abra el chat de WhatsApp generado automáticamente y adjunte manualmente el archivo descargado.<br>
+                        3. Realice el pago por Deuna o transferencia Banco Pichincha y envíe su comprobante para validación.
+                    </p>
+                </div>
+
+                <div class="footer">
+                    <p class="footer-text">
+                        <span class="footer-bold">Curativa © 2026</span> · Documento generado desde el catálogo digital.<br>
+                        Loja, Ecuador · WhatsApp +593 963 036 594 · Pago Deuna y transferencia Banco Pichincha
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    async function downloadOrderPdf(orderData, totals) {
+        if (typeof window.html2pdf !== "function") {
+            alert("No se pudo cargar el generador PDF.");
+            return null;
+        }
+
+        const logoDataUrl = await loadSvgLogoDataUrl();
+        const fileName = `${getOrderReference()}-${normalizePdfText(orderData.customerFullName || "pedido").replace(/\s+/g, "-").toLowerCase()}.pdf`;
+        const tempContainer = document.createElement("div");
+        tempContainer.style.position = "fixed";
+        tempContainer.style.left = "0";
+        tempContainer.style.top = "0";
+        tempContainer.style.opacity = "0";
+        tempContainer.style.pointerEvents = "none";
+        tempContainer.style.zIndex = "-1";
+        tempContainer.style.width = "297mm";
+        tempContainer.style.background = "#f8fafc";
+        tempContainer.innerHTML = buildPaymentSheetHtml(orderData, totals, logoDataUrl);
+        document.body.appendChild(tempContainer);
+
+        try {
+            await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+            await window.html2pdf().set({
+                margin: 0,
+                filename: fileName,
+                image: { type: "jpeg", quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: "#f8fafc" },
+                jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+                pagebreak: { mode: ["avoid-all", "css"] }
+            }).from(tempContainer).save();
+            return fileName;
+        } finally {
+            tempContainer.remove();
+        }
+    }
+
     window.addFromHero = function (id) {
         const productCard = document.querySelector(`.product-item[data-id="${id}"]`);
         if (productCard) {
@@ -785,6 +1503,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const totals = calculateCartTotals(selectedProvince);
 
         if (cartCountEl) cartCountEl.textContent = String(totals.totalItems);
+        updateOrderMeta(selectedProvince);
         renderModalList(totals);
     }
 
@@ -965,6 +1684,262 @@ document.addEventListener("DOMContentLoaded", () => {
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
         });
     }
+
+    async function downloadOrderPdfFromMockup(orderData, totals) {
+        const jspdfNs = window.jspdf;
+        if (!jspdfNs || typeof jspdfNs.jsPDF !== "function") {
+            alert("No se pudo cargar el generador PDF.");
+            return null;
+        }
+
+        const { jsPDF } = jspdfNs;
+        const doc = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4",
+            compress: true
+        });
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const logoDataUrl = await loadSvgLogoDataUrl();
+        const fileName = `${getOrderReference()}-${normalizePdfText(orderData.customerFullName || "pedido").replace(/\s+/g, "-").toLowerCase()}.pdf`;
+        const shippingValue = totals.shipping == null ? "$0.00" : formatCurrency(totals.shipping);
+        const paymentMethod = totals.shipping === 0 ? "Transferencia / QR local" : "Transferencia / QR nacional";
+        const wrapPdf = (text, width) => doc.splitTextToSize(normalizePdfText(text), width);
+
+        const drawHeaderFooter = (pageNumber) => {
+            doc.setFillColor(248, 250, 252);
+            doc.rect(0, 0, pageWidth, pageHeight, "F");
+
+            doc.setDrawColor(226, 232, 240);
+            doc.setLineWidth(0.7);
+            doc.line(15, 26, pageWidth - 15, 26);
+            doc.line(15, pageHeight - 18, pageWidth - 15, pageHeight - 18);
+
+            if (logoDataUrl) {
+                doc.addImage(logoDataUrl, "PNG", 15, 11, 34, 14, undefined, "FAST");
+            } else {
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(22);
+                doc.setTextColor(15, 23, 42);
+                doc.text("curativa", 15, 19);
+            }
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(15);
+            doc.setTextColor(2, 132, 199);
+            doc.text("Ficha de Pago", pageWidth - 15, 15, { align: "right" });
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(51, 65, 85);
+            doc.text(`Nro. Control: ${getOrderReference()}`, pageWidth - 15, 20, { align: "right" });
+            doc.text(`Fecha de Emision: ${getOrderDateLabel()}`, pageWidth - 15, 24.5, { align: "right" });
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8.5);
+            doc.setTextColor(148, 163, 184);
+            doc.text("Curativa © 2026 · Loja, Ecuador · WhatsApp +593 963 036 594", pageWidth / 2, pageHeight - 10, { align: "center" });
+            doc.text(`Pag. ${pageNumber}`, pageWidth - 15, pageHeight - 10, { align: "right" });
+        };
+
+        const drawInfoBoxes = () => {
+            doc.setDrawColor(226, 232, 240);
+            doc.setFillColor(255, 255, 255);
+            doc.roundedRect(15, 33, 87.5, 31, 2, 2, "FD");
+            doc.roundedRect(102.5, 33, 92.5, 31, 2, 2, "FD");
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(8);
+            doc.setTextColor(100, 116, 139);
+            doc.text("PREPARADO PARA", 20, 39);
+            doc.text("METODO DE PAGO SOLICITADO", 107.5, 39);
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(10);
+            doc.setTextColor(15, 23, 42);
+            doc.text(wrapPdf(orderData.customerFullName, 70), 20, 45);
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9);
+            doc.setTextColor(51, 65, 85);
+            doc.text(wrapPdf(`Provincia: ${orderData.province}`, 70), 20, 50);
+            doc.text(wrapPdf(`Direccion: ${orderData.customerAddress}`, 70), 20, 55);
+            doc.text("Canal: WhatsApp", 20, 61);
+
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(15, 23, 42);
+            doc.text(wrapPdf(paymentMethod, 74), 107.5, 45);
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(51, 65, 85);
+            doc.text(wrapPdf("Banco Pichincha / Deuna / Ahorros transaccional", 74), 107.5, 50);
+            doc.text(wrapPdf("Cuenta: 2210381726", 74), 107.5, 56);
+            doc.text(wrapPdf(`Envio: ${totals.shipping === 0 ? "Loja sin recargo" : `Estimado ${shippingValue}`}`, 74), 107.5, 63);
+        };
+
+        const drawTotalsAndNotes = (startY) => {
+            doc.setDrawColor(226, 232, 240);
+            doc.setFillColor(248, 250, 252);
+            doc.roundedRect(15, startY, 180, 25, 2, 2, "FD");
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(9.2);
+            doc.setTextColor(71, 85, 105);
+            doc.text("Subtotal:", 128, startY + 7, { align: "right" });
+            doc.text("Envío:", 128, startY + 12.5, { align: "right" });
+            doc.text("IVA (0%):", 128, startY + 18, { align: "right" });
+
+            doc.setFont("helvetica", "bold");
+            doc.text(formatCurrency(totals.subtotal), 190, startY + 7, { align: "right" });
+            doc.text(shippingValue, 190, startY + 12.5, { align: "right" });
+            doc.text("$0.00", 190, startY + 18, { align: "right" });
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(11);
+            doc.setTextColor(2, 132, 199);
+            doc.text("Total a Pagar:", 128, startY + 24, { align: "right" });
+            doc.text(formatCurrency(totals.total), 190, startY + 24, { align: "right" });
+
+            const noteY = startY + 31;
+            doc.setFillColor(240, 253, 244);
+            doc.setDrawColor(187, 247, 208);
+            doc.roundedRect(15, noteY, 180, 28, 2, 2, "FD");
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(9.2);
+            doc.setTextColor(22, 101, 52);
+            doc.text("Instrucciones para reportar su pago:", 20, noteY + 7);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8.7);
+            doc.setTextColor(20, 83, 45);
+            const noteLines = [
+                "1. Descargue esta ficha y conserve el PDF generado.",
+                "2. Abra el chat de WhatsApp generado automaticamente y adjunte manualmente el archivo descargado.",
+                "3. Realice el pago por Deuna o transferencia Banco Pichincha y envie su comprobante para validacion."
+            ];
+            doc.text(noteLines, 20, noteY + 13);
+        };
+
+        drawHeaderFooter(1);
+        drawInfoBoxes();
+
+        doc.setDrawColor(226, 232, 240);
+        doc.setFillColor(255, 255, 255);
+        doc.roundedRect(15, 70, 180, 114, 2, 2, "FD");
+        doc.setFillColor(241, 245, 249);
+        doc.rect(15, 70, 180, 13, "F");
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11);
+        doc.setTextColor(15, 23, 42);
+        doc.text("Tu Pedido", 20, 78.5);
+
+        doc.autoTable({
+            startY: 83,
+            margin: { left: 15, right: 15, top: 83, bottom: 60 },
+            head: [["Descripción del Artículo", "Cant.", "Precio Unit.", "Total"]],
+            body: cart.map((item) => ([
+                `${normalizePdfText(item.name)}\nProducto Curativa`,
+                String(item.qty),
+                formatCurrency(item.price),
+                formatCurrency(item.qty * item.price)
+            ])),
+            theme: "plain",
+            styles: {
+                font: "helvetica",
+                fontSize: 9,
+                textColor: [51, 65, 85],
+                cellPadding: { top: 4, right: 5, bottom: 4, left: 5 },
+                lineColor: [241, 245, 249],
+                lineWidth: 0.35,
+                valign: "middle"
+            },
+            headStyles: {
+                fillColor: [255, 255, 255],
+                textColor: [100, 116, 139],
+                fontStyle: "bold"
+            },
+            columnStyles: {
+                0: { cellWidth: 99 },
+                1: { cellWidth: 20, halign: "center" },
+                2: { cellWidth: 28, halign: "right" },
+                3: { cellWidth: 28, halign: "right" }
+            },
+            didParseCell: (data) => {
+                data.cell.styles.lineColor = [241, 245, 249];
+                data.cell.styles.lineWidth = { bottom: 0.35 };
+            }
+        });
+
+        const afterTableY = Math.max((doc.lastAutoTable?.finalY || 126) + 4, 146);
+        drawTotalsAndNotes(afterTableY);
+
+        doc.save(fileName);
+        return fileName;
+    }
+
+    const checkoutBtnPdf = document.getElementById("checkout-btn");
+    if (checkoutBtnPdf) {
+        const checkoutPdfClone = checkoutBtnPdf.cloneNode(true);
+        checkoutBtnPdf.replaceWith(checkoutPdfClone);
+        checkoutPdfClone.addEventListener("click", async () => {
+            if (cart.length === 0) {
+                alert("Tu carrito esta vacio.");
+                return;
+            }
+
+            const orderData = getCustomerOrderData(true);
+            if (!orderData) return;
+
+            const totals = calculateCartTotals(orderData.province);
+            updateOrderMeta(orderData.province);
+            const whatsappWindow = window.open("about:blank", "_blank");
+            const fileName = await downloadOrderPdfFromMockup(orderData, totals);
+            if (!fileName) {
+                if (whatsappWindow) whatsappWindow.close();
+                return;
+            }
+
+            const message = [
+                `Hola, soy ${orderData.customerFullName} de ${orderData.province}.`,
+                `Dirección de envío: ${orderData.customerAddress}.`,
+                `Acabo de generar mi pedido en PDF: ${fileName}.`,
+                "Voy a adjuntar el archivo descargado en este chat para confirmar mi compra.",
+                "",
+                `Items: ${totals.totalItems}`,
+                `Total estimado: ${formatCurrency(totals.total)}`
+            ].join("\n");
+
+            const whatsappMessage = [
+                "Hola, Curativa.",
+                "",
+                "He generado mi ficha de pago y voy a adjuntar el PDF descargado en este chat para confirmar mi pedido.",
+                "",
+                "• Cliente",
+                `${orderData.customerFullName}`,
+                "",
+                "• Envío",
+                `📍 ${orderData.province}`,
+                `🏠 ${orderData.customerAddress}`,
+                "",
+                "• Resumen del pedido",
+                `🧾 Ítems: ${totals.totalItems}`,
+                `💳 Total estimado: ${formatCurrency(totals.total)}`,
+                `📄 Archivo: ${fileName}`,
+                "",
+                "Quedo atento a la validación del pago."
+            ].join("\n");
+
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+            if (whatsappWindow) {
+                whatsappWindow.location.href = whatsappUrl;
+            } else {
+                window.open(whatsappUrl, "_blank");
+            }
+        });
+    }
+
+    updateOrderMeta();
+    updateCartUI();
 
     // Disable right-click, dragging and touch menu for all images globally
     document.addEventListener("contextmenu", (event) => {

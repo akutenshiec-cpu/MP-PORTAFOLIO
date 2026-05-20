@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portal de Co-Creación de Marcas: Brief interactivo para la construcción de identidades comerciales premium, gastronomía, leyes, moda y cosmética." />
+    <meta name="theme-color" content="#0B0C10" />
+    <title>Portal de Co-Creación & Clientes | MP Designs</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@400;500;600;700&family=Sacramento&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome & Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <!-- Floating Background Canvas for Aroma Particles -->
+    <canvas id="aroma-particles"></canvas>
+    
+    <!-- Ambient Blur Glows -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- Header Navigation -->
+    <header class="glass-header">
+         <div class="header-container">
+            <a href="../../index.html" class="back-portfolio-btn">
+                <i class="fas fa-arrow-left"></i> <span>Volver a Portafolio MP</span>
+            </a>
+            <div class="brand-logo-compact">
+                <svg class="compact-flask" viewBox="0 0 100 100" width="30" height="30">
+                    <path d="M50,15 L50,30 M40,30 L60,30 M35,30 L35,40 C35,60 20,80 20,85 C20,90 25,92 50,92 C75,92 80,90 80,85 C80,80 65,60 65,40 L65,30" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                    <circle cx="50" cy="65" r="10" fill="currentColor" opacity="0.3"/>
+                    <circle cx="45" cy="55" r="3" fill="currentColor"/>
+                    <circle cx="58" cy="68" r="4" fill="currentColor"/>
+                    <circle cx="48" cy="78" r="3" fill="currentColor"/>
+                </svg>
+                <span class="logo-text-compact" id="header-logo-text">MP <span class="logo-light">DESIGNS CREATIVE</span></span>
+            </div>
+            <div class="header-status">
+                <span class="pulse-dot"></span>
+                <span id="header-status-text">Laboratorio de Co-Creación</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Screen -->
+    <section id="welcome-screen" class="welcome-section fade-in">
+        <div class="welcome-card glass-card">
+            <div class="brand-crest">
+                <!-- Custom Botanical & Apothecary crest -->
+                <svg class="crest-svg" id="welcome-crest-svg" viewBox="0 0 200 200" width="130" height="130">
+                    <circle cx="100" cy="100" r="85" fill="none" stroke="var(--gold-primary)" stroke-width="2" stroke-dasharray="5,3"/>
+                    <circle cx="100" cy="100" r="75" fill="none" stroke="var(--gold-dark)" stroke-width="1"/>
+                    
+                    <!-- Apothecary Flask -->
+                    <path d="M100,50 L100,70 M85,70 L115,70 M80,70 L80,85 C80,110 55,135 55,145 C55,155 65,160 100,160 C135,160 145,155 145,145 C145,135 120,110 120,85 L120,70" fill="none" stroke="var(--gold-primary)" stroke-width="3" stroke-linecap="round"/>
+                    
+                    <!-- Liquid in Flask -->
+                    <path d="M70,120 C70,120 85,115 100,118 C115,121 130,120 130,120 C130,120 138,135 138,143 C138,151 125,153 100,153 C75,153 62,151 62,143 Z" fill="url(#liquid-gradient)" opacity="0.8"/>
+                    
+                    <!-- Botanical sprigs -->
+                    <path d="M50,110 Q35,80 50,50" fill="none" stroke="var(--sage-primary)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M150,110 Q165,80 150,50" fill="none" stroke="var(--sage-primary)" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="39" cy="80" r="3" fill="var(--sage-light)"/>
+                    <circle cx="43" cy="65" r="3" fill="var(--sage-light)"/>
+                    <circle cx="161" cy="80" r="3" fill="var(--sage-light)"/>
+                    <circle cx="157" cy="65" r="3" fill="var(--sage-light)"/>
+                    
+                    <defs>
+                        <linearGradient id="liquid-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="var(--gold-light)"/>
+                            <stop offset="100%" stop-color="var(--gold-dark)"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            
+            <h1 class="welcome-title">CREACIÓN DE <span class="accent-title">MARCAS DE AUTOR</span></h1>
+            <p class="welcome-tagline">BRIEF DE CO-CREACIÓN & PLANIFICACIÓN ESTRATÉGICA</p>
+            
+            <div class="welcome-intro-text">
+                <p>Bienvenido a tu crisol creativo. Este asistente interactivo diseñado por <strong>MP Designs</strong> destilará el alma, la psicología y la estética de tu marca para proyectar una propuesta comercial y regulatoria de altísimo valor.</p>
+                <p>Para comenzar, selecciona el sector o naturaleza de tu marca para cargar las bases creativas adecuadas:</p>
+            </div>
+            <div class="orientation-note">
+                <strong>Antes de empezar:</strong> esta cocreación no define la marca final. Sirve para orientar mejor el gusto, el tono, la dirección visual y las prioridades del proyecto antes del diseño formal.
+            </div>
+
+            <!-- Industry Category Selector -->
+            <div class="form-group-modern" style="max-width: 650px; margin: 0 auto 30px auto;">
+                <div class="category-selection-grid">
+                    <div class="category-card-select active" data-category="perfumeria">
+                        <div class="cat-icon"><i class="fas fa-flask"></i></div>
+                        <span>Perfumería & Cosmética</span>
+                    </div>
+                    <div class="category-card-select" data-category="gastronomia">
+                        <div class="cat-icon"><i class="fas fa-utensils"></i></div>
+                        <span>Gastronomía & Cocina</span>
+                    </div>
+                    <div class="category-card-select" data-category="abogados">
+                        <div class="cat-icon"><i class="fas fa-scale-balanced"></i></div>
+                        <span>Servicios Legales & Ley</span>
+                    </div>
+                    <div class="category-card-select" data-category="boutique">
+                        <div class="cat-icon"><i class="fas fa-shirt"></i></div>
+                        <span>Boutique & Moda</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="welcome-steps-overview">
+                <div class="step-badge-mini" id="badge-step-1"><i class="fas fa-flask"></i> 1. Esencia</div>
+                <div class="step-badge-mini" id="badge-step-2"><i class="fas fa-users"></i> 2. ADN & Ejes</div>
+                <div class="step-badge-mini" id="badge-step-3"><i class="fas fa-palette"></i> 3. Dirección Estética</div>
+                <div class="step-badge-mini" id="badge-step-4"><i class="fas fa-shield-halved"></i> 4. Prioridades & Canales</div>
+                <div class="step-badge-mini" id="badge-step-5"><i class="fas fa-wand-magic-sparkles"></i> 5. La Alquimia</div>
+            </div>
+
+            <button id="start-brief-btn" class="btn btn-gold btn-large glow-effect">
+                <span>Comenzar Cocreación</span> <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            
+            <p class="welcome-duration"><i class="far fa-clock"></i> Tiempo estimado: 6 minutos de inspiración</p>
+        </div>
+    </section>
+
+    <!-- Main Wizard Section (Hidden Initially) -->
+    <section id="wizard-screen" class="wizard-section hidden">
+        <div class="wizard-layout-container">
+            
+            <!-- Wizard Left Side: The Form -->
+            <div class="wizard-form-area">
+                <div class="wizard-card glass-card">
+                    
+                    <!-- Wizard Header & Progress Bar -->
+                    <div class="wizard-header">
+                        <div class="steps-tracker">
+                            <span class="step-num-indicator">Paso <span id="current-step-display">1</span> de 5</span>
+                            <h3 id="step-title-display">Esencia & Alma del Proyecto</h3>
+                        </div>
+                        
+                        <!-- Premium Liquid Progress Bar -->
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-liquid" id="step-progress-liquid"></div>
+                            <div class="progress-bar-backdrop"></div>
+                            <div class="progress-steps-nodes">
+                                <div class="step-node active" data-step="1"><i class="fas fa-flask"></i></div>
+                                <div class="step-node" data-step="2"><i class="fas fa-sliders"></i></div>
+                                <div class="step-node" data-step="3"><i class="fas fa-palette"></i></div>
+                                <div class="step-node" data-step="4"><i class="fas fa-shield-halved"></i></div>
+                                <div class="step-node" data-step="5"><i class="fas fa-wand-magic-sparkles"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 1: ESENCIA & CONCEPTO -->
+                    <div class="step-content-pane active" data-step="1">
+                        <div class="instruction-block">
+                            <span class="number-bubble">01</span>
+                            <div>
+                                <h4 id="step-1-heading">Definiendo la Base del Elíxir</h4>
+                                <p id="step-1-description">Comencemos por delimitar el nombre de la marca, los productos principales y la inspiración fundamental.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-brand-name" for="brand-name"><i class="fas fa-signature"></i> Nombre de la Marca</label>
+                            <input type="text" id="brand-name" class="premium-input" placeholder="Ej. Valverde & Co. / Ferjho Aromas" />
+                            <small id="hint-brand-name" class="input-hint">El nombre oficial tal como aparecerá en logotipos y soportes de marca.</small>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-brand-slogan" for="brand-slogan"><i class="fas fa-feather-pointed"></i> Slogan o Subtexto Sugerido</label>
+                            <input type="text" id="brand-slogan" class="premium-input" placeholder="Ej. Alquimia Olfativa / Perfumería de Autor" />
+                            <small id="hint-brand-slogan" class="input-hint">Una frase corta que define la categoría o filosofía del laboratorio.</small>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-products-group"><i class="fas fa-boxes-stacked"></i> Universo de Productos Primarios <span class="required-flag">(Selecciona los que apliquen)</span></label>
+                            <div class="interactive-grid-select" id="products-grid-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-brand-history" for="brand-history"><i class="fas fa-scroll"></i> El Origen y la Inspiración</label>
+                            <textarea id="brand-history" class="premium-textarea" placeholder="¿Cuál es la historia detrás de este laboratorio de aromas? Describe la chispa que dio vida a este proyecto..."></textarea>
+                            <small id="hint-brand-history" class="input-hint">Esto nos ayuda a redactar la narrativa de marca (Storytelling) y diseñar el ADN emocional.</small>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-values-group"><i class="fas fa-gem"></i> Valores Conceptuales Centrales <span class="required-flag">(Elige exactamente 3)</span></label>
+                            <div class="values-pill-container" id="values-pills-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: ADN & PÚBLICO OBJETIVO -->
+                    <div class="step-content-pane" data-step="2">
+                        <div class="instruction-block">
+                            <span class="number-bubble">02</span>
+                            <div>
+                                <h4 id="step-2-heading">Psicología & Audiencia del Laboratorio</h4>
+                                <p id="step-2-description">Entendamos el carácter psicológico de la marca y cómo conectaremos en cada punto de contacto.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-target-group"><i class="fas fa-users-viewfinder"></i> El Cliente Ideal (Target Visual)</label>
+                            <div class="target-grid" id="targets-grid-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-personality-group"><i class="fas fa-sliders"></i> Ejes de Personalidad de Marca</label>
+                            <p class="slider-intro-text" id="slider-intro-text-element">Desliza para posicionar tu marca entre estos conceptos opuestos:</p>
+                            
+                            <div class="slider-wrapper-lux">
+                                <div class="slider-labels">
+                                    <span class="slider-side-label">Clásico / Tradicional</span>
+                                    <span class="slider-side-label">Moderno / Vanguardia</span>
+                                </div>
+                                <input type="range" id="personality-slider-1" class="lux-range-slider" min="1" max="100" value="50" />
+                                <div class="slider-value-display">Equilibrio Perfecto (<span id="slider-1-val">50</span>%)</div>
+                            </div>
+
+                            <div class="slider-wrapper-lux">
+                                <div class="slider-labels">
+                                    <span class="slider-side-label">Místico / Ritual / Alquimia</span>
+                                    <span class="slider-side-label">Científico / Apotecario</span>
+                                </div>
+                                <input type="range" id="personality-slider-2" class="lux-range-slider" min="1" max="100" value="50" />
+                                <div class="slider-value-display">Equilibrio Perfecto (<span id="slider-2-val">50</span>%)</div>
+                            </div>
+
+                            <div class="slider-wrapper-lux">
+                                <div class="slider-labels">
+                                    <span class="slider-side-label">Artesanal / Calidez Orgánica</span>
+                                    <span class="slider-side-label">Lujo / Sofisticado / Premium</span>
+                                </div>
+                                <input type="range" id="personality-slider-3" class="lux-range-slider" min="1" max="100" value="50" />
+                                <div class="slider-value-display">Equilibrio Perfecto (<span id="slider-3-val">50</span>%)</div>
+                            </div>
+
+                            <div class="slider-wrapper-lux">
+                                <div class="slider-labels">
+                                    <span class="slider-side-label">Cercano / Familiar / Cotidiano</span>
+                                    <span class="slider-side-label">Exclusivo / Nicho / Selectivo</span>
+                                </div>
+                                <input type="range" id="personality-slider-4" class="lux-range-slider" min="1" max="100" value="50" />
+                                <div class="slider-value-display">Equilibrio Perfecto (<span id="slider-4-val">50</span>%)</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-tone-group"><i class="fas fa-bullhorn"></i> Tono de la Comunicación Escrita</label>
+                            <div class="tone-selectors" id="tones-grid-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: DIRECCIÓN ESTÉTICA & PREVISUALIZADOR -->
+                    <div class="step-content-pane" data-step="3">
+                        <div class="instruction-block">
+                            <span class="number-bubble">03</span>
+                            <div>
+                                <h4 id="step-3-heading">Estética & Alquimia Visual</h4>
+                                <p id="step-3-description">Llegamos a la fase de diseño puro. Elige los colores de tu marca y prueba tipografías en tiempo real.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-palette-group"><i class="fas fa-palette"></i> Paletas de Colores de Inspiración</label>
+                            <p class="palette-intro-text" id="palette-intro-text-element">Selecciona una de nuestras armonías cromáticas curadas para tu sector:</p>
+                            
+                            <div class="palettes-container" id="palettes-list-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+
+                        <!-- Live Typography Tester -->
+                        <div class="form-group-modern">
+                            <label id="label-typo-group"><i class="fas fa-font"></i> Tipografía & Personalidad del Logotipo</label>
+                            <p class="typo-intro-text" id="typo-intro-text-element">Escribe tu texto y observa cómo se expresa visualmente en diferentes estilos:</p>
+                            
+                            <div class="typo-input-container">
+                                <input type="text" id="typo-preview-input" class="premium-input text-center" value="Ferjho Aromas Lab" placeholder="Escribe aquí el nombre de la marca" />
+                            </div>
+
+                            <div class="typo-previews-grid">
+                                <!-- Option 1 -->
+                                <div class="typo-preview-card active" data-font="Cormorant Garamond" data-type="Editorial Serif">
+                                    <div class="typo-sample-display font-serif-cormorant" id="sample-cormorant">Ferjho Aromas Lab</div>
+                                    <div class="typo-meta">
+                                        <span class="typo-name">Cormorant Garamond</span>
+                                        <span class="typo-badge">Editorial & Lujo</span>
+                                    </div>
+                                    <p class="typo-desc">Serif humanista, clásica, muy fina. Perfecta para perfumería de nicho, transmite elegancia literaria e historia apotecaria.</p>
+                                </div>
+
+                                <!-- Option 2 -->
+                                <div class="typo-preview-card" data-font="Cinzel" data-type="Roman Luxury">
+                                    <div class="typo-sample-display font-serif-cinzel" id="sample-cinzel">FERJHO AROMAS LAB</div>
+                                    <div class="typo-meta">
+                                        <span class="typo-name">Cinzel / Cincelada</span>
+                                        <span class="typo-badge">Monárquico & Lujo</span>
+                                    </div>
+                                    <p class="typo-desc">Inspirada en inscripciones romanas imperiales. Transmite máxima autoridad, estabilidad, exclusividad y lujo atemporal.</p>
+                                </div>
+
+                                <!-- Option 3 -->
+                                <div class="typo-preview-card" data-font="Montserrat" data-type="Modern Geometric">
+                                    <div class="typo-sample-display font-sans-montserrat" id="sample-montserrat">FERJHO AROMAS LAB</div>
+                                    <div class="typo-meta">
+                                        <span class="typo-name">Montserrat (Geométrica)</span>
+                                        <span class="typo-badge">Limpio & Científico</span>
+                                    </div>
+                                    <p class="typo-desc">Sans-serif limpia, moderna y de proporciones estables. Ideal para la vertiente científica y de laboratorio tecnológico.</p>
+                                </div>
+
+                                <!-- Option 4 -->
+                                <div class="typo-preview-card" data-font="Sacramento" data-type="Artisanal Script">
+                                    <div class="typo-sample-display font-script-sacramento" id="sample-sacramento">Ferjho Aromas Lab</div>
+                                    <div class="typo-meta">
+                                        <span class="typo-name">Sacramento (Caligráfica)</span>
+                                        <span class="typo-badge">Artesanal & Íntimo</span>
+                                    </div>
+                                    <p class="typo-desc">Una caligrafía fina e íntima. Evoca recetas escritas a mano del maestro perfumista en su cuaderno personal de fórmulas.</p>
+                                </div>
+
+                                <div class="typo-preview-card" data-font="DM Serif Display" data-type="Soft Editorial Serif">
+                                    <div class="typo-sample-display font-serif-dm" id="sample-dm-serif">Ferjho Aromas Lab</div>
+                                    <div class="typo-meta">
+                                        <span class="typo-name">DM Serif Display</span>
+                                        <span class="typo-badge">Editorial & Amable</span>
+                                    </div>
+                                    <p class="typo-desc">Serif elegante con más calidez y cercanía. Funciona muy bien para marcas premium que quieren verse refinadas sin tanta rigidez.</p>
+                                </div>
+
+                                <div class="typo-preview-card" data-font="Space Grotesk" data-type="Contemporary Grotesk">
+                                    <div class="typo-sample-display font-sans-space" id="sample-space-grotesk">FERJHO AROMAS LAB</div>
+                                    <div class="typo-meta">
+                                        <span class="typo-name">Space Grotesk</span>
+                                        <span class="typo-badge">Digital & Contemporáneo</span>
+                                    </div>
+                                    <p class="typo-desc">Sans moderna, limpia y con carácter. Ideal para proyectos más frescos, visuales o orientados a un lenguaje digital actual.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-logo-style-group"><i class="fas fa-layer-group"></i> Estilo Visual Preferido para el Logotipo</label>
+                            <div class="logo-style-container" id="logo-style-grid-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+                        <div class="sector-visual-lab glass-subcard" id="sector-visual-lab">
+                            <div class="sector-lab-heading">
+                                <div>
+                                    <span class="sector-lab-kicker">PERSONALIZACION POR RUBRO</span>
+                                    <h5 id="sector-lab-title">Laboratorio Visual de Perfumeria</h5>
+                                </div>
+                                <div class="sector-lab-badge" id="sector-lab-badge">Etapa 1</div>
+                            </div>
+                            <p class="sector-lab-intro" id="sector-lab-intro">Aqui aterrizamos la identidad en recursos visuales mas concretos: monogramas, sistemas de firma y acabados para explorar una direccion mas atractiva.</p>
+                            <div class="sector-lab-placeholder hidden" id="sector-lab-placeholder">
+                                Esta capa avanzada se esta desarrollando por rubros. Por ahora la version ampliada esta enfocada en perfumeria y cosmetica.
+                            </div>
+
+                            <div id="sector-lab-content">
+                                <div class="form-group-modern compact-group">
+                                    <label for="signature-letter-input"><i class="fas fa-square-pen"></i> Letras o iniciales protagonistas</label>
+                                    <div class="signature-input-row">
+                                        <input type="text" id="signature-letter-input" class="premium-input signature-input" maxlength="4" placeholder="Ej. FA / V / LAB" />
+                                        <p class="signature-input-hint">Sirve para probar monogramas, letras entre recuadros o una firma corta dentro de la plantilla visual.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group-modern compact-group">
+                                    <label><i class="fas fa-draw-polygon"></i> Sistema de firma o cartucho</label>
+                                    <div class="visual-option-grid signature-template-grid" id="signature-template-grid-container">
+                                        <!-- Injected dynamically via JS -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group-modern compact-group" style="display: none;">
+                                    <label><i class="fas fa-wine-bottle"></i> Plantilla de frasco / etiqueta sugerida</label>
+                                    <div class="visual-option-grid bottle-template-grid" id="bottle-template-grid-container">
+                                        <!-- Injected dynamically via JS -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group-modern compact-group">
+                                    <label><i class="fas fa-sparkles"></i> Acabado y materialidad</label>
+                                    <div class="finish-chip-grid" id="finish-grid-container">
+                                        <!-- Injected dynamically via JS -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: PROPUESTA, REGULACIÓN & CANALES -->
+                    <div class="step-content-pane" data-step="4">
+                        <div class="instruction-block">
+                            <span class="number-bubble">04</span>
+                            <div>
+                                <h4 id="step-4-heading">Prioridades de Marca & Activacion</h4>
+                                <p id="step-4-description">En esta etapa definimos que piezas, prioridades y focos necesita la marca para salir al mercado con una direccion clara.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-value-prop" for="brand-value-prop"><i class="fas fa-lightbulb"></i> La Propuesta de Valor Única (El "Superpoder")</label>
+                            <input type="text" id="brand-value-prop" class="premium-input" placeholder="Ej. Elíxires botánicos formulados con precisión científica para balancear cuerpo y mente." />
+                            <small id="hint-value-prop" class="input-hint">¿Por qué el cliente te elegirá a ti en lugar de a marcas industriales?</small>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-regulatory-group"><i class="fas fa-compass-drafting"></i> Prioridades Clave para Desarrollar la Marca</label>
+                            <p class="checkbox-intro-text" id="regulatory-intro-text-element">Selecciona los frentes que mas te importa resolver primero dentro del brief y la construccion de marca:</p>
+                            
+                            <div class="modern-checkbox-list" id="regulatory-checklist-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-channels-group"><i class="fas fa-shop"></i> Canales Primarios de Distribución Comercial</label>
+                            <div class="channels-grid" id="channels-grid-container">
+                                <!-- Injected dynamically via JS based on selected Category -->
+                            </div>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <label id="label-references" for="brand-references"><i class="fas fa-compass"></i> Marcas Referentes o de Inspiración</label>
+                            <textarea id="brand-references" class="premium-input" rows="5" placeholder="Ej.&#10;Aesop - retail sobrio y tono editorial - https://www.aesop.com/&#10;Le Labo - sistema de etiquetas y naming - https://www.lelabofragrances.com/"></textarea>
+                            <small id="hint-references" class="input-hint">Puedes escribir varias referencias. Lo ideal es una por linea: nombre de marca, idea clave y enlace del dominio si lo tienes.</small>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: RESUMEN & ALQUIMIA FINAL (THE PORTRAIT MOODBOARD) -->
+                    <div class="step-content-pane" data-step="5">
+                        <div class="instruction-block">
+                            <span class="number-bubble">05</span>
+                            <div>
+                                <h4 id="step-5-heading">La Alquimia de Marca Completada</h4>
+                                <p id="step-5-description">Hemos condensado los componentes. A continuación tienes el retrato dinámico de la marca.</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-final-dashboard" id="dynamic-moodboard">
+                            <!-- Premium Header -->
+                            <div class="moodboard-header">
+                                <div class="brand-crest-mini">
+                                    <svg viewBox="0 0 100 100" width="40" height="40" style="color: var(--gold-primary);">
+                                        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3,2"/>
+                                        <path d="M50,20 L50,35 M40,35 L60,35 M35,35 L65,75 L35,75 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="moodboard-main-title font-serif-cormorant" id="summary-brand-display">Ferjho Aromas Lab</h4>
+                                    <p class="moodboard-subtitle" id="summary-slogan-display">Laboratorio de Alquimia Olfativa</p>
+                                </div>
+                                <div class="seal-complete">
+                                    <div class="rotating-seal-text">DESTILADO · PREMIUM · MP DESIGNS · 2026</div>
+                                    <div class="seal-icon"><i class="fas fa-check"></i></div>
+                                </div>
+                            </div>
+
+                            <div class="moodboard-grid-mosaic">
+                                <!-- Card 1: Colors & Typography -->
+                                <div class="mosaic-card col-span-2 flex-row-layout">
+                                    <div class="mosaic-section">
+                                        <span class="mosaic-eyebrow">Paleta Cromática Destilada</span>
+                                        <div class="moodboard-colors" id="summary-colors-strip">
+                                            <!-- Injected via JS -->
+                                        </div>
+                                        <p class="moodboard-palette-name" id="summary-palette-name">Alquimia Dorada</p>
+                                    </div>
+                                    <div class="mosaic-section border-left">
+                                        <span class="mosaic-eyebrow">Tipografía de Marca</span>
+                                        <h3 class="moodboard-font-preview" id="summary-font-preview">Ferjho Aromas Lab</h3>
+                                        <p class="moodboard-font-meta">Estilo: <span id="summary-font-style">Editorial Serif</span></p>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2: Core Values -->
+                                <div class="mosaic-card">
+                                    <span class="mosaic-eyebrow">Valores Fundamentales</span>
+                                    <ul class="moodboard-list" id="summary-values-list">
+                                        <!-- Injected via JS -->
+                                    </ul>
+                                </div>
+
+                                <!-- Card 3: Brand Personality -->
+                                <div class="mosaic-card col-span-2">
+                                    <span class="mosaic-eyebrow" id="summary-personality-eyebrow">Carácter Olfativo & Psicológico</span>
+                                    <div class="personality-radar-lite">
+                                        <div class="radar-bar-item">
+                                            <span class="radar-label">Vanguardia / Modernidad</span>
+                                            <div class="radar-track"><div class="radar-fill" id="radar-fill-1" style="width: 50%;"></div></div>
+                                        </div>
+                                        <div class="radar-bar-item">
+                                            <span class="radar-label">Apotecario / Ciencia</span>
+                                            <div class="radar-track"><div class="radar-fill" id="radar-fill-2" style="width: 50%;"></div></div>
+                                        </div>
+                                        <div class="radar-bar-item">
+                                            <span class="radar-label">Exclusividad / Lujo</span>
+                                            <div class="radar-track"><div class="radar-fill" id="radar-fill-3" style="width: 50%;"></div></div>
+                                        </div>
+                                        <div class="radar-bar-item">
+                                            <span class="radar-label">Nicho / Seleccionado</span>
+                                            <div class="radar-track"><div class="radar-fill" id="radar-fill-4" style="width: 50%;"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 4: Product Universe -->
+                                <div class="mosaic-card">
+                                    <span class="mosaic-eyebrow" id="summary-products-eyebrow">Universo de Aromas</span>
+                                    <div class="moodboard-tags" id="summary-products-list">
+                                        <!-- Injected via JS -->
+                                    </div>
+                                </div>
+                                <div class="mosaic-card">
+                                    <span class="mosaic-eyebrow">Sistema Visual Aplicado</span>
+                                    <div class="summary-visual-signature" id="summary-visual-signature">
+                                        <div class="signature-mark-box">FA</div>
+                                        <div class="signature-meta">
+                                            <strong id="summary-signature-style">Cartucho editorial</strong>
+                                            <span id="summary-finish-style">Tapa dorada satinada</span>
+                                        </div>
+                                    </div>
+                                    <div class="summary-bottle-card" id="summary-bottle-card" style="display: none;">
+                                        <div class="summary-bottle-shape bottle-shape-rect" id="summary-bottle-shape">
+                                            <div class="summary-bottle-cap" id="summary-bottle-cap"></div>
+                                            <div class="summary-bottle-label-frame frame-cartouche" id="summary-bottle-label-frame">
+                                                <span id="summary-bottle-letter">FA</span>
+                                            </div>
+                                        </div>
+                                        <p class="summary-bottle-caption" id="summary-bottle-caption">Frasco boticario contemporaneo</p>
+                                    </div>
+                                </div>
+
+                                <!-- Card 5: Core Narrative -->
+                                <div class="mosaic-card col-span-3">
+                                    <span class="mosaic-eyebrow" id="summary-story-eyebrow">La Chispa e Inspiración del Fundador</span>
+                                    <p class="moodboard-quote-text" id="summary-story-text">
+                                        "Un laboratorio donde cada fragancia cuenta una historia botánica, uniendo los saberes del boticario medieval con el refinamiento de la perfumería francesa moderna."
+                                    </p>
+                                </div>
+
+                                <!-- Card 6: Regulatory Checklist -->
+                                <div class="mosaic-card col-span-2">
+                                    <span class="mosaic-eyebrow" id="summary-regulatory-eyebrow">Prioridades para Sacar la Marca Adelante</span>
+                                    <div class="moodboard-checkboxes" id="summary-regulatory-list">
+                                        <!-- Injected via JS -->
+                                    </div>
+                                </div>
+
+                                <!-- Card 7: Commercial Channels -->
+                                <div class="mosaic-card">
+                                    <span class="mosaic-eyebrow" id="summary-channels-eyebrow">Ruta Comercial</span>
+                                    <div class="moodboard-tags" id="summary-channels-list">
+                                        <!-- Injected via JS -->
+                                    </div>
+                                </div>
+                                <div class="mosaic-card col-span-3 disclaimer-mosaic-card">
+                                    <span class="mosaic-eyebrow">Aclaracion de Referencia</span>
+                                    <p class="reference-disclaimer" id="reference-disclaimer">
+                                        Esto no es la marca final en si. Es una referencia visual y estrategica para alinear gustos, lenguaje, acabados y direccion creativa antes del diseno formal.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Footer Signature -->
+                            <div class="moodboard-footer-signature">
+                                <div>
+                                    <p class="architect-credit">Arquitectura Visual por <strong>Marco Pérez · MP Designs</strong></p>
+                                    <p class="date-credit">Fórmula de Marca Destilada el 18 de Mayo, 2026</p>
+                                </div>
+                                <div class="watermark-mp">MP.</div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Options -->
+                        <div class="submit-action-panel">
+                            <h4 id="action-panel-title">¿Qué deseas hacer con la Alquimia de Marca?</h4>
+                            <p class="action-description" id="action-panel-description">Puedes descargar el documento técnico oficial del Brief en formato PDF de alta resolución, o enviarlo de inmediato por WhatsApp a tu diseñador para iniciar la fase creativa.</p>
+                            
+                            <p class="action-disclaimer">El PDF final incluira esta personalizacion como referencia visual. No reemplaza la marca definitiva, pero si nos sirve para validar estilo, tono y camino creativo.</p>
+                            <div class="submit-btns-row">
+                                <button id="export-pdf-btn" class="btn btn-outline-light">
+                                    <i class="fas fa-file-pdf"></i> Descargar Brief PDF A4
+                                </button>
+                                <button id="send-whatsapp-btn" class="btn btn-gold glow-effect">
+                                    <i class="fab fa-whatsapp"></i> Enviar Brief por WhatsApp
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wizard Navigation Footer -->
+                    <div class="wizard-footer">
+                        <button id="prev-step-btn" class="btn btn-ghost disabled" disabled>
+                            <i class="fas fa-arrow-left"></i> Atrás
+                        </button>
+                        
+                        <div class="step-indicators-circles">
+                            <span class="indicator-circle active" data-step="1"></span>
+                            <span class="indicator-circle" data-step="2"></span>
+                            <span class="indicator-circle" data-step="3"></span>
+                            <span class="indicator-circle" data-step="4"></span>
+                            <span class="indicator-circle" data-step="5"></span>
+                        </div>
+
+                        <button id="next-step-btn" class="btn btn-gold">
+                            <span>Continuar</span> <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Wizard Right Side: "Fórmula en Destilación" Live Sidebar (Sticky) -->
+            <div class="wizard-sidebar-area">
+                <div class="live-formula-card glass-card">
+                    <div class="alchemy-bubble-animation">
+                        <div class="al-bubble bub-1"></div>
+                        <div class="al-bubble bub-2"></div>
+                        <div class="al-bubble bub-3"></div>
+                    </div>
+                    
+                    <h4 class="sidebar-card-title"><i class="fas fa-fire-burner"></i> FÓRMULA EN DESTILACIÓN</h4>
+                    <p class="sidebar-card-intro">Tus respuestas se condensan en tiempo real dentro del matraz alquímico.</p>
+                    
+                    <div class="formula-parameters-list">
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-flask-vial"></i> Nombre Base:</span>
+                            <strong class="param-value" id="live-param-name">Ferjho Aromas Lab</strong>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-feather"></i> Subtexto:</span>
+                            <strong class="param-value text-italic" id="live-param-slogan">Sin definir</strong>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label" id="live-param-products-label"><i class="fas fa-leaf" id="live-param-products-icon"></i> Ingredientes:</span>
+                            <strong class="param-value" id="live-param-products">Ninguno seleccionado</strong>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-heart"></i> Valores:</span>
+                            <strong class="param-value" id="live-param-values">Ninguno seleccionado</strong>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-sliders"></i> Ejes ADN:</span>
+                            <div class="mini-ejes-grid">
+                                <div class="mini-eje-line" title="Modernidad"><span>Mod:</span> <span id="live-param-eje1">50%</span></div>
+                                <div class="mini-eje-line" title="Ciencia"><span>Cie:</span> <span id="live-param-eje2">50%</span></div>
+                                <div class="mini-eje-line" title="Lujo"><span>Lux:</span> <span id="live-param-eje3">50%</span></div>
+                                <div class="mini-eje-line" title="Exclusividad"><span>Exc:</span> <span id="live-param-eje4">50%</span></div>
+                            </div>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-palette"></i> Armonía:</span>
+                            <div class="live-harmony-swatch" id="live-param-colors">
+                                <div class="l-swatch" style="background-color: #0B0C10;"></div>
+                                <div class="l-swatch" style="background-color: #1F2833;"></div>
+                                <div class="l-swatch" style="background-color: #D4AF37;"></div>
+                                <div class="l-swatch" style="background-color: #F4F6F9;"></div>
+                            </div>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-font"></i> Tipografía:</span>
+                            <strong class="param-value" id="live-param-font">Cormorant Garamond</strong>
+                        </div>
+                        <div class="param-item">
+                            <span class="param-label"><i class="fas fa-compass-drafting"></i> Prioridades:</span>
+                            <strong class="param-value" id="live-param-regulatory">0 prioridades clave</strong>
+                        </div>
+                    </div>
+
+                    <div class="alembic-status-box">
+                        <div class="spinner-alembic"></div>
+                        <span>Destilador activo: Extrayendo esencias...</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Success Celebration Overlay -->
+    <div id="success-overlay" class="celebration-overlay hidden">
+        <div class="celebration-card glass-card fade-in">
+            <div class="check-animation">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="font-serif-cormorant">¡Alquimia Exitosa!</h2>
+            <p>El Brief de construcción de marca para <strong>Ferjho Aromas Lab</strong> ha sido completamente destilado e integrado en el sistema.</p>
+            <div class="celebration-links">
+                <button id="success-pdf-btn" class="btn btn-outline-light"><i class="fas fa-file-pdf"></i> Descargar PDF A4</button>
+                <button id="success-whatsapp-btn" class="btn btn-gold"><i class="fab fa-whatsapp"></i> Abrir WhatsApp</button>
+            </div>
+            <button id="close-success-btn" class="btn btn-ghost">Revisar el Brief otra vez</button>
+        </div>
+    </div>
+
+    <!-- Technical Footer -->
+    <footer class="brief-footer">
+        <p>&copy; 2026 Marco Pérez · MP Designs. Todos los derechos reservados.</p>
+        <p class="dev-credit">Plataforma de Cocreación y Diseño de Identidades Olfativas bajo Normativas de Calidad.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
