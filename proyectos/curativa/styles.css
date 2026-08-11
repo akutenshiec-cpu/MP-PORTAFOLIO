@@ -3585,6 +3585,16 @@ body.cart-drawer-open > .fab-wrapper {
   transform: translateY(130px);
 }
 
+.portfolio-return {
+  border: 1px solid rgba(251, 170, 38, 0.28);
+  color: #f4c875;
+}
+
+.portfolio-return i {
+  margin-right: 0.35rem;
+  font-size: 0.68rem;
+}
+
 /* Final iPhone gesture guard: keep this last so premium hover rules cannot override it. */
 @media (hover: none), (pointer: coarse) {
   .carousel-track { touch-action: pan-y pinch-zoom !important; }

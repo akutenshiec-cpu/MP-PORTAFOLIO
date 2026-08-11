@@ -607,12 +607,10 @@ function changeSlide(dir) {
    5. MODAL WEB & FAB
    ========================================= */
 function openWeb(key) {
-    const data = webDB[key]; if(!data) return;
-    webTitle.innerText = data.title; webFrame.src = data.url; webLink.href = data.url;
-    history.pushState({ modal: 'web' }, null, "");
-    webModal.classList.add('active'); 
-    document.body.classList.add('modal-open');
-    document.body.classList.add('web-modal-active');
+    const data = webDB[key];
+    if (!data?.url) return;
+    const demoWindow = window.open(data.url, "_blank", "noopener,noreferrer");
+    if (demoWindow) demoWindow.opener = null;
 }
 
 function closeWebUI() {
