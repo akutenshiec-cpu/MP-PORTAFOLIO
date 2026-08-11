@@ -2951,3 +2951,9 @@ html, body, * { scrollbar-width: none !important; -ms-overflow-style: none !impo
     .marcobio-bio-item { padding: 9px 10px; }
     .marcobio-bio-item:first-child { padding: 14px; }
 }
+/* Clean social-card capture mode, enabled only with ?og-preview=1. */
+html.og-preview-mode body .fab-wrapper,
+html.og-preview-mode body #floating-bio-dock,
+html.og-preview-mode body #page-loading-overlay {
+  display: none !important;
+}

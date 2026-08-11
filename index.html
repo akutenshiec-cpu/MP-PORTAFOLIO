@@ -15,9 +15,9 @@
     <meta property="og:description" content="Marco Pérez Celi · Desarrollo experiencias web premium, identidades visuales y sistemas QMS/ERP a medida para operaciones reales. Loja, Ecuador." />
     <meta property="og:url" content="https://mpdesigns.xyz/" />
     <meta property="og:updated_time" content="2026-08-10T22:00:00-05:00" />
-    <meta property="og:image" content="https://mpdesigns.xyz/images/mp-dev-studio-share-2026.jpg" />
-    <meta property="og:image:url" content="https://mpdesigns.xyz/images/mp-dev-studio-share-2026.jpg" />
-    <meta property="og:image:secure_url" content="https://mpdesigns.xyz/images/mp-dev-studio-share-2026.jpg" />
+    <meta property="og:image" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg" />
+    <meta property="og:image:url" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg" />
+    <meta property="og:image:secure_url" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg" />
     <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -25,9 +25,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="MP Dev Studio — Web Premium, Branding &amp; Sistemas" />
     <meta name="twitter:description" content="Experiencias web premium, identidad visual y sistemas QMS/ERP a medida desde Loja, Ecuador." />
-    <meta name="twitter:image" content="https://mpdesigns.xyz/images/mp-dev-studio-share-2026.jpg" />
+    <meta name="twitter:image" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg" />
     <meta name="twitter:image:alt" content="MP Dev Studio · Development, Design, Systems" />
     <title>Dev Studio | Web Premium y Sistemas a Medida</title>
+    <script>
+      if (new URLSearchParams(window.location.search).has("og-preview")) {
+        document.documentElement.classList.add("og-preview-mode");
+      }
+    </script>
     <style>
         body {
             margin: 0;
@@ -43,7 +48,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" href="images/mp-dev-studio-mark.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=20260810-hero-preview" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script type="application/ld+json">
     {
@@ -55,7 +60,7 @@
           "name": "MP Dev Studio",
           "url": "https://mpdesigns.xyz/",
           "logo": "https://mpdesigns.xyz/images/mp-dev-studio-mark.svg",
-          "image": "https://mpdesigns.xyz/images/mp-dev-studio-share-2026.jpg",
+          "image": "https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg",
           "description": "Desarrollo web premium, sistemas empresariales QMS y ERP a medida, branding y diseño editorial.",
           "telephone": "+593963036594",
           "email": "marcod.pc2021@gmail.com",
@@ -78,6 +83,11 @@
           "name": "MP Dev Studio",
           "inLanguage": "es-EC",
           "publisher": { "@id": "https://mpdesigns.xyz/#studio" }
+        }
+        html.og-preview-mode .fab-wrapper,
+        html.og-preview-mode #floating-bio-dock,
+        html.og-preview-mode #page-loading-overlay {
+            display: none !important;
         }
       ]
     }
