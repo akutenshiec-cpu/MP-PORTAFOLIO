@@ -225,6 +225,43 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function restorePageScroll() {
+        const visibleModal = document.querySelector(".new-modal-overlay:not(.hidden)");
+        if (!visibleModal) {
+            document.body.classList.remove("no-scroll", "cart-drawer-open");
+            document.documentElement.style.removeProperty("overflow");
+            document.body.style.removeProperty("overflow");
+            document.body.style.removeProperty("position");
+            document.body.style.removeProperty("touch-action");
+        }
+    }
+
+    function closeNavigationSurfaces() {
+        closeFabMenu();
+        closeMobileCategoryMenu();
+        if (mobileNavOverlay) {
+            mobileNavOverlay.classList.remove("active");
+            mobileNavOverlay.classList.add("hidden");
+        }
+        restorePageScroll();
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+        link.addEventListener("click", (event) => {
+            const hash = link.getAttribute("href");
+            if (!hash || hash === "#") return;
+            const target = document.querySelector(hash);
+            if (!target) return;
+
+            event.preventDefault();
+            closeNavigationSurfaces();
+            requestAnimationFrame(() => {
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+                if (window.history?.replaceState) window.history.replaceState(null, "", hash);
+            });
+        });
+    });
+
     if (mobileCategoryToggle && mobileCategoryMenu) {
         mobileCategoryToggle.setAttribute("aria-expanded", "false");
         mobileCategoryToggle.addEventListener("click", () => {
@@ -397,6 +434,31 @@ document.addEventListener("DOMContentLoaded", () => {
             const dragThreshold = 8;
             const clampScroll = (value) => Math.max(0, Math.min(value, track.scrollWidth - track.clientWidth));
             const isDesktopCarousel = () => desktopQuery.matches;
+
+            // iOS may emit a click after a vertical page swipe that began on a card.
+            // Track the complete touch gesture independently from Pointer Events.
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchMoved = false;
+            track.addEventListener("touchstart", (event) => {
+                const touch = event.touches[0];
+                if (!touch) return;
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                touchMoved = false;
+            }, { passive: true });
+            track.addEventListener("touchmove", (event) => {
+                const touch = event.touches[0];
+                if (!touch) return;
+                const deltaX = touch.clientX - touchStartX;
+                const deltaY = touch.clientY - touchStartY;
+                if (Math.hypot(deltaX, deltaY) > 7) touchMoved = true;
+            }, { passive: true });
+            track.addEventListener("touchend", () => {
+                if (!touchMoved) return;
+                track.dataset.dragged = "true";
+                window.setTimeout(() => delete track.dataset.dragged, 350);
+            }, { passive: true });
 
             const stopTrackAnimation = () => {
                 if (rafId) {

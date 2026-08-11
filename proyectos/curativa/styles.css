@@ -86,6 +86,13 @@ body.no-scroll {
   overflow: hidden;
 }
 
+/* Los menús de navegación no deben bloquear el desplazamiento de la página. */
+body.category-menu-open {
+  overflow-y: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -3576,6 +3583,40 @@ body.cart-drawer-open > .fab-wrapper {
 .hero-nav {
   margin-top: 0.7rem;
   transform: translateY(130px);
+}
+
+/* Final iPhone gesture guard: keep this last so premium hover rules cannot override it. */
+@media (hover: none), (pointer: coarse) {
+  .carousel-track { touch-action: pan-y pinch-zoom !important; }
+  .carousel-card:hover,
+  .carousel-card:active { transform: none !important; }
+  .carousel-card:hover .card-thumb img,
+  .carousel-card:active .card-thumb img { transform: none !important; }
+}
+
+/* Touch devices: vertical page scrolling wins; hover zoom must never stick on iOS. */
+@media (hover: none), (pointer: coarse) {
+  .carousel-track {
+    touch-action: pan-y pinch-zoom;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .carousel-card,
+  .clickable-card,
+  .card-thumb,
+  .card-thumb img {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .carousel-card:hover,
+  .carousel-card:active {
+    transform: none;
+  }
+
+  .carousel-card:hover .card-thumb img,
+  .carousel-card:active .card-thumb img {
+    transform: none;
+  }
 }
 
 .hero-carousel > .hero-progress-bar {
