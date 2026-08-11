@@ -1,8 +1,41 @@
 window.MPPortfolioData = {
+    studioBrand: {
+        rotateMs: 6200,
+        variants: [
+            {
+                name: "MP DEV STUDIO",
+                tagline: "DEVELOPMENT | DESIGN",
+                accent: "gold",
+                nameScale: 1,
+                tagScale: 1
+            },
+            {
+                name: "MP DEV STUDIO",
+                tagline: "Sistemas · Web · Branding premium",
+                accent: "copper",
+                nameScale: 1,
+                tagScale: 1
+            },
+            {
+                name: "MP DEV · STUDIO",
+                tagline: "Visual Architect · Development & design",
+                accent: "split",
+                nameScale: 1,
+                tagScale: 1
+            },
+            {
+                name: "MP DEV STUDIO",
+                tagline: "ARCSA & ACESS · Packaging · Sistemas",
+                accent: "wine",
+                nameScale: 1,
+                tagScale: 1
+            }
+        ]
+    },
     pageConfig: {
         sectionOrder: ["hero", "servicios", "webs", "branding", "promo", "ciencia", "planes", "contacto"],
         hiddenSections: [],
-        heroStatusText: "Disponible 2026"
+        heroStatusText: ""
     },
     contentBlocks: {
         planes: {
@@ -21,9 +54,8 @@ window.MPPortfolioData = {
             instagram: "https://www.instagram.com/neckarc"
         },
         footer: {
-            brandTitle: "Marco Daniel Pérez Celi",
             brandDescription:
-                "Desarrollo experiencias web premium y sistemas empresariales a medida. Diseño editorial, criterio técnico y software útil para operación real.",
+                "MP Dev Studio — desarrollo web premium, sistemas empresariales a medida, branding y diseño editorial con criterio técnico.",
             services: [
                 { text: "Landings premium", href: "#webs" },
                 { text: "Catálogos web", href: "#webs" },
@@ -35,7 +67,7 @@ window.MPPortfolioData = {
                 { text: "marcod.pc2021@gmail.com", href: "mailto:marcod.pc2021@gmail.com" },
                 { text: "@neckarc", href: "https://www.instagram.com/neckarc" }
             ],
-            copy: "© 2026 Marco Pérez · Loja, Ecuador. Diseño, desarrollo y sistemas para negocios que necesitan valor real."
+            copy: "© 2026 MP Dev Studio · Loja, Ecuador. Development, design y sistemas para negocios que necesitan valor real."
         }
     },
     sectionMeta: {
@@ -92,20 +124,18 @@ window.MPPortfolioData = {
         autoplayMs: 0,
         slides: [
             {
-                title: "MARCO PÉREZ",
-                role: "LANDINGS PREMIUM // QMS // ERP",
+                brandVariant: 0,
                 description:
                     "Diseño experiencias web de alto valor y construyo sistemas operativos a medida para negocios que necesitan claridad, control y presencia premium.",
                 image: "images/foto-hq.jpg",
-                imageAlt: "Marco Pérez",
+                imageAlt: "MP Dev Studio",
                 ctaPrimaryText: "Explorar portafolio",
                 ctaPrimaryLink: "#webs",
                 ctaSecondaryText: "Ver sistemas",
                 ctaSecondaryLink: "#servicios"
             },
             {
-                title: "EXPERIENCIAS Y SISTEMAS",
-                role: "CONVERSIÓN VISUAL // OPERACIÓN SERIA",
+                brandVariant: 2,
                 description:
                     "Desde una landing de validación hasta un ERP enfocado en calidad, ventas y trazabilidad: el stack cambia, la exigencia de diseño no.",
                 image: "images/curativa-thumb.png",
@@ -120,11 +150,13 @@ window.MPPortfolioData = {
     webs: {
         elementos: { title: "Jardín 5 Elementos", url: "proyectos/5elementos/index.html" },
         curativa: { title: "Curativa E-Commerce", url: "proyectos/curativa/index.html" },
-        curarte: { title: "CurArte Experience", url: "https://curarteloja.com" }
+        curarte: { title: "CurArte Experience", url: "https://curarteloja.com" },
+        maureen: { title: "Cotización Maureen (regulatorio)", url: "proyectos/Cotización/Maureen/index.html" },
     },
     galleries: {
         curativa: {
             title: "Curativa Cosmética",
+            rubro: "Identidad y E-commerce",
             summary:
                 "Identidad completa y ecosistema visual para cosmética natural: manual de marca, packaging y piezas para retail y entorno digital.",
             images: [
@@ -144,6 +176,7 @@ window.MPPortfolioData = {
         },
         tiny: {
             title: "Tiny Melts",
+            rubro: "Branding de producto",
             summary: "Brand board, logotipo y campaña visual para una marca artesanal con tono cálido y memorable.",
             images: [
                 "images/tinymeltsbrandboard-hq.png",
@@ -154,21 +187,25 @@ window.MPPortfolioData = {
         },
         finca: {
             title: "Finca Pindaca",
+            rubro: "Identidad agrícola",
             summary: "Identidad agrícola enfocada en origen, confianza de marca y aplicaciones de producto.",
             images: ["images/finca-hq.jpeg"]
         },
         encuentros: {
             title: "Los Encuentros NET",
+            rubro: "Identidad corporativa",
             summary: "Sistema visual corporativo para proveedor local de internet, con aplicaciones técnicas y señalética.",
             images: ["images/losencuentros-hq.png", "images/1.png"]
         },
         flyer: {
             title: "Campaña Jardín 5 Elementos",
+            rubro: "Publicidad digital",
             summary: "Serie promocional para eventos, talleres y activaciones con una dirección visual inmersiva.",
             images: ["images/5elementos-hq.jpg", "images/talleresvacacionales-hq.jpg", "images/halloween.jpg"]
         },
         cultura: {
             title: "Cultura Saraguro",
+            rubro: "Fotografía y editorial",
             summary: "Serie editorial inspirada en patrimonio, identidad cultural y territorio.",
             images: [
                 "images/Saraguro1-hq.jpg",
@@ -179,11 +216,13 @@ window.MPPortfolioData = {
         },
         science: {
             title: "Ilustración Científica",
+            rubro: "Divulgación",
             summary: "Láminas naturalistas en alta definición para divulgación, documentación y lectura editorial.",
             images: ["images/caracol-hq.jpg", "images/cangrejo1-hq.jpg", "images/tipula-hq.jpg"]
         },
         etiquetas: {
             title: "Etiquetas y Packaging",
+            rubro: "Impresos comerciales",
             summary: "Sistemas de etiquetado listos para imprenta, normativa y consistencia de línea.",
             images: [
                 "images/etiqueta1.png",
@@ -197,16 +236,19 @@ window.MPPortfolioData = {
         },
         llavero: {
             title: "Merchandising",
+            rubro: "Productos promocionales",
             summary: "Aplicación de marca en objeto promocional y pieza de activación.",
             images: ["images/llavero.jpg"]
         },
         prototype: {
             title: "PROTOTYP3D",
+            rubro: "Identidad tech",
             summary: "Identidad para marca tecnológica con énfasis industrial y comercial.",
             images: ["images/prototype.png", "images/tarjetaprototyp3d.png"]
         },
         editorial: {
             title: "Editorial y Manuales",
+            rubro: "Maquetación",
             summary: "Maquetación de materiales largos, manuales visuales y contenidos promocionales de alta lectura.",
             images: ["images/Manual1-hq.png", "images/talleresvacacionales-hq.jpg"]
         }
@@ -237,7 +279,7 @@ window.MPPortfolioData = {
                 description:
                     "Sistema QMS base para equipos que inician trazabilidad, control documental y gestión de lotes.",
                 image: "images/itera_dashboard.png",
-                imageAlt: "Implementación ITERA LITE",
+                imageAlt: "Dashboard actual de ITERA con alertas operativas y estado de lotes",
                 badge: "QMS Base",
                 tags: ["Trazabilidad", "Lotes", "QMS"],
                 order: 1,
@@ -250,7 +292,7 @@ window.MPPortfolioData = {
                 description:
                     "Gestión total de inventarios, ventas, documentos y reportes para operaciones B2B y B2C con criterio industrial.",
                 image: "images/itera_ventas_crm.png",
-                imageAlt: "ITERA ERP Premium",
+                imageAlt: "Vista actual de ventas y pedidos en ITERA ERP Premium",
                 badge: "Full Suite",
                 tags: ["ERP", "Operación", "Industrial"],
                 order: 2,
@@ -304,7 +346,40 @@ window.MPPortfolioData = {
                 badge: "Premium",
                 tags: ["Demo Real", "UI/UX", "Editorial"],
                 order: 3,
-                visible: true
+                visible: true,
+                buyEnabled: true
+            },
+            {
+                id: "maureen",
+                type: "web",
+                title: "Cotización Maureen · Regulatorio",
+                description:
+                    "Propuesta interactiva: registros, POES, BPM, notificación sanitaria por categorías y rol de representante técnica + calidad.",
+                image: "images/curativa-thumb.png",
+                imageAlt: "Cotización Maureen",
+                overlayText: "Abrir configurador",
+                overlayIcon: "fa-flask",
+                badge: "Bioquímica",
+                tags: ["POES", "BPM", "ARCSA"],
+                order: 4,
+                visible: false,
+                buyEnabled: true
+            },
+            {
+                id: "marco",
+                type: "bio",
+                title: "Currículum interactivo",
+                description:
+                    "Currículum profesional interactivo: desarrollo de software (QMS & ERP), branding/packaging e ilustración científica con precisión morfológica.",
+                image: "images/foto-hq.jpg",
+                imageAlt: "Currículum interactivo",
+                overlayText: "Abrir currículum",
+                overlayIcon: "fa-id-card",
+                badge: "Visual Architect & Dev",
+                tags: ["Sistemas", "Branding", "Ilustración"],
+                order: 5,
+                visible: false,
+                buyEnabled: false
             }
         ],
         branding: [
@@ -357,6 +432,7 @@ window.MPPortfolioData = {
                 id: "encuentros",
                 type: "gallery",
                 title: "Los Encuentros NET",
+            rubro: "Identidad corporativa",
                 description:
                     "Identidad corporativa para ISP local con aplicaciones de señalética y comunicación técnica.",
                 image: "images/losencuentros-thumb.png",
@@ -372,6 +448,7 @@ window.MPPortfolioData = {
                 id: "prototype",
                 type: "gallery",
                 title: "PROTOTYP3D",
+            rubro: "Identidad tech",
                 description:
                     "Identidad para marca tecnológica con acento industrial, comercial y de producto.",
                 image: "images/prototype.png",
@@ -387,6 +464,7 @@ window.MPPortfolioData = {
                 id: "finca",
                 type: "gallery",
                 title: "Finca Pindaca",
+            rubro: "Identidad agrícola",
                 description:
                     "Construcción de marca agrícola pensada para origen, confianza y aplicaciones de empaque.",
                 image: "images/finca-thumb.jpeg",
@@ -419,6 +497,7 @@ window.MPPortfolioData = {
                 id: "cultura",
                 type: "gallery",
                 title: "Cultura Saraguro",
+            rubro: "Fotografía y editorial",
                 description:
                     "Serie gráfica y editorial con foco en identidad cultural, patrimonio y lenguaje visual.",
                 image: "images/Saraguro1-thumb.jpg",

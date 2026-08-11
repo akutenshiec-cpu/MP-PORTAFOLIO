@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!fabMenu || !fabBtn) return;
         fabMenu.classList.remove("active");
         fabBtn.classList.remove("active");
+        fabBtn.setAttribute("aria-expanded", "false");
         const icon = fabBtn.querySelector("i");
         if (icon) {
             icon.classList.remove("fa-times");
@@ -167,9 +168,12 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeFab = closeFabMenu;
 
     if (fabBtn && fabMenu) {
+        fabBtn.setAttribute("aria-expanded", "false");
         fabBtn.addEventListener("click", () => {
             const isActive = fabMenu.classList.toggle("active");
             fabBtn.classList.toggle("active", isActive);
+            fabBtn.setAttribute("aria-expanded", String(isActive));
+            if (isActive) closeMobileCategoryMenu();
             const icon = fabBtn.querySelector("i");
             if (icon) {
                 icon.classList.toggle("fa-bars", !isActive);
@@ -212,6 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!mobileCategoryMenu || !mobileCategoryToggle) return;
         mobileCategoryMenu.classList.add("hidden");
         mobileCategoryToggle.setAttribute("aria-expanded", "false");
+        mobileCategoryToggle.classList.remove("active");
+        document.body.classList.remove("category-menu-open");
+        const icon = mobileCategoryToggle.querySelector("i");
+        if (icon) {
+            icon.classList.remove("fa-times");
+            icon.classList.add("fa-th-large");
+        }
     }
 
     if (mobileCategoryToggle && mobileCategoryMenu) {
@@ -220,6 +231,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const isHidden = mobileCategoryMenu.classList.contains("hidden");
             mobileCategoryMenu.classList.toggle("hidden", !isHidden);
             mobileCategoryToggle.setAttribute("aria-expanded", String(isHidden));
+            mobileCategoryToggle.classList.toggle("active", isHidden);
+            document.body.classList.toggle("category-menu-open", isHidden);
+            if (isHidden) closeFabMenu();
+            const icon = mobileCategoryToggle.querySelector("i");
+            if (icon) {
+                icon.classList.toggle("fa-th-large", !isHidden);
+                icon.classList.toggle("fa-times", isHidden);
+            }
         });
     }
 
@@ -241,6 +260,12 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!fabMenu || !fabBtn) return;
         if (fabMenu.contains(event.target)) return;
         closeFabMenu();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        closeFabMenu();
+        closeMobileCategoryMenu();
     });
 
     function createGeneratedThumb(name, sectionName) {
@@ -302,26 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSlide = 0;
     let slideInterval;
     const slideDuration = 5000;
-    let heroMobileControls = null;
-
-    function relocateHeroControls() {
-        if (!heroNav || !heroProgressBar || !slides.length) return;
-
-        const activeSlide = slides[currentSlide] || document.querySelector(".hero-slide.active");
-        const activeContent = activeSlide ? activeSlide.querySelector(".hero-slide-content") : null;
-        const activeText = activeContent ? activeContent.querySelector(".hero-text") : null;
-        if (!activeContent || !activeText) return;
-
-        if (!heroMobileControls) {
-            heroMobileControls = document.createElement("div");
-            heroMobileControls.className = "hero-mobile-controls";
-        }
-
-        heroMobileControls.appendChild(heroNav);
-        heroMobileControls.appendChild(heroProgressBar);
-        activeText.appendChild(heroMobileControls);
-    }
-
     function showSlide(index) {
         if (!slides.length) return;
 
@@ -334,8 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         slides[currentSlide].classList.add("active");
         if (dots[currentSlide]) dots[currentSlide].classList.add("active");
-        relocateHeroControls();
-
         if (progressBar) {
             progressBar.style.transition = "none";
             progressBar.style.width = "0%";
@@ -371,8 +374,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
-
-    window.addEventListener("resize", relocateHeroControls);
 
     document.querySelectorAll(".carousel-wrapper").forEach((wrapper) => {
         const track = wrapper.querySelector(".carousel-track");
@@ -517,12 +518,17 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!modal) return;
         modal.classList.remove("hidden");
         document.body.classList.add("no-scroll");
+        if (modalId === "cart-modal") {
+            document.body.classList.add("cart-drawer-open");
+            if (window.matchMedia("(max-width: 600px)").matches) setMobileCheckoutStep(1);
+        }
     }
 
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
         modal.classList.add("hidden");
+        if (modalId === "cart-modal") document.body.classList.remove("cart-drawer-open");
         document.body.classList.remove("no-scroll");
     }
 
@@ -605,7 +611,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const orderDeliveryLabelEl = document.getElementById("order-delivery-label");
     const CONTACTS = {
         brand: "CURATIVA",
-        studio: "MP Designs · Marco Pérez",
+        studio: "MP Dev Studio",
         whatsappLabel: "+593 963 036 594",
         whatsappUrl: "https://wa.me/593963036594",
         email: "marcod.pc2021@gmail.com",
@@ -711,27 +717,23 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    function buildPrintableDocument(orderData, totals) {
+    function buildPrintableDocument(orderData, totals, embeddedLogo = "") {
         const today = new Date().toLocaleDateString("es-EC", {
             year: "numeric",
             month: "long",
             day: "numeric"
         });
-        const rows = cart.map((item, index) => `
+        const rows = cart.map((item) => `
             <tr>
-                <td>${index + 1}</td>
-                <td>${escapeHtml(item.name)}</td>
-                <td>${item.qty}</td>
-                <td>${formatCurrency(item.price)}</td>
-                <td>${formatCurrency(item.qty * item.price)}</td>
+                <td><strong>${escapeHtml(item.name)}</strong><br><span>Producto botánico Curativa</span></td>
+                <td class="center">${item.qty}</td>
+                <td class="right">${formatCurrency(item.price)}</td>
+                <td class="right"><strong>${formatCurrency(item.qty * item.price)}</strong></td>
             </tr>
         `).join("");
-        const shippingLabel = totals.shipping == null
-            ? "Por confirmar"
-            : totals.shipping === 0
-                ? "Sin recargo local"
-                : "Envío nacional estimado";
         const shippingValue = totals.shipping == null ? "-" : formatCurrency(totals.shipping);
+        const orderReference = getOrderReference();
+        const whatsappText = encodeURIComponent(`Hola, adjunto mi comprobante de pago para el pedido ${orderReference}.`);
 
         return `<!DOCTYPE html>
 <html lang="es">
@@ -739,92 +741,49 @@ document.addEventListener("DOMContentLoaded", () => {
 <meta charset="UTF-8">
 <title>Pedido Curativa</title>
 <style>
-  @page { size: A4 landscape; margin: 16mm; }
+  @page { size: A4 portrait; margin: 12mm; }
   * { box-sizing: border-box; }
-  body { margin: 0; font-family: Arial, sans-serif; color: #2a2336; background: #ffffff; }
-  .sheet { width: 100%; min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; gap: 12mm; }
-  .header { display: flex; justify-content: space-between; gap: 12mm; padding-bottom: 6mm; border-bottom: 1px solid #d8cfc5; }
-  .brand { display: flex; align-items: center; gap: 6mm; }
-  .brand-logo { width: 42mm; max-height: 22mm; object-fit: contain; }
-  .brand-copy { display: grid; gap: 1mm; }
-  .brand h1 { margin: 0; font-size: 28px; letter-spacing: 0.18em; }
-  .brand p, .meta p, .footer p { margin: 4px 0 0; font-size: 12px; line-height: 1.5; color: #5b5168; }
-  .meta { text-align: right; }
-  .hero-box { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10mm; align-items: start; }
-  .card { border: 1px solid #e7dfd6; border-radius: 14px; padding: 6mm; background: #fcfaf7; }
-  .card h2 { margin: 0 0 4mm; font-size: 18px; letter-spacing: 0.04em; }
-  .table { width: 100%; border-collapse: collapse; }
-  .table th { text-align: left; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #6a5f76; padding: 0 0 3mm; }
-  .table td { padding: 3.5mm 0; border-top: 1px solid #ece5dd; font-size: 13px; }
-  .table th:last-child, .table td:last-child { text-align: right; }
-  .table th:nth-last-child(2), .table td:nth-last-child(2) { text-align: right; }
-  .summary { display: grid; gap: 3mm; }
-  .summary-line { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #4f455c; }
-  .summary-line.total { margin-top: 3mm; padding-top: 3mm; border-top: 1px solid #d8cfc5; font-size: 16px; font-weight: 700; color: #2a2336; }
-  .notes { font-size: 12px; line-height: 1.6; color: #5f566b; }
-  .footer { display: flex; justify-content: space-between; gap: 10mm; padding-top: 5mm; border-top: 1px solid #d8cfc5; font-size: 11px; color: #5b5168; }
+  body { margin: 0; padding: 20px; font-family: Arial, sans-serif; color: #352d3d; background: #eee8e1; line-height: 1.55; }
+  .sheet { max-width: 800px; margin: auto; padding: 42px; background: #fff; box-shadow: 0 8px 30px rgba(33,22,47,.08); }
+  .header { display: flex; justify-content: space-between; gap: 30px; padding-bottom: 20px; border-bottom: .75px solid #e7e1da; }
+  .brand { display: flex; align-items: flex-start; gap: 16px; }
+  .brand-logo { width: 76px; height: 76px; object-fit: contain; }
+  .brand h1 { margin: 0; color: #21162f; font-size: 28px; letter-spacing: .12em; }
+  .brand p,.meta p { margin: 3px 0; color: #6f6677; font-size: 12px; }
+  .meta { text-align: right; } .meta h2 { margin: 0; color: #21162f; font-size: 18px; }
+  .status { display: inline-block; margin-top: 8px; padding: 5px 12px; border: .75px solid #ead18e; border-radius: 99px; background: #fff9e8; color: #8f5a13; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .notice { margin: 24px 0; padding: 17px 20px; border-left: 2px solid #25a95b; border-radius: 3px; background: #f7f9f8; }
+  .notice h3,.section-title { margin: 0 0 7px; color: #21162f; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .notice p { margin: 0 0 11px; color: #5d5662; font-size: 12px; }
+  .wa-contact { margin: 0; color: #4f4854; font-size: 11px; }
+  .wa-contact a { color: #187a42; font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
+  .customer { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; padding: 18px 20px; border-radius: 8px; background: #faf8f5; }
+  .customer p,.bank p { margin: 3px 0; color: #554e5a; font-size: 12px; }
+  table { width: 100%; border-collapse: collapse; } th,td { padding: 11px 8px; border-bottom: .65px solid #e9e3dc; text-align: left; font-size: 12px; }
+  th { color: #746b7d; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; } td span { color: #8b828f; font-size: 10px; }
+  .right { text-align: right; } .center { text-align: center; }
+  .payment { display: grid; grid-template-columns: 1fr .82fr; gap: 24px; align-items: start; margin-top: 25px; }
+  .bank { padding: 17px; border-radius: 8px; background: #faf8f5; } .totals td { padding: 8px; }
+  .totals .grand td { padding-top: 12px; border: 0; color: #21162f; font-size: 15px; font-weight: 800; }
+  .footer { margin-top: 28px; padding-top: 18px; border-top: .75px solid #e7e1da; color: #7b7281; font-size: 11px; text-align: center; } .footer p { margin: 3px; }
 </style>
 </head>
 <body>
   <div class="sheet">
     <header class="header">
       <div class="brand">
-        <img src="image/logo_curativa_hero.svg" alt="Logo Curativa" class="brand-logo">
-        <div class="brand-copy">
-        <h1>${escapeHtml(CONTACTS.brand)}</h1>
-        <p>Catálogo comercial · Vista previa para impresión / PDF</p>
-        <p>${escapeHtml(CONTACTS.studio)}</p>
-        </div>
+        <img src="${embeddedLogo || "image/logo_curativa_hero.svg"}" alt="Logo Curativa" class="brand-logo">
+        <div><h1>CURATIVA</h1><p>Cosmética botánica artesanal</p><p>Loja, Ecuador</p><p>${escapeHtml(CONTACTS.email)} · ${escapeHtml(CONTACTS.whatsappLabel)}</p></div>
       </div>
       <div class="meta">
-        <p><strong>Cliente:</strong> ${escapeHtml(orderData.customerName)}</p>
-        <p><strong>Provincia:</strong> ${escapeHtml(orderData.province || "Por confirmar")}</p>
-        <p><strong>Fecha:</strong> ${escapeHtml(today)}</p>
+        <h2>Pedido ${escapeHtml(orderReference)}</h2><p>Fecha: ${escapeHtml(today)}</p><span class="status">Pendiente de pago</span>
       </div>
     </header>
-
-    <main class="hero-box">
-      <section class="card">
-        <h2>Detalle del pedido</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Producto</th>
-              <th>Cant.</th>
-              <th>Unit.</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </section>
-
-      <aside class="card">
-        <h2>Resumen comercial</h2>
-        <div class="summary">
-          <div class="summary-line"><span>Ítems</span><strong>${totals.totalItems}</strong></div>
-          <div class="summary-line"><span>Subtotal</span><strong>${formatCurrency(totals.subtotal)}</strong></div>
-          <div class="summary-line"><span>${escapeHtml(shippingLabel)}</span><strong>${shippingValue}</strong></div>
-          <div class="summary-line total"><span>Total estimado</span><strong>${formatCurrency(totals.total)}</strong></div>
-        </div>
-        <div class="notes">
-          <p>Documento de referencia para revisión, impresión o guardado como PDF desde el navegador.</p>
-          <p>Para confirmar el pedido, envío y pago final, continúa el contacto por WhatsApp.</p>
-        </div>
-      </aside>
-    </main>
-
-    <footer class="footer">
-      <div>
-        <p><strong>WhatsApp:</strong> ${escapeHtml(CONTACTS.whatsappLabel)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(CONTACTS.email)}</p>
-      </div>
-      <div>
-        <p><strong>Instagram:</strong> ${escapeHtml(CONTACTS.instagram)}</p>
-        <p>Diseño y desarrollo: ${escapeHtml(CONTACTS.studio)}</p>
-      </div>
-    </footer>
+    <section class="notice"><h3>Paso requerido: confirmación de pago</h3><p>Para procesar y despachar tu pedido, envía el comprobante de transferencia por WhatsApp.</p><p class="wa-contact">WhatsApp: <a href="https://wa.me/593963036594?text=${whatsappText}">+593 963 036 594</a></p></section>
+    <section class="customer"><div><h3 class="section-title">Datos del cliente</h3><p><strong>${escapeHtml(orderData.customerFullName)}</strong></p><p>Pedido generado desde el catálogo Curativa</p></div><div><h3 class="section-title">Dirección de entrega</h3><p>${escapeHtml(orderData.customerAddress)}</p><p>${escapeHtml(orderData.province)}, Ecuador</p></div></section>
+    <h3 class="section-title">Detalle de productos</h3><table><thead><tr><th>Descripción</th><th class="center">Cant.</th><th class="right">Precio unitario</th><th class="right">Total</th></tr></thead><tbody>${rows}</tbody></table>
+    <section class="payment"><div class="bank"><h3 class="section-title">Datos para transferencia</h3><p><strong>Banco:</strong> Banco Pichincha</p><p><strong>Tipo:</strong> Cuenta de ahorro transaccional</p><p><strong>Cuenta:</strong> 2210381726</p><p><strong>Confirmación:</strong> WhatsApp ${escapeHtml(CONTACTS.whatsappLabel)}</p></div><table class="totals"><tr><td>Subtotal</td><td class="right">${formatCurrency(totals.subtotal)}</td></tr><tr><td>Envío</td><td class="right">${shippingValue}</td></tr><tr><td>IVA (0%)</td><td class="right">$0.00</td></tr><tr class="grand"><td>Total a pagar</td><td class="right">${formatCurrency(totals.total)}</td></tr></table></section>
+    <footer class="footer"><p><strong>Tu orden permanecerá reservada por 24 horas mientras confirmamos el pago.</strong></p><p>Una vez recibido el comprobante coordinaremos preparación y entrega.</p></footer>
   </div>
 </body>
 </html>`;
@@ -1512,21 +1471,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cartItemsList.innerHTML = "";
         if (cart.length === 0) {
-            cartItemsList.innerHTML = '<p class="empty-msg">Tu carrito está vacío.</p>';
+            cartItemsList.innerHTML = '<div class="empty-msg"><i class="fas fa-basket-shopping"></i><strong>Tu carrito está vacío</strong><span>Agrega productos del catálogo para preparar tu pedido.</span></div>';
         } else {
             cart.forEach((item) => {
+                const productCard = document.querySelector(`.product-item[data-id="${item.id}"]`);
+                const productImage = productCard?.querySelector(".card-thumb img")?.getAttribute("src") || "image/logo_curativa_hero.svg";
                 const row = document.createElement("div");
                 row.className = "cart-item-row";
                 row.innerHTML = `
-                    <div class="item-info">
-                        <h4>${item.name}</h4>
-                        <span class="item-price">$${item.price.toFixed(2)} c/u</span>
+                    <div class="cart-item-product">
+                        <div class="cart-item-thumb"><img src="${productImage}" alt=""></div>
+                        <div class="item-info">
+                            <h4>${item.name}</h4>
+                            <span class="item-price">$${item.price.toFixed(2)} c/u</span>
+                        </div>
                     </div>
                     <div class="cart-item-actions">
                         <div class="modal-qty-controls">
-                            <button onclick="changeModalQty('${item.id}', -1)" class="modal-qty-btn"><i class="fas fa-minus"></i></button>
-                            <span style="font-weight:bold; width:20px; text-align:center;">${item.qty}</span>
-                            <button onclick="changeModalQty('${item.id}', 1)" class="modal-qty-btn"><i class="fas fa-plus"></i></button>
+                            <button onclick="changeModalQty('${item.id}', -1)" class="modal-qty-btn" aria-label="Restar una unidad"><i class="fas fa-minus"></i></button>
+                            <span class="modal-qty-value">${item.qty}</span>
+                            <button onclick="changeModalQty('${item.id}', 1)" class="modal-qty-btn" aria-label="Agregar una unidad"><i class="fas fa-plus"></i></button>
                         </div>
                         <div class="cart-item-meta">
                             <div class="cart-item-total">$${(item.qty * item.price).toFixed(2)}</div>
@@ -1559,6 +1523,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const provinceSelect = document.getElementById("customer-province");
     if (provinceSelect) provinceSelect.addEventListener("change", updateCartUI);
+
+    const cartModalEl = document.getElementById("cart-modal");
+    const mobileCheckoutNext = document.getElementById("mobile-checkout-next");
+    const mobileCheckoutBack = document.getElementById("mobile-checkout-back");
+    const mobileCheckoutSteps = document.querySelectorAll(".checkout-progress-step");
+    let mobileCheckoutStep = 1;
+
+    function setMobileCheckoutStep(step) {
+        mobileCheckoutStep = Math.max(1, Math.min(3, Number(step) || 1));
+        if (!cartModalEl) return;
+
+        cartModalEl.dataset.checkoutStep = String(mobileCheckoutStep);
+        mobileCheckoutSteps.forEach((item) => {
+            const itemStep = Number(item.dataset.checkoutTarget);
+            item.classList.toggle("active", itemStep === mobileCheckoutStep);
+            item.classList.toggle("complete", itemStep < mobileCheckoutStep);
+            if (itemStep === mobileCheckoutStep) item.setAttribute("aria-current", "step");
+            else item.removeAttribute("aria-current");
+        });
+
+        if (mobileCheckoutBack) mobileCheckoutBack.hidden = mobileCheckoutStep === 1;
+        if (mobileCheckoutNext) {
+            mobileCheckoutNext.hidden = mobileCheckoutStep === 3;
+            mobileCheckoutNext.innerHTML = mobileCheckoutStep === 1
+                ? 'Proceder a pagar <i class="fas fa-arrow-right"></i>'
+                : 'Continuar al pago <i class="fas fa-arrow-right"></i>';
+        }
+
+        const drawer = cartModalEl.querySelector(".cart-modal-advanced");
+        if (drawer) drawer.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function validateMobileCheckoutStep() {
+        if (mobileCheckoutStep === 1 && cart.length === 0) {
+            alert("Agrega al menos un producto antes de continuar.");
+            return false;
+        }
+
+        if (mobileCheckoutStep === 2) {
+            const requiredFields = [
+                [document.getElementById("customer-name"), "Escribe tus nombres."],
+                [document.getElementById("customer-lastname"), "Escribe tus apellidos."],
+                [document.getElementById("customer-province"), "Selecciona tu provincia."],
+                [document.getElementById("customer-address"), "Escribe la dirección de entrega."]
+            ];
+            const invalid = requiredFields.find(([field]) => !field || !String(field.value || "").trim());
+            if (invalid) {
+                alert(invalid[1]);
+                if (invalid[0]) invalid[0].focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (mobileCheckoutNext) {
+        mobileCheckoutNext.addEventListener("click", () => {
+            if (!validateMobileCheckoutStep()) return;
+            setMobileCheckoutStep(mobileCheckoutStep + 1);
+        });
+    }
+
+    if (mobileCheckoutBack) {
+        mobileCheckoutBack.addEventListener("click", () => setMobileCheckoutStep(mobileCheckoutStep - 1));
+    }
+
+    mobileCheckoutSteps.forEach((item) => {
+        item.addEventListener("click", () => {
+            const targetStep = Number(item.dataset.checkoutTarget);
+            if (targetStep < mobileCheckoutStep) setMobileCheckoutStep(targetStep);
+        });
+    });
 
     const clearBtn = document.getElementById("clear-cart-btn");
     if (clearBtn) {
@@ -1705,20 +1741,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const logoDataUrl = await loadSvgLogoDataUrl();
         const fileName = `${getOrderReference()}-${normalizePdfText(orderData.customerFullName || "pedido").replace(/\s+/g, "-").toLowerCase()}.pdf`;
         const shippingValue = totals.shipping == null ? "$0.00" : formatCurrency(totals.shipping);
-        const paymentMethod = totals.shipping === 0 ? "Transferencia / QR local" : "Transferencia / QR nacional";
         const wrapPdf = (text, width) => doc.splitTextToSize(normalizePdfText(text), width);
 
         const drawHeaderFooter = (pageNumber) => {
-            doc.setFillColor(248, 250, 252);
+            doc.setFillColor(255, 255, 255);
             doc.rect(0, 0, pageWidth, pageHeight, "F");
 
-            doc.setDrawColor(226, 232, 240);
-            doc.setLineWidth(0.7);
-            doc.line(15, 26, pageWidth - 15, 26);
+            doc.setDrawColor(235, 228, 219);
+            doc.setLineWidth(0.45);
+            doc.line(15, 31, pageWidth - 15, 31);
             doc.line(15, pageHeight - 18, pageWidth - 15, pageHeight - 18);
 
             if (logoDataUrl) {
-                doc.addImage(logoDataUrl, "PNG", 15, 11, 34, 14, undefined, "FAST");
+                doc.addImage(logoDataUrl, "PNG", 15, 8, 25, 20, undefined, "FAST");
             } else {
                 doc.setFont("helvetica", "bold");
                 doc.setFontSize(22);
@@ -1727,115 +1762,133 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             doc.setFont("helvetica", "bold");
-            doc.setFontSize(15);
-            doc.setTextColor(2, 132, 199);
-            doc.text("Ficha de Pago", pageWidth - 15, 15, { align: "right" });
-
-            doc.setFont("helvetica", "normal");
-            doc.setFontSize(9);
-            doc.setTextColor(51, 65, 85);
-            doc.text(`Nro. Control: ${getOrderReference()}`, pageWidth - 15, 20, { align: "right" });
-            doc.text(`Fecha de Emision: ${getOrderDateLabel()}`, pageWidth - 15, 24.5, { align: "right" });
+            doc.setFontSize(13);
+            doc.setTextColor(33, 22, 47);
+            doc.text(`Pedido ${getOrderReference()}`, pageWidth - 15, 13, { align: "right" });
 
             doc.setFont("helvetica", "normal");
             doc.setFontSize(8.5);
-            doc.setTextColor(148, 163, 184);
-            doc.text("Curativa © 2026 · Loja, Ecuador · WhatsApp +593 963 036 594", pageWidth / 2, pageHeight - 10, { align: "center" });
+            doc.setTextColor(91, 81, 104);
+            doc.text(`Fecha: ${getOrderDateLabel()}`, pageWidth - 15, 18, { align: "right" });
+            doc.setFillColor(255, 247, 220);
+            doc.setDrawColor(242, 207, 124);
+            doc.roundedRect(pageWidth - 55, 21, 40, 7, 3.5, 3.5, "FD");
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(7);
+            doc.setTextColor(155, 92, 9);
+            doc.text("PENDIENTE DE PAGO", pageWidth - 35, 25.6, { align: "center" });
+
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8.5);
+            doc.setTextColor(123, 114, 129);
+            doc.text("Curativa 2026 · Loja, Ecuador · WhatsApp +593 963 036 594", pageWidth / 2, pageHeight - 10, { align: "center" });
             doc.text(`Pag. ${pageNumber}`, pageWidth - 15, pageHeight - 10, { align: "right" });
         };
 
         const drawInfoBoxes = () => {
-            doc.setDrawColor(226, 232, 240);
-            doc.setFillColor(255, 255, 255);
-            doc.roundedRect(15, 33, 87.5, 31, 2, 2, "FD");
-            doc.roundedRect(102.5, 33, 92.5, 31, 2, 2, "FD");
-
+            doc.setFillColor(245, 247, 246);
+            doc.setDrawColor(37, 211, 102);
+            doc.setLineWidth(0.45);
+            doc.roundedRect(15, 37, 180, 24, 2, 2, "F");
+            doc.line(15, 37, 15, 61);
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(8.5);
+            doc.setTextColor(33, 22, 47);
+            doc.text("PASO REQUERIDO: CONFIRMACION DE PAGO", 21, 44);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8.2);
+            doc.setTextColor(80, 72, 86);
+            doc.text(wrapPdf("Envia el comprobante de transferencia por WhatsApp para procesar y despachar tu pedido.", 160), 21, 50);
             doc.setFont("helvetica", "bold");
             doc.setFontSize(8);
-            doc.setTextColor(100, 116, 139);
-            doc.text("PREPARADO PARA", 20, 39);
-            doc.text("METODO DE PAGO SOLICITADO", 107.5, 39);
+            doc.setTextColor(80, 72, 86);
+            doc.text("WhatsApp:", 21, 57.5);
+            doc.setTextColor(24, 122, 66);
+            doc.textWithLink("+593 963 036 594", 38, 57.5, {
+                url: `https://wa.me/593963036594?text=${encodeURIComponent(`Hola, adjunto mi comprobante para el pedido ${getOrderReference()}.`)}`
+            });
 
+            doc.setDrawColor(235, 228, 219);
+            doc.setFillColor(250, 248, 245);
+            doc.roundedRect(15, 67, 180, 28, 2, 2, "FD");
             doc.setFont("helvetica", "bold");
+            doc.setFontSize(7.5);
+            doc.setTextColor(116, 90, 132);
+            doc.text("DATOS DEL CLIENTE", 21, 74);
+            doc.text("DIRECCION DE ENTREGA", 109, 74);
             doc.setFontSize(10);
-            doc.setTextColor(15, 23, 42);
-            doc.text(wrapPdf(orderData.customerFullName, 70), 20, 45);
-
+            doc.setTextColor(33, 22, 47);
+            doc.text(wrapPdf(orderData.customerFullName, 74), 21, 80);
             doc.setFont("helvetica", "normal");
-            doc.setFontSize(9);
-            doc.setTextColor(51, 65, 85);
-            doc.text(wrapPdf(`Provincia: ${orderData.province}`, 70), 20, 50);
-            doc.text(wrapPdf(`Direccion: ${orderData.customerAddress}`, 70), 20, 55);
-            doc.text("Canal: WhatsApp", 20, 61);
-
-            doc.setFont("helvetica", "bold");
-            doc.setTextColor(15, 23, 42);
-            doc.text(wrapPdf(paymentMethod, 74), 107.5, 45);
-            doc.setFont("helvetica", "normal");
-            doc.setTextColor(51, 65, 85);
-            doc.text(wrapPdf("Banco Pichincha / Deuna / Ahorros transaccional", 74), 107.5, 50);
-            doc.text(wrapPdf("Cuenta: 2210381726", 74), 107.5, 56);
-            doc.text(wrapPdf(`Envio: ${totals.shipping === 0 ? "Loja sin recargo" : `Estimado ${shippingValue}`}`, 74), 107.5, 63);
+            doc.setFontSize(8.5);
+            doc.setTextColor(80, 72, 86);
+            doc.text("Pedido generado desde el catalogo Curativa", 21, 87);
+            doc.text(wrapPdf(orderData.customerAddress, 78), 109, 80);
+            doc.text(`${normalizePdfText(orderData.province)}, Ecuador`, 109, 90);
         };
 
         const drawTotalsAndNotes = (startY) => {
-            doc.setDrawColor(226, 232, 240);
-            doc.setFillColor(248, 250, 252);
-            doc.roundedRect(15, startY, 180, 25, 2, 2, "FD");
+            if (startY > pageHeight - 76) {
+                doc.addPage();
+                drawHeaderFooter(doc.internal.getNumberOfPages());
+                startY = 38;
+            }
+            doc.setDrawColor(235, 228, 219);
+            doc.setFillColor(250, 248, 245);
+            doc.roundedRect(15, startY, 88, 34, 2, 2, "FD");
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(7.5);
+            doc.setTextColor(116, 90, 132);
+            doc.text("DATOS PARA TRANSFERENCIA", 21, startY + 7);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8.5);
+            doc.setTextColor(80, 72, 86);
+            doc.text(["Banco: Banco Pichincha", "Tipo: Cuenta de ahorro transaccional", "Cuenta: 2210381726", "Confirmacion: WhatsApp +593 963 036 594"], 21, startY + 14);
+
+            doc.setFillColor(255, 255, 255);
+            doc.roundedRect(109, startY, 86, 34, 2, 2, "FD");
 
             doc.setFont("helvetica", "normal");
             doc.setFontSize(9.2);
-            doc.setTextColor(71, 85, 105);
-            doc.text("Subtotal:", 128, startY + 7, { align: "right" });
-            doc.text("Envío:", 128, startY + 12.5, { align: "right" });
-            doc.text("IVA (0%):", 128, startY + 18, { align: "right" });
+            doc.setTextColor(80, 72, 86);
+            doc.text("Subtotal", 116, startY + 8);
+            doc.text("Envio", 116, startY + 14);
+            doc.text("IVA (0%)", 116, startY + 20);
 
             doc.setFont("helvetica", "bold");
-            doc.text(formatCurrency(totals.subtotal), 190, startY + 7, { align: "right" });
-            doc.text(shippingValue, 190, startY + 12.5, { align: "right" });
-            doc.text("$0.00", 190, startY + 18, { align: "right" });
+            doc.text(formatCurrency(totals.subtotal), 190, startY + 8, { align: "right" });
+            doc.text(shippingValue, 190, startY + 14, { align: "right" });
+            doc.text("$0.00", 190, startY + 20, { align: "right" });
 
-            doc.setFont("helvetica", "bold");
+            doc.setDrawColor(235, 228, 219);
+            doc.line(116, startY + 23, 190, startY + 23);
             doc.setFontSize(11);
-            doc.setTextColor(2, 132, 199);
-            doc.text("Total a Pagar:", 128, startY + 24, { align: "right" });
-            doc.text(formatCurrency(totals.total), 190, startY + 24, { align: "right" });
+            doc.setTextColor(33, 22, 47);
+            doc.text("Total a pagar", 116, startY + 30);
+            doc.text(formatCurrency(totals.total), 190, startY + 30, { align: "right" });
 
-            const noteY = startY + 31;
-            doc.setFillColor(240, 253, 244);
-            doc.setDrawColor(187, 247, 208);
-            doc.roundedRect(15, noteY, 180, 28, 2, 2, "FD");
+            const noteY = startY + 42;
             doc.setFont("helvetica", "bold");
-            doc.setFontSize(9.2);
-            doc.setTextColor(22, 101, 52);
-            doc.text("Instrucciones para reportar su pago:", 20, noteY + 7);
+            doc.setFontSize(8.5);
+            doc.setTextColor(70, 60, 77);
+            doc.text("Tu orden permanecera reservada por 24 horas mientras confirmamos el pago.", pageWidth / 2, noteY, { align: "center" });
             doc.setFont("helvetica", "normal");
-            doc.setFontSize(8.7);
-            doc.setTextColor(20, 83, 45);
-            const noteLines = [
-                "1. Descargue esta ficha y conserve el PDF generado.",
-                "2. Abra el chat de WhatsApp generado automaticamente y adjunte manualmente el archivo descargado.",
-                "3. Realice el pago por Deuna o transferencia Banco Pichincha y envie su comprobante para validacion."
-            ];
-            doc.text(noteLines, 20, noteY + 13);
+            doc.setFontSize(8);
+            doc.setTextColor(123, 114, 129);
+            doc.text("Una vez recibido el comprobante coordinaremos preparacion y entrega.", pageWidth / 2, noteY + 5, { align: "center" });
         };
 
         drawHeaderFooter(1);
         drawInfoBoxes();
 
-        doc.setDrawColor(226, 232, 240);
-        doc.setFillColor(255, 255, 255);
-        doc.roundedRect(15, 70, 180, 114, 2, 2, "FD");
-        doc.setFillColor(241, 245, 249);
-        doc.rect(15, 70, 180, 13, "F");
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(11);
-        doc.setTextColor(15, 23, 42);
-        doc.text("Tu Pedido", 20, 78.5);
+        doc.setFontSize(8);
+        doc.setTextColor(116, 90, 132);
+        doc.text("DETALLE DE LOS PRODUCTOS", 15, 104);
 
         doc.autoTable({
-            startY: 83,
-            margin: { left: 15, right: 15, top: 83, bottom: 60 },
+            startY: 108,
+            margin: { left: 15, right: 15, top: 38, bottom: 70 },
             head: [["Descripción del Artículo", "Cant.", "Precio Unit.", "Total"]],
             body: cart.map((item) => ([
                 `${normalizePdfText(item.name)}\nProducto Curativa`,
@@ -1847,15 +1900,15 @@ document.addEventListener("DOMContentLoaded", () => {
             styles: {
                 font: "helvetica",
                 fontSize: 9,
-                textColor: [51, 65, 85],
+                textColor: [53, 45, 61],
                 cellPadding: { top: 4, right: 5, bottom: 4, left: 5 },
-                lineColor: [241, 245, 249],
+                lineColor: [235, 228, 219],
                 lineWidth: 0.35,
                 valign: "middle"
             },
             headStyles: {
-                fillColor: [255, 255, 255],
-                textColor: [100, 116, 139],
+                fillColor: [250, 248, 245],
+                textColor: [116, 107, 125],
                 fontStyle: "bold"
             },
             columnStyles: {
@@ -1865,16 +1918,90 @@ document.addEventListener("DOMContentLoaded", () => {
                 3: { cellWidth: 28, halign: "right" }
             },
             didParseCell: (data) => {
-                data.cell.styles.lineColor = [241, 245, 249];
+                data.cell.styles.lineColor = [235, 228, 219];
                 data.cell.styles.lineWidth = { bottom: 0.35 };
             }
         });
 
-        const afterTableY = Math.max((doc.lastAutoTable?.finalY || 126) + 4, 146);
+        const afterTableY = Math.max((doc.lastAutoTable?.finalY || 145) + 7, 154);
         drawTotalsAndNotes(afterTableY);
 
         doc.save(fileName);
         return fileName;
+    }
+
+    async function downloadOrderPdfFromTemplate(orderData, totals) {
+        if (typeof window.html2pdf !== "function") {
+            alert("No se pudo cargar el generador visual del PDF.");
+            return null;
+        }
+
+        const fileName = `${getOrderReference()}-${normalizePdfText(orderData.customerFullName || "pedido").replace(/\s+/g, "-").toLowerCase()}.pdf`;
+        const renderHost = document.createElement("div");
+        renderHost.id = "pdf-render-host";
+        renderHost.setAttribute("aria-hidden", "true");
+        Object.assign(renderHost.style, {
+            position: "fixed",
+            left: "-10000px",
+            top: "0",
+            width: "900px",
+            minHeight: "1250px",
+            padding: "20px",
+            background: "#eee8e1",
+            pointerEvents: "none",
+            zIndex: "-9999"
+        });
+
+        try {
+            const embeddedLogo = await loadSvgLogoDataUrl();
+            const templateDocument = new DOMParser().parseFromString(
+                buildPrintableDocument(orderData, totals, embeddedLogo || ""),
+                "text/html"
+            );
+            const templateStyle = templateDocument.querySelector("style");
+            const templateSheet = templateDocument.querySelector(".sheet");
+            if (!templateStyle || !templateSheet) throw new Error("No se pudo preparar la plantilla del pedido.");
+
+            const styleElement = document.createElement("style");
+            styleElement.textContent = templateStyle.textContent;
+            const sheet = document.importNode(templateSheet, true);
+            renderHost.append(styleElement, sheet);
+            document.body.appendChild(renderHost);
+
+            if (document.fonts?.ready) await document.fonts.ready;
+            const images = Array.from(sheet.querySelectorAll("img"));
+            await Promise.all(images.map((image) => image.complete
+                ? Promise.resolve()
+                : new Promise((resolve) => {
+                    image.addEventListener("load", resolve, { once: true });
+                    image.addEventListener("error", resolve, { once: true });
+                })));
+
+            await window.html2pdf().set({
+                margin: [7, 7, 7, 7],
+                filename: fileName,
+                enableLinks: true,
+                image: { type: "jpeg", quality: 0.98 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: false,
+                    backgroundColor: "#eee8e1",
+                    logging: false,
+                    windowWidth: 900
+                },
+                jsPDF: { unit: "mm", format: "a4", orientation: "portrait", compress: true },
+                pagebreak: { mode: ["css", "legacy"], avoid: [".header", ".notice", ".customer", ".payment", ".footer", "tr"] }
+            }).from(sheet).save();
+
+            return fileName;
+        } catch (error) {
+            console.error("No se pudo generar el PDF desde la plantilla visual:", error);
+            alert("No se pudo generar el PDF con la plantilla visual.");
+            return null;
+        } finally {
+            renderHost.remove();
+        }
     }
 
     const checkoutBtnPdf = document.getElementById("checkout-btn");
@@ -1934,6 +2061,103 @@ document.addEventListener("DOMContentLoaded", () => {
                 whatsappWindow.location.href = whatsappUrl;
             } else {
                 window.open(whatsappUrl, "_blank");
+            }
+        });
+    }
+
+    const catalogSearch = document.getElementById("catalog-search");
+    const catalogSearchInput = document.getElementById("catalog-search-input");
+    const catalogSearchResults = document.getElementById("catalog-search-results");
+    const searchableProducts = Array.from(document.querySelectorAll(".product-item[data-name]"));
+    let currentSearchMatches = [];
+
+    const normalizeSearchText = (value) => String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
+    function closeCatalogSearchResults() {
+        if (!catalogSearchResults || !catalogSearchInput) return;
+        catalogSearchResults.classList.add("hidden");
+        catalogSearchInput.setAttribute("aria-expanded", "false");
+    }
+
+    function focusCatalogProduct(card) {
+        if (!card) return;
+        const section = card.closest(".section");
+        closeCatalogSearchResults();
+        catalogSearch?.classList.remove("expanded");
+        card.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+        card.classList.remove("search-highlight");
+        requestAnimationFrame(() => card.classList.add("search-highlight"));
+        setTimeout(() => card.classList.remove("search-highlight"), 1800);
+        if (section) section.classList.add("search-section-active");
+        setTimeout(() => section?.classList.remove("search-section-active"), 1800);
+    }
+
+    function renderCatalogSearch(query) {
+        if (!catalogSearchResults || !catalogSearchInput) return;
+        const normalizedQuery = normalizeSearchText(query);
+        catalogSearchResults.innerHTML = "";
+
+        if (!normalizedQuery) {
+            currentSearchMatches = [];
+            closeCatalogSearchResults();
+            return;
+        }
+
+        currentSearchMatches = searchableProducts.filter((card) => {
+            const name = normalizeSearchText(card.dataset.name);
+            const sectionName = normalizeSearchText(card.closest(".section")?.querySelector(".section-title")?.textContent);
+            return name.includes(normalizedQuery) || sectionName.includes(normalizedQuery);
+        }).slice(0, 6);
+
+        if (!currentSearchMatches.length) {
+            const empty = document.createElement("p");
+            empty.className = "search-empty";
+            empty.textContent = "No encontramos productos con ese nombre.";
+            catalogSearchResults.appendChild(empty);
+        } else {
+            currentSearchMatches.forEach((card) => {
+                const option = document.createElement("button");
+                option.type = "button";
+                option.className = "catalog-search-option";
+                option.setAttribute("role", "option");
+                option.innerHTML = `<span><strong>${card.dataset.name}</strong><small>${card.closest(".section")?.querySelector(".section-title")?.textContent || "Catálogo"}</small></span><b>$${Number(card.dataset.price).toFixed(2)}</b>`;
+                option.addEventListener("click", () => focusCatalogProduct(card));
+                catalogSearchResults.appendChild(option);
+            });
+        }
+
+        catalogSearchResults.classList.remove("hidden");
+        catalogSearchInput.setAttribute("aria-expanded", "true");
+    }
+
+    if (catalogSearch && catalogSearchInput) {
+        catalogSearchInput.addEventListener("input", () => renderCatalogSearch(catalogSearchInput.value));
+        catalogSearch.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (window.matchMedia("(max-width: 768px)").matches && !catalogSearch.classList.contains("expanded")) {
+                catalogSearch.classList.add("expanded");
+                setTimeout(() => catalogSearchInput.focus(), 50);
+                return;
+            }
+            if (currentSearchMatches[0]) focusCatalogProduct(currentSearchMatches[0]);
+            else catalogSearchInput.focus();
+        });
+        document.addEventListener("click", (event) => {
+            if (!catalogSearch.contains(event.target)) {
+                closeCatalogSearchResults();
+                if (!catalogSearchInput.value) catalogSearch.classList.remove("expanded");
+            }
+        });
+        catalogSearchInput.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                catalogSearchInput.value = "";
+                closeCatalogSearchResults();
+                catalogSearch.classList.remove("expanded");
+                catalogSearchInput.blur();
             }
         });
     }

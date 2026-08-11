@@ -2,8 +2,7 @@ function initHeroCarouselLegacy() {
     const slides = heroCarousel.slides || [];
     if (!slides.length) return;
 
-    const heroName = document.getElementById("hero-name");
-    const heroRole = document.getElementById("hero-role");
+    const heroBrand = document.querySelector('[data-mp-brand-slot="hero"]');
     const heroDesc = document.getElementById("hero-desc");
     const heroImg = document.getElementById("hero-image");
     const ctaPrimary = document.getElementById("hero-cta-primary");
@@ -16,14 +15,13 @@ function initHeroCarouselLegacy() {
     const secondaryImg = document.getElementById("hero-secondary-image");
     const secondaryCtaPrimary = document.getElementById("hero-secondary-cta-primary");
     const secondaryCtaSecondary = document.getElementById("hero-secondary-cta-secondary");
-    if (!heroName || !heroRole || !heroDesc || !heroImg || !ctaPrimary || !ctaSecondary || !dotsWrap) return;
+    if (!heroDesc || !heroImg || !ctaPrimary || !ctaSecondary || !dotsWrap) return;
 
     const primarySlide = slides[0];
     const secondarySlide = slides[1];
 
     if (primarySlide) {
-        heroName.textContent = repairText(primarySlide.title || "");
-        heroRole.innerHTML = repairText(primarySlide.role || "").replace("//", '<span class="slash">//</span>');
+        applySlideBrandVariant(heroBrand, primarySlide);
         heroDesc.textContent = repairText(primarySlide.description || "");
         heroImg.src = primarySlide.image || heroImg.src;
         heroImg.alt = repairText(primarySlide.imageAlt || "Hero image");
@@ -57,19 +55,17 @@ function initHeroCarousel() {
     const slides = heroCarousel.slides || [];
     if (!slides.length) return;
 
-    const heroName = document.getElementById("hero-name");
-    const heroRole = document.getElementById("hero-role");
+    const heroBrand = document.querySelector('[data-mp-brand-slot="hero"]');
     const heroDesc = document.getElementById("hero-desc");
     const heroImg = document.getElementById("hero-image");
     const ctaPrimary = document.getElementById("hero-cta-primary");
     const ctaSecondary = document.getElementById("hero-cta-secondary");
-    if (!heroName || !heroRole || !heroDesc || !heroImg || !ctaPrimary || !ctaSecondary) return;
+    if (!heroDesc || !heroImg || !ctaPrimary || !ctaSecondary) return;
 
     const primarySlide = slides[0];
     if (!primarySlide) return;
 
-    heroName.textContent = repairText(primarySlide.title || "");
-    heroRole.innerHTML = repairText(primarySlide.role || "").replace("//", '<span class="slash">//</span>');
+    applySlideBrandVariant(heroBrand, primarySlide);
     heroDesc.textContent = repairText(primarySlide.description || "");
     heroImg.src = primarySlide.image || heroImg.src;
     heroImg.alt = repairText(primarySlide.imageAlt || "Hero image");
@@ -247,7 +243,7 @@ function renderHomeSections() {
                 : "";
             const safeAlt = repairText(card.imageAlt || card.title || "");
             const imageStyle = card.imageStyle || "";
-            const isClickable = card.type === "web" || card.type === "gallery";
+            const isClickable = card.type === "web" || card.type === "gallery" || card.type === "bio";
             const galleryIndex =
                 card.type === "gallery" && sectionKey === "ciencia"
                     ? cardIndex
@@ -299,7 +295,7 @@ function findCardById(id) {
 
 function sendInterestToWhatsApp(serviceName) {
     const cleanName = repairText(serviceName || "Servicio");
-    const message = `Hola Marco, estoy interesado en el proyecto: ${cleanName}. ¿Podemos conversar sobre el alcance?`;
+    const message = `Hola MP Dev Studio, estoy interesado en el proyecto: ${cleanName}. ¿Podemos conversar sobre el alcance?`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
 }
@@ -308,14 +304,13 @@ function initHeroCarouselLegacy() {
     const slides = heroCarousel.slides || [];
     if (!slides.length) return;
 
-    const heroName = document.getElementById("hero-name");
-    const heroRole = document.getElementById("hero-role");
+    const heroBrand = document.querySelector('[data-mp-brand-slot="hero"]');
     const heroDesc = document.getElementById("hero-desc");
     const heroImg = document.getElementById("hero-image");
     const ctaPrimary = document.getElementById("hero-cta-primary");
     const ctaSecondary = document.getElementById("hero-cta-secondary");
     const dotsWrap = document.getElementById("hero-dots");
-    if (!heroName || !heroRole || !heroDesc || !heroImg || !ctaPrimary || !ctaSecondary || !dotsWrap) return;
+    if (!heroDesc || !heroImg || !ctaPrimary || !ctaSecondary || !dotsWrap) return;
 
     let current = 0;
     function goToSlide(index) {
@@ -325,8 +320,7 @@ function initHeroCarouselLegacy() {
 
     function applySlide(index) {
         const slide = slides[index];
-        heroName.textContent = repairText(slide.title || "");
-        heroRole.innerHTML = repairText(slide.role || "").replace("//", '<span class="slash">//</span>');
+        applySlideBrandVariant(heroBrand, slide);
         heroDesc.textContent = repairText(slide.description || "");
         heroImg.src = slide.image || heroImg.src;
         heroImg.alt = repairText(slide.imageAlt || "Hero image");
@@ -387,6 +381,60 @@ function renderLinks(containerId, links = [], targetBlank = false) {
     }).join("");
 }
 
+const STUDIO_BRAND_ACCENTS = ["gold", "copper", "wine", "split"];
+
+function applySlideBrandVariant(heroBrand, slide) {
+    if (!heroBrand || !slide) return;
+    const variants = sharedData.studioBrand?.variants || [];
+    if (!variants.length) return;
+    const index = Number.isFinite(slide.brandVariant) ? slide.brandVariant : 0;
+    const variant = variants[(index + variants.length) % variants.length];
+    applyStudioBrandVariant(heroBrand, variant);
+}
+
+function applyStudioBrandVariant(root, variant) {
+    if (!root || !variant) return;
+    const nameEl = root.querySelector("[data-mp-brand-name]");
+    const tagEl = root.querySelector("[data-mp-brand-tagline]");
+    if (nameEl && variant.name) nameEl.textContent = repairText(variant.name);
+    if (tagEl && variant.tagline) tagEl.textContent = repairText(variant.tagline);
+    STUDIO_BRAND_ACCENTS.forEach((accent) => root.classList.remove(`mp-brand--accent-${accent}`));
+    root.classList.add(`mp-brand--accent-${variant.accent || "gold"}`);
+}
+
+function initStudioBrand() {
+    const config = sharedData.studioBrand || {};
+    const variants = Array.isArray(config.variants) ? config.variants : [];
+    if (!variants.length) return;
+
+    const nav = document.querySelector('[data-mp-brand-slot="nav"]');
+    if (nav) applyStudioBrandVariant(nav, variants[0]);
+
+    const rotateRoots = document.querySelectorAll("[data-mp-brand-rotate]");
+    let variantIndex = 0;
+
+    const syncRotating = () => {
+        const variant = variants[variantIndex];
+        rotateRoots.forEach((root) => applyStudioBrandVariant(root, variant));
+    };
+
+    syncRotating();
+
+    if (variants.length < 2 || !rotateRoots.length) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const intervalMs = Number(config.rotateMs) || 6200;
+    window.setInterval(() => {
+        variantIndex = (variantIndex + 1) % variants.length;
+        rotateRoots.forEach((root) => {
+            root.classList.add("mp-brand--transitioning");
+            window.setTimeout(() => root.classList.remove("mp-brand--transitioning"), 520);
+        });
+        syncRotating();
+    }, intervalMs);
+}
+
 function applyContentCustomization() {
     const heroStatus = document.getElementById("hero-status-text");
     if (heroStatus && pageConfig.heroStatusText) {
@@ -416,10 +464,8 @@ function applyContentCustomization() {
     if (contactInstagram && contact.instagram) contactInstagram.href = contact.instagram;
 
     const footer = contentBlocks.footer || {};
-    const footerBrandTitle = document.getElementById("footer-brand-title");
     const footerBrandDescription = document.getElementById("footer-brand-description");
     const footerCopy = document.getElementById("footer-copy");
-    if (footerBrandTitle && footer.brandTitle) footerBrandTitle.textContent = repairText(footer.brandTitle);
     if (footerBrandDescription && footer.brandDescription) footerBrandDescription.textContent = repairText(footer.brandDescription);
     if (footerCopy && footer.copy) footerCopy.textContent = repairText(footer.copy);
     renderLinks("footer-services-links", footer.services || []);
@@ -479,12 +525,42 @@ const webModal = document.getElementById('web-modal'), webFrame = document.getEl
 /* =========================================
    3. CONTROL DE HISTORIAL (BACK BUTTON FIX)
    ========================================= */
-window.addEventListener('popstate', function() {
+window.addEventListener('popstate', function(e) {
     if (lightbox && lightbox.classList.contains('active')) {
         closeGalleryUI();
     }
     if (webModal && webModal.classList.contains('active')) {
         closeWebUI();
+    }
+    
+    const state = e.state || {};
+    
+    // Bio dock management
+    const paneBio = document.getElementById('pane-bio');
+    if (paneBio) {
+        if (state.modal === 'marcobio' || state.modal === 'cvnote') {
+            if (!paneBio.classList.contains('active-dock')) {
+                openMarcoBioDockUI();
+            }
+        } else {
+            if (paneBio.classList.contains('active-dock')) {
+                closeMarcoBioDockUI();
+            }
+        }
+    }
+    
+    // CV Note management
+    const cvNote = document.getElementById('cv-note-modal');
+    if (cvNote) {
+        if (state.modal === 'cvnote') {
+            if (!cvNote.classList.contains('active')) {
+                openCvNoteUI();
+            }
+        } else {
+            if (cvNote.classList.contains('active')) {
+                closeCvNoteUI();
+            }
+        }
     }
 });
 
@@ -516,7 +592,10 @@ function closeGalleryUI() {
 }
 
 function closeGallery() {
-    history.back(); 
+    closeGalleryUI();
+    if (history.state && history.state.modal === 'gallery') {
+        history.back();
+    }
 }
 
 function changeSlide(dir) {
@@ -533,16 +612,21 @@ function openWeb(key) {
     history.pushState({ modal: 'web' }, null, "");
     webModal.classList.add('active'); 
     document.body.classList.add('modal-open');
+    document.body.classList.add('web-modal-active');
 }
 
 function closeWebUI() {
     webModal.classList.remove('active'); 
     document.body.classList.remove('modal-open');
+    document.body.classList.remove('web-modal-active');
     setTimeout(() => webFrame.src = "", 300);
 }
 
 function closeWeb() {
-    history.back();
+    closeWebUI();
+    if (history.state && history.state.modal === 'web') {
+        history.back();
+    }
 }
 
 /* =========================================
@@ -597,6 +681,7 @@ if(fabBtn) {
         e.stopPropagation(); 
         fabWrapper.classList.toggle('active'); 
         fabBtn.classList.toggle('active'); 
+        fabBtn.setAttribute('aria-expanded', fabWrapper.classList.contains('active') ? 'true' : 'false');
         const i = fabBtn.querySelector('i');
         if(fabWrapper.classList.contains('active')) { 
             i.classList.remove('fa-bars'); i.classList.add('fa-times'); 
@@ -608,6 +693,7 @@ if(fabBtn) {
 function closeFab() { 
     fabWrapper.classList.remove('active'); 
     fabBtn.classList.remove('active'); 
+    fabBtn.setAttribute('aria-expanded', 'false');
     const i = fabBtn.querySelector('i');
     i.classList.remove('fa-times'); i.classList.add('fa-bars'); 
 }
@@ -666,6 +752,10 @@ document.addEventListener("click", (event) => {
     const action = card.dataset.action;
     const key = card.dataset.key;
     const galleryIndex = Number(card.dataset.galleryIndex || 0);
+    if (action === "bio" || key === "marco") {
+        openMarcoBioDock();
+        return;
+    }
     if (action === "web") openWeb(key);
     if (action === "gallery") openGallery(key, galleryIndex);
 });
@@ -675,6 +765,7 @@ document.addEventListener("click", (event) => {
    ========================================= */
 window.addEventListener('load', function() {
     applyContentCustomization();
+    initStudioBrand();
     renderHomeSections();
     applySectionMetaToDOM();
     applySectionLayout();
@@ -779,3 +870,190 @@ window.addEventListener('load', function() {
     setTimeout(resize, 500); 
     animate();
 });
+
+/* =========================================
+   10. MARCO INTERACTIVE CV & OVERLAY DRAWER
+   ========================================= */
+const CV_DATA_MARCO = {
+    "1": {
+        title: "Arquitectura QMS & ERP",
+        desc: "<strong>Sistemas a medida.</strong><br><br>Desarrollo backend y bases de datos relacionales para operaciones industriales reales. Control documental estricto, flujos de inventario y trazabilidad bajo normativas de calidad (ITERA)."
+    },
+    "2": {
+        title: "Ecosistemas Web Premium",
+        desc: "<strong>Landings & E-commerce de alto rendimiento.</strong><br><br>Interfaces que elevan la percepción de marca con carga veloz y arquitecturas frontend optimizadas. Flujos de conversión sin fricción integrados con ventas."
+    },
+    "3": {
+        title: "Identidad Visual & Packaging",
+        desc: "<strong>Branding & preparación retail.</strong><br><br>Sistemas visuales completos y maquetación técnica de etiquetas listas para imprenta, garantizando coherencia entre el producto físico y el digital."
+    },
+    "4": {
+        title: "Ilustración Científica",
+        desc: "<strong>Fauna neotropical & botánica.</strong><br><br>Documentación morfológica precisa de especies silvestres y láminas naturalistas de alta resolución. Enfoque analítico respaldado por mi formación como Biólogo."
+    },
+    "5": {
+        title: "Diseño Editorial",
+        desc: "<strong>Manuales & publicaciones técnicas.</strong><br><br>Maquetación estructurada de libros, folletos y manuales técnicos. Rigor tipográfico, jerarquía visual y legibilidad para material complejo."
+    },
+    "6": {
+        title: "IA & Tecnologías 3D",
+        desc: "<strong>Automatización & prototipado.</strong><br><br>Modelado 3D e integración de sistemas de Inteligencia Artificial para potenciar flujos de trabajo en código y diseño visual."
+    }
+};
+
+function openMarcoBioDock() {
+    const paneBio = document.getElementById('pane-bio');
+    if (!paneBio || paneBio.classList.contains('active-dock')) return;
+    
+    // Push history state to enable native back button closing
+    history.pushState({ modal: 'marcobio' }, null, "");
+    openMarcoBioDockUI();
+}
+
+function openMarcoBioDockUI() {
+    closeFab();
+    const paneBio = document.getElementById('pane-bio');
+    if (paneBio) {
+        paneBio.classList.add('active-dock');
+    }
+    document.body.classList.add('cv-modal-open');
+}
+
+function closeMarcoBioDock() {
+    const paneBio = document.getElementById('pane-bio');
+    if (paneBio && paneBio.classList.contains('active-dock')) {
+        history.back();
+    }
+}
+
+function closeMarcoBioDockUI() {
+    const paneBio = document.getElementById('pane-bio');
+    if (paneBio) {
+        paneBio.classList.remove('active-dock');
+    }
+    // Only remove cv-modal-open if the CV note modal is also closed
+    const cvNote = document.getElementById('cv-note-modal');
+    if (!cvNote || !cvNote.classList.contains('active')) {
+        document.body.classList.remove('cv-modal-open');
+    }
+}
+
+function openCvNote(id) {
+    const data = CV_DATA_MARCO[id];
+    if (!data) return;
+    
+    const titleEl = document.getElementById('cv-note-title');
+    const descEl = document.getElementById('cv-note-desc');
+    if (titleEl) titleEl.innerText = data.title;
+    if (descEl) descEl.innerHTML = data.desc;
+    
+    history.pushState({ modal: 'cvnote' }, null, "");
+    openCvNoteUI();
+}
+
+function openCvNoteUI() {
+    const cvNote = document.getElementById('cv-note-modal');
+    if (cvNote) {
+        cvNote.classList.add('active');
+    }
+    document.body.classList.add('cv-modal-open');
+}
+
+function closeCvNote() {
+    const cvNote = document.getElementById('cv-note-modal');
+    if (cvNote && cvNote.classList.contains('active')) {
+        history.back();
+    }
+}
+
+function closeCvNoteUI() {
+    const cvNote = document.getElementById('cv-note-modal');
+    if (cvNote) {
+        cvNote.classList.remove('active');
+    }
+    // Only remove body scroll lock if the main bio pane is also closed
+    const paneBio = document.getElementById('pane-bio');
+    if (!paneBio || !paneBio.classList.contains('active-dock')) {
+        document.body.classList.remove('cv-modal-open');
+    }
+}
+
+// Bind Swipe down to close on mobile handles
+function initCvSwipeGestures() {
+    // Bio dock handle
+    const dockHandle = document.querySelector('.cv-dock-handle');
+    if (dockHandle) {
+        let touchStartY = 0;
+        dockHandle.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        dockHandle.addEventListener('touchmove', (e) => {
+            const deltaY = e.touches[0].clientY - touchStartY;
+            if (deltaY > 50) {
+                closeMarcoBioDock();
+            }
+        }, { passive: true });
+    }
+    
+    // CV Note handle
+    const noteHandle = document.getElementById('cv-note-handle');
+    if (noteHandle) {
+        let touchStartY = 0;
+        noteHandle.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        noteHandle.addEventListener('touchmove', (e) => {
+            const deltaY = e.touches[0].clientY - touchStartY;
+            if (deltaY > 50) {
+                closeCvNote();
+            }
+        }, { passive: true });
+    }
+}
+
+// Register event handlers
+document.addEventListener('DOMContentLoaded', () => {
+    // Grid item click handling
+    document.addEventListener('click', (e) => {
+        const gridItem = e.target.closest('.cv-grid-item');
+        if (gridItem && gridItem.dataset.cv) {
+            e.preventDefault();
+            e.stopPropagation();
+            openCvNote(gridItem.dataset.cv);
+        }
+    });
+    
+    initCvSwipeGestures();
+});
+
+// Expose functions globally for inline HTML event handlers
+window.openMarcoBioDock = openMarcoBioDock;
+window.closeMarcoBioDock = closeMarcoBioDock;
+window.openCvNote = openCvNote;
+window.closeCvNote = closeCvNote;
+
+// Recupera la navegación normal al volver desde el historial o reactivar la pestaña.
+function restorePageInteraction() {
+    const galleryOpen = lightbox && lightbox.classList.contains('active');
+    const webOpen = webModal && webModal.classList.contains('active');
+    const bioOpen = document.getElementById('pane-bio')?.classList.contains('active-dock');
+    const noteOpen = document.getElementById('cv-note-modal')?.classList.contains('active');
+
+    if (!galleryOpen && !webOpen) {
+        document.body.classList.remove('modal-open', 'web-modal-active');
+    }
+    if (!bioOpen && !noteOpen) {
+        document.body.classList.remove('cv-modal-open');
+    }
+}
+
+window.addEventListener('pageshow', restorePageInteraction);
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) restorePageInteraction();
+});
+document.addEventListener('touchstart', restorePageInteraction, { passive: true, capture: true });
+document.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'touch') restorePageInteraction();
+}, { passive: true, capture: true });

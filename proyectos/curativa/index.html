@@ -7,7 +7,7 @@
     <title>CURATIVA · Catálogo 2026</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Poiret+One&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="glassy-header">
@@ -18,12 +18,17 @@
             </span>
 
             <nav class="header-nav-desktop">
-                <a href="../../index.html" class="nav-link">Portafolio MP</a>
                 <a href="#quienes-somos" class="nav-link">Nosotros</a>
 <a href="#footer-contact" class="nav-link">Contacto</a>
             </nav>
 
             <div class="header-actions">
+                <form class="header-search" id="catalog-search" role="search">
+                    <label class="sr-only" for="catalog-search-input">Buscar productos</label>
+                    <input id="catalog-search-input" type="search" placeholder="Buscar productos" autocomplete="off" aria-controls="catalog-search-results" aria-expanded="false">
+                    <button type="submit" class="header-search-btn" aria-label="Buscar productos"><i class="fas fa-magnifying-glass"></i></button>
+                    <div class="catalog-search-results hidden" id="catalog-search-results" role="listbox"></div>
+                </form>
                 <div id="header-cart-btn" class="header-icon-btn">
                     <i class="fas fa-shopping-cart"></i>
                     <span id="cart-count" class="cart-badge">0</span>
@@ -39,14 +44,15 @@
         <div class="mobile-nav-content">
             <button id="close-mobile-menu" class="close-btn-menu"><i class="fas fa-times"></i></button>
             <h3>Menú</h3>
-            <a href="../../index.html" class="mobile-link">Portafolio MP</a>
             <a href="#quienes-somos" class="mobile-link">Nosotros</a>
 <a href="#footer-contact" class="mobile-link">Contacto</a>
         </div>
     </div>
 
+    <div class="floating-toolbar" aria-label="Herramientas rápidas">
     <div class="mobile-category-fab" id="mobile-category-fab">
         <button type="button" class="mobile-category-toggle" id="mobile-category-toggle" aria-label="Abrir categorias">
+            <span>Categorías</span>
             <i class="fas fa-th-large"></i>
         </button>
         <nav class="mobile-category-bar hidden" id="mobile-category-menu" aria-label="Categorias rapidas">
@@ -65,15 +71,16 @@
     <div class="fab-wrapper" id="fabMenu">
         <div class="fab-glass-container">
             <div class="fab-list">
-                <a href="../../index.html" onclick="closeFab()"><span>Portafolio MP</span><div class="mini-fab"><i class="fas fa-layer-group"></i></div></a>
                 <a href="#quienes-somos" onclick="closeFab()"><span>Nosotros</span><div class="mini-fab"><i class="fas fa-seedling"></i></div></a>
                 <a href="#rostro-section" onclick="closeFab()"><span>Catálogo</span><div class="mini-fab"><i class="fas fa-store"></i></div></a>
                 <a href="#footer-contact" onclick="closeFab()"><span>Contacto</span><div class="mini-fab"><i class="fas fa-paper-plane"></i></div></a>
             </div>
         </div>
         <button class="fab-main-btn" id="fabBtn" aria-label="Abrir menú">
+            <span>Menú</span>
             <i class="fas fa-bars"></i>
         </button>
+    </div>
     </div>
 
     <section id="hero-carousel" class="hero-carousel">
@@ -154,16 +161,16 @@
             </div>
 
             <div class="hero-nav">
-                <button class="hero-arrow prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="hero-arrow prev" aria-label="Ver diapositiva anterior"><i class="fas fa-chevron-left"></i></button>
                 <div class="hero-dots">
-                    <span class="dot active" data-slide="0"></span>
-                    <span class="dot" data-slide="1"></span>
-                    <span class="dot" data-slide="2"></span>
+                    <button class="dot active" data-slide="0" aria-label="Ver diapositiva 1"></button>
+                    <button class="dot" data-slide="1" aria-label="Ver diapositiva 2"></button>
+                    <button class="dot" data-slide="2" aria-label="Ver diapositiva 3"></button>
                 </div>
-                <button class="hero-arrow next"><i class="fas fa-chevron-right"></i></button>
+                <button class="hero-arrow next" aria-label="Ver diapositiva siguiente"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <div class="hero-progress-bar"><div class="progress-fill"></div></div>
         </div>
+        <div class="hero-progress-bar" aria-hidden="true"><div class="progress-fill"></div></div>
     </section>
 
     <main class="grid">
@@ -297,7 +304,8 @@
         <div class="footer-content">
             <div class="footer-col logo-col">
                 <img src="image/logo_curativa_hero.svg" alt="Curativa" class="footer-logo-img">
-                <p>Proyecto de catálogo web diseñado y desarrollado por Marco Pérez · MP Designs.</p>
+                <span class="footer-eyebrow">Cosmética botánica artesanal</span>
+                <p>Proyecto de catálogo web diseñado y desarrollado por MP Dev Studio.</p>
             </div>
             <div class="footer-col">
                 <h4>Contacto</h4>
@@ -305,16 +313,18 @@
                 <p><i class="fas fa-envelope"></i> <a href="mailto:marcod.pc2021@gmail.com" style="color: inherit; text-decoration: none;">marcod.pc2021@gmail.com</a></p>
                 <p><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/neckarc" target="_blank" style="color: inherit; text-decoration: none;">@neckarc</a></p>
             </div>
-            <div class="footer-col">
-                <h4>Portafolio</h4>
-                <ul class="footer-links">
-                    <li><a href="../../index.html">Ver portafolio completo</a></li>
-                    <li><a href="../../index2.html">Catálogo de servicios</a></li>
-                </ul>
+            <div class="footer-col footer-explore">
+                <h4>Explorar</h4>
+                <nav class="footer-quick-links" aria-label="Categorías del catálogo">
+                    <a href="#rostro-section">Rostro <i class="fas fa-arrow-right"></i></a>
+                    <a href="#capilar-section">Capilar <i class="fas fa-arrow-right"></i></a>
+                    <a href="#cuerpo-section">Bienestar <i class="fas fa-arrow-right"></i></a>
+                    <a href="#balsamos-section">Bálsamos <i class="fas fa-arrow-right"></i></a>
+                </nav>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Marco Pérez · MP Designs. Todos los derechos reservados.</p>
+            <p>&copy; 2026 MP Dev Studio. Todos los derechos reservados.</p>
             <p class="dev-credit">Experiencias web premium y sistemas a medida.</p>
         </div>
     </footer>
@@ -327,6 +337,7 @@
                     <img id="detail-img" src="" alt="Producto">
                 </div>
                 <div class="detail-info-col">
+                    <span class="detail-eyebrow">Curativa · Fórmula artesanal</span>
                     <h3 id="detail-title">Nombre Producto</h3>
                     <p id="detail-desc" class="detail-desc">Descripción...</p>
                     <div class="detail-benefits-box">
@@ -345,10 +356,22 @@
     <div id="cart-modal" class="new-modal-overlay hidden">
         <div class="new-modal-container cart-modal-advanced">
             <button class="close-modal-btn cart-close">&times;</button>
-            <h3 class="modal-title">Tu Pedido</h3>
+            <div class="cart-modal-heading">
+                <span class="cart-summary-eyebrow">Curativa · Compra asistida</span>
+                <h3 class="modal-title">Tu ritual, en un solo pedido</h3>
+                <p>Revisa cantidades, completa tus datos y genera la orden para coordinar la entrega.</p>
+            </div>
+
+            <nav class="mobile-checkout-progress" aria-label="Progreso de compra">
+                <button type="button" class="checkout-progress-step active" data-checkout-target="1" aria-current="step"><span>1</span><small>Pedido</small></button>
+                <i></i>
+                <button type="button" class="checkout-progress-step" data-checkout-target="2"><span>2</span><small>Entrega</small></button>
+                <i></i>
+                <button type="button" class="checkout-progress-step" data-checkout-target="3"><span>3</span><small>Pago</small></button>
+            </nav>
 
             <div class="cart-layout-grid">
-                <div class="cart-list-area">
+                <div class="cart-list-area checkout-step-products">
                     <div class="cart-actions-header">
                         <button id="clear-cart-btn" class="btn-text-danger"><i class="fas fa-trash-alt"></i> Vaciar</button>
                     </div>
@@ -359,12 +382,12 @@
 
                 <div class="cart-form-area">
                     <div class="cart-summary-box">
-                        <div class="cart-summary-header">
+                        <div class="cart-summary-header checkout-step-summary">
                             <span class="cart-summary-eyebrow">Resumen del pedido</span>
                             <div class="total-row-main">Total: <span id="final-total">$0.00</span></div>
                         </div>
 
-                        <div class="cart-summary-details">
+                        <div class="cart-summary-details checkout-step-summary">
                             <div class="summary-line">
                                 <span>Productos</span>
                                 <strong id="summary-items-count">0 items</strong>
@@ -383,15 +406,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group checkout-step-customer">
                             <label>Nombres:</label>
                             <input type="text" id="customer-name" class="modern-input" placeholder="Tus nombres">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group checkout-step-customer">
                             <label>Apellidos:</label>
                             <input type="text" id="customer-lastname" class="modern-input" placeholder="Tus apellidos">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group checkout-step-customer">
                             <label>Provincia:</label>
                             <select id="customer-province" class="modern-input">
                                 <option value="" disabled selected>Selecciona...</option>
@@ -422,12 +445,12 @@
                                 <option value="Manabí">Manabí</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group checkout-step-customer">
                             <label>Dirección de envío:</label>
                             <input type="text" id="customer-address" class="modern-input" placeholder="Calle principal, referencia, sector">
                         </div>
 
-                        <div class="payment-info-container demo-payment">
+                        <div class="payment-info-container demo-payment checkout-step-payment">
                             <h4>Pago por transferencia (solo demostración)</h4>
                             <p class="demo-payment-note">Esta tienda es una <strong>demo del portafolio MP Designs</strong>. Los datos bancarios y la razón social siguientes son <strong>ficticios</strong> (formato Ecuador) para mostrar el flujo de compra; en un proyecto real aquí irían los datos del comercio y métodos de pago habilitados.</p>
                             <div class="payment-method-badges">
@@ -444,7 +467,7 @@
                             <p class="shipping-note"><i class="fas fa-truck"></i> Ejemplo envío nacional fuera de la ciudad matriz: +$5.50 (valor ilustrativo).</p>
                         </div>
 
-                        <div class="payment-info-container technical-checkout-panel">
+                        <div class="payment-info-container technical-checkout-panel checkout-step-payment">
                             <h4>Resumen t&eacute;cnico de confirmaci&oacute;n</h4>
                             <p class="demo-payment-note">Este bloque prioriza lectura r&aacute;pida y validaci&oacute;n operativa. Al confirmar, el sistema genera un <strong>PDF descargable</strong> con el detalle del pedido y totales estimados.</p>
                             <div class="payment-method-badges">
@@ -459,7 +482,7 @@
                             </div>
                         </div>
 
-                        <div class="payment-info-container payment-panel-live">
+                        <div class="payment-info-container payment-panel-live checkout-step-payment">
                             <h4>Medios de pago</h4>
                             <div class="payment-method-badges">
                                 <span class="payment-badge"><i class="fas fa-wallet"></i> Deuna</span>
@@ -483,11 +506,16 @@
                             <p class="shipping-note"><i class="fas fa-truck"></i> Envío: Loja sin recargo. Otras provincias con estimado nacional.</p>
                         </div>
 
-                        <button id="preview-cart-btn" class="btn btn-outline-dark btn-block"><i class="fas fa-file-pdf"></i> VISTA PREVIA A4 / PDF</button>
-                        <button id="checkout-btn" class="btn btn-primary btn-block big-btn"><i class="fas fa-file-arrow-down"></i> CONFIRMAR Y DESCARGAR PDF</button>
-                        <button id="continue-shopping-btn" class="btn btn-ghost btn-block btn-small">Seguir comprando</button>
+                        <button id="preview-cart-btn" class="btn btn-outline-dark btn-block checkout-step-payment"><i class="fas fa-file-pdf"></i> VISTA PREVIA A4 / PDF</button>
+                        <button id="checkout-btn" class="btn btn-primary btn-block big-btn checkout-step-payment"><i class="fas fa-file-arrow-down"></i> CONFIRMAR Y DESCARGAR PDF</button>
+                        <button id="continue-shopping-btn" class="btn btn-ghost btn-block btn-small checkout-step-payment">Seguir comprando</button>
                     </div>
                 </div>
+            </div>
+
+            <div class="mobile-checkout-actions">
+                <button type="button" id="mobile-checkout-back" class="btn mobile-step-back"><i class="fas fa-arrow-left"></i> Volver</button>
+                <button type="button" id="mobile-checkout-next" class="btn btn-primary mobile-step-next">Proceder a pagar <i class="fas fa-arrow-right"></i></button>
             </div>
         </div>
     </div>
