@@ -1926,8 +1926,36 @@ document.addEventListener("DOMContentLoaded", () => {
         const afterTableY = Math.max((doc.lastAutoTable?.finalY || 145) + 7, 154);
         drawTotalsAndNotes(afterTableY);
 
-        doc.save(fileName);
-        return fileName;
+        const blob = doc.output("blob");
+        return { fileName, blob };
+    }
+
+    function isAppleMobileBrowser() {
+        const platform = navigator.platform || "";
+        const userAgent = navigator.userAgent || "";
+        return /iPad|iPhone|iPod/.test(userAgent)
+            || (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    }
+
+    function deliverGeneratedPdf(pdfResult, previewWindow = null) {
+        if (!pdfResult?.blob || !pdfResult?.fileName) return false;
+
+        const blobUrl = URL.createObjectURL(pdfResult.blob);
+        if (previewWindow && !previewWindow.closed) {
+            previewWindow.location.replace(blobUrl);
+        } else {
+            const downloadLink = document.createElement("a");
+            downloadLink.href = blobUrl;
+            downloadLink.download = pdfResult.fileName;
+            downloadLink.rel = "noopener";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            downloadLink.remove();
+        }
+
+        // Safari needs the object URL to remain alive while its PDF viewer loads.
+        window.setTimeout(() => URL.revokeObjectURL(blobUrl), 120000);
+        return true;
     }
 
     async function downloadOrderPdfFromTemplate(orderData, totals) {
@@ -2009,6 +2037,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const checkoutPdfClone = checkoutBtnPdf.cloneNode(true);
         checkoutBtnPdf.replaceWith(checkoutPdfClone);
         checkoutPdfClone.addEventListener("click", async () => {
+            if (checkoutPdfClone.dataset.nextAction === "whatsapp") {
+                const whatsappUrl = checkoutPdfClone.dataset.whatsappUrl;
+                if (whatsappUrl) window.open(whatsappUrl, "_blank", "noopener");
+                return;
+            }
+
             if (cart.length === 0) {
                 alert("Tu carrito esta vacio.");
                 return;
@@ -2019,12 +2053,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const totals = calculateCartTotals(orderData.province);
             updateOrderMeta(orderData.province);
-            const whatsappWindow = window.open("about:blank", "_blank");
-            const fileName = await downloadOrderPdfFromMockup(orderData, totals);
-            if (!fileName) {
-                if (whatsappWindow) whatsappWindow.close();
+            const pdfPreviewWindow = isAppleMobileBrowser() ? window.open("about:blank", "_blank") : null;
+            if (pdfPreviewWindow) {
+                pdfPreviewWindow.document.title = "Generando pedido Curativa";
+                pdfPreviewWindow.document.body.innerHTML = "<p style='font:16px system-ui;padding:24px'>Preparando tu PDF...</p>";
+            }
+
+            checkoutPdfClone.disabled = true;
+            checkoutPdfClone.setAttribute("aria-busy", "true");
+            const originalButtonHtml = checkoutPdfClone.innerHTML;
+            checkoutPdfClone.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GENERANDO PDF';
+
+            let pdfResult = null;
+            try {
+                pdfResult = await downloadOrderPdfFromMockup(orderData, totals);
+            } catch (error) {
+                console.error("No se pudo generar el PDF del pedido:", error);
+            }
+
+            if (!pdfResult || !deliverGeneratedPdf(pdfResult, pdfPreviewWindow)) {
+                if (pdfPreviewWindow && !pdfPreviewWindow.closed) pdfPreviewWindow.close();
+                checkoutPdfClone.disabled = false;
+                checkoutPdfClone.removeAttribute("aria-busy");
+                checkoutPdfClone.innerHTML = originalButtonHtml;
+                alert("No se pudo crear el PDF. Intenta nuevamente.");
                 return;
             }
+
+            const fileName = pdfResult.fileName;
 
             const message = [
                 `Hola, soy ${orderData.customerFullName} de ${orderData.province}.`,
@@ -2057,11 +2113,11 @@ document.addEventListener("DOMContentLoaded", () => {
             ].join("\n");
 
             const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
-            if (whatsappWindow) {
-                whatsappWindow.location.href = whatsappUrl;
-            } else {
-                window.open(whatsappUrl, "_blank");
-            }
+            checkoutPdfClone.disabled = false;
+            checkoutPdfClone.removeAttribute("aria-busy");
+            checkoutPdfClone.dataset.nextAction = "whatsapp";
+            checkoutPdfClone.dataset.whatsappUrl = whatsappUrl;
+            checkoutPdfClone.innerHTML = '<i class="fab fa-whatsapp"></i> PDF LISTO · ABRIR WHATSAPP';
         });
     }
 

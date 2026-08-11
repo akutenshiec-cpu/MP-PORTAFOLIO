@@ -691,11 +691,15 @@ if(fabBtn) {
     });
 }
 function closeFab() { 
-    fabWrapper.classList.remove('active'); 
-    fabBtn.classList.remove('active'); 
+    if (fabWrapper) fabWrapper.classList.remove('active');
+    if (!fabBtn) return;
+    fabBtn.classList.remove('active');
     fabBtn.setAttribute('aria-expanded', 'false');
     const i = fabBtn.querySelector('i');
-    i.classList.remove('fa-times'); i.classList.add('fa-bars'); 
+    if (i) {
+        i.classList.remove('fa-times');
+        i.classList.add('fa-bars');
+    }
 }
 
 /* =========================================
@@ -904,25 +908,38 @@ const CV_DATA_MARCO = {
 function openMarcoBioDock() {
     const paneBio = document.getElementById('pane-bio');
     if (!paneBio || paneBio.classList.contains('active-dock')) return;
-    
-    // Push history state to enable native back button closing
-    history.pushState({ modal: 'marcobio' }, null, "");
+
+    // Open first: some mobile browsers can reject history mutations.
     openMarcoBioDockUI();
+    try {
+        history.pushState({ modal: 'marcobio' }, '', window.location.href);
+        paneBio.dataset.historyEntry = 'true';
+    } catch (error) {
+        paneBio.dataset.historyEntry = 'false';
+    }
 }
 
 function openMarcoBioDockUI() {
-    closeFab();
     const paneBio = document.getElementById('pane-bio');
     if (paneBio) {
         paneBio.classList.add('active-dock');
+        paneBio.setAttribute('aria-hidden', 'false');
     }
+    const trigger = document.getElementById('floating-bio-dock');
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
     document.body.classList.add('cv-modal-open');
+    closeFab();
 }
 
 function closeMarcoBioDock() {
     const paneBio = document.getElementById('pane-bio');
     if (paneBio && paneBio.classList.contains('active-dock')) {
-        history.back();
+        if (paneBio.dataset.historyEntry === 'true') {
+            paneBio.dataset.historyEntry = 'false';
+            history.back();
+        } else {
+            closeMarcoBioDockUI();
+        }
     }
 }
 
@@ -930,7 +947,11 @@ function closeMarcoBioDockUI() {
     const paneBio = document.getElementById('pane-bio');
     if (paneBio) {
         paneBio.classList.remove('active-dock');
+        paneBio.setAttribute('aria-hidden', 'true');
+        paneBio.dataset.historyEntry = 'false';
     }
+    const trigger = document.getElementById('floating-bio-dock');
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
     // Only remove cv-modal-open if the CV note modal is also closed
     const cvNote = document.getElementById('cv-note-modal');
     if (!cvNote || !cvNote.classList.contains('active')) {
@@ -1015,6 +1036,15 @@ function initCvSwipeGestures() {
 
 // Register event handlers
 document.addEventListener('DOMContentLoaded', () => {
+    const bioTrigger = document.getElementById('floating-bio-dock');
+    if (bioTrigger) {
+        bioTrigger.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            openMarcoBioDock();
+        });
+    }
+
     // Grid item click handling
     document.addEventListener('click', (e) => {
         const gridItem = e.target.closest('.cv-grid-item');
