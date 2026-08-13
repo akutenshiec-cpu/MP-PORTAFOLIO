@@ -422,7 +422,12 @@
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+            .hero-content { padding-inline: 12px; }
+            .hero h1 {
+                font-size: clamp(1.35rem, 7.2vw, 2.5rem);
+                letter-spacing: clamp(0.5px, 0.4vw, 2px);
+                white-space: nowrap;
+            }
             .hero p { font-size: 0.8rem; }
             .hero-logo { width: 120px; }
             .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; }

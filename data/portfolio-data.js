@@ -150,7 +150,7 @@ window.MPPortfolioData = {
     webs: {
         elementos: { title: "Jardín 5 Elementos", url: "proyectos/5elementos/index.html" },
         curativa: { title: "Curativa E-Commerce", url: "proyectos/curativa/index.html" },
-        curarte: { title: "CurArte Experience", url: "https://curarteloja.com" },
+        curarte: { title: "CurArte Experience", url: "proyectos/curarte_menu/index.html" },
         maureen: { title: "Cotización Maureen (regulatorio)", url: "proyectos/Cotización/Maureen/index.html" },
     },
     galleries: {
