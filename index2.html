@@ -219,8 +219,17 @@
     .decision__copy .button { width: 100%; }
     .decision__note { margin: 14px 0 0; color: var(--muted) !important; font-size: .72rem; text-align: center; }
 
-    footer { padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: .72rem; }
-    .footer__inner { display: flex; justify-content: space-between; gap: 20px; }
+    footer { padding: 28px 0 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: .72rem; }
+    .footer__inner {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px;
+      padding-top: 2px; letter-spacing: .055em;
+    }
+    .footer__brand { color: #d8d3ca; font-weight: 700; }
+    .footer__services {
+      color: #d8b36a; font-size: .61rem; font-weight: 700;
+      letter-spacing: .16em; text-align: center; text-transform: uppercase;
+    }
+    .footer__location { justify-self: end; color: #9ba49f; }
 
     @media (max-width: 900px) {
       .hero__grid, .section-head, .decision__box { grid-template-columns: 1fr; gap: 32px; }
@@ -306,9 +315,10 @@
       h1 { max-width: 11ch; font-size: clamp(3.25rem,14vw,5rem); line-height: .9; }
       .hero__lead { font-size: .98rem; }
       .hero__aside { grid-template-columns: repeat(2,minmax(0,1fr)); }
-      .route { overflow-x: auto; scrollbar-width: none; }
-      .route__inner { display: flex; width: max-content; min-width: 100%; }
-      .route a { min-width: 190px; border-right: 1px solid var(--line); border-bottom: 0; }
+      .route { overflow: hidden; }
+      .route__inner { display: grid; grid-template-columns: 1fr; width: 100%; min-width: 0; }
+      .route a { min-width: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .route a:last-child { border-bottom: 0; }
       .service-section { padding: 72px 0; }
       .section-head { gap: 18px; margin-bottom: 30px; }
       .service-card { display: grid; grid-template-columns: minmax(170px,.72fr) 1.28fr; }
@@ -339,7 +349,10 @@
       summary { min-height: 46px; align-items: center; gap: 12px; }
       details ul { padding-left: 20px; font-size: .76rem; line-height: 1.55; }
       .decision__box { padding: 28px 22px; border-radius: 22px; }
-      .footer__inner { gap: 6px; text-align: center; }
+      footer { padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+      .footer__inner { grid-template-columns: 1fr; justify-items: center; gap: 7px; text-align: center; }
+      .footer__services { order: -1; }
+      .footer__location { justify-self: center; }
     }
     @media (max-width: 360px) {
       .brand__copy { display: none; }
@@ -387,6 +400,30 @@
     }
 
     .service-section-tab { display: none; }
+    @media (max-width: 899px) {
+      html, body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        overscroll-behavior-x: none;
+      }
+      @supports (overflow: clip) {
+        html, body { overflow-x: clip; }
+      }
+      body, main { touch-action: pan-y pinch-zoom; }
+      main,
+      main > section[data-service-page],
+      .service-page-content,
+      .shell,
+      .service-grid,
+      .solution-map {
+        min-width: 0;
+        max-width: 100%;
+      }
+      main { overflow-x: clip; }
+      main > section[data-service-page] { contain: paint; }
+      .mobile-orbit-card { backface-visibility: hidden; }
+    }
     @media (min-width: 900px) and (min-height: 560px) {
       html.services-carousel-lock, html.services-carousel-lock body { overflow: hidden; scroll-behavior: auto !important; }
       body.services-carousel .topbar { position: fixed; inset: 0 0 auto; z-index: 1050; overflow: hidden; }
@@ -593,7 +630,13 @@
     </section>
   </main>
 
-  <footer><div class="shell footer__inner"><span>© 2026 MP Dev Studio</span><span>Development · Design · Systems</span></div></footer>
+  <footer>
+    <div class="shell footer__inner">
+      <span class="footer__brand">© 2026 MP Dev Studio</span>
+      <span class="footer__services">Development · Design · Systems</span>
+      <span class="footer__location">Loja, Ecuador</span>
+    </div>
+  </footer>
   <script src="ads-config.js?v=20260813a"></script>
   <script src="ads-tracking.js?v=20260813a"></script>
   <script>

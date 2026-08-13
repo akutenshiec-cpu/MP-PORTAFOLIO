@@ -470,7 +470,9 @@ function applyContentCustomization() {
     const footerBrandDescription = document.getElementById("footer-brand-description");
     const footerCopy = document.getElementById("footer-copy");
     if (footerBrandDescription && footer.brandDescription) footerBrandDescription.textContent = repairText(footer.brandDescription);
-    if (footerCopy && footer.copy) footerCopy.textContent = repairText(footer.copy);
+    if (footerCopy && footer.copy && !footerCopy.querySelector('.footer-copy__brand')) {
+        footerCopy.textContent = repairText(footer.copy);
+    }
     renderLinks("footer-services-links", footer.services || []);
     renderLinks("footer-contact-links", footer.contacts || [], true);
 }
@@ -1310,7 +1312,7 @@ function initHeroPointerComposition() {
     stage.dataset.pointerCompositionReady = 'true';
 
     let frame = 0;
-    const setPosition = (x, y) => {
+    const setPosition = (x, y, movePhoto = true) => {
         const layer = (name, factorX, factorY = factorX) => {
             stage.style.setProperty(`--hero-${name}-x`, `${(x * factorX).toFixed(2)}px`);
             stage.style.setProperty(`--hero-${name}-y`, `${(y * factorY).toFixed(2)}px`);
@@ -1319,7 +1321,23 @@ function initHeroPointerComposition() {
         layer('ring', -1.05);
         layer('dots', 1.45);
         layer('arc', -.85);
-        layer('photo', 1.5, .85);
+        if (movePhoto) layer('photo', 1.5, .85);
+        else layer('photo', 0, 0);
+    };
+
+    const mobileMedia = window.matchMedia('(max-width: 820px)');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let scrollFrame = 0;
+    const moveCompositionOnScroll = () => {
+        if (!mobileMedia.matches || reduceMotion.matches) return;
+        cancelAnimationFrame(scrollFrame);
+        scrollFrame = requestAnimationFrame(() => {
+            const rect = stage.getBoundingClientRect();
+            const viewport = window.innerHeight || document.documentElement.clientHeight;
+            const centerDelta = (viewport * .52) - (rect.top + rect.height * .5);
+            const progress = Math.max(-1, Math.min(1, centerDelta / (viewport * .62)));
+            setPosition(progress * 8, progress * 18, false);
+        });
     };
     const moveComposition = (event) => {
         const rect = hero.getBoundingClientRect();
@@ -1335,12 +1353,16 @@ function initHeroPointerComposition() {
         stage.classList.remove('is-pointer-active');
     };
     window.addEventListener('mousemove', (event) => {
+        if (mobileMedia.matches) return;
         const rect = hero.getBoundingClientRect();
         const insideHero = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
         if (insideHero) moveComposition(event);
         else resetComposition();
     }, { passive: true });
     window.addEventListener('blur', resetComposition);
+    window.addEventListener('scroll', moveCompositionOnScroll, { passive: true });
+    window.addEventListener('resize', moveCompositionOnScroll, { passive: true });
+    moveCompositionOnScroll();
 }
 
 if (document.readyState === 'loading') {

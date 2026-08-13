@@ -49,7 +49,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" href="images/mp-dev-studio-mark.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="style.css?v=20260813-mobile-orbit" />
+    <link rel="stylesheet" href="style.css?v=20260813-mobile-orbit-hero" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script type="application/ld+json">
     {
@@ -403,7 +403,17 @@
         .footer-col:not(:first-child) { padding-left: 24px; border-left: 1px solid rgba(232,220,198,.1); }
         .main-footer .contact-btn { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; backdrop-filter: none; }
         .main-footer .contact-btn:hover { transform: none; background: transparent; }
-        .footer-copy { color: #7f9388; border-top-color: rgba(232,220,198,.1); }
+        .footer-copy {
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px;
+            color: #87928d; border-top-color: rgba(232,220,198,.1);
+            font-size: .68rem; line-height: 1.4; letter-spacing: .055em; text-align: left;
+        }
+        .footer-copy__brand { color: #d8d3ca; font-weight: 700; }
+        .footer-copy__services {
+            color: #d8b36a; font-size: .61rem; font-weight: 700;
+            letter-spacing: .16em; text-transform: uppercase; text-align: center;
+        }
+        .footer-copy__location { justify-self: end; color: #9ba49f; }
         .fab-glass-container, .fab-main-btn { display: none !important; }
         .fab-wrapper { right: 18px; bottom: 18px; }
         #floating-bio-dock {
@@ -533,6 +543,12 @@
             #contacto .contact-links { display: grid; grid-template-columns: 1fr; }
             #contacto .contact-btn { width: 100%; justify-content: center; }
             .footer-col:not(:first-child) { padding: 22px 0 0; border-left: 0; border-top: 1px solid rgba(232,220,198,.1); }
+            .footer-copy {
+                grid-template-columns: 1fr; justify-items: center; gap: 7px;
+                padding: 20px 0 calc(4px + env(safe-area-inset-bottom)); text-align: center;
+            }
+            .footer-copy__services { order: -1; }
+            .footer-copy__location { justify-self: center; }
             .section-block { margin-top: 68px; }
             .cards-grid { grid-template-columns: minmax(0,1fr); gap: 18px; }
             .trust-card {
@@ -666,6 +682,34 @@
             .hero-editorial__stage {
                 order: 2;
                 min-height: clamp(390px, 112vw, 520px);
+                background:
+                    linear-gradient(90deg, transparent 49.92%, rgba(112,64,77,.075) 50%, transparent 50.08%),
+                    linear-gradient(0deg, transparent 49.92%, rgba(195,151,79,.075) 50%, transparent 50.08%),
+                    radial-gradient(circle at 64% 48%, rgba(255,255,251,.9), transparent 35%),
+                    linear-gradient(145deg, #f0ece3 0%, #dfd9cc 62%, #cec8b9 100%);
+            }
+            .hero-editorial__stage::before {
+                border-width: 1px;
+                box-shadow: 0 18px 38px rgba(104,73,34,.2), 0 0 0 4px rgba(216,179,106,.07), inset 0 1px rgba(255,248,224,.55);
+            }
+            .hero-editorial__stage::after {
+                border-width: 1px;
+                border-color: rgba(112,64,77,.55);
+                box-shadow: 0 0 0 4px rgba(216,179,106,.075);
+            }
+            .hero-editorial__dots {
+                width: 68px;
+                height: 68px;
+                opacity: .52;
+                background-image: radial-gradient(#70404d .9px, transparent 1.05px);
+                background-size: 9px 9px;
+                filter: none;
+            }
+            .hero-editorial__arc {
+                border-width: 1px;
+                border-top: 0;
+                border-color: rgba(112,64,77,.58);
+                box-shadow: 0 5px 12px rgba(112,64,77,.07), inset 0 -2px 0 rgba(216,179,106,.055);
             }
             .hero-editorial__photo {
                 width: min(430px, 98vw);
@@ -710,6 +754,25 @@
             .hero-editorial__stage::before {
                 width: min(76vw, 300px);
                 top: 31%;
+            }
+            .hero-editorial__stage::after {
+                width: 62px;
+                height: 62px;
+                right: 7%;
+                top: 9%;
+            }
+            .hero-editorial__dots {
+                width: 58px;
+                height: 58px;
+                right: 6%;
+                top: 20%;
+                background-size: 8px 8px;
+            }
+            .hero-editorial__arc {
+                width: min(64vw, 230px);
+                height: min(32vw, 115px);
+                left: 20%;
+                bottom: 27%;
             }
             .hero-editorial__photo {
                 width: min(390px, 104vw);
@@ -941,7 +1004,11 @@
                 </div>
             </div>
         </div>
-        <p class="footer-copy" id="footer-copy">&copy; 2026 MP Dev Studio · Development &amp; design · Loja, Ecuador.</p>
+        <p class="footer-copy" id="footer-copy">
+            <span class="footer-copy__brand">&copy; 2026 MP Dev Studio</span>
+            <span class="footer-copy__services">Development · Design · Systems</span>
+            <span class="footer-copy__location">Loja, Ecuador</span>
+        </p>
     </footer>
 
     <div class="fab-wrapper" id="fabMenu">
@@ -1287,7 +1354,7 @@
             </div>
         </div>
     </div>    <script src="data/portfolio-data.js?v=20260813f"></script>
-    <script src="script.js?v=20260813z"></script>
+    <script src="script.js?v=20260813-mobile-hero-scroll"></script>
     <script src="ads-config.js?v=20260813a"></script>
     <script src="ads-tracking.js?v=20260813a"></script>
 </body>
