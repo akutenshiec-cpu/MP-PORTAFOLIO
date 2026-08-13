@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
     <meta name="description" content="MP Dev Studio: landing pages premium, catálogos web, sistemas QMS/ERP y software operativo a medida. Development &amp; design." />
     <meta name="theme-color" content="#15110f" />
     <meta name="author" content="Marco Pérez Celi · MP Dev Studio" />
@@ -48,7 +49,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="icon" href="images/mp-dev-studio-mark.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="style.css?v=20260810-hero-preview" />
+    <link rel="stylesheet" href="style.css?v=20260813-mobile-orbit" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script type="application/ld+json">
     {
@@ -84,22 +85,19 @@
           "inLanguage": "es-EC",
           "publisher": { "@id": "https://mpdesigns.xyz/#studio" }
         }
-        html.og-preview-mode .fab-wrapper,
-        html.og-preview-mode #floating-bio-dock,
-        html.og-preview-mode #page-loading-overlay {
-            display: none !important;
-        }
       ]
     }
     </script>
     <style id="index-optimization">
         .portfolio-nav {
             position: fixed; inset: 0 0 auto; z-index: 1050;
+            overflow: hidden;
             border-bottom: 1px solid rgba(226,232,238,.09);
             background: rgba(12,17,21,.84); backdrop-filter: blur(18px);
         }
         .portfolio-nav__inner {
             width: min(1180px, calc(100% - 40px)); min-height: 70px; margin: auto;
+            position: relative;
             display: flex; align-items: center; justify-content: space-between; gap: 24px;
         }
         .portfolio-nav__brand { display: flex; align-items: center; gap: 11px; color: #eef2f4; text-decoration: none; }
@@ -159,35 +157,54 @@
         .hero-editorial { display: grid; grid-template-columns: 54% 46%; align-items: stretch; min-height: 620px; }
         .hero-editorial__stage {
             position: relative; min-width: 0; overflow: hidden;
+            --hero-bg-x: 0px; --hero-bg-y: 0px;
+            --hero-ring-x: 0px; --hero-ring-y: 0px;
+            --hero-dots-x: 0px; --hero-dots-y: 0px;
+            --hero-arc-x: 0px; --hero-arc-y: 0px;
+            --hero-photo-x: 0px; --hero-photo-y: 0px;
             background:
-                radial-gradient(circle at 64% 48%, rgba(255,255,251,.92), transparent 35%),
+                linear-gradient(90deg, transparent 49.8%, rgba(112,64,77,.11) 50%, transparent 50.2%),
+                linear-gradient(0deg, transparent 49.8%, rgba(195,151,79,.12) 50%, transparent 50.2%),
+                radial-gradient(circle at 64% 48%, rgba(255,255,251,.94), transparent 35%),
                 linear-gradient(145deg, #f0ece3 0%, #dfd9cc 62%, #cec8b9 100%);
             box-shadow: inset -20px 0 45px rgba(58,45,39,.07);
+            perspective: 900px;
         }
         .hero-editorial__stage::before {
             content: ""; position: absolute; width: min(375px, 32vw); aspect-ratio: 1;
-            left: 54%; top: 43%; transform: translate(-50%,-50%); border-radius: 50%;
-            background: linear-gradient(145deg, #d8b36a 0%, #c3974f 58%, #aa7738 100%);
-            box-shadow: 0 24px 55px rgba(104,73,34,.18), inset 0 1px rgba(255,245,218,.3);
+            left: 54%; top: 43%; transform: translate(calc(-50% + var(--hero-bg-x)), calc(-50% + var(--hero-bg-y))); border-radius: 50%;
+            background: linear-gradient(145deg, #e4c47e 0%, #c3974f 55%, #9f682d 100%);
+            border: 2px solid rgba(255,240,201,.48);
+            box-shadow: 0 28px 62px rgba(104,73,34,.3), 0 0 0 10px rgba(216,179,106,.1), inset 0 1px rgba(255,248,224,.65);
+            transition: transform .55s cubic-bezier(.2,.8,.2,1);
         }
         .hero-editorial__stage::after {
             content: ""; position: absolute; width: 82px; height: 82px; right: 8%; top: 9%;
-            border-radius: 50%; border: 1px solid rgba(216,179,106,.58);
+            border-radius: 50%; border: 2px solid rgba(112,64,77,.72);
+            box-shadow: 0 0 0 8px rgba(216,179,106,.11), inset 0 0 0 1px rgba(255,255,255,.42);
+            transform: translate(var(--hero-ring-x), var(--hero-ring-y));
+            transition: transform .48s cubic-bezier(.2,.8,.2,1);
         }
         .hero-editorial__dots {
             position: absolute; z-index: 1; width: 82px; height: 82px; right: 11%; top: 22%;
-            opacity: .42; background-image: radial-gradient(#765447 1.15px, transparent 1.15px);
-            background-size: 8px 8px;
+            opacity: .78; background-image: radial-gradient(#70404d 1.55px, transparent 1.65px);
+            background-size: 8px 8px; filter: drop-shadow(0 4px 7px rgba(112,64,77,.2));
+            transform: translate(var(--hero-dots-x), var(--hero-dots-y));
+            transition: transform .38s cubic-bezier(.2,.8,.2,1);
         }
         .hero-editorial__arc {
             position: absolute; z-index: 1; width: 300px; height: 150px; left: 27%; bottom: 21%;
-            border: 1.5px solid rgba(112,64,77,.55); border-top: 0;
+            border: 3px solid rgba(112,64,77,.78); border-top: 0;
             border-radius: 0 0 180px 180px;
+            box-shadow: 0 9px 18px rgba(112,64,77,.13), inset 0 -7px 0 rgba(216,179,106,.09);
+            transform: translate(var(--hero-arc-x), var(--hero-arc-y));
+            transition: transform .44s cubic-bezier(.2,.8,.2,1);
         }
         .hero-editorial__photo {
-            position: absolute; z-index: 2; left: 58%; bottom: 0; transform: translateX(-50%);
+            position: absolute; z-index: 2; left: 58%; bottom: 0; transform: translateX(calc(-50% + var(--hero-photo-x))) translateY(var(--hero-photo-y));
             width: min(500px, 45vw); max-height: 98%; object-fit: contain; object-position: bottom;
             filter: saturate(.88) contrast(1.015) drop-shadow(0 20px 26px rgba(42,31,28,.2));
+            transition: transform .32s cubic-bezier(.2,.8,.2,1), filter .3s ease;
         }
         .hero-editorial__identity {
             position: absolute; z-index: 3; left: clamp(24px, 3.5vw, 48px); bottom: 44px;
@@ -197,6 +214,11 @@
         .hero-editorial__identity small { color: #70404d; font-size: .6rem; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
         .hero-editorial__identity strong { display: block; margin-top: 7px; font-family: "Cormorant Garamond",serif; font-size: 1.35rem; font-weight: 500; line-height: 1.05; }
         .hero-editorial__identity span { display: block; margin-top: 7px; color: #6b5a55; font-size: .7rem; line-height: 1.45; }
+        .hero-editorial__stage.is-pointer-active .hero-editorial__photo { filter: saturate(.94) contrast(1.025) drop-shadow(0 25px 32px rgba(42,31,28,.25)); }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-editorial__stage::before, .hero-editorial__stage::after,
+            .hero-editorial__dots, .hero-editorial__arc, .hero-editorial__photo { transition: none !important; }
+        }
         .hero-editorial__pitch {
             position: relative; z-index: 3; padding: clamp(46px, 5vw, 66px) clamp(42px, 5vw, 70px);
             display: flex; flex-direction: column; justify-content: flex-start;
@@ -246,7 +268,7 @@
         .hero-editorial__pitch .hero-btns { animation: heroCopyIn .7s .32s ease-out both; }
         @keyframes heroCircleIn { from { opacity: 0; transform: translate(-50%,-46%) scale(.92); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
         @keyframes heroPortraitIn { from { opacity: 0; transform: translate(-50%,24px); } to { opacity: 1; transform: translate(-50%,0); } }
-        @keyframes heroDetailIn { from { opacity: 0; } to { opacity: .65; } }
+        @keyframes heroDetailIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes heroCopyIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
         @media (prefers-reduced-motion: reduce) {
             .hero-editorial__stage::before, .hero-editorial__photo, .hero-editorial__dots,
@@ -736,11 +758,30 @@
                 <a href="#servicios">Sistemas</a>
                 <a href="#webs">Web</a>
                 <a href="#branding">Marca</a>
-                <a href="galerial.html?id=curativa">Galería</a>
+                <a href="galerial.html?id=curativa" target="_blank" rel="noopener noreferrer">Galería</a>
                 <a class="portfolio-nav__cta" href="#contacto">Contacto</a>
             </nav>
         </div>
     </header>
+
+    <aside class="section-wheel no-print" id="section-wheel" aria-label="Ruleta de secciones">
+        <div class="section-wheel__hub">
+            <button type="button" class="section-wheel__arrow" data-wheel-direction="-1" aria-label="Sección anterior"><i class="fa-solid fa-chevron-up"></i></button>
+            <span class="section-wheel__hub-label">Páginas</span>
+            <span class="section-wheel__counter" aria-live="polite">01 / 08</span>
+            <button type="button" class="section-wheel__arrow" data-wheel-direction="1" aria-label="Sección siguiente"><i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+        <nav class="section-wheel__orbit" id="section-wheel-orbit" aria-label="Secciones del sitio">
+            <a class="section-wheel__window" style="--wheel-index: 0" href="#hero"><span class="section-wheel__cab"><i class="fa-solid fa-house"></i><span>Inicio</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 1" href="#servicios"><span class="section-wheel__cab"><i class="fa-solid fa-cubes"></i><span>Sistemas</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 2" href="#webs"><span class="section-wheel__cab"><i class="fa-solid fa-code"></i><span>Web</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 3" href="#branding"><span class="section-wheel__cab"><i class="fa-solid fa-layer-group"></i><span>Marca</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 4" href="#promo"><span class="section-wheel__cab"><i class="fa-solid fa-bullhorn"></i><span>Narrativa</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 5" href="#ciencia"><span class="section-wheel__cab"><i class="fa-solid fa-microscope"></i><span>Ciencia</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 6" href="#planes"><span class="section-wheel__cab"><i class="fa-solid fa-tags"></i><span>Planes</span></span></a>
+            <a class="section-wheel__window" style="--wheel-index: 7" href="#contacto"><span class="section-wheel__cab"><i class="fa-solid fa-paper-plane"></i><span>Contacto</span></span></a>
+        </nav>
+    </aside>
 
     <div class="page-loading-overlay" id="page-loading-overlay" aria-hidden="true" hidden>
         <div class="page-loading-card">
@@ -788,7 +829,7 @@
                     <div class="hero-editorial__stage" aria-label="Marco Pérez, diseñador y desarrollador">
                         <span class="hero-editorial__dots" aria-hidden="true"></span>
                         <span class="hero-editorial__arc" aria-hidden="true"></span>
-                        <img class="hero-editorial__photo" src="images/fototransparente.png" alt="Marco Pérez, fundador de MP Dev Studio" fetchpriority="high" decoding="async">
+                        <img class="hero-editorial__photo" src="images/fototransparente.png" alt="Marco Pérez, fundador de MP Dev Studio" width="960" height="958" fetchpriority="high" decoding="async">
                         <div class="hero-editorial__identity">
                             <small>Dirección de producto</small>
                             <strong>Marco Pérez</strong>
@@ -796,7 +837,7 @@
                         </div>
                     </div>
                     <div class="hero-text hero-editorial__pitch">
-                        <img class="hero-editorial__watermark" src="images/mp-dev-studio-mark.svg" alt="" aria-hidden="true">
+                        <img class="hero-editorial__watermark" src="images/mp-dev-studio-mark.svg" alt="" width="76" height="58" loading="lazy" decoding="async" aria-hidden="true">
                         <p class="hero-kicker-new">Development · Design · Systems</p>
                         <h1 class="hero-brand-title">Diseño que posiciona. Tecnología que <em>ordena.</em></h1>
                         <p class="hero-desc" id="hero-desc">
@@ -849,7 +890,7 @@
                 <div class="banner-content">
                     <h4 id="planes-title">Arquitectura digital para crecer</h4>
                     <p id="planes-description">Desde una landing premium hasta un sistema operativo completo. Elige el nivel de intervención que necesita tu negocio y avanza con una ruta clara.</p>
-                    <a href="index2.html" class="btn btn-primary" id="planes-cta-link"><span id="planes-cta-text">Ver catálogo de servicios</span> <i class="fas fa-arrow-right"></i></a>
+                    <a href="index2.html" class="btn btn-primary" id="planes-cta-link"><span id="planes-cta-text">Explorar servicios y soluciones</span> <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
         </section>
@@ -906,7 +947,7 @@
     <div class="fab-wrapper" id="fabMenu">
         <div class="fab-glass-container" id="fab-navigation">
             <div class="fab-list">
-                <a href="galerial.html?id=curativa" onclick="closeFab()"><span>Galería HD</span><div class="mini-fab"><i class="fas fa-images"></i></div></a>
+                <a href="galerial.html?id=curativa" target="_blank" rel="noopener noreferrer" onclick="closeFab()"><span>Galería HD</span><div class="mini-fab"><i class="fas fa-images"></i></div></a>
                 <a href="#servicios" onclick="closeFab()"><span>Sistemas</span><div class="mini-fab"><i class="fas fa-briefcase"></i></div></a>
                 <a href="index2.html"><span>Servicios</span><div class="mini-fab"><i class="fas fa-tags"></i></div></a>
                 <a href="https://www.instagram.com/neckarc" target="_blank"><span>Instagram</span><div class="mini-fab"><i class="fab fa-instagram"></i></div></a>
@@ -927,10 +968,10 @@
     </button>
 
     <div id="lightbox" class="modal-overlay">
-        <button class="modal-close" onclick="closeGallery()">&times;</button>
+        <button type="button" class="modal-close" onclick="closeGallery(event)" aria-label="Cerrar galería">&times;</button>
         <button class="modal-prev" onclick="changeSlide(-1)">&#10094;</button>
         <button class="modal-next" onclick="changeSlide(1)">&#10095;</button>
-        <div class="modal-content"><div class="lb-header"><h3 id="lb-title">Proyecto</h3><span class="zoom-hint"><i class="fas fa-search-plus"></i> Doble toque: Zoom</span></div><div class="lb-image-wrapper" id="swipeArea"><img id="lb-img" src="" alt="Cargando..." /></div><div id="lb-counter">1 / 1</div></div>
+        <div class="modal-content"><div class="lb-header"><h3 id="lb-title">Proyecto</h3><span class="zoom-hint"><i class="fas fa-search-plus"></i> Doble toque: Zoom</span></div><div class="lb-image-wrapper" id="swipeArea"><img id="lb-img" src="" alt="Cargando..." /></div><div id="lb-counter">1 / 1</div><div class="lb-zoom-controls" aria-label="Controles de zoom"><button type="button" onclick="changeGalleryZoom(-0.25)" aria-label="Alejar"><i class="fas fa-minus"></i></button><button type="button" onclick="resetGalleryZoom()" aria-label="Restablecer zoom"><i class="fas fa-rotate-left"></i></button><button type="button" onclick="changeGalleryZoom(0.25)" aria-label="Acercar"><i class="fas fa-plus"></i></button></div></div>
     </div>
     <div id="web-modal" class="modal-overlay web-mode">
         <div class="web-bar"><span id="web-title">Vista previa</span><div class="web-actions"><a id="web-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i></a><button onclick="closeWeb()">Cerrar</button></div></div><div class="iframe-box"><iframe id="web-frame" src="" frameborder="0"></iframe></div>
@@ -1009,7 +1050,122 @@
                     <span class="bio-tag">NEXT.JS &amp; REACT</span>
                     <span class="bio-tag">TAILWIND CSS</span>
                     <span class="bio-tag">POSTGRESQL &amp; PRISMA</span>
-                    <span class="bio-tag">SUPABASE</span>
+                    <span class="bio-tag">BACKEND &amp; CLOUD</span>
+                    <span class="bio-tag">SISTEMAS IA &amp; 3D</span>
+                </div>
+
+                <div class="marcobio-divider"></div>
+
+                <!-- Desktop/Tablet Expanded Sections -->
+                <div class="marcobio-desktop-cv">
+                    <div class="marcobio-expanded-section">
+                        <h3 class="marcobio-section-title"><i class="fas fa-cubes"></i> Arquitectura de Software &amp; Diseño Integral</h3>
+                        <p class="marcobio-expanded-p">Desde una landing para validar ideas en el mercado hasta una suite completa de control de calidad documental. El stack tecnológico evoluciona. El rigor y la utilidad real, no.</p>
+                        
+                        <div class="marcobio-bullets-grid">
+                            <div class="marcobio-bullet-card">
+                                <div class="bullet-icon-box"><i class="fas fa-laptop-code"></i></div>
+                                <div class="bullet-content">
+                                    <h4>Arquitectura QMS &amp; ERP</h4>
+                                    <p><strong>Sistemas a medida.</strong> Desarrollo backend y bases de datos relacionales para operaciones industriales reales. Control documental estricto, flujos de inventario y trazabilidad bajo normativas de calidad (ITERA).</p>
+                                </div>
+                            </div>
+                            <div class="marcobio-bullet-card">
+                                <div class="bullet-icon-box"><i class="fas fa-rocket"></i></div>
+                                <div class="bullet-content">
+                                    <h4>Ecosistemas Web Premium</h4>
+                                    <p><strong>Landings &amp; E-commerce de alto rendimiento.</strong> Interfaces que elevan la percepción de marca con carga veloz y arquitecturas frontend optimizadas. Flujos de conversión sin fricción integrados con ventas.</p>
+                                </div>
+                            </div>
+                            <div class="marcobio-bullet-card">
+                                <div class="bullet-icon-box"><i class="fas fa-palette"></i></div>
+                                <div class="bullet-content">
+                                    <h4>Identidad Visual &amp; Packaging</h4>
+                                    <p><strong>Branding &amp; preparación retail.</strong> Sistemas visuales completos y maquetación técnica de etiquetas listas para imprenta, garantizando coherencia entre el producto físico y el digital.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="marcobio-divider"></div>
+
+                    <div class="marcobio-expanded-section">
+                        <h3 class="marcobio-section-title"><i class="fas fa-microscope"></i> Ciencia, Edición &amp; Tecnologías Emergentes</h3>
+                        <div class="marcobio-knowledge-grid">
+                            <div class="knowledge-item">
+                                <span class="ki-title"><i class="fas fa-solid fa-angles-right"></i> Ilustración Científica</span>
+                                <p><strong>Fauna neotropical &amp; botánica.</strong> Documentación morfológica precisa de especies silvestres y láminas naturalistas de alta resolución, respaldada por mi formación como Biólogo.</p>
+                            </div>
+                            <div class="knowledge-item">
+                                <span class="ki-title"><i class="fas fa-solid fa-angles-right"></i> Diseño Editorial</span>
+                                <p><strong>Manuales &amp; publicaciones técnicas.</strong> Maquetación estructurada de libros, folletos y manuales técnicos con rigor tipográfico, jerarquía visual y legibilidad.</p>
+                            </div>
+                            <div class="knowledge-item">
+                                <span class="ki-title"><i class="fas fa-solid fa-angles-right"></i> IA &amp; Tecnologías 3D</span>
+                                <p><strong>Automatización &amp; prototipado.</strong> Modelado 3D e integración de sistemas de Inteligencia Artificial para potenciar flujos de trabajo en código y diseño visual.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Grid (Visible everywhere, active for detailed cards) -->
+                <div class="marcobio-mobile-cv">
+                    <h3 class="marcobio-section-title"><i class="fas fa-id-card"></i> Arquitectura de Software &amp; Diseño Integral</h3>
+                    <p class="marcobio-grid-intro">Desde una landing para validar ideas en el mercado hasta una suite completa de control de calidad documental. El stack tecnológico evoluciona. El rigor y la utilidad real, no.</p>
+                    
+                    <div class="marcobio-grid-cv">
+                        <div class="cv-grid-item" data-cv="1">
+                            <div class="cv-icon-box"><i class="fas fa-database"></i></div>
+                            <span class="cv-grid-title">QMS &amp; ERP</span>
+                        </div>
+                        <div class="cv-grid-item" data-cv="2">
+                            <div class="cv-icon-box"><i class="fas fa-globe"></i></div>
+                            <span class="cv-grid-title">Web Premium</span>
+                        </div>
+                        <div class="cv-grid-item" data-cv="3">
+                            <div class="cv-icon-box"><i class="fas fa-box-open"></i></div>
+                            <span class="cv-grid-title">Identidad/Pack</span>
+                        </div>
+                        <div class="cv-grid-item" data-cv="4">
+                            <div class="cv-icon-box"><i class="fas fa-microscope"></i></div>
+                            <span class="cv-grid-title">Ilustración Científica</span>
+                        </div>
+                        <div class="cv-grid-item" data-cv="5">
+                            <div class="cv-icon-box"><i class="fas fa-pen-nib"></i></div>
+                            <span class="cv-grid-title">Diseño Editorial</span>
+                        </div>
+                        <div class="cv-grid-item" data-cv="6">
+                            <div class="cv-icon-box"><i class="fas fa-robot"></i></div>
+                            <span class="cv-grid-title">IA &amp; 3D</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="marcobio-actions-divider"></div>
+
+                <!-- Primary Contact / Portfolio Actions -->
+                <div class="marcobio-actions">
+                    <a id="marcobio-wa-advice" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio,%20vi%20el%20portafolio%20y%20me%20gustar%C3%ADa%20conversar%20sobre%20un%20proyecto." target="_blank" class="btn btn-accent glow-effect">
+                        <i class="fab fa-whatsapp"></i> <span>Agendar Diagnóstico</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sliding Detail Bottom-Sheet Overlay -->
+    <div class="cv-note-overlay no-print" id="cv-note-modal">
+        <div class="cv-note-backdrop" onclick="window.closeCvNote()"></div>
+        <div class="cv-note-sheet">
+            <div class="cv-note-handle" id="cv-note-handle"></div>
+            <button class="cv-note-close" onclick="window.closeCvNote()" aria-label="Cerrar detalles"><i class="fas fa-xmark"></i></button>
+            <div class="cv-note-header">
+                <span class="cv-note-subtitle">Marco Pérez Celi ✦ Especialidad</span>
+                <h2 class="cv-note-title" id="cv-note-title">Título de Especialidad</h2>
+            </div>
+            <div class="cv-note-body">
+                <p id="cv-note-desc">Descripción del alcance y rol técnico en esta disciplina.</p>
+            </div>
                     <span class="bio-tag">SISTEMAS IA &amp; 3D</span>
                 </div>
 
@@ -1130,7 +1286,9 @@
                 <span>Visual Architect &amp; Web Developer · Solución Premium</span>
             </div>
         </div>
-    </div>    <script src="data/portfolio-data.js?v=20260810c"></script>
-    <script src="script.js?v=20260810d"></script>
+    </div>    <script src="data/portfolio-data.js?v=20260813f"></script>
+    <script src="script.js?v=20260813z"></script>
+    <script src="ads-config.js?v=20260813a"></script>
+    <script src="ads-tracking.js?v=20260813a"></script>
 </body>
 </html>

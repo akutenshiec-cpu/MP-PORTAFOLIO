@@ -230,6 +230,7 @@ function renderHomeSections() {
             const imageClass = card.imageClass ? ` ${card.imageClass}` : "";
             const badgeLabel = repairText(card.badge || "");
             const badge = badgeLabel ? `<span class="card-badge">${badgeLabel}</span>` : "";
+            const kickerLabel = repairText(card.rubro || card.badge || "Proyecto seleccionado");
             const overlay = card.overlayText
                 ? `<div class="hover-overlay"><i class="fas ${card.overlayIcon || "fa-arrow-right"}"></i> ${card.overlayText}</div>`
                 : "";
@@ -244,6 +245,7 @@ function renderHomeSections() {
             const safeAlt = repairText(card.imageAlt || card.title || "");
             const imageStyle = card.imageStyle || "";
             const isClickable = card.type === "web" || card.type === "gallery" || card.type === "bio";
+            const galleryTarget = card.galleryId || (card.type === "gallery" ? card.id : "");
             const galleryIndex =
                 card.type === "gallery" && sectionKey === "ciencia"
                     ? cardIndex
@@ -258,10 +260,10 @@ function renderHomeSections() {
                           .join("")}</div>`
                     : "";
             const galleryLink =
-                card.type === "gallery"
+                galleryTarget
                     ? `<a href="galerial.html?id=${encodeURIComponent(
-                          card.id
-                      )}" class="card-gallery-link" data-gallery-link>Vista galería HD <i class="fas fa-images"></i></a>`
+                          galleryTarget
+                       )}" class="card-gallery-link" data-gallery-link target="_blank" rel="noopener noreferrer">Vista galería HD <i class="fas fa-images"></i></a>`
                     : "";
 
             return `
@@ -272,6 +274,7 @@ function renderHomeSections() {
                         ${overlay}
                     </div>
                     <div class="card-info">
+                        <span class="card-kicker">${kickerLabel}</span>
                         <h4>${repairText(card.title)}</h4>
                         <p>${repairText(card.description)}</p>
                         ${tagsHtml}
@@ -492,6 +495,42 @@ function initRevealOnScroll() {
     els.forEach((el) => io.observe(el));
 }
 
+function initMobileSectionMotion() {
+    const media = window.matchMedia('(max-width: 899px)');
+    const sections = Array.from(document.querySelectorAll('.grid-container > section[data-section-key]'));
+    if (!media.matches || !sections.length) return;
+
+    sections.forEach((section) => section.classList.add('mobile-scroll-section'));
+    const cards = Array.from(document.querySelectorAll(
+        '.grid-container > section[data-section-key] .cards-grid > *, .grid-container > section[data-section-key] .banner-card, .grid-container > section[data-section-key] .contact-box'
+    ));
+    cards.forEach((card) => card.classList.add('mobile-orbit-card'));
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        sections.forEach((section) => section.classList.add('mobile-section-visible'));
+        cards.forEach((card) => card.classList.add('mobile-card-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('mobile-section-visible');
+            observer.unobserve(entry.target);
+        });
+    }, { threshold: 0.08, rootMargin: '0px 0px -10% 0px' });
+
+    sections.forEach((section) => observer.observe(section));
+
+    const cardObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('mobile-card-visible');
+            cardObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.16, rootMargin: '0px 0px -6% 0px' });
+    cards.forEach((card) => cardObserver.observe(card));
+}
+
 function applySectionLayout() {
     const main = document.querySelector("main.grid-container");
     if (!main) return;
@@ -519,6 +558,8 @@ function applySectionLayout() {
    2. UI VARIABLES
    ========================================= */
 let currentImgs = [], idx = 0, currentScale = 1, currentX = 0, currentY = 0, startX = 0, startY = 0, isDragging = false, lastTap = 0;
+let suppressBioOpenUntil = 0;
+let closingGalleryHistoryEntry = false;
 const lightbox = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img'), lbTitle = document.getElementById('lb-title'), lbCounter = document.getElementById('lb-counter'), lbWrapper = document.querySelector('.lb-image-wrapper');
 const webModal = document.getElementById('web-modal'), webFrame = document.getElementById('web-frame'), webTitle = document.getElementById('web-title'), webLink = document.getElementById('web-link');
 
@@ -526,7 +567,11 @@ const webModal = document.getElementById('web-modal'), webFrame = document.getEl
    3. CONTROL DE HISTORIAL (BACK BUTTON FIX)
    ========================================= */
 window.addEventListener('popstate', function(e) {
-    if (lightbox && lightbox.classList.contains('active')) {
+    const galleryWasOpen = Boolean(lightbox && lightbox.classList.contains('active'));
+    const galleryWasClosedByControl = closingGalleryHistoryEntry || galleryWasOpen;
+    closingGalleryHistoryEntry = false;
+
+    if (galleryWasOpen) {
         closeGalleryUI();
     }
     if (webModal && webModal.classList.contains('active')) {
@@ -538,7 +583,7 @@ window.addEventListener('popstate', function(e) {
     // Bio dock management
     const paneBio = document.getElementById('pane-bio');
     if (paneBio) {
-        if (state.modal === 'marcobio' || state.modal === 'cvnote') {
+        if ((state.modal === 'marcobio' || state.modal === 'cvnote') && !galleryWasClosedByControl && Date.now() >= suppressBioOpenUntil) {
             if (!paneBio.classList.contains('active-dock')) {
                 openMarcoBioDockUI();
             }
@@ -552,7 +597,7 @@ window.addEventListener('popstate', function(e) {
     // CV Note management
     const cvNote = document.getElementById('cv-note-modal');
     if (cvNote) {
-        if (state.modal === 'cvnote') {
+        if (state.modal === 'cvnote' && !galleryWasClosedByControl && Date.now() >= suppressBioOpenUntil) {
             if (!cvNote.classList.contains('active')) {
                 openCvNoteUI();
             }
@@ -580,9 +625,17 @@ function openGallery(key, startIndex = 0) {
 }
 
 function updateImage() {
+    // Cada imagen entra siempre en su estado canónico: 100% y sin desplazamiento.
+    resetTransform();
     lbImg.style.opacity = 0.5; lbImg.style.transition = 'opacity 0.2s';
+    lbImg.decoding = 'async';
+    lbImg.fetchPriority = 'high';
     lbImg.src = currentImgs[idx]; lbCounter.innerText = (idx + 1) + " / " + currentImgs.length;
-    lbImg.onload = () => { lbImg.style.opacity = 1; lbImg.style.transition = 'none'; };
+    lbImg.onload = () => {
+        resetTransform();
+        lbImg.style.opacity = 1;
+        lbImg.style.transition = 'none';
+    };
 }
 
 function closeGalleryUI() {
@@ -591,9 +644,16 @@ function closeGalleryUI() {
     setTimeout(() => { lbImg.src = ""; resetTransform(); }, 300);
 }
 
-function closeGallery() {
+function closeGallery(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    // Evita que el mismo toque active el botón flotante del CV situado debajo.
+    suppressBioOpenUntil = Date.now() + 500;
     closeGalleryUI();
     if (history.state && history.state.modal === 'gallery') {
+        closingGalleryHistoryEntry = true;
         history.back();
     }
 }
@@ -630,7 +690,14 @@ function closeWeb() {
 /* =========================================
    6. TOUCH & ZOOM LOGIC
    ========================================= */
-function resetTransform() { currentScale = 1; currentX = 0; currentY = 0; applyTransform(); lbWrapper.style.cursor = 'grab'; }
+function resetTransform() {
+    currentScale = 1;
+    currentX = 0;
+    currentY = 0;
+    isDragging = false;
+    applyTransform();
+    if (lbWrapper) lbWrapper.style.cursor = 'grab';
+}
 function applyTransform() { lbImg.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentScale})`; }
 
 lbWrapper.addEventListener('touchstart', handleStart, {passive: false});
@@ -666,9 +733,23 @@ function handleEnd(e) {
     }
 }
 function toggleZoom() {
-    if (currentScale === 1) currentScale = 2.5; else resetTransform();
+    if (currentScale === 1) currentScale = 1.75; else resetTransform();
     lbImg.style.transition = 'transform 0.3s ease'; applyTransform(); setTimeout(() => lbImg.style.transition = 'none', 300);
 }
+function changeGalleryZoom(amount) {
+    currentScale = Math.max(1, Math.min(2.5, currentScale + amount));
+    if (currentScale === 1) { currentX = 0; currentY = 0; }
+    lbImg.style.transition = 'transform 0.25s ease';
+    applyTransform();
+    setTimeout(() => { lbImg.style.transition = 'none'; }, 250);
+}
+function resetGalleryZoom() { resetTransform(); }
+
+// El historial de página y los cambios de tamaño nunca deben restaurar un zoom anterior.
+window.addEventListener('pageshow', resetTransform);
+window.addEventListener('resize', () => {
+    if (lightbox && lightbox.classList.contains('active')) resetTransform();
+});
 
 /* =========================================
    7. MENÚ FAB
@@ -708,7 +789,13 @@ document.addEventListener('keydown', (e) => {
         if (lightbox && lightbox.classList.contains('active')) closeGallery();
         if (webModal && webModal.classList.contains('active')) closeWeb();
     }
-    if(lightbox && lightbox.classList.contains('active')) { if(e.key === "ArrowLeft") changeSlide(-1); if(e.key === "ArrowRight") changeSlide(1); }
+    if(lightbox && lightbox.classList.contains('active')) {
+        if(e.key === "ArrowLeft") changeSlide(-1);
+        if(e.key === "ArrowRight") changeSlide(1);
+        if(e.key === "+" || e.key === "=") changeGalleryZoom(0.25);
+        if(e.key === "-") changeGalleryZoom(-0.25);
+        if(e.key === "0") resetGalleryZoom();
+    }
 });
 document.addEventListener('click', (e) => {
     if(fabWrapper && fabWrapper.classList.contains('active') && !fabWrapper.contains(e.target)) closeFab();
@@ -734,6 +821,8 @@ window.closeGallery = closeGallery;
 window.openWeb = openWeb; 
 window.closeWeb = closeWeb; 
 window.changeSlide = changeSlide; 
+window.changeGalleryZoom = changeGalleryZoom;
+window.resetGalleryZoom = resetGalleryZoom;
 window.closeFab = closeFab;
 
 document.addEventListener("click", (event) => {
@@ -773,6 +862,7 @@ window.addEventListener('load', function() {
     applySectionLayout();
     initHeroCarousel();
     initRevealOnScroll();
+    initMobileSectionMotion();
 
     const canvas = document.getElementById('hero-canvas');
     const container = document.getElementById('hero-card-container'); 
@@ -904,6 +994,7 @@ const CV_DATA_MARCO = {
 };
 
 function openMarcoBioDock() {
+    if (Date.now() < suppressBioOpenUntil) return;
     const paneBio = document.getElementById('pane-bio');
     if (!paneBio || paneBio.classList.contains('active-dock')) return;
 
@@ -1034,6 +1125,130 @@ function initCvSwipeGestures() {
 
 // Register event handlers
 document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
+    const sectionWheel = document.getElementById('section-wheel');
+    const portfolioHeaderInner = document.querySelector('.portfolio-nav__inner');
+    const portfolioHeaderBrand = portfolioHeaderInner?.querySelector('.portfolio-nav__brand');
+    if (sectionWheel && portfolioHeaderInner && portfolioHeaderBrand) {
+        portfolioHeaderBrand.insertAdjacentElement('afterend', sectionWheel);
+    }
+    const ferrisMedia = window.matchMedia('(min-width: 900px) and (min-height: 560px)');
+    const ferrisSections = Array.from(document.querySelectorAll('.grid-container > section[data-section-key]'));
+    const ferrisLinks = Array.from(sectionWheel?.querySelectorAll('.section-wheel__window') || []);
+    const ferrisOrbit = sectionWheel?.querySelector('.section-wheel__orbit');
+    const ferrisCounter = sectionWheel?.querySelector('.section-wheel__counter');
+    let ferrisIndex = Math.max(0, ferrisSections.findIndex((section) => `#${section.id}` === window.location.hash));
+    let ferrisRotation = 90 - (ferrisIndex * 45);
+    let ferrisRenderedIndex = ferrisIndex;
+    let ferrisWheelLocked = false;
+    let ferrisResizeTimer = 0;
+
+    ferrisSections.forEach((section) => {
+        if (section.id === 'hero' || section.querySelector(':scope > .ferris-section-content')) return;
+        const content = document.createElement('div');
+        content.className = 'ferris-section-content';
+        while (section.firstChild) content.appendChild(section.firstChild);
+        section.appendChild(content);
+    });
+
+    const renderFerris = (nextIndex, updateHash = true) => {
+        if (ferrisMedia.matches) window.scrollTo(0, 0);
+        const count = ferrisSections.length;
+        const normalizedNext = (nextIndex + count) % count;
+        let movement = normalizedNext - ferrisRenderedIndex;
+        if (movement > count / 2) movement -= count;
+        if (movement < -count / 2) movement += count;
+        ferrisRotation -= movement * (360 / count);
+        ferrisIndex = normalizedNext;
+        ferrisRenderedIndex = normalizedNext;
+        if (sectionWheel) {
+            sectionWheel.classList.toggle('section-wheel--from-above', movement < 0);
+            sectionWheel.classList.toggle('section-wheel--from-below', movement >= 0);
+        }
+        ferrisSections.forEach((section, index) => {
+            const rawDelta = index - ferrisIndex;
+            const delta = ((rawDelta + count / 2) % count + count) % count - count / 2;
+            section.classList.remove('ferris-active', 'ferris-prev', 'ferris-next', 'ferris-away-up', 'ferris-away-down');
+            if (delta === 0) section.classList.add('ferris-active');
+            else if (delta === -1) section.classList.add('ferris-prev');
+            else if (delta === 1) section.classList.add('ferris-next');
+            else section.classList.add(delta < 0 ? 'ferris-away-up' : 'ferris-away-down');
+            section.setAttribute('aria-hidden', String(delta !== 0));
+        });
+        ferrisLinks.forEach((link, index) => {
+            link.classList.toggle('is-active', index === ferrisIndex);
+            link.setAttribute('aria-current', index === ferrisIndex ? 'page' : 'false');
+            const cab = link.querySelector('.section-wheel__cab');
+            if (cab) cab.style.rotate = `${-ferrisRotation}deg`;
+        });
+        if (ferrisOrbit) ferrisOrbit.style.rotate = `${ferrisRotation}deg`;
+        if (ferrisCounter) ferrisCounter.textContent = `${String(ferrisIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+        if (updateHash) history.replaceState(history.state, '', `#${ferrisSections[ferrisIndex].id}`);
+        ferrisSections[ferrisIndex].scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        ferrisSections[ferrisIndex].querySelectorAll('img[loading="lazy"]').forEach((image) => {
+            image.loading = 'eager';
+        });
+    };
+
+    const setFerrisMode = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.classList.toggle('ferris-scroll-lock', ferrisMedia.matches);
+        document.body.classList.toggle('ferris-mode', ferrisMedia.matches);
+        if (ferrisMedia.matches) {
+            window.scrollTo(0, 0);
+            renderFerris(ferrisIndex, false);
+        }
+        else ferrisSections.forEach((section) => {
+            section.classList.remove('ferris-active', 'ferris-prev', 'ferris-next', 'ferris-away-up', 'ferris-away-down');
+            section.removeAttribute('aria-hidden');
+        });
+    };
+
+    if (sectionWheel && ferrisSections.length) {
+        ferrisLinks.forEach((link, index) => link.addEventListener('click', (event) => {
+            if (!ferrisMedia.matches) return;
+            event.preventDefault();
+            renderFerris(index);
+        }));
+        sectionWheel.querySelectorAll('[data-wheel-direction]').forEach((button) => button.addEventListener('click', () => {
+            renderFerris(ferrisIndex + Number(button.dataset.wheelDirection));
+        }));
+        document.addEventListener('click', (event) => {
+            const anchor = event.target.closest('a[href^="#"]');
+            if (!anchor || !ferrisMedia.matches) return;
+            const targetIndex = ferrisSections.findIndex((section) => `#${section.id}` === anchor.getAttribute('href'));
+            if (targetIndex < 0) return;
+            event.preventDefault();
+            renderFerris(targetIndex);
+        });
+        document.addEventListener('keydown', (event) => {
+            if (!ferrisMedia.matches || event.target.matches('input, textarea, select')) return;
+            if (event.key === 'ArrowUp' || event.key === 'PageUp') renderFerris(ferrisIndex - 1);
+            if (event.key === 'ArrowDown' || event.key === 'PageDown') renderFerris(ferrisIndex + 1);
+        });
+        document.querySelector('.grid-container')?.addEventListener('wheel', (event) => {
+            if (!ferrisMedia.matches || ferrisWheelLocked) return;
+            const active = ferrisSections[ferrisIndex];
+            const atTop = active.scrollTop <= 1;
+            const atBottom = active.scrollTop + active.clientHeight >= active.scrollHeight - 2;
+            if ((event.deltaY < 0 && !atTop) || (event.deltaY > 0 && !atBottom)) return;
+            event.preventDefault();
+            ferrisWheelLocked = true;
+            renderFerris(ferrisIndex + (event.deltaY > 0 ? 1 : -1));
+            window.setTimeout(() => { ferrisWheelLocked = false; }, 750);
+        }, { passive: false });
+        ferrisMedia.addEventListener('change', setFerrisMode);
+        window.addEventListener('resize', () => {
+            window.clearTimeout(ferrisResizeTimer);
+            ferrisResizeTimer = window.setTimeout(setFerrisMode, 120);
+        });
+        window.addEventListener('pageshow', () => window.requestAnimationFrame(setFerrisMode));
+        if (document.fonts?.ready) {
+            document.fonts.ready.then(() => window.requestAnimationFrame(setFerrisMode));
+        }
+        setFerrisMode();
+    }
+
     const bioTrigger = document.getElementById('floating-bio-dock');
     if (bioTrigger) {
         bioTrigger.addEventListener('click', (event) => {
@@ -1085,3 +1300,51 @@ document.addEventListener('touchstart', restorePageInteraction, { passive: true,
 document.addEventListener('pointerdown', (event) => {
     if (event.pointerType === 'touch') restorePageInteraction();
 }, { passive: true, capture: true });
+
+/* Profundidad editorial del hero: capas independientes, solo con puntero preciso. */
+function initHeroPointerComposition() {
+    const stage = document.querySelector('.hero-editorial__stage');
+    if (!stage) return;
+    const hero = document.getElementById('hero') || stage;
+    if (stage.dataset.pointerCompositionReady === 'true') return;
+    stage.dataset.pointerCompositionReady = 'true';
+
+    let frame = 0;
+    const setPosition = (x, y) => {
+        const layer = (name, factorX, factorY = factorX) => {
+            stage.style.setProperty(`--hero-${name}-x`, `${(x * factorX).toFixed(2)}px`);
+            stage.style.setProperty(`--hero-${name}-y`, `${(y * factorY).toFixed(2)}px`);
+        };
+        layer('bg', .55);
+        layer('ring', -1.05);
+        layer('dots', 1.45);
+        layer('arc', -.85);
+        layer('photo', 1.5, .85);
+    };
+    const moveComposition = (event) => {
+        const rect = hero.getBoundingClientRect();
+        const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - .5) * 2)) * 24;
+        const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - .5) * 2)) * 18;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => setPosition(x, y));
+        stage.classList.add('is-pointer-active');
+    };
+    const resetComposition = () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => setPosition(0, 0));
+        stage.classList.remove('is-pointer-active');
+    };
+    window.addEventListener('mousemove', (event) => {
+        const rect = hero.getBoundingClientRect();
+        const insideHero = event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom;
+        if (insideHero) moveComposition(event);
+        else resetComposition();
+    }, { passive: true });
+    window.addEventListener('blur', resetComposition);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroPointerComposition, { once: true });
+} else {
+    initHeroPointerComposition();
+}

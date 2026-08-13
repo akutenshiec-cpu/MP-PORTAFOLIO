@@ -39,10 +39,10 @@ window.MPPortfolioData = {
     },
     contentBlocks: {
         planes: {
-            title: "Tres niveles para crecer con criterio",
+            title: "Soluciones para crecer con criterio",
             description:
-                "Presencia que atrae clientes, catálogo que cierra pedidos por WhatsApp, sistema que registra cada lote y emite documentos sin planillas. Tres niveles, un solo proveedor.",
-            ctaText: "Explorar tarifario estratégico",
+                "Web, marca y sistemas articulados según el problema, la operación y la etapa real de cada negocio.",
+            ctaText: "Explorar catálogo de servicios",
             ctaLink: "index2.html"
         },
         contacto: {
@@ -107,11 +107,11 @@ window.MPPortfolioData = {
                 "Precisión morfológica, observación y criterio editorial para divulgación, docencia y documentación técnica."
         },
         planes: {
-            title: "Inversión estratégica",
-            icon: "fa-tags",
+            title: "Servicios y soluciones",
+            icon: "fa-compass",
             enabled: true,
             subtitle:
-                "Un tarifario agrupado por tipo de solución para que el cliente entienda el valor antes que la lista de entregables."
+                "Un catálogo de capacidades para entender qué resuelve cada servicio, su alcance y los entregables que puede integrar."
         },
         contacto: {
             title: "Contacto profesional",
@@ -154,6 +154,36 @@ window.MPPortfolioData = {
         maureen: { title: "Cotización Maureen (regulatorio)", url: "proyectos/Cotización/Maureen/index.html" },
     },
     galleries: {
+        "itera-lite": {
+            title: "ITERA LITE · Sistema QMS",
+            rubro: "Producto digital y documentación operativa",
+            summary: "Presentación editorial y vistas reales de trazabilidad, documentos, lotes y operación de calidad.",
+            images: ["images/card-itera-lite-editorial.webp", "images/itera_dashboard.png", "images/itera_documentos.png", "images/itera_trazabilidad.png"]
+        },
+        "itera-premium": {
+            title: "ITERA ERP Premium",
+            rubro: "Arquitectura empresarial",
+            summary: "Sistema multiplataforma para ventas, inventario, calidad, documentos y lectura ejecutiva de la operación.",
+            images: ["images/card-itera-erp-editorial.webp", "images/itera_ventas_crm.png", "images/itera_dashboard.png", "images/itera_documentos.png"]
+        },
+        elementos: {
+            title: "Landing de validación",
+            rubro: "Experiencia web y dirección editorial",
+            summary: "Presentación adaptable, interfaz real y piezas visuales aplicadas a una experiencia de lanzamiento.",
+            images: ["images/5elementos-real.png", "images/card-web-editorial.webp", "images/5elementos-hq.jpg"]
+        },
+        "curativa-web": {
+            title: "Curativa · Catálogo digital",
+            rubro: "Comercio digital",
+            summary: "Interfaz comercial, sistema visual y aplicaciones de producto reunidas en una experiencia coherente.",
+            images: ["images/curativa-real.png", "images/thumb_catalogo_whatsapp_es.jpg"]
+        },
+        "curarte-web": {
+            title: "CurArte · Ecosistema premium",
+            rubro: "Experiencia editorial digital",
+            summary: "Dirección de arte, composición y presentación responsive de una experiencia cultural inmersiva.",
+            images: ["images/curarte-real.png", "images/thumb_ecosistema_premium_es.jpg", "images/og-preview.png"]
+        },
         curativa: {
             title: "Curativa Cosmética",
             rubro: "Identidad y E-commerce",
@@ -161,15 +191,6 @@ window.MPPortfolioData = {
                 "Identidad completa y ecosistema visual para cosmética natural: manual de marca, packaging y piezas para retail y entorno digital.",
             images: [
                 "images/curativa-hq.png",
-                "images/desodorante-hq.png",
-                "images/balsamo-hq.png",
-                "images/Manual1-hq.png",
-                "images/Manual2-hq.png",
-                "images/Manual3-hq.png",
-                "images/Manual4-hq.png",
-                "images/Manual5-hq.png",
-                "images/Manual6-hq.png",
-                "images/Manual7-hq.png",
                 "images/Logonegativo-hq.png",
                 "images/logousonormal-hq.png"
             ]
@@ -189,26 +210,35 @@ window.MPPortfolioData = {
             title: "Finca Pindaca",
             rubro: "Identidad agrícola",
             summary: "Identidad agrícola enfocada en origen, confianza de marca y aplicaciones de producto.",
-            images: ["images/finca-hq.jpeg"]
+            images: ["images/finca-hq.jpeg", "images/gallery-finca-aplicaciones.webp"]
         },
         encuentros: {
             title: "Los Encuentros NET",
             rubro: "Identidad corporativa",
             summary: "Sistema visual corporativo para proveedor local de internet, con aplicaciones técnicas y señalética.",
-            images: ["images/losencuentros-hq.png", "images/1.png"]
+            images: ["images/losencuentros-hq.png", "images/gallery-encuentros-aplicaciones.webp", "images/1.png"]
         },
         flyer: {
-            title: "Campaña Jardín 5 Elementos",
+            title: "Dirección de arte estacional",
             rubro: "Publicidad digital",
-            summary: "Serie promocional para eventos, talleres y activaciones con una dirección visual inmersiva.",
-            images: ["images/5elementos-hq.jpg", "images/talleresvacacionales-hq.jpg", "images/halloween.jpg"]
+            summary: "Sistemas visuales escalables para campañas de alto impacto y experiencias inmersivas.",
+            images: [
+                "images/5elementos-hq.jpg",
+                "images/gallery-campana-aplicaciones.webp",
+                "images/gallery-victoria-formatos.webp",
+                "images/gallery-victoria-evento.webp",
+                "images/talleresvacacionales-hq.jpg",
+                "images/halloween.jpg"
+            ]
         },
         cultura: {
-            title: "Cultura Saraguro",
-            rubro: "Fotografía y editorial",
-            summary: "Serie editorial inspirada en patrimonio, identidad cultural y territorio.",
+            title: "Narrativa documental",
+            rubro: "Revista cultural · Fotografía y editorial",
+            summary: "Revista cultural construida como archivo vivo: portada, reportaje fotográfico, crónica visual y sistema editorial sobre memoria, oficio y territorio.",
             images: [
                 "images/Saraguro1-hq.jpg",
+                "images/gallery-documental-revista.webp",
+                "images/gallery-documental-reportaje.webp",
                 "images/Saraguro2-hq.jpg",
                 "images/Saraguro3-hq.jpg",
                 "images/Saraguro4-hq.jpg"
@@ -218,7 +248,7 @@ window.MPPortfolioData = {
             title: "Ilustración Científica",
             rubro: "Divulgación",
             summary: "Láminas naturalistas en alta definición para divulgación, documentación y lectura editorial.",
-            images: ["images/caracol-hq.jpg", "images/cangrejo1-hq.jpg", "images/tipula-hq.jpg"]
+            images: ["images/ciencia1.jpg", "images/ciencia2.jpg", "images/ciencia3.jpg", "images/caracol-hq.jpg", "images/cangrejo1-hq.jpg", "images/tipula-hq.jpg"]
         },
         etiquetas: {
             title: "Etiquetas y Packaging",
@@ -236,27 +266,40 @@ window.MPPortfolioData = {
         },
         llavero: {
             title: "Merchandising",
-            rubro: "Productos promocionales",
-            summary: "Aplicación de marca en objeto promocional y pieza de activación.",
-            images: ["images/llavero.jpg"]
+            rubro: "Objeto de marca · Fabricación 3D",
+            summary: "Familias de objetos fabricables: identificadores, soportes, sellos y exhibidores desarrollados desde marcas reales y criterios de producción.",
+            images: ["images/gallery-merch-3d-brands.webp", "images/gallery-merch-aplicaciones.webp", "images/llavero.jpg"]
         },
         prototype: {
             title: "PROTOTYP3D",
             rubro: "Identidad tech",
-            summary: "Identidad para marca tecnológica con énfasis industrial y comercial.",
-            images: ["images/prototype.png", "images/tarjetaprototyp3d.png"]
+            summary: "Sistema de identidad para diseño y fabricación 3D, aplicado a documentación, taller y prototipos físicos.",
+            images: ["images/prototype.png", "images/gallery-prototyp3d-aplicaciones.webp", "images/tarjetaprototyp3d.png"]
         },
         editorial: {
-            title: "Editorial y Manuales",
+            title: "Arquitectura de información",
             rubro: "Maquetación",
-            summary: "Maquetación de materiales largos, manuales visuales y contenidos promocionales de alta lectura.",
-            images: ["images/Manual1-hq.png", "images/talleresvacacionales-hq.jpg"]
+            summary: "Maquetación avanzada y diseño editorial especializado en manuales técnicos y sistemas de lectura.",
+            images: [
+                "images/Manual1-hq.png",
+                "images/gallery-editorial-manual.webp",
+                "images/Manual2-hq.png",
+                "images/Manual3-hq.png",
+                "images/Manual4-hq.png",
+                "images/Manual5-hq.png",
+                "images/Manual6-hq.png",
+                "images/Manual7-hq.png"
+            ]
         }
     },
     galleryGroups: [
         {
             title: "Marca y sistemas visuales",
             items: ["curativa", "tiny", "finca", "encuentros", "prototype", "llavero"]
+        },
+        {
+            title: "Sistemas y producto digital",
+            items: ["itera-lite", "itera-premium", "elementos", "curativa-web", "curarte-web"]
         },
         {
             title: "Packaging y etiquetas",
@@ -275,7 +318,9 @@ window.MPPortfolioData = {
         servicios: [
             {
                 id: "itera-lite",
+                galleryId: "itera-lite",
                 title: "Implementación ITERA LITE",
+                rubro: "Sistema operativo · QMS",
                 description:
                     "Sistema QMS base para equipos que inician trazabilidad, control documental y gestión de lotes.",
                 image: "images/itera_dashboard.png",
@@ -288,7 +333,9 @@ window.MPPortfolioData = {
             },
             {
                 id: "itera-premium",
+                galleryId: "itera-premium",
                 title: "ITERA ERP Premium",
+                rubro: "Arquitectura empresarial · ERP",
                 description:
                     "Gestión total de inventarios, ventas, documentos y reportes para operaciones B2B y B2C con criterio industrial.",
                 image: "images/itera_ventas_crm.png",
@@ -303,8 +350,10 @@ window.MPPortfolioData = {
         webs: [
             {
                 id: "elementos",
+                galleryId: "elementos",
                 type: "web",
                 title: "Landing de validación",
+                rubro: "Producto digital · Lanzamiento",
                 description:
                     "Conversión rápida, narrativa visual y una estructura precisa para captar leads o validar un producto sin fricción.",
                 image: "images/5elementos-real.png",
@@ -319,8 +368,10 @@ window.MPPortfolioData = {
             },
             {
                 id: "curativa",
+                galleryId: "curativa-web",
                 type: "web",
                 title: "Catálogo Pro WhatsApp",
+                rubro: "Comercio digital · Conversión",
                 description:
                     "Inventario dinámico, carrito y cierre por chat para marcas que necesitan vender con claridad y velocidad.",
                 image: "images/curativa-real.png",
@@ -335,8 +386,10 @@ window.MPPortfolioData = {
             },
             {
                 id: "curarte",
+                galleryId: "curarte-web",
                 type: "web",
                 title: "Demo: Ecosistema Premium",
+                rubro: "Experiencia editorial · Web",
                 description:
                     "Una muestra real de dirección de arte, UI refinada y experiencia inmersiva aplicada a una marca con alto valor percibido.",
                 image: "images/curarte-real.png",
@@ -387,9 +440,10 @@ window.MPPortfolioData = {
                 id: "curativa",
                 type: "gallery",
                 title: "Curativa · Identidad y packaging",
+                rubro: "Cosmética natural · Retail",
                 description:
                     "Brandbook, empaques y sistema visual técnico listos para retail y posicionamiento premium.",
-                image: "images/curativa-thumb.png",
+                image: "images/desodorante-thumb.png",
                 imageAlt: "Curativa",
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
@@ -402,6 +456,7 @@ window.MPPortfolioData = {
                 id: "tiny",
                 type: "gallery",
                 title: "Tiny Melts · Sistema visual",
+                rubro: "Marca artesanal · Identidad",
                 description:
                     "Logo, dirección cromática y piezas promocionales para una marca artesanal con lenguaje propio.",
                 image: "images/tinymeltsbrandboard-thumb.png",
@@ -417,6 +472,7 @@ window.MPPortfolioData = {
                 id: "etiquetas",
                 type: "gallery",
                 title: "Etiquetas y packaging técnico",
+                rubro: "Diseño regulatorio · Impreso",
                 description:
                     "Sistemas gráficos para líneas de producto con consistencia visual y salida a imprenta.",
                 image: "images/etiqueta1.png",
@@ -481,46 +537,48 @@ window.MPPortfolioData = {
             {
                 id: "flyer",
                 type: "gallery",
-                title: "Jardín 5 Elementos",
+                title: "Dirección de arte estacional",
+                rubro: "Campaña cultural · Evento",
                 description:
-                    "Campañas estacionales, flyers y material experiencial para eventos con atmósfera propia.",
-                image: "images/5elementos-thumb.jpg",
-                imageAlt: "Jardín 5 Elementos",
+                    "Sistemas visuales escalables para campañas de alto impacto, enfocados en la retención y la inmersión del usuario.",
+                image: "images/gallery-campana-aplicaciones.webp",
+                imageAlt: "Dirección de arte estacional",
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
-                badge: "Eventos",
-                tags: ["Flyers", "Temporadas", "Experiencia"],
+                badge: "Campaña",
+                tags: ["Dirección de Arte", "Sistema Visual", "Eventos"],
                 order: 1,
                 visible: true
             },
             {
                 id: "cultura",
                 type: "gallery",
-                title: "Cultura Saraguro",
-            rubro: "Fotografía y editorial",
+                title: "Narrativa documental",
+                rubro: "Revista cultural · Fotografía y editorial",
                 description:
-                    "Serie gráfica y editorial con foco en identidad cultural, patrimonio y lenguaje visual.",
-                image: "images/Saraguro1-thumb.jpg",
-                imageAlt: "Cultura Saraguro",
+                    "Revista cultural concebida como archivo vivo: crónica visual, fotografía documental y una retícula editorial para narrar memoria, oficio y territorio.",
+                image: "images/gallery-documental-revista.webp",
+                imageAlt: "Narrativa documental",
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
-                badge: "Editorial",
-                tags: ["Patrimonio", "Cultura", "Gráfica"],
+                badge: "Documental",
+                tags: ["Editorial", "Patrimonio", "Fotografía"],
                 order: 2,
                 visible: true
             },
             {
                 id: "editorial",
                 type: "gallery",
-                title: "Editorial y manuales",
+                title: "Arquitectura de información",
+                rubro: "Diseño editorial · Manuales",
                 description:
-                    "Maquetación de piezas largas, manuales visuales y soportes de campaña con lectura clara.",
-                image: "images/talleresvacacionales-thumb.jpg",
-                imageAlt: "Editorial y manuales",
+                    "Maquetación avanzada y diseño editorial especializado en manuales técnicos y sistemas de lectura de alta densidad.",
+                image: "images/gallery-editorial-manual.webp",
+                imageAlt: "Arquitectura de información",
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
-                badge: "Maquetación",
-                tags: ["Editorial", "Manual", "Campaña"],
+                badge: "Diseño Editorial",
+                tags: ["Retículas", "Manuales", "Tipografía"],
                 order: 3,
                 visible: true
             },
@@ -528,14 +586,15 @@ window.MPPortfolioData = {
                 id: "llavero",
                 type: "gallery",
                 title: "Merchandising y objeto",
+                rubro: "Aplicación de marca · Fabricación 3D",
                 description:
-                    "Aplicaciones de marca sobre piezas físicas para activaciones, recuerdo y presencia comercial.",
-                image: "images/llavero.jpg",
+                    "Sistemas de objetos fabricables —identificadores, soportes, sellos y exhibidores— desarrollados desde marcas reales y restricciones de producción.",
+                image: "images/gallery-merch-aplicaciones.webp",
                 imageAlt: "Merchandising y objeto",
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
                 badge: "Promo",
-                tags: ["Objeto", "Marca", "Activación"],
+                tags: ["Impresión 3D", "Objeto", "Prototipado"],
                 order: 4,
                 visible: true
             }
@@ -545,9 +604,10 @@ window.MPPortfolioData = {
                 id: "science",
                 type: "gallery",
                 title: "Ilustración botánica",
+                rubro: "Lámina naturalista · Botánica",
                 description:
                     "Láminas técnicas con precisión morfológica y una lectura cuidada para publicación o divulgación.",
-                image: "images/caracol-thumb.jpg",
+                image: "images/ciencia1.jpg",
                 imageAlt: "Ilustración botánica",
                 overlayText: "Ver detalle",
                 overlayIcon: "fa-search-plus",
@@ -562,9 +622,10 @@ window.MPPortfolioData = {
                 id: "science",
                 type: "gallery",
                 title: "Fauna neotropical",
+                rubro: "Documentación visual · Fauna",
                 description:
                     "Documentación visual de especies y detalle anatómico para guías, docencia e investigación.",
-                image: "images/cangrejo1-thumb.jpg",
+                image: "images/ciencia2.jpg",
                 imageAlt: "Fauna neotropical",
                 overlayText: "Ver detalle",
                 overlayIcon: "fa-search-plus",
@@ -579,9 +640,10 @@ window.MPPortfolioData = {
                 id: "science",
                 type: "gallery",
                 title: "Detalle entomológico",
+                rubro: "Morfología · Entomología",
                 description:
                     "Observación e ilustración de estructuras finas para material educativo y documentación especializada.",
-                image: "images/tipula-thumb.jpg",
+                image: "images/ciencia3.jpg",
                 imageAlt: "Detalle entomológico",
                 overlayText: "Ver detalle",
                 overlayIcon: "fa-search-plus",

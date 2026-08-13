@@ -3,12 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Servicios de MP Dev Studio: desarrollo web, identidad visual y sistemas ITERA para negocios que necesitan crecer con claridad.">
+  <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
+  <meta name="description" content="Soluciones de MP Dev Studio para presencia web, identidad de marca y control operativo, organizadas según el problema que necesitas resolver.">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://mpdesigns.xyz/index2.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Servicios · MP Dev Studio">
-  <meta property="og:description" content="Desarrollo web, identidad visual y sistemas ITERA para negocios que necesitan crecer con claridad.">
+  <meta property="og:title" content="Soluciones · MP Dev Studio">
+  <meta property="og:description" content="Elige una ruta para resolver presencia y ventas, identidad de marca o control operativo.">
   <meta property="og:url" content="https://mpdesigns.xyz/index2.html">
   <meta property="og:image" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg">
   <meta property="og:image:secure_url" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg">
@@ -17,7 +18,7 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg">
-  <title>Servicios · MP Dev Studio</title>
+  <title>Soluciones · MP Dev Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -56,6 +57,23 @@
     :focus-visible { outline: 2px solid var(--sage); outline-offset: 4px; }
 
     .shell { width: min(calc(100% - 40px), var(--max)); margin-inline: auto; }
+    .catalog-intro { padding: clamp(34px,5vh,54px) 0 48px; }
+    .catalog-intro__inner { display: grid; gap: 30px; }
+    .catalog-intro__head { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(280px,.65fr); gap: 42px; align-items: end; }
+    .catalog-intro__head h1 { max-width: 700px; margin: 5px 0 0; font: 500 clamp(2.45rem,4vw,4rem)/.94 var(--serif); letter-spacing: -.035em; }
+    .catalog-intro__head h1 em { color: var(--sage); font-style: normal; }
+    .catalog-intro__head > p { max-width: 50ch; margin: 0; color: #b7bec2; font-size: .88rem; line-height: 1.7; }
+    .solution-map { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+    .solution-route { min-height: 218px; padding: 23px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 20px; color: inherit; background: linear-gradient(155deg,rgba(255,255,255,.045),rgba(255,255,255,.012)); text-decoration: none; transition: transform .25s ease,border-color .25s ease,background .25s ease; }
+    .solution-route:hover { transform: translateY(-4px); border-color: rgba(216,179,106,.42); background: linear-gradient(155deg,rgba(112,64,77,.34),rgba(255,255,255,.018)); }
+    .solution-route > span { color: var(--sage); font-size: .63rem; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+    .solution-route h2 { margin: 22px 0 8px; font: 500 clamp(2.2rem,4vw,3.5rem)/1 var(--serif); }
+    .solution-route p { margin: 0; color: #adb5b9; font-size: .8rem; line-height: 1.65; }
+    .solution-route strong { margin-top: auto; padding-top: 22px; color: #e4ded1; font-size: .68rem; letter-spacing: .06em; }
+    .catalog-intro__foot { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-top: 2px; }
+    .catalog-intro__foot p { margin: 0; color: #929ca1; font-size: .74rem; }
+    .catalog-intro__foot b { color: #d8b36a; }
+    @media (max-width: 780px) { .catalog-intro { min-height: 0; padding: 42px 0 70px; } .catalog-intro__head { grid-template-columns: 1fr; gap: 16px; } .solution-map { grid-template-columns: 1fr; } .solution-route { min-height: 220px; } .catalog-intro__foot { align-items: stretch; flex-direction: column; } }
     .topbar {
       position: sticky;
       top: 0;
@@ -153,6 +171,28 @@
     .service-card__tag { color: var(--sage); font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
     h3 { margin: 10px 0 12px; font-family: var(--serif); font-size: 1.75rem; font-weight: 500; line-height: 1.05; }
     .service-card p { min-height: 76px; margin-bottom: 18px; color: #aeb8be; font-size: .86rem; }
+    .service-card__result { min-height: 0 !important; margin: -4px 0 18px !important; color: #e6cba6 !important; font-size: .72rem !important; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .service-card__cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 48px;
+      margin: 2px 0 18px;
+      padding: 0 16px;
+      border: 1px solid rgba(216,179,106,.42);
+      border-radius: 999px;
+      color: #241b1d;
+      background: linear-gradient(135deg,#e8c77f,#d8ad59);
+      font-size: .72rem;
+      font-weight: 800;
+      line-height: 1.25;
+      text-decoration: none;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .service-card__cta::after { content: "→"; flex: 0 0 auto; font-size: 1rem; transition: transform .2s ease; }
+    .service-card__cta:hover { transform: translateY(-2px); background: linear-gradient(135deg,#f0d493,#dfb965); box-shadow: 0 10px 24px rgba(216,179,106,.18); }
+    .service-card__cta:hover::after { transform: translateX(3px); }
     details { border-top: 1px solid var(--line); padding-top: 16px; }
     summary { display: flex; justify-content: space-between; color: #d9dee1; cursor: pointer; font-size: .74rem; font-weight: 700; list-style: none; }
     summary::-webkit-details-marker { display: none; }
@@ -235,8 +275,8 @@
     .service-card h3 { color: #fff; }
     .service-card p { color: #c9ceca; }
     .service-card details { border-color: rgba(232,220,198,.12); }
-    .service-card summary { min-height: 44px; align-items: center; padding: 0 13px; border-radius: 999px; color: #522631; background: #f0ece6; }
-    .service-card summary::after { color: #70404d; }
+    .service-card summary { min-height: 40px; align-items: center; padding: 0 2px; border-radius: 0; color: #c9ceca; background: transparent; }
+    .service-card summary::after { color: #d8b36a; }
     .service-card details[open] summary { margin-bottom: 14px; }
     .service-card details ul { color: #c9ceca; }
     .decision__box {
@@ -314,6 +354,156 @@
       html { scroll-behavior: auto; }
       *, *::before, *::after { transition-duration: .01ms !important; }
     }
+
+    @media (max-width: 899px) {
+      main > section[data-service-page].mobile-scroll-page {
+        opacity: 0;
+        transform: translate3d(0,58px,0);
+        transition: opacity .62s ease, transform .78s cubic-bezier(.2,.78,.2,1);
+        will-change: opacity,transform;
+      }
+      main > section[data-service-page].mobile-scroll-page.mobile-page-visible {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+      }
+      .mobile-orbit-card {
+        --mobile-orbit-x:34vw;
+        --mobile-orbit-r:9deg;
+        opacity: 0;
+        transform: translate3d(var(--mobile-orbit-x),72px,0) rotate(var(--mobile-orbit-r)) scale(.92);
+        transform-origin:50% 145%;
+        transition:opacity .56s ease,transform .82s cubic-bezier(.18,.82,.2,1);
+        will-change:opacity,transform;
+      }
+      .mobile-orbit-card:nth-child(even) { --mobile-orbit-x:-34vw; --mobile-orbit-r:-9deg; }
+      .mobile-orbit-card.mobile-card-visible {
+        opacity: 1;
+        transform:translate3d(0,0,0) rotate(0) scale(1);
+      }
+    }
+    @media (max-width: 899px) and (prefers-reduced-motion: reduce) {
+      .mobile-scroll-page,
+      .mobile-orbit-card { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    .service-section-tab { display: none; }
+    @media (min-width: 900px) and (min-height: 560px) {
+      html.services-carousel-lock, html.services-carousel-lock body { overflow: hidden; scroll-behavior: auto !important; }
+      body.services-carousel .topbar { position: fixed; inset: 0 0 auto; z-index: 1050; overflow: hidden; }
+      body.services-carousel .topbar__inner { justify-content: flex-start; }
+      body.services-carousel .topnav { margin-left: auto; }
+      .service-section-tab { position: relative; display: block; flex: 0 0 108px; width: 108px; height: 46px; margin-left: 24px; margin-right: auto; }
+      .service-section-tab__item {
+        position: absolute; inset: 0; display: grid; grid-template-columns: 18px minmax(0,1fr); align-items: center; gap: 7px;
+        width: 108px; height: 46px; padding: 7px 10px; overflow: hidden; opacity: 0; visibility: hidden; pointer-events: none;
+        color: #f5eee6; border: 1px solid rgba(216,179,106,.32); border-radius: 12px;
+        background: linear-gradient(145deg,rgba(112,64,77,.96),rgba(67,40,49,.98));
+        box-shadow: 0 8px 20px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.1);
+        font: 700 .6rem/1 var(--sans); letter-spacing: .015em; text-decoration: none;
+      }
+      .service-section-tab__item i { width: 18px; height: 18px; display: grid; place-items: center; color: #d8b36a; font-style: normal; text-align: center; }
+      .service-section-tab__item svg { width: 13px; height: 13px; display: block; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+      .service-section-tab__item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .service-section-tab__item.is-active { opacity: 1; visibility: visible; pointer-events: auto; animation: serviceTabSlideUp .5s cubic-bezier(.22,.75,.25,1) both; }
+      @keyframes serviceTabSlideUp { from { opacity: 0; transform: translateY(54px); } to { opacity: 1; transform: translateY(0); } }
+      html, body, main, main > section, .service-page-content { zoom: 1 !important; }
+      body.services-carousel main { position: relative; width: min(calc(100% - 64px),1080px); height: 100dvh; margin-inline: auto; padding-top: 72px; perspective: 1500px; }
+      body.services-carousel main > section[data-service-page] {
+        position: absolute; inset: 72px 0 0; display: flex; flex-direction: column; justify-content: flex-start;
+        width: 100%; max-height: calc(100dvh - 72px); padding: 0; overflow: auto; opacity: 0; visibility: hidden; pointer-events: none;
+        transform-origin: 0 50%; transition: transform .9s cubic-bezier(.2,.8,.2,1), opacity .5s ease, filter .72s ease;
+      }
+      body.services-carousel main > section[data-service-page] > .service-page-content {
+        width: 100%;
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        margin-block: auto;
+        padding-block: clamp(28px,5vh,56px);
+      }
+      body.services-carousel main > section.service-page-active { z-index: 5; opacity: 1; visibility: visible; pointer-events: auto; transform: translate3d(0,0,0) rotateX(0) scale(1); }
+      body.services-carousel main > section.service-page-prev { transform: translate3d(-28%,-72%,-260px) rotateZ(-13deg) rotateY(12deg) scale(.7); }
+      body.services-carousel main > section.service-page-next { transform: translate3d(-28%,72%,-260px) rotateZ(13deg) rotateY(12deg) scale(.7); }
+      body.services-carousel main > section.service-page-away-up { transform: translate3d(-58%,-118%,-520px) rotateZ(-27deg) rotateY(20deg) scale(.4); }
+      body.services-carousel main > section.service-page-away-down { transform: translate3d(-58%,118%,-520px) rotateZ(27deg) rotateY(20deg) scale(.4); }
+      body.services-carousel .route, body.services-carousel footer { display: none; }
+      body.services-carousel .catalog-intro__inner, body.services-carousel .service-section > .shell, body.services-carousel .decision__box { width: 100%; }
+      body.services-carousel .service-section > .shell { max-width: 1020px; }
+      body.services-carousel .decision__box { max-width: 1020px; margin-inline: auto; }
+      body.services-carousel .catalog-intro, body.services-carousel .service-section, body.services-carousel .decision { min-height: 0; border: 0; }
+      body.services-carousel .catalog-intro { padding: 0; }
+      body.services-carousel .catalog-intro__inner { gap: 22px; }
+      body.services-carousel .catalog-intro__head h1 { font-size: clamp(2.6rem,5vw,4.6rem); }
+      body.services-carousel .solution-route { min-height: 210px; }
+      body.services-carousel .section-head { grid-template-columns: .55fr 1.45fr; gap: clamp(34px,5vw,64px); margin-bottom: 34px; }
+      body.services-carousel .section-head {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      body.services-carousel .section-head::after {
+        content: "";
+        height: 1px;
+        flex: 1;
+        background: linear-gradient(90deg,rgba(216,179,106,.62),rgba(216,179,106,0));
+      }
+      body.services-carousel .section-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 44px;
+        width: 44px;
+        height: 44px;
+        overflow: hidden;
+        color: #d8b36a;
+        border: 1px solid rgba(216,179,106,.18);
+        border-radius: 14px;
+        background: rgba(216,179,106,.09);
+        font-size: 0;
+      }
+      body.services-carousel .section-number::before { font-size: 1rem; line-height: 1; }
+      body.services-carousel #web .section-number::before { content: "</>"; font: 700 .65rem/1 var(--sans); }
+      body.services-carousel #marca .section-number::before { content: "◆"; }
+      body.services-carousel #itera .section-number::before { content: "▦"; }
+      body.services-carousel .section-head > div { display: contents; }
+      body.services-carousel .section-head h2 {
+        flex: 0 0 auto;
+        max-width: 680px;
+        margin: 0;
+        color: #f4f0e8;
+        font-size: clamp(1.8rem,3vw,2.65rem);
+        line-height: 1;
+      }
+      body.services-carousel .section-head p { max-width: 560px; margin-bottom: 0; line-height: 1.55; }
+      body.services-carousel .section-head p {
+        position: absolute;
+        top: calc(100% + 14px);
+        left: 0;
+        color: #b8c0bb;
+      }
+      body.services-carousel .service-grid { padding-top: 56px; gap: 16px; }
+      body.services-carousel .service-card {
+        border-color: rgba(232,220,198,.14);
+        border-radius: 18px;
+        background: radial-gradient(circle at 100% 0,rgba(216,179,106,.07),transparent 34%),linear-gradient(155deg,rgba(53,57,60,.96),rgba(29,32,34,.94));
+        box-shadow: 0 16px 38px rgba(8,9,10,.26);
+      }
+      body.services-carousel .service-card__image { border-radius: 0; background: #121619; }
+      body.services-carousel .service-card__image img { border: 0; border-radius: 0; box-shadow: none; object-fit: contain; }
+      body.services-carousel .service-card__body { padding: 22px; }
+      body.services-carousel .service-card h3 { font-size: 1.55rem; }
+      body.services-carousel .service-card p { min-height: 68px; line-height: 1.55; }
+      body.services-carousel .decision__box { padding: clamp(38px,5vw,60px); }
+      body.services-carousel .decision h2 { max-width: 560px; font-size: clamp(2.6rem,4.4vw,4rem); }
+      body.services-carousel .service-card { background: linear-gradient(155deg,rgba(53,57,60,.96),rgba(29,32,34,.94)); }
+      @media (max-height: 780px) {
+        body.services-carousel main > section[data-service-page] > .service-page-content { padding-block: 18px; }
+        body.services-carousel h1 { font-size: clamp(3rem,6vw,5.6rem); }
+        body.services-carousel .section-head { margin-bottom: 26px; }
+        body.services-carousel .service-card__image { aspect-ratio: 16/7.5; }
+        body.services-carousel .service-card__body { padding: 18px 20px 20px; }
+      }
+    }
   </style>
 </head>
 <body>
@@ -323,90 +513,199 @@
         <img src="images/mp-dev-studio-mark.svg" alt="">
         <span class="brand__copy"><strong>DEV STUDIO</strong><span>Development · Design</span></span>
       </a>
+      <nav class="service-section-tab" aria-label="Sección activa">
+        <a class="service-section-tab__item" href="#soluciones"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h16"/><path d="M7 3v4M12 10v4M17 17v4"/></svg></i><span>Soluciones</span></a>
+        <a class="service-section-tab__item" href="#web"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 7-5 5 5 5M15.5 7l5 5-5 5M14 4l-4 16"/></svg></i><span>Web</span></a>
+        <a class="service-section-tab__item" href="#marca"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 12 8 4 8-4M4 17l8 4 8-4"/></svg></i><span>Marca</span></a>
+        <a class="service-section-tab__item" href="#itera"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11M12 13h5M12 16h5"/></svg></i><span>Sistemas</span></a>
+        <a class="service-section-tab__item" href="#diagnostico"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z"/><path d="M8 10h8M8 14h5"/></svg></i><span>Contacto</span></a>
+      </nav>
       <nav class="topnav" aria-label="Navegación de servicios">
-        <a href="#web">Web</a><a href="#marca">Marca</a><a href="#itera">ITERA</a>
+        <a href="#web">Web</a><a href="#marca">Marca</a><a href="#itera">Sistemas</a>
         <a class="back" href="index.html">Volver al portafolio</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="shell hero__grid">
-        <div>
-          <p class="eyebrow">Carta de servicios · 2026</p>
-          <h1>Diseño y tecnología que <em>resuelven.</em></h1>
-          <p class="hero__lead">Tres áreas de trabajo para convertir una idea en una presencia sólida, una marca reconocible o una operación digital más ordenada.</p>
-          <div class="actions">
-            <a class="button" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20quiero%20conversar%20sobre%20un%20proyecto." target="_blank" rel="noopener">Conversemos sobre tu proyecto</a>
-            <a class="button button--ghost" href="#web">Explorar servicios</a>
-          </div>
+    <section class="catalog-intro" id="soluciones" data-service-page="soluciones">
+      <div class="shell catalog-intro__inner">
+        <header class="catalog-intro__head">
+          <div><p class="eyebrow">Catálogo de soluciones</p><h1>¿Qué necesitas <em>resolver?</em></h1></div>
+          <p>Elige una ruta según el problema actual. Cada servicio se define después de un diagnóstico breve; no son paquetes genéricos.</p>
+        </header>
+        <div class="solution-map" aria-label="Rutas de servicio">
+          <a class="solution-route" href="#web"><span>01 · Presencia y ventas</span><h2>Web</h2><p>Para explicar una oferta, captar contactos o vender mediante un catálogo conectado.</p><strong>Landing · Catálogo · Ecosistema</strong></a>
+          <a class="solution-route" href="#marca"><span>02 · Identidad y producto</span><h2>Marca</h2><p>Para construir coherencia visual y aplicarla correctamente en pantalla, empaque e impresión.</p><strong>Identidad · Brandbook · Packaging</strong></a>
+          <a class="solution-route" href="#itera"><span>03 · Operación y trazabilidad</span><h2>Sistemas a medida</h2><p>Para convertir procesos, reglas y responsabilidades reales del negocio en una herramienta operativa propia.</p><strong>Flujos · Roles · Auditoría</strong></a>
         </div>
-        <aside class="hero__aside" aria-label="Forma de trabajo">
-          <div><p>Enfoque</p><strong>Soluciones a medida</strong></div>
-          <div><p>Primer paso</p><strong>Diagnóstico breve</strong></div>
-        </aside>
+        <div class="catalog-intro__foot"><p><b>Proceso:</b> diagnóstico → alcance → propuesta → implementación.</p><a class="button" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20vi%20el%20cat%C3%A1logo%20de%20soluciones%20y%20quiero%20definir%20la%20ruta%20adecuada." target="_blank" rel="noopener">Solicitar diagnóstico</a></div>
       </div>
     </section>
 
-    <nav class="route" aria-label="Áreas de servicio">
-      <div class="shell route__inner">
-        <a href="#web"><small>01</small><span>Presencia web</span></a>
-        <a href="#marca"><small>02</small><span>Identidad de marca</span></a>
-        <a href="#itera"><small>03</small><span>Sistemas ITERA</span></a>
-      </div>
-    </nav>
-
-    <section class="service-section" id="web">
+    <section class="service-section" id="web" data-service-page="web">
       <div class="shell">
         <header class="section-head">
           <span class="section-number">01 · Desarrollo web</span>
-          <div><h2>Una presencia que explica y convierte.</h2><p>Diseñamos experiencias rápidas y claras, desde una primera página comercial hasta un ecosistema digital completo.</p></div>
+          <div><h2>Experiencias web.</h2><p>Sitios claros, rápidos y orientados a conversión.</p></div>
         </header>
         <div class="service-grid">
-          <article class="service-card"><div class="service-card__image"><img src="images/thumb_landing_validacion_es.jpg" alt="Ejemplo de landing de validación" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Para empezar</span><h3>Landing de validación</h3><p>Una página enfocada para presentar una oferta, captar interés y abrir conversaciones reales.</p><details><summary>Qué incluye</summary><ul><li>Estructura estratégica de una página.</li><li>Diseño responsive y CTA a WhatsApp.</li><li>Dos rondas de revisión.</li></ul></details></div></article>
-          <article class="service-card"><div class="service-card__image"><img src="images/thumb_catalogo_whatsapp_es.jpg" alt="Ejemplo de catálogo conectado con WhatsApp" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Para vender</span><h3>Catálogo conectado</h3><p>Productos organizados para consultar, seleccionar y cerrar el pedido directamente por WhatsApp.</p><details><summary>Qué incluye</summary><ul><li>Catálogo filtrable y adaptable.</li><li>Carrito o lista de pedido.</li><li>Gestión de contenido acordada.</li></ul></details></div></article>
-          <article class="service-card"><div class="service-card__image"><img src="images/thumb_ecosistema_premium_es.jpg" alt="Ejemplo de ecosistema web multipágina" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Para consolidar</span><h3>Ecosistema premium</h3><p>Una plataforma multipágina para marcas que necesitan autoridad, contenido y herramientas comerciales.</p><details><summary>Qué incluye</summary><ul><li>Arquitectura de información completa.</li><li>Diseño visual personalizado.</li><li>Integraciones según el proyecto.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/thumb_landing_validacion_es.jpg" alt="Ejemplo de landing de validación" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Para validar</span><h3>Landing de conversión</h3><p>Una página enfocada en explicar una oferta, resolver objeciones y convertir visitas en conversaciones comerciales.</p><p class="service-card__result">Resultado: propuesta lista para captar leads</p><details><summary>Alcance y entregables</summary><ul><li>Diagnóstico, arquitectura y recorrido de conversión.</li><li>Diseño responsive personalizado.</li><li>Copy base, formularios y CTA a WhatsApp.</li><li>SEO técnico, analítica y publicación.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/thumb_catalogo_whatsapp_es.jpg" alt="Ejemplo de catálogo conectado con WhatsApp" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Para vender</span><h3>Catálogo conectado</h3><p>Un escaparate digital organizado para descubrir productos, preparar el pedido y cerrar la compra directamente por WhatsApp.</p><p class="service-card__result">Resultado: catálogo comercial autogestionable</p><details><summary>Alcance y entregables</summary><ul><li>Categorías, filtros, búsqueda y fichas de producto.</li><li>Carrito o lista de pedido conectada a WhatsApp.</li><li>Panel o flujo acordado para actualizar contenido.</li><li>Configuración responsive, analítica y publicación.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/thumb_ecosistema_premium_es.jpg" alt="Ejemplo de ecosistema web multipágina" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Para consolidar</span><h3>Ecosistema premium</h3><p>Una plataforma multipágina para reunir autoridad de marca, contenidos, captación e instrumentos comerciales en una experiencia sólida.</p><p class="service-card__result">Resultado: presencia digital escalable</p><details><summary>Alcance y entregables</summary><ul><li>Arquitectura completa y sistema de navegación.</li><li>Diseño visual y componentes reutilizables.</li><li>CMS, formularios e integraciones acordadas.</li><li>Optimización, documentación y despliegue.</li></ul></details></div></article>
         </div>
       </div>
     </section>
 
-    <section class="service-section" id="marca">
+    <section class="service-section" id="marca" data-service-page="marca">
       <div class="shell">
         <header class="section-head">
           <span class="section-number">02 · Identidad visual</span>
-          <div><h2>Una marca capaz de sostener su valor.</h2><p>Creamos sistemas visuales coherentes para que tu negocio se reconozca con claridad en pantalla, empaque e impresión.</p></div>
+          <div><h2>Sistemas de marca.</h2><p>Identidades coherentes para pantalla, empaque e impresión.</p></div>
         </header>
         <div class="service-grid">
-          <article class="service-card"><div class="service-card__image"><img src="images/thumb_branding_identidad.png" alt="Muestra de identidad visual" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Identidad esencial</span><h3>Base de marca</h3><p>Logo, color y tipografía para comenzar con una presencia profesional y consistente.</p><details><summary>Qué incluye</summary><ul><li>Logo principal y versiones.</li><li>Paleta y sistema tipográfico.</li><li>Guía breve de uso.</li></ul></details></div></article>
-          <article class="service-card"><div class="service-card__image"><img src="images/Manual6-thumb.png" alt="Páginas de un manual de marca" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Sistema completo</span><h3>Brandbook profesional</h3><p>Un manual técnico para equipos, proveedores, campañas y aplicaciones de marca consistentes.</p><details><summary>Qué incluye</summary><ul><li>Normas visuales y retículas.</li><li>Color para digital e imprenta.</li><li>Aplicaciones clave acordadas.</li></ul></details></div></article>
-          <article class="service-card"><div class="service-card__image"><img src="images/etiqueta1.png" alt="Diseño de etiqueta y packaging" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Producto físico</span><h3>Packaging y etiquetas</h3><p>Diseño aplicado al envase con jerarquía comercial y preparación técnica para producción.</p><details><summary>Qué incluye</summary><ul><li>Diseño sobre troquel acordado.</li><li>Organización de información.</li><li>Archivos finales para imprenta.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/thumb_branding_identidad.png" alt="Muestra de identidad visual" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Identidad esencial</span><h3>Base de marca</h3><p>Un núcleo visual reconocible para comenzar o corregir una marca que todavía no comunica con consistencia.</p><p class="service-card__result">Resultado: identidad lista para operar</p><details><summary>Alcance y entregables</summary><ul><li>Concepto, logotipo principal y versiones funcionales.</li><li>Paleta cromática y sistema tipográfico.</li><li>Avatar, firma y aplicaciones prioritarias.</li><li>Guía breve y archivos maestros organizados.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/Manual6-thumb.png" alt="Páginas de un manual de marca" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Sistema completo</span><h3>Brandbook profesional</h3><p>Un sistema documentado para que equipos, proveedores y campañas reproduzcan la marca sin perder calidad ni coherencia.</p><p class="service-card__result">Resultado: estándar visual replicable</p><details><summary>Alcance y entregables</summary><ul><li>Principios, construcción, retículas y áreas de seguridad.</li><li>Normas cromáticas para digital e imprenta.</li><li>Jerarquía tipográfica, estilo gráfico y fotografía.</li><li>Aplicaciones, usos incorrectos y manual final.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/etiqueta1.png" alt="Diseño de etiqueta y packaging" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Producto físico</span><h3>Packaging y etiquetas</h3><p>Diseño aplicado al envase para ordenar información técnica, diferenciar la línea y mejorar la presencia comercial del producto.</p><p class="service-card__result">Resultado: arte final listo para producción</p><details><summary>Alcance y entregables</summary><ul><li>Arquitectura de información y jerarquía frontal.</li><li>Diseño sobre troquel o formato acordado.</li><li>Variantes por producto, sabor o presentación.</li><li>Preprensa, sangrados y archivos finales.</li></ul></details></div></article>
         </div>
       </div>
     </section>
 
-    <section class="service-section" id="itera">
+    <section class="service-section" id="itera" data-service-page="itera">
       <div class="shell">
         <header class="section-head">
-          <span class="section-number">03 · Sistemas ITERA</span>
-          <div><h2>Menos planillas. Más control operativo.</h2><p>Digitalizamos trazabilidad, documentos y procesos comerciales con módulos adaptados a la realidad de cada equipo.</p></div>
+          <span class="section-number">03 · Sistemas a medida</span>
+          <div><h2>Operación hecha software.</h2><p>Diseñamos alrededor del proceso real. ITERA QMS es el caso de producto: una plataforma para plantas reguladas, no un ERP contable genérico.</p></div>
         </header>
         <div class="service-grid">
-          <article class="service-card"><div class="service-card__image"><img src="images/itera_nuevo.png" alt="Dashboard actual de ITERA con alertas y estado de lotes" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Implementación</span><h3>ITERA operativo</h3><p>Panel central para supervisar recepciones, lotes, documentos, alertas sanitarias e inventario.</p><details><summary>Qué incluye</summary><ul><li>Configuración inicial y permisos.</li><li>Indicadores y alertas operativas.</li><li>Capacitación y acompañamiento.</li></ul></details></div></article>
-          <article class="service-card"><div class="service-card__image"><img src="images/itera_trazabilidad.png" alt="Vista actual de calidad y trazabilidad de un lote en ITERA" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Módulo especializado</span><h3>Trazabilidad y lotes</h3><p>Seguimiento del origen, consumo, elaboración, estado sanitario y disponibilidad comercial de cada lote.</p><details><summary>Qué incluye</summary><ul><li>Recepciones y movimientos.</li><li>Lotes y productos elaborados.</li><li>Estados sanitarios y reportes.</li></ul></details></div></article>
-          <article class="service-card"><div class="service-card__image"><img src="images/itera_documentos.png" alt="Centro documental actual del sistema ITERA" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Módulo especializado</span><h3>Documentos y calidad</h3><p>Centro documental para emitir, cargar, revisar, archivar y etiquetar registros vinculados a cada proceso.</p><details><summary>Qué incluye</summary><ul><li>Emisión y archivo documental.</li><li>Control de estados y evidencias.</li><li>Permisos según responsabilidad.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/itera_dashboard.png" alt="Panel real de ITERA QMS con indicadores de planta y centro de alertas" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Caso de producto</span><h3>ITERA QMS</h3><p>Sistema de gestión de calidad, producción y trazabilidad para fabricantes de cosmética y cuidado personal que operan bajo exigencias sanitarias.</p><a class="service-card__cta" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20quiero%20evaluar%20ITERA%20QMS%20para%20mi%20planta." target="_blank" rel="noopener">Evaluar ITERA para mi planta</a><details><summary>Conocer el caso de producto</summary><ul><li>Arquitectura SaaS con información aislada por empresa.</li><li>Paneles y permisos según administración, operación y representación técnica.</li><li>Indicadores, alertas, auditoría y evidencia vinculados al trabajo diario.</li><li>Configuración, incorporación de datos y capacitación por planta.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/itera_trazabilidad.png" alt="Ficha real de un lote en ITERA QMS con estado sanitario, recepción de origen y trazabilidad" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Núcleo regulatorio</span><h3>Calidad y trazabilidad</h3><p>Conecta proveedor, recepción, materia prima, fórmula, fabricación, liberación técnica y despacho para reconstruir el recorrido de cada lote.</p><a class="service-card__cta" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20necesito%20mejorar%20la%20calidad%20y%20trazabilidad%20de%20mi%20operaci%C3%B3n." target="_blank" rel="noopener">Revisar mi trazabilidad</a><details><summary>Ver el flujo cubierto</summary><ul><li>Cuarentena, aprobación o rechazo con bloqueos sanitarios.</li><li>Validación exclusiva del Representante Técnico y evidencia auditable.</li><li>SKU, lotes, caducidades, consumos, mermas y producto terminado.</li><li>Centro documental ligado a recepciones, proveedores, insumos y lotes.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/itera_ventas_crm.png" alt="Módulo real de ventas y despacho de ITERA QMS conectado con clientes y trazabilidad" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Flujo integrado</span><h3>De planta a despacho</h3><p>Recepción, producción, inventario, documentos, clientes y ventas comparten el mismo dato operativo para evitar registros paralelos y decisiones a ciegas.</p><a class="service-card__cta" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20quiero%20integrar%20producci%C3%B3n%2C%20inventario%2C%20ventas%20y%20despacho." target="_blank" rel="noopener">Integrar mi operación</a><details><summary>Explorar capacidades</summary><ul><li>Fórmulas versionadas, producción guiada y etiquetado BPM.</li><li>Inventario FIFO/FEFO, capacidad y alertas de caducidad o stock mínimo.</li><li>Ventas, proformas, selección de lotes y actas de despacho.</li><li>Tienda y portal mayorista opcionales conectados al stock de planta.</li></ul></details></div></article>
         </div>
       </div>
     </section>
 
-    <section class="decision">
+    <section class="decision" id="diagnostico" data-service-page="diagnostico">
       <div class="shell decision__box">
-        <div><p class="eyebrow">No necesitas elegir solo</p><h2>Empecemos por el problema real.</h2></div>
-        <div class="decision__copy"><p>Cuéntame qué quieres lanzar, mejorar u ordenar. Te propondré una ruta concreta y el alcance adecuado.</p><a class="button" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20vi%20la%20carta%20de%20servicios%20y%20quiero%20un%20diagn%C3%B3stico." target="_blank" rel="noopener">Solicitar diagnóstico</a><p class="decision__note">Conversación inicial sin compromiso.</p></div>
+        <div><p class="eyebrow">Contacto</p><h2>Hablemos del proyecto.</h2></div>
+        <div class="decision__copy"><p>Cuéntame qué necesitas lanzar, mejorar u ordenar.</p><a class="button" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20vi%20la%20carta%20de%20servicios%20y%20quiero%20un%20diagn%C3%B3stico." target="_blank" rel="noopener">Solicitar diagnóstico</a></div>
       </div>
     </section>
   </main>
 
   <footer><div class="shell footer__inner"><span>© 2026 MP Dev Studio</span><span>Development · Design · Systems</span></div></footer>
+  <script src="ads-config.js?v=20260813a"></script>
+  <script src="ads-tracking.js?v=20260813a"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const media = window.matchMedia('(min-width: 900px) and (min-height: 560px)');
+      const pages = Array.from(document.querySelectorAll('main > section[data-service-page]'));
+      const tabs = Array.from(document.querySelectorAll('.service-section-tab__item'));
+      let current = Math.max(0, pages.findIndex(page => `#${page.id}` === location.hash));
+      let wheelLocked = false;
+      let resizeTimer = 0;
+
+      window.scrollTo(0, 0);
+
+      pages.forEach(page => {
+        const content = document.createElement('div');
+        content.className = 'service-page-content';
+        while (page.firstChild) content.appendChild(page.firstChild);
+        page.appendChild(content);
+      });
+
+      const render = (next, updateHash = true) => {
+        const count = pages.length;
+        current = (next + count) % count;
+        window.scrollTo(0,0);
+        pages.forEach((page,index) => {
+          const raw = index - current;
+          const delta = ((raw + count / 2) % count + count) % count - count / 2;
+          page.classList.remove('service-page-active','service-page-prev','service-page-next','service-page-away-up','service-page-away-down');
+          if (delta === 0) page.classList.add('service-page-active');
+          else if (delta === -1) page.classList.add('service-page-prev');
+          else if (delta === 1) page.classList.add('service-page-next');
+          else page.classList.add(delta < 0 ? 'service-page-away-up' : 'service-page-away-down');
+          page.setAttribute('aria-hidden',String(delta !== 0));
+        });
+        tabs.forEach((tab,index) => {
+          tab.classList.toggle('is-active',index === current);
+          tab.setAttribute('aria-current',index === current ? 'page' : 'false');
+        });
+        pages[current].scrollTo({top:0,left:0,behavior:'instant'});
+        pages[current].querySelectorAll('img[loading="lazy"]').forEach(img => img.loading='eager');
+        if (updateHash) history.replaceState(history.state,'',`#${pages[current].id}`);
+      };
+
+      const setMode = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.classList.toggle('services-carousel-lock',media.matches);
+        document.body.classList.toggle('services-carousel',media.matches);
+        if (media.matches) render(current,false);
+        else pages.forEach(page => {
+          page.classList.remove('service-page-active','service-page-prev','service-page-next','service-page-away-up','service-page-away-down');
+          page.removeAttribute('aria-hidden');
+        });
+      };
+
+      const initMobileMotion = () => {
+        if (media.matches) return;
+        pages.forEach(page => page.classList.add('mobile-scroll-page'));
+        const cards = Array.from(document.querySelectorAll('.solution-route,.service-card,.decision__box'));
+        cards.forEach(card => card.classList.add('mobile-orbit-card'));
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+          pages.forEach(page => page.classList.add('mobile-page-visible'));
+          cards.forEach(card => card.classList.add('mobile-card-visible'));
+          return;
+        }
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('mobile-page-visible');
+            observer.unobserve(entry.target);
+          });
+        }, {threshold:.08,rootMargin:'0px 0px -10% 0px'});
+        pages.forEach(page => observer.observe(page));
+        const cardObserver = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('mobile-card-visible');
+            cardObserver.unobserve(entry.target);
+          });
+        }, {threshold:.16,rootMargin:'0px 0px -6% 0px'});
+        cards.forEach(card => cardObserver.observe(card));
+      };
+
+      tabs.forEach((tab,index) => tab.addEventListener('click',event => { if (media.matches) { event.preventDefault(); render(index); } }));
+      document.addEventListener('click',event => {
+        const anchor = event.target.closest('a[href^="#"]');
+        if (!anchor || !media.matches) return;
+        const index = pages.findIndex(page => `#${page.id}` === anchor.getAttribute('href'));
+        if (index < 0) return;
+        event.preventDefault(); render(index);
+      });
+      document.addEventListener('keydown',event => {
+        if (!media.matches || event.target.matches('input,textarea,select')) return;
+        if (event.key === 'ArrowUp' || event.key === 'PageUp') render(current - 1);
+        if (event.key === 'ArrowDown' || event.key === 'PageDown') render(current + 1);
+      });
+      document.querySelector('main').addEventListener('wheel',event => {
+        if (!media.matches || wheelLocked) return;
+        const active = pages[current];
+        const atTop = active.scrollTop <= 1;
+        const atBottom = active.scrollTop + active.clientHeight >= active.scrollHeight - 2;
+        if ((event.deltaY < 0 && !atTop) || (event.deltaY > 0 && !atBottom)) return;
+        event.preventDefault(); wheelLocked = true;
+        render(current + (event.deltaY > 0 ? 1 : -1));
+        setTimeout(() => { wheelLocked = false; },750);
+      },{passive:false});
+      media.addEventListener('change',setMode);
+      addEventListener('resize',() => { clearTimeout(resizeTimer); resizeTimer=setTimeout(setMode,120); });
+      addEventListener('pageshow',() => requestAnimationFrame(setMode));
+      if (document.fonts?.ready) document.fonts.ready.then(() => requestAnimationFrame(setMode));
+      setMode();
+      initMobileMotion();
+    });
+  </script>
 </body>
 </html>

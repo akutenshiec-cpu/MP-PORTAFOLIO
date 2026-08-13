@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
   <style>
+    html, body, .gallery-layout, .gallery-track, .slide { zoom: 1 !important; }
     :root {
       --bg-950: #101214;
       --bg-920: #171a1d;
@@ -193,11 +194,14 @@
       align-items: center;
       position: relative;
       overflow: hidden;
-      padding: 8px;
+      padding: clamp(16px, 2.4vw, 34px);
       box-sizing: border-box;
     }
 
     .slide img {
+      display: block;
+      width: auto;
+      height: auto;
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
@@ -751,8 +755,8 @@
       }
       .slide img {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: auto;
+        height: auto;
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
@@ -866,7 +870,9 @@
     </button>
   </div>
 
-  <script src="data/portfolio-data.js"></script>
+  <script src="data/portfolio-data.js?v=20260813e"></script>
+  <script src="ads-config.js?v=20260813a"></script>
+  <script src="ads-tracking.js?v=20260813a"></script>
   <script>
     /* ========= DATOS REUTILIZADOS (FUENTE COMPARTIDA) ========= */
     const sharedData = window.MPPortfolioData || {};
@@ -876,6 +882,12 @@
     /* ========= VARIABLES GLOBALES (RESTO DEL SCRIPT DE GALERÍA) ========= */
     let currentSlide = 0;
     let currentZoom = 1;
+    let galleryDragActive = false;
+    let galleryDragX = 0;
+    let galleryDragY = 0;
+    let galleryOffsetX = 0;
+    let galleryOffsetY = 0;
+    let galleryLastTap = 0;
     const track = document.getElementById("track");
     const pagination = document.getElementById("pagination");
     const projectNameElement = document.getElementById("project-name");
@@ -997,6 +1009,7 @@
     }
 
     function loadGallery() {
+      resetZoom();
       const projectId = getProjectId();
       const project = db[projectId];
       currentProjectId = projectId || "";
@@ -1041,6 +1054,7 @@
       }
 
       let pending = totalSlides;
+      const initialIndex = Math.max(0, Math.min(getInitialIndex(), totalSlides - 1));
 
       images.forEach((imgName, index) => {
         const slide = document.createElement("div");
@@ -1050,6 +1064,9 @@
         img.src = imgName;
         img.alt = `${project.title} – Imagen ${index + 1}`;
         img.id = `img-${index}`;
+        img.loading = index === initialIndex ? "eager" : "lazy";
+        img.decoding = "async";
+        img.fetchPriority = index === initialIndex ? "high" : "low";
 
         const done = () => {
           if (img.dataset.done) return;
@@ -1060,7 +1077,7 @@
           }
 
           pending--;
-          if (pending <= 0) {
+          if (index === initialIndex || pending <= 0) {
             hideLoader();
           }
         };
@@ -1077,13 +1094,12 @@
         pagination.appendChild(dot);
       });
 
-      const initialIndex = Math.max(0, Math.min(getInitialIndex(), totalSlides - 1));
       updateSlideDisplay(initialIndex);
     }
 
     function updateSlideDisplay(index) {
-      currentSlide = index;
       resetZoom();
+      currentSlide = index;
 
       const scrollPos = track.clientWidth * index;
       track.scrollTo({ left: scrollPos, behavior: "smooth" });
@@ -1106,21 +1122,24 @@
 
     function zoom(factor) {
       let newZoom = currentZoom + factor;
-      newZoom = Math.max(1, Math.min(3, newZoom));
+      newZoom = Math.max(1, Math.min(2.5, newZoom));
       currentZoom = newZoom;
 
       const imgElement = document.getElementById(`img-${currentSlide}`);
       if (imgElement) {
-        imgElement.style.transform = `scale(${currentZoom})`;
+        imgElement.style.transform = `translate(${galleryOffsetX}px, ${galleryOffsetY}px) scale(${currentZoom})`;
       }
     }
 
     function resetZoom() {
       currentZoom = 1;
-      const imgElement = document.getElementById(`img-${currentSlide}`);
-      if (imgElement) {
-        imgElement.style.transform = "scale(1)";
-      }
+      galleryOffsetX = 0;
+      galleryOffsetY = 0;
+      galleryDragActive = false;
+      track.querySelectorAll('.slide img').forEach((imgElement) => {
+        imgElement.style.transition = "none";
+        imgElement.style.transform = "translate(0, 0) scale(1)";
+      });
     }
 
     let scrollTimeout;
@@ -1139,7 +1158,38 @@
       const touch = event.changedTouches[0];
       touchStartX = touch.clientX;
       touchStartY = touch.clientY;
-    }, { passive: true });
+      const now = Date.now();
+      if (now - galleryLastTap < 300) {
+        event.preventDefault();
+        currentZoom > 1 ? resetZoom() : zoom(0.75);
+      }
+      galleryLastTap = now;
+    }, { passive: false });
+
+    track.addEventListener("dblclick", (event) => {
+      event.preventDefault();
+      currentZoom > 1 ? resetZoom() : zoom(0.75);
+    });
+
+    track.addEventListener("pointerdown", (event) => {
+      if (currentZoom <= 1) return;
+      galleryDragActive = true;
+      galleryDragX = event.clientX;
+      galleryDragY = event.clientY;
+      track.setPointerCapture?.(event.pointerId);
+    });
+    track.addEventListener("pointermove", (event) => {
+      if (!galleryDragActive || currentZoom <= 1) return;
+      galleryOffsetX += event.clientX - galleryDragX;
+      galleryOffsetY += event.clientY - galleryDragY;
+      galleryDragX = event.clientX;
+      galleryDragY = event.clientY;
+      const img = document.getElementById(`img-${currentSlide}`);
+      if (img) img.style.transform = `translate(${galleryOffsetX}px, ${galleryOffsetY}px) scale(${currentZoom})`;
+    });
+    const stopGalleryDrag = () => { galleryDragActive = false; };
+    track.addEventListener("pointerup", stopGalleryDrag);
+    track.addEventListener("pointercancel", stopGalleryDrag);
 
     track.addEventListener("touchend", (event) => {
       if (currentZoom > 1 || !isMobileSidebarMode() || document.body.classList.contains("sidebar-open")) return;
@@ -1155,11 +1205,20 @@
       if (e.key === "ArrowRight") scrollSlide(1);
       if (e.key === "ArrowDown") navigateProject(1);
       if (e.key === "ArrowUp") navigateProject(-1);
+      if (e.key === "+" || e.key === "=") zoom(0.25);
+      if (e.key === "-") zoom(-0.25);
+      if (e.key === "0") resetZoom();
       if (e.key === "Escape") setSidebarOpen(false);
     });
 
     window.addEventListener("resize", () => {
+      resetZoom();
       if (!isMobileSidebarMode()) setSidebarOpen(false);
+    });
+
+    window.addEventListener("pageshow", resetZoom);
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden) resetZoom();
     });
 
     if (sidebarToggle) {
