@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function createGeneratedThumb(name, sectionName) {
         const safeName = (name || "Producto").trim();
-        const safeSection = (sectionName || "Curativa").trim();
+        const safeSection = (sectionName || "alúa").trim();
         const palette = {
             "Rostro y Limpieza": ["#f3e4c7", "#fff7ef", "#8d6a2c"],
             "Ojos y Maquillaje": ["#eedcf3", "#fff8fc", "#6f57a5"],
@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <rect x="156" y="138" width="328" height="36" rx="18" fill="${accent}" opacity="0.16"/>
               <rect x="188" y="202" width="264" height="220" rx="132" fill="${accent}" opacity="0.14"/>
               <rect x="218" y="232" width="204" height="160" rx="102" fill="${accent}" opacity="0.22"/>
-              <text x="320" y="112" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5" fill="${accent}">CURATIVA</text>
+              <text x="320" y="112" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5" fill="${accent}">alúa</text>
               <text x="320" y="466" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="42" font-weight="700" fill="#2f2840">${titleLines[0]}</text>
               ${titleLines[1] ? `<text x="320" y="512" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="38" font-weight="700" fill="#2f2840">${titleLines[1]}</text>` : ""}
               <text x="320" y="554" text-anchor="middle" font-family="Manrope, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="2" fill="${accent}">${safeSection.toUpperCase()}</text>
@@ -375,7 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".product-item .placeholder-img").forEach((img) => {
         const card = img.closest(".product-item");
         const section = card ? card.closest(".section") : null;
-        const sectionName = section ? section.querySelector(".section-title")?.textContent : "Curativa";
+        const sectionName = section ? section.querySelector(".section-title")?.textContent : "alúa";
         const name = card ? card.getAttribute("data-name") : "Producto";
         img.src = createGeneratedThumb(name, sectionName);
         img.removeAttribute("class");
@@ -396,14 +396,32 @@ document.addEventListener("DOMContentLoaded", () => {
     function showSlide(index) {
         if (!slides.length) return;
 
-        if (index >= slides.length) currentSlide = 0;
-        else if (index < 0) currentSlide = slides.length - 1;
-        else currentSlide = index;
+        let targetIndex = index;
+        if (targetIndex >= slides.length) targetIndex = 0;
+        else if (targetIndex < 0) targetIndex = slides.length - 1;
 
-        slides.forEach((slide) => slide.classList.remove("active"));
-        dots.forEach((dot) => dot.classList.remove("active"));
+        slides.forEach((slide, i) => {
+            slide.classList.remove("active", "prev-slide");
+            if (i === targetIndex) return;
 
+            let isPrev = false;
+            if (targetIndex > currentSlide) {
+                isPrev = i <= currentSlide; 
+            } else {
+                isPrev = i < targetIndex;
+            }
+            if (currentSlide === slides.length - 1 && targetIndex === 0) {
+                 isPrev = true;
+            } else if (currentSlide === 0 && targetIndex === slides.length - 1) {
+                 isPrev = false;
+            }
+            if (isPrev) slide.classList.add("prev-slide");
+        });
+
+        currentSlide = targetIndex;
         slides[currentSlide].classList.add("active");
+
+        dots.forEach((dot) => dot.classList.remove("active"));
         if (dots[currentSlide]) dots[currentSlide].classList.add("active");
         if (progressBar) {
             progressBar.style.transition = "none";
@@ -428,6 +446,10 @@ document.addEventListener("DOMContentLoaded", () => {
         slideInterval = setInterval(nextSlide, slideDuration);
     }
 
+    function pauseTimer() {
+        clearInterval(slideInterval);
+    }
+
     if (slides.length > 0) {
         showSlide(0);
         resetTimer();
@@ -439,6 +461,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 resetTimer();
             });
         });
+
+        const heroSection = document.querySelector("#hero-carousel");
+        if (heroSection) {
+            let touchStartY = 0;
+            let touchEndY = 0;
+
+            heroSection.addEventListener("mouseenter", pauseTimer);
+            heroSection.addEventListener("mouseleave", resetTimer);
+
+            heroSection.addEventListener("touchstart", (e) => {
+                touchStartY = e.changedTouches[0].screenY;
+                pauseTimer();
+            }, { passive: true });
+
+            heroSection.addEventListener("touchend", (e) => {
+                touchEndY = e.changedTouches[0].screenY;
+                if (touchEndY < touchStartY - 50) {
+                    nextSlide();
+                } else if (touchEndY > touchStartY + 50) {
+                    prevSlide();
+                }
+                resetTimer();
+            }, { passive: true });
+        }
     }
 
     document.querySelectorAll(".carousel-wrapper").forEach((wrapper) => {
@@ -675,7 +721,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         currentDetailId = id;
+
+        const similarGrid = document.getElementById("similar-products-grid");
+        if (similarGrid) {
+            similarGrid.innerHTML = "";
+            const allCards = Array.from(document.querySelectorAll(".carousel-card.clickable-card"));
+            const otherCards = allCards.filter(c => c.getAttribute("data-id") !== currentDetailId);
+            const shuffled = otherCards.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 4);
+            
+            selected.forEach(simCard => {
+                const simId = simCard.getAttribute("data-id");
+                const simName = simCard.getAttribute("data-name");
+                const simImg = simCard.querySelector("img").src;
+                
+                const div = document.createElement("div");
+                div.className = "similar-item";
+                div.innerHTML = `
+                    <img src="${simImg}" alt="${simName}">
+                    <h5>${simName}</h5>
+                `;
+                div.addEventListener("click", () => {
+                    simCard.click();
+                });
+                similarGrid.appendChild(div);
+            });
+        }
+
         openModal("product-detail-modal");
+        
+        if (typeof syncDetailModalQty === "function") {
+            syncDetailModalQty();
+        }
     });
 
     const addDetailBtn = document.getElementById("add-to-cart-detail-btn");
@@ -683,7 +760,15 @@ document.addEventListener("DOMContentLoaded", () => {
         addDetailBtn.addEventListener("click", () => {
             if (!currentDetailId) return;
             window.addFromHero(currentDetailId);
-            closeModal("product-detail-modal");
+            const originalText = addDetailBtn.innerHTML;
+            addDetailBtn.innerHTML = "<i class='fas fa-check'></i> ¡Añadido!";
+            addDetailBtn.style.backgroundColor = "#4caf50";
+            addDetailBtn.style.borderColor = "#4caf50";
+            setTimeout(() => {
+                addDetailBtn.innerHTML = originalText;
+                addDetailBtn.style.backgroundColor = "";
+                addDetailBtn.style.borderColor = "";
+            }, 1500);
         });
     }
 
@@ -1492,12 +1577,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (plusButton) {
             event.stopPropagation();
-            updateProductQty(plusButton.closest(".product-item"), 1);
+            if (plusButton.closest(".modal-qty-controls")) {
+                const card = document.querySelector(`.product-item[data-id="${currentDetailId}"]`);
+                if (card) updateProductQty(card, 1);
+                
+                const addBtn = document.getElementById("add-to-cart-detail-btn");
+                if (addBtn) {
+                    const origText = addBtn.dataset.originalText || addBtn.innerHTML;
+                    if (!addBtn.dataset.originalText) addBtn.dataset.originalText = origText;
+                    
+                    addBtn.innerHTML = "<i class='fas fa-check'></i> ¡Añadido!";
+                    addBtn.style.backgroundColor = "#4caf50";
+                    addBtn.style.borderColor = "#4caf50";
+                    
+                    if (addBtn.timeoutId) clearTimeout(addBtn.timeoutId);
+                    addBtn.timeoutId = setTimeout(() => {
+                        addBtn.innerHTML = origText;
+                        addBtn.style.backgroundColor = "";
+                        addBtn.style.borderColor = "";
+                    }, 1500);
+                }
+            } else {
+                updateProductQty(plusButton.closest(".product-item"), 1);
+            }
         }
 
         if (minusButton) {
             event.stopPropagation();
-            updateProductQty(minusButton.closest(".product-item"), -1);
+            if (minusButton.closest(".modal-qty-controls")) {
+                const card = document.querySelector(`.product-item[data-id="${currentDetailId}"]`);
+                if (card) updateProductQty(card, -1);
+
+                const addBtn = document.getElementById("add-to-cart-detail-btn");
+                if (addBtn) {
+                    const origText = addBtn.dataset.originalText || addBtn.innerHTML;
+                    if (!addBtn.dataset.originalText) addBtn.dataset.originalText = origText;
+
+                    addBtn.innerHTML = "-1";
+                    addBtn.style.backgroundColor = "var(--color-secondary)";
+                    addBtn.style.borderColor = "var(--color-secondary)";
+
+                    if (addBtn.timeoutId) clearTimeout(addBtn.timeoutId);
+                    addBtn.timeoutId = setTimeout(() => {
+                        addBtn.innerHTML = origText;
+                        addBtn.style.backgroundColor = "";
+                        addBtn.style.borderColor = "";
+                    }, 1500);
+                }
+            } else {
+                updateProductQty(minusButton.closest(".product-item"), -1);
+            }
         }
     });
 
@@ -1549,6 +1678,14 @@ document.addEventListener("DOMContentLoaded", () => {
         updateCartUI();
     };
 
+    function syncDetailModalQty() {
+        if (!currentDetailId) return;
+        const modalQtyDisplay = document.getElementById("modal-qty-display");
+        if (!modalQtyDisplay) return;
+        const item = cart.find(i => i.id === currentDetailId);
+        modalQtyDisplay.textContent = item ? String(item.qty) : "0";
+    }
+
     function updateCartUI() {
         const provinceSelect = document.getElementById("customer-province");
         const selectedProvince = provinceSelect ? provinceSelect.value : "";
@@ -1557,6 +1694,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cartCountEl) cartCountEl.textContent = String(totals.totalItems);
         updateOrderMeta(selectedProvince);
         renderModalList(totals);
+        syncDetailModalQty();
     }
 
     function renderModalList(totals) {
@@ -1649,16 +1787,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function validateMobileCheckoutStep() {
-        if (mobileCheckoutStep === 1 && cart.length === 0) {
-            alert("Agrega al menos un producto antes de continuar.");
-            return false;
+        if (mobileCheckoutStep === 1) {
+            if (cart.length === 0) {
+                alert("Agrega al menos un producto antes de continuar.");
+                return false;
+            }
+            const provinceField = document.getElementById("customer-province");
+            if (!provinceField || !String(provinceField.value || "").trim()) {
+                alert("Selecciona tu provincia.");
+                if (provinceField) provinceField.focus();
+                return false;
+            }
         }
 
         if (mobileCheckoutStep === 2) {
             const requiredFields = [
                 [document.getElementById("customer-name"), "Escribe tus nombres."],
                 [document.getElementById("customer-lastname"), "Escribe tus apellidos."],
-                [document.getElementById("customer-province"), "Selecciona tu provincia."],
                 [document.getElementById("customer-address"), "Escribe la dirección de entrega."]
             ];
             const invalid = requiredFields.find(([field]) => !field || !String(field.value || "").trim());
@@ -2324,6 +2469,179 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("dragstart", (event) => {
         if (event.target.tagName === "IMG") {
             event.preventDefault();
+        }
+    });
+
+    // ==========================================
+    // KEYBOARD CAROUSEL NAVIGATION LOGIC
+    // ==========================================
+    let currentActiveSection = null;
+    let sectionsArray = [];
+    let isKeyboardMode = false;
+    let focusedCardIndex = -1;
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        let maxIntersection = 0;
+        let mostVisibleSection = null;
+        
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.intersectionRatio > 0.5) {
+                    currentActiveSection = entry.target;
+                } else if (entry.intersectionRatio > maxIntersection) {
+                    maxIntersection = entry.intersectionRatio;
+                    mostVisibleSection = entry.target;
+                }
+            }
+        });
+        
+        if (!currentActiveSection && mostVisibleSection) {
+            currentActiveSection = mostVisibleSection;
+        }
+        
+        clearCardFocus();
+    }, {
+        root: null,
+        threshold: [0.1, 0.3, 0.5, 0.7, 0.9]
+    });
+
+    document.querySelectorAll("section").forEach(section => {
+        sectionsArray.push(section);
+        sectionObserver.observe(section);
+    });
+
+    let lastDownTime = 0;
+    let downHoldTimer = null;
+    const DOWN_DOUBLE_TAP_THRESHOLD = 500; // ms
+    const DOWN_HOLD_THRESHOLD = 1500; // ms
+    
+    let lastUpTime = 0;
+    let upHoldTimer = null;
+    const UP_DOUBLE_TAP_THRESHOLD = 500; // ms
+    const UP_HOLD_THRESHOLD = 2000; // ms
+
+    function jumpToNextSection(currentSection) {
+        if (!currentSection) return;
+        const currentIndex = sectionsArray.indexOf(currentSection);
+        if (currentIndex !== -1 && currentIndex + 1 < sectionsArray.length) {
+            sectionsArray[currentIndex + 1].scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+    
+    function jumpToHeroTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function clearCardFocus() {
+        document.querySelectorAll(".carousel-card.keyboard-focus").forEach(el => {
+            el.classList.remove("keyboard-focus");
+        });
+        focusedCardIndex = -1;
+    }
+
+    function applyCardFocus(cards, index) {
+        clearCardFocus();
+        if (cards[index]) {
+            cards[index].classList.add("keyboard-focus");
+            cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            focusedCardIndex = index;
+        }
+    }
+
+    // Deactivate keyboard mode when mouse moves
+    document.addEventListener("mousemove", () => {
+        if (isKeyboardMode) {
+            isKeyboardMode = false;
+            clearCardFocus();
+        }
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (!currentActiveSection) return;
+
+        // Ensure we are not typing in an input
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+            isKeyboardMode = true;
+        }
+
+        const isHero = currentActiveSection.id === "hero-carousel";
+        const carouselTrack = currentActiveSection.querySelector(".carousel-track");
+
+        if (isHero) {
+            if (e.key === "ArrowUp") {
+                e.preventDefault();
+                const now = Date.now();
+                
+                if (now - lastUpTime < UP_DOUBLE_TAP_THRESHOLD) {
+                    clearTimeout(upHoldTimer);
+                    lastUpTime = 0;
+                    jumpToHeroTop();
+                    return;
+                }
+                lastUpTime = now;
+
+                if (!upHoldTimer) {
+                    upHoldTimer = setTimeout(() => {
+                        jumpToHeroTop();
+                        upHoldTimer = null;
+                    }, UP_HOLD_THRESHOLD);
+                }
+
+                prevSlide();
+                resetTimer();
+            } else if (e.key === "ArrowDown") {
+                e.preventDefault();
+                const now = Date.now();
+                
+                if (now - lastDownTime < DOWN_DOUBLE_TAP_THRESHOLD) {
+                    clearTimeout(downHoldTimer);
+                    lastDownTime = 0;
+                    jumpToNextSection(currentActiveSection);
+                    return;
+                }
+                lastDownTime = now;
+
+                if (!downHoldTimer) {
+                    downHoldTimer = setTimeout(() => {
+                        jumpToNextSection(currentActiveSection);
+                        downHoldTimer = null;
+                    }, DOWN_HOLD_THRESHOLD);
+                }
+
+                nextSlide();
+                resetTimer();
+            }
+        } else if (carouselTrack) {
+            const cards = Array.from(carouselTrack.querySelectorAll(".carousel-card"));
+            if (!cards.length) return;
+
+            if (e.key === "ArrowLeft") {
+                e.preventDefault();
+                if (focusedCardIndex <= 0) focusedCardIndex = cards.length - 1;
+                else focusedCardIndex--;
+                applyCardFocus(cards, focusedCardIndex);
+            } else if (e.key === "ArrowRight") {
+                e.preventDefault();
+                if (focusedCardIndex === -1 || focusedCardIndex >= cards.length - 1) focusedCardIndex = 0;
+                else focusedCardIndex++;
+                applyCardFocus(cards, focusedCardIndex);
+            }
+        }
+    });
+
+    document.addEventListener("keyup", (e) => {
+        if (e.key === "ArrowDown") {
+            if (downHoldTimer) {
+                clearTimeout(downHoldTimer);
+                downHoldTimer = null;
+            }
+        } else if (e.key === "ArrowUp") {
+            if (upHoldTimer) {
+                clearTimeout(upHoldTimer);
+                upHoldTimer = null;
+            }
         }
     });
 });

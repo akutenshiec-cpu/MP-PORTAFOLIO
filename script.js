@@ -1193,7 +1193,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const setFerrisMode = () => {
-        window.scrollTo(0, 0);
         document.documentElement.classList.toggle('ferris-scroll-lock', ferrisMedia.matches);
         document.body.classList.toggle('ferris-mode', ferrisMedia.matches);
         if (ferrisMedia.matches) {
