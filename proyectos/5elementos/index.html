@@ -6,7 +6,7 @@
     <meta name="description" content="Jardín 5 Elementos: experiencias gastronómicas, eventos y reservas en Loja. Fuego, aire, tierra, agua y éter." />
     <title>Jardín 5 Elementos | Experiencia & Sentidos</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- CONFIGURACIÓN BASE --- */
@@ -54,7 +54,12 @@
         }
         .site-top-nav a:hover { color: var(--primary); }
 
-        h1, h2, h3 { font-family: 'Cinzel', serif; letter-spacing: 1px; }
+        h1, h2, h3 { 
+            font-family: 'Cormorant Garamond', serif; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            font-variant-numeric: lining-nums;
+        }
 
         /* --- SECCIÓN 1: HERO --- */
         .hero {
@@ -152,10 +157,13 @@
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: clamp(1.2rem, 6vw, 2.5rem);
             margin-bottom: 60px;
             color: var(--primary);
             position: relative;
+            white-space: normal;
+            word-break: keep-all;
+            overflow-wrap: normal;
         }
 
         .cards-container {
@@ -170,7 +178,6 @@
         .card {
             width: 320px;
             height: 480px;
-            border-radius: 8px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
@@ -424,9 +431,18 @@
         @media (max-width: 768px) {
             .hero-content { padding-inline: 12px; }
             .hero h1 {
-                font-size: clamp(1.1rem, 6vw, 2.5rem);
-                letter-spacing: clamp(0.5px, 0.4vw, 2px);
-                white-space: nowrap;
+                font-size: clamp(1.2rem, 8vw, 2.5rem);
+                letter-spacing: 0px;
+                white-space: normal;
+                word-wrap: normal;
+                word-break: keep-all;
+                line-height: 1.1;
+            }
+            .section-title {
+                font-size: 1.6rem !important;
+                letter-spacing: 0px !important;
+                white-space: normal !important;
+                word-break: keep-all !important;
             }
             .hero p { font-size: 0.8rem; }
             .hero-logo { width: 120px; }
