@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Curativa: cosmética natural. Catálogo por categorías con carrito y pedido por WhatsApp." />
     <title>CURATIVA · Catálogo 2026</title>
-    <link rel="stylesheet" href="styles.css?v=20260813-carousel-sliders-overlay" />
+    <link rel="stylesheet" href="styles.css?v=20260813-mobile-product-viewport" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700;800&family=Poiret+One&display=swap" rel="stylesheet">
 </head>
@@ -51,38 +51,35 @@
         </div>
     </div>
 
-    <div class="floating-toolbar" aria-label="Herramientas rápidas">
-    <div class="mobile-category-fab" id="mobile-category-fab">
-        <button type="button" class="mobile-category-toggle" id="mobile-category-toggle" aria-label="Abrir categorias">
-            <span>Categorías</span>
-            <i class="fas fa-th-large"></i>
-        </button>
-        <nav class="mobile-category-bar hidden" id="mobile-category-menu" aria-label="Categorias rapidas">
-            <div class="mobile-category-panel">
-                <a href="#rostro-section" class="mobile-category-pill"><span>Rostro</span><div class="mini-fab"><i class="fas fa-spa"></i></div></a>
-                <a href="#ojos-section" class="mobile-category-pill"><span>Ojos</span><div class="mini-fab"><i class="fas fa-eye"></i></div></a>
-                <a href="#capilar-section" class="mobile-category-pill"><span>Capilar</span><div class="mini-fab"><i class="fas fa-wind"></i></div></a>
-                <a href="#desodorantes-section" class="mobile-category-pill"><span>Desodorantes</span><div class="mini-fab"><i class="fas fa-spray-can-sparkles"></i></div></a>
-                <a href="#cuerpo-section" class="mobile-category-pill"><span>Bienestar</span><div class="mini-fab"><i class="fas fa-hand-holding-heart"></i></div></a>
-                <a href="#balsamos-section" class="mobile-category-pill"><span>Balsamos</span><div class="mini-fab"><i class="fas fa-droplet"></i></div></a>
-                <a href="#roll-on-section" class="mobile-category-pill"><span>Roll-ons</span><div class="mini-fab"><i class="fas fa-circle-dot"></i></div></a>
+    <div class="fab-wrapper mobile-category-fab" id="mobile-category-fab">
+        <nav class="fab-glass-container mobile-category-bar hidden" id="mobile-category-menu" aria-label="Categorias rapidas">
+            <div class="fab-list mobile-category-panel">
+                <a href="#rostro-section" class="mobile-category-pill"><span class="fab-copy"><strong>Rostro</strong><small>Cuidado facial</small></span><div class="mini-fab"><i class="fas fa-spa"></i></div></a>
+                <a href="#ojos-section" class="mobile-category-pill"><span class="fab-copy"><strong>Ojos</strong><small>Mirada y contorno</small></span><div class="mini-fab"><i class="fas fa-eye"></i></div></a>
+                <a href="#capilar-section" class="mobile-category-pill"><span class="fab-copy"><strong>Capilar</strong><small>Rutina del cabello</small></span><div class="mini-fab"><i class="fas fa-wind"></i></div></a>
+                <a href="#desodorantes-section" class="mobile-category-pill"><span class="fab-copy"><strong>Desodorantes</strong><small>Protección diaria</small></span><div class="mini-fab"><i class="fas fa-spray-can-sparkles"></i></div></a>
+                <a href="#cuerpo-section" class="mobile-category-pill"><span class="fab-copy"><strong>Bienestar</strong><small>Cuerpo y equilibrio</small></span><div class="mini-fab"><i class="fas fa-hand-holding-heart"></i></div></a>
+                <a href="#balsamos-section" class="mobile-category-pill"><span class="fab-copy"><strong>Bálsamos</strong><small>Nutrición localizada</small></span><div class="mini-fab"><i class="fas fa-droplet"></i></div></a>
+                <a href="#roll-on-section" class="mobile-category-pill"><span class="fab-copy"><strong>Roll-ons</strong><small>Bienestar portátil</small></span><div class="mini-fab"><i class="fas fa-circle-dot"></i></div></a>
             </div>
         </nav>
+        <button type="button" class="fab-main-btn mobile-category-toggle" id="mobile-category-toggle" aria-label="Abrir categorías" aria-expanded="false" aria-controls="mobile-category-menu" data-tooltip="Explorar categorías">
+            <i class="fas fa-th-large" aria-hidden="true"></i>
+        </button>
     </div>
 
     <div class="fab-wrapper" id="fabMenu">
-        <div class="fab-glass-container">
+        <div class="fab-glass-container" id="fab-navigation">
             <div class="fab-list">
-                <a href="#quienes-somos" onclick="closeFab()"><span>Nosotros</span><div class="mini-fab"><i class="fas fa-seedling"></i></div></a>
-                <a href="#rostro-section" onclick="closeFab()"><span>Catálogo</span><div class="mini-fab"><i class="fas fa-store"></i></div></a>
-                <a href="#footer-contact" onclick="closeFab()"><span>Contacto</span><div class="mini-fab"><i class="fas fa-paper-plane"></i></div></a>
+                <a href="#quienes-somos" onclick="closeFab()"><span class="fab-copy"><strong>Nosotros</strong><small>Esencia Curativa</small></span><div class="mini-fab"><i class="fas fa-seedling"></i></div></a>
+                <a href="#rostro-section" onclick="closeFab()"><span class="fab-copy"><strong>Catálogo</strong><small>Explora los productos</small></span><div class="mini-fab"><i class="fas fa-store"></i></div></a>
+                <a href="#footer-contact" onclick="closeFab()"><span class="fab-copy"><strong>Contacto</strong><small>Conversemos</small></span><div class="mini-fab"><i class="fas fa-paper-plane"></i></div></a>
+                <a href="../../index.html"><span class="fab-copy"><strong>Portafolio</strong><small>Volver a MP Dev Studio</small></span><div class="mini-fab"><i class="fas fa-arrow-left"></i></div></a>
             </div>
         </div>
-        <button class="fab-main-btn" id="fabBtn" aria-label="Abrir menú">
-            <span>Menú</span>
-            <i class="fas fa-bars"></i>
+        <button class="fab-main-btn" id="fabBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="fab-navigation" data-tooltip="Abrir navegación">
+            <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
-    </div>
     </div>
 
     <section id="hero-carousel" class="hero-carousel">
@@ -163,13 +160,11 @@
             </div>
 
             <div class="hero-nav">
-                <button class="hero-arrow prev" aria-label="Ver diapositiva anterior"><i class="fas fa-chevron-left"></i></button>
                 <div class="hero-dots">
                     <button class="dot active" data-slide="0" aria-label="Ver diapositiva 1"></button>
                     <button class="dot" data-slide="1" aria-label="Ver diapositiva 2"></button>
                     <button class="dot" data-slide="2" aria-label="Ver diapositiva 3"></button>
                 </div>
-                <button class="hero-arrow next" aria-label="Ver diapositiva siguiente"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
         <div class="hero-progress-bar" aria-hidden="true"><div class="progress-fill"></div></div>
@@ -558,8 +553,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="script.js?v=20260813-carousel-sliders-overlay"></script>
-    <script src="carousel-sliders.js?v=20260813-carousel-sliders-overlay"></script>
+    <script src="script.js?v=20260813-scroll-aware-wine-fabs"></script>
 </body>
 </html>
 

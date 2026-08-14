@@ -153,6 +153,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const mobileCategoryToggle = document.getElementById("mobile-category-toggle");
     const mobileCategoryMenu = document.getElementById("mobile-category-menu");
 
+    // Retract the floating controls while progressing down the page and
+    // restore them as soon as the user navigates upwards.
+    let lastFabScrollY = Math.max(window.scrollY, 0);
+    let fabScrollTicking = false;
+    const syncFloatingControlsWithScroll = () => {
+        const currentY = Math.max(window.scrollY, 0);
+        const delta = currentY - lastFabScrollY;
+        const menuIsOpen = fabMenu?.classList.contains("active") || mobileCategoryFab?.classList.contains("active");
+
+        if (!menuIsOpen && currentY > 110 && delta > 7) {
+            document.body.classList.add("fab-controls-hidden");
+        } else if (delta < -7 || currentY <= 110 || menuIsOpen) {
+            document.body.classList.remove("fab-controls-hidden");
+        }
+
+        if (Math.abs(delta) > 7) lastFabScrollY = currentY;
+        fabScrollTicking = false;
+    };
+
+    window.addEventListener("scroll", () => {
+        if (fabScrollTicking) return;
+        fabScrollTicking = true;
+        window.requestAnimationFrame(syncFloatingControlsWithScroll);
+    }, { passive: true });
+
     function closeFabMenu() {
         if (!fabMenu || !fabBtn) return;
         fabMenu.classList.remove("active");
@@ -170,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (fabBtn && fabMenu) {
         fabBtn.setAttribute("aria-expanded", "false");
         fabBtn.addEventListener("click", () => {
+            document.body.classList.remove("fab-controls-hidden");
             const isActive = fabMenu.classList.toggle("active");
             fabBtn.classList.toggle("active", isActive);
             fabBtn.setAttribute("aria-expanded", String(isActive));
@@ -214,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeMobileCategoryMenu() {
         if (!mobileCategoryMenu || !mobileCategoryToggle) return;
+        mobileCategoryFab?.classList.remove("active");
         mobileCategoryMenu.classList.add("hidden");
         mobileCategoryToggle.setAttribute("aria-expanded", "false");
         mobileCategoryToggle.classList.remove("active");
@@ -265,7 +292,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (mobileCategoryToggle && mobileCategoryMenu) {
         mobileCategoryToggle.setAttribute("aria-expanded", "false");
         mobileCategoryToggle.addEventListener("click", () => {
+            document.body.classList.remove("fab-controls-hidden");
             const isHidden = mobileCategoryMenu.classList.contains("hidden");
+            mobileCategoryFab.classList.toggle("active", isHidden);
             mobileCategoryMenu.classList.toggle("hidden", !isHidden);
             mobileCategoryToggle.setAttribute("aria-expanded", String(isHidden));
             mobileCategoryToggle.classList.toggle("active", isHidden);
@@ -417,37 +446,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const prevBtn = wrapper.querySelector(".prev-btn");
         const nextBtn = wrapper.querySelector(".next-btn");
         const desktopQuery = window.matchMedia("(min-width: 1081px)");
-
-        let positionControl = wrapper.querySelector(".carousel-position-control");
-        if (track && !positionControl) {
-            const sectionTitle = wrapper.closest(".section")?.querySelector("h2, h3")?.textContent.trim() || "productos";
-            positionControl = document.createElement("label");
-            positionControl.className = "carousel-position-control";
-            positionControl.innerHTML = `<span>Recorrer ${sectionTitle}</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Posición del carrusel de ${sectionTitle}"><output>0%</output>`;
-            wrapper.append(positionControl);
-
-            const range = positionControl.querySelector("input");
-            const output = positionControl.querySelector("output");
-            const syncSliderFromTrack = () => {
-                const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-                const ratio = maxScroll ? track.scrollLeft / maxScroll : 0;
-                const value = Math.round(Math.max(0, Math.min(1, ratio)) * 1000);
-                range.value = String(value);
-                range.style.setProperty("--carousel-position", `${value / 10}%`);
-                output.textContent = `${Math.round(value / 10)}%`;
-                range.disabled = maxScroll === 0;
-            };
-            range.addEventListener("input", () => {
-                const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
-                const ratio = Number(range.value) / 1000;
-                track.scrollLeft = maxScroll * ratio;
-                range.style.setProperty("--carousel-position", `${ratio * 100}%`);
-                output.textContent = `${Math.round(ratio * 100)}%`;
-            });
-            track.addEventListener("scroll", syncSliderFromTrack, { passive: true });
-            window.addEventListener("resize", syncSliderFromTrack, { passive: true });
-            requestAnimationFrame(syncSliderFromTrack);
-        }
 
         if (track && prevBtn && nextBtn) {
             nextBtn.addEventListener("click", () => track.scrollBy({ left: 260, behavior: "smooth" }));
