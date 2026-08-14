@@ -418,6 +418,37 @@ document.addEventListener("DOMContentLoaded", () => {
         const nextBtn = wrapper.querySelector(".next-btn");
         const desktopQuery = window.matchMedia("(min-width: 1081px)");
 
+        let positionControl = wrapper.querySelector(".carousel-position-control");
+        if (track && !positionControl) {
+            const sectionTitle = wrapper.closest(".section")?.querySelector("h2, h3")?.textContent.trim() || "productos";
+            positionControl = document.createElement("label");
+            positionControl.className = "carousel-position-control";
+            positionControl.innerHTML = `<span>Recorrer ${sectionTitle}</span><input type="range" min="0" max="1000" value="0" step="1" aria-label="Posición del carrusel de ${sectionTitle}"><output>0%</output>`;
+            wrapper.append(positionControl);
+
+            const range = positionControl.querySelector("input");
+            const output = positionControl.querySelector("output");
+            const syncSliderFromTrack = () => {
+                const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+                const ratio = maxScroll ? track.scrollLeft / maxScroll : 0;
+                const value = Math.round(Math.max(0, Math.min(1, ratio)) * 1000);
+                range.value = String(value);
+                range.style.setProperty("--carousel-position", `${value / 10}%`);
+                output.textContent = `${Math.round(value / 10)}%`;
+                range.disabled = maxScroll === 0;
+            };
+            range.addEventListener("input", () => {
+                const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+                const ratio = Number(range.value) / 1000;
+                track.scrollLeft = maxScroll * ratio;
+                range.style.setProperty("--carousel-position", `${ratio * 100}%`);
+                output.textContent = `${Math.round(ratio * 100)}%`;
+            });
+            track.addEventListener("scroll", syncSliderFromTrack, { passive: true });
+            window.addEventListener("resize", syncSliderFromTrack, { passive: true });
+            requestAnimationFrame(syncSliderFromTrack);
+        }
+
         if (track && prevBtn && nextBtn) {
             nextBtn.addEventListener("click", () => track.scrollBy({ left: 260, behavior: "smooth" }));
             prevBtn.addEventListener("click", () => track.scrollBy({ left: -260, behavior: "smooth" }));
