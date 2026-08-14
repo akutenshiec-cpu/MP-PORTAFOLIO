@@ -3597,7 +3597,7 @@ body.cart-drawer-open > .fab-wrapper {
 
 /* Final iPhone gesture guard: keep this last so premium hover rules cannot override it. */
 @media (hover: none), (pointer: coarse) {
-  .carousel-track { touch-action: pan-y pinch-zoom !important; }
+  .carousel-track { touch-action: pan-x pan-y pinch-zoom !important; }
   .carousel-card:hover,
   .carousel-card:active { transform: none !important; }
   .carousel-card:hover .card-thumb img,
@@ -3607,8 +3607,10 @@ body.cart-drawer-open > .fab-wrapper {
 /* Touch devices: vertical page scrolling wins; hover zoom must never stick on iOS. */
 @media (hover: none), (pointer: coarse) {
   .carousel-track {
-    touch-action: pan-y pinch-zoom;
+    touch-action: pan-x pan-y pinch-zoom;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
   }
 
   .carousel-card,
@@ -3627,6 +3629,46 @@ body.cart-drawer-open > .fab-wrapper {
   .carousel-card:active .card-thumb img {
     transform: none;
   }
+}
+
+/* Menús flotantes editoriales, alineados con MP Portfolio y CurArte. */
+body > .fab-wrapper,
+body > .mobile-category-fab { isolation: isolate; }
+.fab-main-btn,
+.mobile-category-toggle {
+  border: 1px solid rgba(212,180,133,.46) !important;
+  border-radius: 16px !important;
+  background: rgba(244,238,228,.96) !important;
+  color: #241d2d !important;
+  box-shadow: 0 18px 46px rgba(8,6,12,.34), inset 0 1px rgba(255,255,255,.7) !important;
+  backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+}
+.fab-main-btn:hover,
+.mobile-category-toggle:hover { border-color: rgba(251,170,38,.68) !important; transform: translateY(-3px); }
+.fab-glass-container,
+.mobile-category-panel {
+  padding: .48rem !important;
+  border: 1px solid rgba(212,180,133,.24) !important;
+  border-radius: 18px !important;
+  background: rgba(20,16,27,.93) !important;
+  box-shadow: 0 26px 64px rgba(7,5,10,.46) !important;
+  backdrop-filter: blur(22px) !important; -webkit-backdrop-filter: blur(22px) !important;
+}
+.fab-list { padding: .25rem !important; border: 0 !important; border-radius: 14px !important; background: transparent !important; box-shadow: none !important; }
+.fab-list a,
+.mobile-category-pill {
+  min-height: 46px; margin: .2rem 0 !important; padding: .3rem .35rem .3rem .75rem;
+  border: 1px solid transparent; border-radius: 13px; background: rgba(255,255,255,.025);
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+.fab-list a:hover,
+.mobile-category-pill:hover { border-color: rgba(212,180,133,.24); background: rgba(212,180,133,.08); transform: translateX(-3px); }
+.fab-list span,
+.mobile-category-pill > span { color: #eee5d8 !important; font-size: .65rem !important; font-weight: 600 !important; letter-spacing: .08em !important; }
+.mini-fab {
+  width: 38px !important; height: 38px !important;
+  border: 1px solid rgba(212,180,133,.3) !important; border-radius: 11px !important;
+  background: rgba(212,180,133,.1) !important; color: #d4b485 !important;
 }
 
 .hero-carousel > .hero-progress-bar {

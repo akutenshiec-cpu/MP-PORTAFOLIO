@@ -493,6 +493,8 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             track.addEventListener("pointerdown", (event) => {
+                // En pantallas táctiles Safari debe conservar el gesto y la inercia nativos.
+                if (!isDesktopCarousel()) return;
                 if (event.pointerType === "mouse" && event.button !== 0) return;
                 stopTrackAnimation();
                 isDragging = true;
