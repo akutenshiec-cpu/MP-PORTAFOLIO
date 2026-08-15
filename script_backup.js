@@ -329,14 +329,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            if (document.body.classList.contains("product-modal-open")) {
-                closeModal("product-detail-modal");
-            } else {
-                closeFabMenu();
-                closeMobileCategoryMenu();
-            }
-        }
+        if (event.key !== "Escape") return;
+        closeFabMenu();
+        closeMobileCategoryMenu();
     });
 
     function createGeneratedThumb(name, sectionName) {
@@ -657,50 +652,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    const headerCloseBtn = document.getElementById("header-close-btn");
-
-    function getActiveModal() {
-        const visibleModals = Array.from(document.querySelectorAll(".new-modal-overlay:not(.hidden)"));
-        return visibleModals.at(-1) || null;
-    }
-
-    function syncHeaderModalClose() {
-        const activeModal = getActiveModal();
-        document.body.classList.toggle("modal-open", Boolean(activeModal));
-        if (!headerCloseBtn) return;
-        headerCloseBtn.setAttribute("aria-hidden", String(!activeModal));
-        headerCloseBtn.tabIndex = activeModal ? 0 : -1;
-        headerCloseBtn.dataset.modalId = activeModal?.id || "";
-    }
-
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
         modal.classList.remove("hidden");
-        modal.setAttribute("aria-hidden", "false");
         document.body.classList.add("no-scroll");
         if (modalId === "cart-modal") {
             document.body.classList.add("cart-drawer-open");
             if (window.matchMedia("(max-width: 600px)").matches) setMobileCheckoutStep(1);
         }
-        if (modalId === "product-detail-modal") {
-            document.body.classList.add("product-modal-open");
-        }
-        syncHeaderModalClose();
-        saveSiteSession();
     }
 
     function closeModal(modalId) {
         const modal = document.getElementById(modalId);
         if (!modal) return;
         modal.classList.add("hidden");
-        modal.setAttribute("aria-hidden", "true");
         if (modalId === "cart-modal") document.body.classList.remove("cart-drawer-open");
-        if (modalId === "product-detail-modal") document.body.classList.remove("product-modal-open");
-        const anotherModalIsOpen = getActiveModal();
-        document.body.classList.toggle("no-scroll", Boolean(anotherModalIsOpen));
-        syncHeaderModalClose();
-        saveSiteSession();
+        document.body.classList.remove("no-scroll");
     }
 
     document.querySelectorAll(".close-modal-btn").forEach((btn) => {
@@ -716,14 +684,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    if (headerCloseBtn) {
-        syncHeaderModalClose();
-        headerCloseBtn.addEventListener("click", () => {
-            const modalId = headerCloseBtn.dataset.modalId;
-            if (modalId) closeModal(modalId);
-        });
-    }
-
     document.querySelectorAll(".trigger-distributor").forEach((trigger) => {
         trigger.addEventListener("click", (event) => {
             event.preventDefault();
@@ -732,284 +692,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     let currentDetailId = null;
-    const detailPager = document.getElementById("product-detail-pager");
-    const detailCategoryName = document.getElementById("detail-category-name");
-    const detailPageCounter = document.getElementById("detail-page-counter");
-    const detailCategoryTrigger = document.getElementById("detail-category-trigger");
-    const detailCategoryIndex = document.getElementById("detail-category-index");
-    const detailPrevProduct = document.getElementById("detail-prev-product");
-    const detailNextProduct = document.getElementById("detail-next-product");
-    const productDetailModal = document.getElementById("product-detail-modal");
-    const categoryColors = [
-        { accent: "#76539a", soft: "rgba(118, 83, 154, 0.18)" },
-        { accent: "#a45b70", soft: "rgba(164, 91, 112, 0.18)" },
-        { accent: "#4f7b6b", soft: "rgba(79, 123, 107, 0.18)" },
-        { accent: "#b4773e", soft: "rgba(180, 119, 62, 0.18)" },
-        { accent: "#52739c", soft: "rgba(82, 115, 156, 0.18)" },
-        { accent: "#9a7443", soft: "rgba(154, 116, 67, 0.18)" },
-        { accent: "#8c5d86", soft: "rgba(140, 93, 134, 0.18)" }
-    ];
-
-    const getProductSections = () => Array.from(document.querySelectorAll("main .section"))
-        .filter((section) => section.querySelector(".product-item.clickable-card"));
-
-    function getSectionName(section) {
-        return section?.querySelector(".section-title")?.textContent?.trim() || "Catálogo alúa";
-    }
-
-    function openDetailCategoryIndex() {
-        if (!detailCategoryIndex || !detailCategoryTrigger) return;
-        detailCategoryIndex.hidden = false;
-        detailCategoryTrigger.setAttribute("aria-expanded", "true");
-        detailPager?.classList.add("category-index-open");
-        detailCategoryIndex.querySelector(".is-active")?.focus({ preventScroll: true });
-    }
-
-    function closeDetailCategoryIndex() {
-        if (!detailCategoryIndex || !detailCategoryTrigger) return;
-        detailCategoryIndex.hidden = true;
-        detailCategoryTrigger.setAttribute("aria-expanded", "false");
-        detailPager?.classList.remove("category-index-open");
-    }
-
-    function navigateToDetailSection(section) {
-        const targetCard = section?.querySelector(".product-item.clickable-card");
-        const targetTrack = targetCard?.closest(".carousel-track");
-        if (targetTrack) targetTrack.dataset.dragged = "false";
-        targetCard?.click();
-    }
-
-    function renderDetailCategoryIndex(activeSection) {
-        if (!detailCategoryIndex) return;
-        const sections = getProductSections();
-        detailCategoryIndex.innerHTML = "";
-        sections.forEach((section, index) => {
-            const color = categoryColors[index % categoryColors.length];
-            const button = document.createElement("button");
-            button.type = "button";
-            button.role = "menuitem";
-            button.className = section === activeSection ? "is-active" : "";
-            button.style.setProperty("--category-color", color.accent);
-            button.textContent = getSectionName(section);
-            button.addEventListener("click", (event) => {
-                event.stopPropagation();
-                closeDetailCategoryIndex();
-                navigateToDetailSection(section);
-            });
-            detailCategoryIndex.appendChild(button);
-        });
-    }
-
-    function getCurrentProductContext() {
-        const card = document.querySelector(`.product-item.clickable-card[data-id="${currentDetailId}"]`);
-        const section = card?.closest(".section");
-        const cards = section ? Array.from(section.querySelectorAll(".product-item.clickable-card")) : [];
-        return { card, section, cards, index: card ? cards.indexOf(card) : -1 };
-    }
-
-    function updateProductDetailPager() {
-        const { section, cards, index } = getCurrentProductContext();
-        const category = getSectionName(section);
-        const sectionIndex = Math.max(0, getProductSections().indexOf(section));
-        const categoryColor = categoryColors[sectionIndex % categoryColors.length];
-        if (detailCategoryName) detailCategoryName.textContent = category;
-        if (detailPageCounter) detailPageCounter.textContent = index >= 0 ? `${index + 1} de ${cards.length}` : "1 de 1";
-        if (detailPager) {
-            detailPager.dataset.categoryIndex = String(sectionIndex);
-            detailPager.style.setProperty("--pager-accent", categoryColor.accent);
-            detailPager.style.setProperty("--pager-accent-soft", categoryColor.soft);
-        }
-        const hasMultipleProducts = cards.length > 1;
-        if (detailPrevProduct) detailPrevProduct.disabled = !hasMultipleProducts;
-        if (detailNextProduct) detailNextProduct.disabled = !hasMultipleProducts;
-        renderDetailCategoryIndex(section);
-    }
-
-    function resetProductModalPosition() {
-        if (!window.matchMedia("(max-width: 768px)").matches) return;
-        window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-                [
-                    document.querySelector("#product-detail-modal .detail-grid"),
-                    document.querySelector("#product-detail-modal .detail-info-col"),
-                    document.querySelector("#product-detail-modal .detail-content-wrapper"),
-                    document.querySelector("#product-detail-modal .new-modal-container")
-                ].filter(Boolean).forEach((element) => {
-                    element.scrollTo({ top: 0, left: 0, behavior: "auto" });
-                });
-            });
-        });
-    }
-
-    function navigateDetailProduct(direction) {
-        const { cards, index } = getCurrentProductContext();
-        if (cards.length < 2 || index < 0) return;
-        const targetCard = cards[(index + direction + cards.length) % cards.length];
-        const targetTrack = targetCard.closest(".carousel-track");
-        if (targetTrack) targetTrack.dataset.dragged = "false";
-        targetCard.click();
-    }
-
-    function navigateDetailCategory(direction) {
-        const sections = getProductSections();
-        const { section } = getCurrentProductContext();
-        const currentSectionIndex = sections.indexOf(section);
-        if (!sections.length || currentSectionIndex < 0) return;
-        const nextSection = sections[(currentSectionIndex + direction + sections.length) % sections.length];
-        navigateToDetailSection(nextSection);
-    }
-
-    if (detailCategoryTrigger) {
-        let categoryHoldTimer = null;
-        let categoryHoldStart = null;
-        const cancelCategoryHold = () => {
-            window.clearTimeout(categoryHoldTimer);
-            categoryHoldTimer = null;
-            categoryHoldStart = null;
-        };
-        detailCategoryTrigger.addEventListener("pointerdown", (event) => {
-            if (event.button !== 0) return;
-            categoryHoldStart = { x: event.clientX, y: event.clientY };
-            detailCategoryTrigger.classList.add("is-holding");
-            categoryHoldTimer = window.setTimeout(() => {
-                categoryHoldTimer = null;
-                detailCategoryTrigger.classList.remove("is-holding");
-                openDetailCategoryIndex();
-                navigator.vibrate?.(18);
-            }, 550);
-        });
-        detailCategoryTrigger.addEventListener("pointermove", (event) => {
-            if (!categoryHoldStart) return;
-            if (Math.hypot(event.clientX - categoryHoldStart.x, event.clientY - categoryHoldStart.y) > 12) {
-                detailCategoryTrigger.classList.remove("is-holding");
-                cancelCategoryHold();
-            }
-        });
-        ["pointerup", "pointercancel", "pointerleave"].forEach((type) => {
-            detailCategoryTrigger.addEventListener(type, () => {
-                detailCategoryTrigger.classList.remove("is-holding");
-                cancelCategoryHold();
-            });
-        });
-        detailCategoryTrigger.addEventListener("keydown", (event) => {
-            if (event.key !== "Enter" && event.key !== " ") return;
-            event.preventDefault();
-            openDetailCategoryIndex();
-        });
-    }
-
-    document.addEventListener("pointerdown", (event) => {
-        if (!detailPager?.classList.contains("category-index-open") || detailPager.contains(event.target)) return;
-        closeDetailCategoryIndex();
-    });
-
-    detailPrevProduct?.addEventListener("click", (event) => {
-        event.stopPropagation();
-        navigateDetailProduct(-1);
-    });
-    detailNextProduct?.addEventListener("click", (event) => {
-        event.stopPropagation();
-        navigateDetailProduct(1);
-    });
-
-    document.addEventListener("keydown", (event) => {
-        if (!document.body.classList.contains("product-modal-open")) return;
-        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement) return;
-        if (event.key === "Escape" && detailPager?.classList.contains("category-index-open")) {
-            event.preventDefault();
-            closeDetailCategoryIndex();
-            detailCategoryTrigger?.focus({ preventScroll: true });
-            return;
-        }
-        const actions = {
-            ArrowLeft: () => navigateDetailProduct(-1),
-            ArrowRight: () => navigateDetailProduct(1),
-            ArrowUp: () => navigateDetailCategory(-1),
-            ArrowDown: () => navigateDetailCategory(1)
-        };
-        const action = actions[event.key];
-        if (!action) return;
-        event.preventDefault();
-        action();
-    });
-
-    let detailWheelLocked = false;
-    [document.querySelector("#product-detail-modal .detail-image-col"), detailPager].filter(Boolean).forEach((surface) => {
-        surface.addEventListener("wheel", (event) => {
-            if (detailWheelLocked) return;
-            const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-            if (Math.abs(delta) < 8) return;
-            event.preventDefault();
-            detailWheelLocked = true;
-            navigateDetailProduct(delta > 0 ? 1 : -1);
-            window.setTimeout(() => { detailWheelLocked = false; }, 360);
-        }, { passive: false });
-
-    });
-
-    const isExcludedGestureTarget = (target) => Boolean(target.closest(
-        ".similar-products-section, .similar-grid, button, a, input, textarea, select, .qty-controls"
-    ));
-
-    function getDetailScrollState() {
-        const candidates = [
-            document.querySelector("#product-detail-modal .detail-grid"),
-            document.querySelector("#product-detail-modal .detail-info-col"),
-            document.querySelector("#product-detail-modal .new-modal-container")
-        ].filter(Boolean);
-        const scrollSurface = candidates.find((element) => element.scrollHeight > element.clientHeight + 2) || candidates[0];
-        if (!scrollSurface) return { atTop: true, atBottom: true };
-        const remaining = scrollSurface.scrollHeight - scrollSurface.clientHeight - scrollSurface.scrollTop;
-        return {
-            atTop: scrollSurface.scrollTop <= 10,
-            atBottom: remaining <= 10
-        };
-    }
-
-    function runDetailGesture(deltaX, deltaY) {
-        if (!window.matchMedia("(max-width: 768px)").matches) return;
-        const minimumDistance = 56;
-        if (Math.max(Math.abs(deltaX), Math.abs(deltaY)) < minimumDistance) return;
-        if (Math.abs(deltaX) > Math.abs(deltaY) * 1.12) {
-            navigateDetailProduct(deltaX < 0 ? 1 : -1);
-        } else if (Math.abs(deltaY) > Math.abs(deltaX) * 1.12) {
-            const { atTop, atBottom } = getDetailScrollState();
-            if (deltaY < 0 && atBottom) navigateDetailCategory(1);
-            if (deltaY > 0 && atTop) navigateDetailCategory(-1);
-        }
-    }
-
-    if (productDetailModal) {
-        let mouseGestureStart = null;
-        productDetailModal.addEventListener("pointerdown", (event) => {
-            if (event.pointerType !== "mouse" || event.button !== 0 || isExcludedGestureTarget(event.target)) return;
-            mouseGestureStart = { x: event.clientX, y: event.clientY };
-        });
-        productDetailModal.addEventListener("pointerup", (event) => {
-            if (!mouseGestureStart) return;
-            const deltaX = event.clientX - mouseGestureStart.x;
-            const deltaY = event.clientY - mouseGestureStart.y;
-            mouseGestureStart = null;
-            runDetailGesture(deltaX, deltaY);
-        });
-        productDetailModal.addEventListener("pointercancel", () => { mouseGestureStart = null; });
-
-        let touchGestureStart = null;
-        productDetailModal.addEventListener("touchstart", (event) => {
-            if (event.touches.length !== 1 || isExcludedGestureTarget(event.target)) return;
-            const touch = event.touches[0];
-            touchGestureStart = { x: touch.clientX, y: touch.clientY };
-        }, { passive: true });
-        productDetailModal.addEventListener("touchend", (event) => {
-            if (!touchGestureStart || !event.changedTouches.length) return;
-            const touch = event.changedTouches[0];
-            const deltaX = touch.clientX - touchGestureStart.x;
-            const deltaY = touch.clientY - touchGestureStart.y;
-            touchGestureStart = null;
-            runDetailGesture(deltaX, deltaY);
-        }, { passive: true });
-        productDetailModal.addEventListener("touchcancel", () => { touchGestureStart = null; }, { passive: true });
-    }
 
     document.body.addEventListener("click", (event) => {
         if (event.target.closest(".qty-controls") || event.target.closest(".btn-primary")) return;
@@ -1039,8 +721,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         currentDetailId = id;
-        updateProductDetailPager();
-        resetProductModalPosition();
 
         const similarGrid = document.getElementById("similar-products-grid");
         if (similarGrid) {
@@ -1092,60 +772,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const SITE_SESSION_KEY = "alua-site-session-v1";
-    const SITE_SESSION_DURATION = 60 * 60 * 1000;
-
-    function readSiteSession() {
-        try {
-            const saved = JSON.parse(localStorage.getItem(SITE_SESSION_KEY) || "null");
-            if (!saved || !saved.expiresAt || saved.expiresAt <= Date.now()) {
-                localStorage.removeItem(SITE_SESSION_KEY);
-                return null;
-            }
-            return saved;
-        } catch (error) {
-            localStorage.removeItem(SITE_SESSION_KEY);
-            return null;
-        }
-    }
-
-    function getSavedCheckoutFields() {
-        return ["customer-name", "customer-lastname", "customer-province", "customer-address"].reduce((fields, id) => {
-            const field = document.getElementById(id);
-            if (field) fields[id] = field.value;
-            return fields;
-        }, {});
-    }
-
-    function saveSiteSession() {
-        try {
-            const session = {
-                expiresAt: Date.now() + SITE_SESSION_DURATION,
-                cart,
-                currentDetailId,
-                activeModalId: getActiveModal()?.id || null,
-                checkoutStep: typeof mobileCheckoutStep === "number" ? mobileCheckoutStep : 1,
-                fields: getSavedCheckoutFields()
-            };
-            localStorage.setItem(SITE_SESSION_KEY, JSON.stringify(session));
-        } catch (error) {
-            console.warn("No se pudo guardar la sesión temporal de alúa.", error);
-        }
-    }
-
-    function clearSiteSession() {
-        localStorage.removeItem(SITE_SESSION_KEY);
-    }
-
-    const savedSiteSession = readSiteSession();
-    let cart = Array.isArray(savedSiteSession?.cart)
-        ? savedSiteSession.cart.filter((item) => item && item.id && Number(item.qty) > 0).map((item) => ({
-            id: String(item.id),
-            name: String(item.name || "Producto"),
-            price: Number(item.price) || 0,
-            qty: Math.max(1, Math.floor(Number(item.qty) || 1))
-        }))
-        : [];
+    let cart = [];
     const headerCartBtn = document.getElementById("header-cart-btn");
     const cartCountEl = document.getElementById("cart-count");
     const cartItemsList = document.getElementById("cart-items-list");
@@ -1956,7 +1583,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const addBtn = document.getElementById("add-to-cart-detail-btn");
                 if (addBtn) {
-                    addBtn.classList.remove("is-removed-feedback");
                     const origText = addBtn.dataset.originalText || addBtn.innerHTML;
                     if (!addBtn.dataset.originalText) addBtn.dataset.originalText = origText;
                     
@@ -1967,8 +1593,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (addBtn.timeoutId) clearTimeout(addBtn.timeoutId);
                     addBtn.timeoutId = setTimeout(() => {
                         addBtn.innerHTML = origText;
-                        addBtn.style.backgroundColor = "";
-                        addBtn.style.borderColor = "";
+                        addBtn.classList.remove("btn-flash-minus");
                     }, 1500);
                 }
             } else {
@@ -1980,26 +1605,20 @@ document.addEventListener("DOMContentLoaded", () => {
             event.stopPropagation();
             if (minusButton.closest(".modal-qty-controls")) {
                 const card = document.querySelector(`.product-item[data-id="${currentDetailId}"]`);
-                const currentItem = cart.find((entry) => entry.id === currentDetailId);
-                const quantityWasReduced = Boolean(currentItem && currentItem.qty > 0);
                 if (card) updateProductQty(card, -1);
 
                 const addBtn = document.getElementById("add-to-cart-detail-btn");
-                if (addBtn && quantityWasReduced) {
+                if (addBtn) {
                     const origText = addBtn.dataset.originalText || addBtn.innerHTML;
                     if (!addBtn.dataset.originalText) addBtn.dataset.originalText = origText;
 
-                    addBtn.innerHTML = "<i class='fas fa-check'></i> ¡Eliminado!";
-                    addBtn.classList.add("is-removed-feedback");
-                    addBtn.style.backgroundColor = "#76539a";
-                    addBtn.style.borderColor = "#76539a";
+                    addBtn.innerHTML = "-1";
+                    addBtn.classList.add("btn-flash-minus");
 
                     if (addBtn.timeoutId) clearTimeout(addBtn.timeoutId);
                     addBtn.timeoutId = setTimeout(() => {
-                        addBtn.classList.remove("is-removed-feedback");
                         addBtn.innerHTML = origText;
-                        addBtn.style.backgroundColor = "";
-                        addBtn.style.borderColor = "";
+                        addBtn.classList.remove("btn-flash-minus");
                     }, 1500);
                 }
             } else {
@@ -2070,10 +1689,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const totals = calculateCartTotals(selectedProvince);
 
         if (cartCountEl) cartCountEl.textContent = String(totals.totalItems);
+        const detailCartCountEl = document.getElementById('detail-cart-count');
+        if (detailCartCountEl) detailCartCountEl.textContent = String(totals.totalItems);
         updateOrderMeta(selectedProvince);
         renderModalList(totals);
         syncDetailModalQty();
-        saveSiteSession();
     }
 
     function renderModalList(totals) {
@@ -2163,7 +1783,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const drawer = cartModalEl.querySelector(".cart-modal-advanced");
         if (drawer) drawer.scrollTo({ top: 0, behavior: "smooth" });
-        saveSiteSession();
     }
 
     function validateMobileCheckoutStep() {
@@ -2698,8 +2317,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            clearSiteSession();
-
             const fileName = pdfResult.fileName;
 
             const message = [
@@ -2761,9 +2378,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function focusCatalogProduct(card) {
         if (!card) return;
+        const section = card.closest(".section");
         closeCatalogSearchResults();
-        if (catalogSearch) catalogSearch.classList.remove("expanded");
-        card.click();
+        catalogSearch?.classList.remove("expanded");
+        card.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+        card.classList.remove("search-highlight");
+        requestAnimationFrame(() => card.classList.add("search-highlight"));
+        setTimeout(() => card.classList.remove("search-highlight"), 1800);
+        if (section) section.classList.add("search-section-active");
+        setTimeout(() => section?.classList.remove("search-section-active"), 1800);
     }
 
     function renderCatalogSearch(query) {
@@ -2833,40 +2456,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateOrderMeta();
-    if (savedSiteSession?.fields) {
-        Object.entries(savedSiteSession.fields).forEach(([id, value]) => {
-            const field = document.getElementById(id);
-            if (field && typeof value === "string") field.value = value;
-        });
-    }
-
-    cart.forEach((item) => {
-        const quantity = document.querySelector(`.product-item[data-id="${item.id}"] .qty-display`);
-        if (quantity) quantity.textContent = String(item.qty);
-    });
-
     updateCartUI();
-
-    if (savedSiteSession) {
-        setMobileCheckoutStep(savedSiteSession.checkoutStep || 1);
-        const savedProductCard = savedSiteSession.currentDetailId
-            ? document.querySelector(`.product-item.clickable-card[data-id="${savedSiteSession.currentDetailId}"]`)
-            : null;
-        if (savedProductCard) savedProductCard.click();
-
-        if (savedSiteSession.activeModalId === "cart-modal") {
-            if (savedProductCard) closeModal("product-detail-modal");
-            openModal("cart-modal");
-            setMobileCheckoutStep(savedSiteSession.checkoutStep || 1);
-        } else if (savedSiteSession.activeModalId !== "product-detail-modal" && savedProductCard) {
-            closeModal("product-detail-modal");
-        }
-    }
-
-    ["customer-name", "customer-lastname", "customer-province", "customer-address"].forEach((id) => {
-        const field = document.getElementById(id);
-        field?.addEventListener(field.tagName === "SELECT" ? "change" : "input", saveSiteSession);
-    });
 
     // Disable right-click, dragging and touch menu for all images globally
     document.addEventListener("contextmenu", (event) => {
@@ -2966,7 +2556,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("keydown", (e) => {
-        if (document.body.classList.contains("product-modal-open")) return;
         if (!currentActiveSection) return;
 
         // Ensure we are not typing in an input
@@ -3054,4 +2643,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+    const detailOpenCartBtn = document.getElementById('detail-open-cart-btn');
+    if (detailOpenCartBtn) {
+        detailOpenCartBtn.addEventListener('click', () => {
+            openModal('cart-modal');
+        });
+    }
 });
+
+
