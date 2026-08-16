@@ -1,0 +1,72 @@
+﻿# ─── Documentos internos de desarrollo ───────────────────────────────────────
+CONTEXTO-Y-PENDIENTES.md
+SERVIDOR-LOCAL.md
+
+# ─── Scripts de automatización local ─────────────────────────────────────────
+Abrir Portafolio Local.bat
+*.bat
+
+# ─── Scripts de parche / utilidades de sesión ────────────────────────────────
+patch.py
+patch2.py
+patch3.py
+patch4.py
+patch5.py
+patch6.py
+patch7.py
+patch8.py
+patch9.py
+patch10.py
+patch11.py
+patch12.py
+patch13.py
+patch14.py
+patch_header.py
+patch_header_safe.py
+fix_css.py
+fix_encoding.py
+fix_html.py
+fix_html2.py
+fix_html3.py
+compact_similar.py
+revert_padding.py
+check_html.py
+update_fab.js
+
+# ─── Backups de archivos fuente ───────────────────────────────────────────────
+script_backup.js
+
+# ─── Herramientas y dependencias temporales ───────────────────────────────────
+temp_screenshot/
+node_modules/
+
+# ─── Configuración publicitaria con IDs reales (llenar localmente) ────────────
+# Descomenta esta línea cuando pongas los IDs reales de Google Ads / Meta Pixel
+# ads-config.js
+
+# ─── Sistema operativo ────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.lnk
+
+# ─── Editores e IDEs ─────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.env
+.venv/
