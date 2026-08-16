@@ -166,6 +166,16 @@ window.MPPortfolioData = {
             summary: "Sistema multiplataforma para ventas, inventario, calidad, documentos y lectura ejecutiva de la operación.",
             images: ["images/card-itera-erp-editorial.webp", "images/itera_ventas_crm.png", "images/itera_dashboard.png", "images/itera_documentos.png"]
         },
+        "saas-multitenant": {
+            title: "Plataforma SaaS Multitenant",
+            rubro: "Arquitectura SaaS · Tienda + CRM + POS",
+            summary: "Plataforma que despliega tiendas independientes con dominio propio, panel de administración, roles por operación, POS, caja, fidelización y asistente IA por tenant. Cada cliente opera en un entorno aislado bajo el mismo núcleo."
+        },
+        "fnb-pos": {
+            title: "Sistema operativo para F&B",
+            rubro: "Restaurante · Pedidos · Caja · Vitrina",
+            summary: "Sistema completo para locales de comida y servicio: grilla táctil de mesas, pedidos por tipo de servicio, cierre POS por método de pago, comprobantes bancarios obligatorios, ticket imprimible y vitrina pública con carrito persistente."
+        },
         elementos: {
             title: "Landing de validación",
             rubro: "Experiencia web y dirección editorial",
@@ -299,7 +309,7 @@ window.MPPortfolioData = {
         },
         {
             title: "Sistemas y producto digital",
-            items: ["itera-lite", "itera-premium", "elementos", "curativa-web", "curarte-web"]
+            items: ["itera-lite", "itera-premium", "saas-multitenant", "fnb-pos", "elementos", "curativa-web", "curarte-web"]
         },
         {
             title: "Packaging y etiquetas",
@@ -345,6 +355,36 @@ window.MPPortfolioData = {
                 order: 2,
                 visible: true,
                 buyEnabled: true,
+            },
+            {
+                id: "saas-multitenant",
+                galleryId: "saas-multitenant",
+                title: "Plataforma SaaS Multitenant",
+                rubro: "Arquitectura SaaS · Tienda + CRM + POS",
+                description:
+                    "Plataforma propia que despliega tiendas con dominio independiente, gestión de clientes, roles por operación, POS, caja por turno, fidelización y asistente IA. Cada tenant opera en un entorno aislado bajo el mismo núcleo.",
+                image: "images/itera_dashboard.png",
+                imageAlt: "Panel de administración de la plataforma SaaS multitenant",
+                badge: "SaaS",
+                tags: ["Multitenant", "E-commerce", "IA", "POS"],
+                order: 3,
+                visible: true,
+                buyEnabled: false,
+            },
+            {
+                id: "fnb-pos",
+                galleryId: "fnb-pos",
+                title: "Sistema F&B · Pedidos y Caja",
+                rubro: "Restaurante · POS · Vitrina digital",
+                description:
+                    "Sistema completo para locales de comida: mesas con estado, pedidos por tipo de servicio, cierre POS, comprobantes bancarios, ticket imprimible y vitrina pública con carrito persistente.",
+                image: "images/itera_documentos.png",
+                imageAlt: "Sistema de pedidos y caja para restaurante y local de servicio",
+                badge: "F&B",
+                tags: ["Restaurante", "POS", "Delivery"],
+                order: 4,
+                visible: true,
+                buyEnabled: false,
             }
         ],
         webs: [
