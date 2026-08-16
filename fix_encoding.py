@@ -1,97 +1,76 @@
-import codecs
+import os
 
-def fix_mojibake(text):
-    replacements = {
-        'Ã¡': 'á',
-        'Ã©': 'é',
-        'Ã­': 'í',
-        'Ã³': 'ó',
-        'Ãº': 'ú',
-        'Ã±': 'ñ',
-        'Ã\x81': 'Á',
-        'Ã\x89': 'É',
-        'Ã\x8d': 'Í',
-        'Ã\x93': 'Ó',
-        'Ã\x9a': 'Ú',
-        'Ã\x91': 'Ñ',
-        'Ã\xbc': 'ü',
-        'Ã\x9c': 'Ü',
-        'Â¿': '¿',
-        'Â¡': '¡',
-        'Â°': '°',
-        'Ã\xa1': 'á', 
-        'Ã\xa9': 'é',
-        'Ã\xad': 'í', 
-        'Ã\xb3': 'ó',
-        'Ã\xba': 'ú',
-        'Ã\xb1': 'ñ',
-        'dejÃ¡ndola': 'dejándola',
-        'HidrataciÃ³n': 'Hidratación',
-        'ColÃ¡geno': 'Colágeno',
-        'HialurÃ³nico': 'Hialurónico',
-        'AdiÃ³s': 'Adiós',
-        'LÃneas': 'Líneas',
-        'LÃ­neas': 'Líneas',
-        'ExpresiÃ³n': 'Expresión',
-        'Ã cido': 'Ácido',
-        'Ã\x82': 'Á',
-        'JabÃ³n': 'Jabón',
-        'CarbÃ³n': 'Carbón',
-        'AlÃºa': 'Alúa',
-        'ALÃšA': 'ALÚA',
-        'FÃ³rmula': 'Fórmula',
-        'RenovaciÃ³n': 'Renovación',
-        'MÃ¡s': 'Más',
-        'nutriciÃ³n': 'nutrición',
-        'rÃ¡pida': 'rápida',
-        'exfoliaciÃ³n': 'exfoliación',
-        'PrevenciÃ³n': 'Prevención',
-        'reducciÃ³n': 'reducción',
-        'DÃa': 'Día',
-        'dÃa': 'día',
-        'Ãšnica': 'Única',
-        'AÃ±adido': 'Añadido',
-        'aÃ±adir': 'añadir',
-        'MenÃº': 'Menú',
-        'CatÃ¡logo': 'Catálogo',
-        'CategorÃas': 'Categorías',
-        'CosmÃ©tica': 'Cosmética',
-        'alÃºa': 'alúa'
+styles_path = r"c:\Users\Usuario iTC\Documents\Desarrollo Sistemas\MP-PORTAFOLIO\proyectos\curativa\styles.css"
+script_path = r"c:\Users\Usuario iTC\Documents\Desarrollo Sistemas\MP-PORTAFOLIO\proyectos\curativa\script.js"
+
+with open(styles_path, 'r', encoding='utf-8') as f:
+    styles = f.read()
+
+styles = styles.replace(
+    '  #product-detail-modal .detail-info-col {\n    padding: 26px 20px 22px !important;\n  }',
+    '  #product-detail-modal .detail-info-col {\n    padding: 26px 20px 120px !important;\n  }'
+)
+
+css_append = '''
+/* Hidden on scroll styles for mobile action row and pager */
+@media (max-width: 768px) {
+  #product-detail-modal .detail-action-row {
+    transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.28s ease, box-shadow 0.28s ease !important;
+  }
+  #product-detail-modal .detail-action-row.hidden-on-scroll {
+    transform: translateY(150%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  #product-detail-modal .product-detail-pager.hidden-on-scroll {
+    transform: translateY(150%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+'''
+with open(styles_path, 'w', encoding='utf-8') as f:
+    f.write(styles + '\n' + css_append)
+
+
+with open(script_path, 'r', encoding='utf-8') as f:
+    script = f.read()
+
+if script.endswith('});\n') or script.endswith('});'):
+    script = script[:script.rfind('});')]
+
+js_append = '''
+    // Hiding action row and pager on scroll down (swipe up)
+    const detailGridMobile = document.querySelector("#product-detail-modal .detail-grid");
+    if (detailGridMobile) {
+        let lastGridScrollY = 0;
+        let isScrollTicking = false;
+
+        detailGridMobile.addEventListener("scroll", () => {
+            if (isScrollTicking) return;
+            isScrollTicking = true;
+            window.requestAnimationFrame(() => {
+                if (window.matchMedia("(max-width: 768px)").matches) {
+                    const currentScroll = detailGridMobile.scrollTop;
+                    const actionRow = document.querySelector("#product-detail-modal .detail-action-row");
+                    const pager = document.querySelector("#product-detail-modal .product-detail-pager");
+                    
+                    if (currentScroll > lastGridScrollY && currentScroll > 50) {
+                        if (actionRow) actionRow.classList.add("hidden-on-scroll");
+                        if (pager) pager.classList.add("hidden-on-scroll");
+                    } else {
+                        if (actionRow) actionRow.classList.remove("hidden-on-scroll");
+                        if (pager) pager.classList.remove("hidden-on-scroll");
+                    }
+                    lastGridScrollY = currentScroll;
+                }
+                isScrollTicking = false;
+            });
+        }, { passive: true });
     }
-    
-    # Try generic mojibake fix first (encoding ISO-8859-1 back and decoding to UTF-8)
-    try:
-        # A typical mojibake string is a UTF-8 string that was decoded as CP1252.
-        # Let's just do manual string replacement because it's safer than blindly re-encoding everything
-        pass
-    except Exception:
-        pass
-        
-    for k, v in replacements.items():
-        text = text.replace(k, v)
-        
-    # Also fix some other common ones
-    text = text.replace("Ã", "í") # Some stray Ã usually are í if not followed by anything else (risky, but we replaced the main ones)
-    text = text.replace("í³", "ó") # In case it was replaced partially
-    text = text.replace("í¡", "á")
-    text = text.replace("í©", "é")
-    text = text.replace("í­", "í")
-    text = text.replace("íº", "ú")
-    text = text.replace("í±", "ñ")
-    
-    # Specific ones from the screenshot
-    text = text.replace("Adiós Líneas de Expresión. Con Colígeno", "Adiós Líneas de Expresión. Con Colágeno")
-    text = text.replace("í cido Hialurónico", "Ácido Hialurónico")
-    text = text.replace("Lí­neas", "Líneas")
-    text = text.replace("í\x82cido", "Ácido")
-    
-    return text
+});
+'''
+with open(script_path, 'w', encoding='utf-8') as f:
+    f.write(script + '\n' + js_append)
 
-files = ['proyectos/curativa/script.js', 'proyectos/curativa/index.html']
-
-for f_path in files:
-    with codecs.open(f_path, 'r', 'utf-8') as f:
-        content = f.read()
-    fixed_content = fix_mojibake(content)
-    with codecs.open(f_path, 'w', 'utf-8') as f:
-        f.write(fixed_content)
+print("Done python fix")

@@ -3054,4 +3054,34 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     });
+
+
+    // Hiding action row and pager on scroll down (swipe up)
+    const detailGridMobile = document.querySelector("#product-detail-modal .detail-grid");
+    if (detailGridMobile) {
+        let lastGridScrollY = 0;
+        let isScrollTicking = false;
+
+        detailGridMobile.addEventListener("scroll", () => {
+            if (isScrollTicking) return;
+            isScrollTicking = true;
+            window.requestAnimationFrame(() => {
+                if (window.matchMedia("(max-width: 768px)").matches) {
+                    const currentScroll = detailGridMobile.scrollTop;
+                    const actionRow = document.querySelector("#product-detail-modal .detail-action-row");
+                    const pager = document.querySelector("#product-detail-modal .product-detail-pager");
+                    
+                    if (currentScroll > lastGridScrollY && currentScroll > 50) {
+                        if (actionRow) actionRow.classList.add("hidden-on-scroll");
+                        if (pager) pager.classList.add("hidden-on-scroll");
+                    } else {
+                        if (actionRow) actionRow.classList.remove("hidden-on-scroll");
+                        if (pager) pager.classList.remove("hidden-on-scroll");
+                    }
+                    lastGridScrollY = currentScroll;
+                }
+                isScrollTicking = false;
+            });
+        }, { passive: true });
+    }
 });
