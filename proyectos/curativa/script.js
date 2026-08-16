@@ -1,146 +1,191 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Category Color Tint Observer
+    const sectionOverlayColors = {
+        'inicio': 'transparent', // Hero
+        'rostro-section': '#D4AF37', // Dorado
+        'capilar-section': '#50C878', // Verde
+        'desodorantes-section': '#7DF9FF', // Cyan
+        'corporal-section': '#FFB347', // Naranja
+        'basicos-section': '#D4B485', // Beige
+        'bienestar-section': '#A890D3', // Morado
+        'maquillaje-section': '#FF69B4', // Rosa
+        'higiene-section': '#A0E8E6', // Menta
+        'hogar-section': '#7057A5', // Índigo
+        'kits-section': '#F2C478' // Dorado claro
+    };
+
+    const overlay = document.getElementById('category-color-overlay');
+    if (overlay) {
+        const sectionObserver = new IntersectionObserver((entries) => {
+            let maxRatio = 0;
+            let currentSection = null;
+            
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        currentSection = entry.target.id;
+                    }
+                }
+            });
+
+            if (currentSection && sectionOverlayColors[currentSection]) {
+                overlay.style.backgroundColor = sectionOverlayColors[currentSection];
+            } else if (currentSection && currentSection === 'inicio') {
+                overlay.style.backgroundColor = 'transparent';
+            }
+        }, {
+            root: null,
+            threshold: [0.1, 0.3, 0.5, 0.7]
+        });
+
+        document.querySelectorAll('.section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+    }
+
     const WHATSAPP_NUMBER = "593963036594";
     const productsDB = {
         "serum-detox": {
             desc: "Tratamiento efectivo para disminuir y eliminar granitos, espinillas y puntos negros en rostro, cuello y espalda. Sus aceites combaten bacterias y hongos. También funciona como detox para eliminar mal olor en axilas y pies.",
             benefits: ["Elimina granitos y espinillas", "Combate bacterias y hongos", "Detox para axilas y pies", "Cura infecciones cutáneas"]
-        },
+        , tech_size: "Gotero 30ml", tech_area: "Rostro y focalizado", tech_frequency: "Noche", tech_use: "Aplica 2-3 gotas en las manos y distribuye en el rostro o directamente sobre el granito.", tech_ingredients: "Aceite de jojoba, extracto de neem, árbol de té.", tech_warning: "Evitar exposición al sol. Uso nocturno." },
         "serum-premium": {
             desc: "Serum antioxidante y antiarrugas rico en Vitamina C y E. Ideal para humectar y fortalecer la piel, mejorando su textura y tono, dejándola luminosa y suave.",
             benefits: ["Antioxidante", "Antiarrugas", "Mejora textura y tono", "Piel luminosa y suave"]
-        },
+        , tech_size: "Aplicador 15ml", tech_area: "Rostro y cuello", tech_frequency: "Diaria AM/PM", tech_use: "Aplica 2 gotas y masajea suavemente con movimientos ascendentes.", tech_ingredients: "Vitamina C, Vitamina E, Ácido Hialurónico vegetal.", tech_warning: "Uso externo." },
         "crema-facial": {
             desc: "Hidratación profunda con Rosa Mosqueta y Ácido Hialurónico. Elimina y trata manchitas, aumenta la hidratación, mejora la elasticidad y fortalece la piel.",
             benefits: ["Elimina manchas", "Aumenta hidratación", "Mejora elasticidad", "Fortalece la piel"]
-        },
+        , tech_size: "Envase 30g", tech_area: "Rostro", tech_frequency: "Diaria AM/PM", tech_use: "Toma una pequeña cantidad y esparce en rostro limpio.", tech_ingredients: "Rosa Mosqueta, Ácido Hialurónico, Manteca de Karité.", tech_warning: "Uso externo." },
         "crema-facial-50": {
             desc: "Presentación de 50g. Hidratación profunda con Rosa Mosqueta y Ácido Hialurónico. Elimina y trata manchitas, mejora la elasticidad.",
             benefits: ["Elimina manchas", "Aumenta hidratación", "Mejora elasticidad", "Fortalece la piel"]
-        },
+        , tech_size: "Envase 50g", tech_area: "Rostro", tech_frequency: "Diaria AM/PM", tech_use: "Toma una pequeña cantidad y esparce en rostro limpio.", tech_ingredients: "Rosa Mosqueta, Ácido Hialurónico, Manteca de Karité.", tech_warning: "Uso externo." },
         "tonico-facial": {
             desc: "Para todo tipo de piel. Con Ácido Hialurónico y Rosa Mosqueta. Ayuda a cerrar poros, eliminar granitos y controlar la grasa. Hidrata y renueva.",
             benefits: ["Cierra poros", "Controla grasa", "Elimina granitos", "Mejora aspecto de arrugas"]
-        },
+        , tech_size: "Botella 100ml", tech_area: "Rostro", tech_frequency: "Diaria AM/PM", tech_use: "Rocía a 15cm del rostro cerrado los ojos o aplica con un pad.", tech_ingredients: "Hidrolato de rosas, Ácido Hialurónico.", tech_warning: "No ingerir. Evitar contacto directo con ojos." },
         "limpiador-avena": {
             desc: "Remueve todas las impurezas gracias a una exfoliación natural de la avena. Deja la piel suave, hidratada y nutrida. Calma irritaciones y combate el acné.",
             benefits: ["Exfoliación natural", "Piel suave y nutrida", "Calma irritaciones", "Combate el acné"]
-        },
+        , tech_size: "Tarro 150g", tech_area: "Rostro", tech_frequency: "Uso diario", tech_use: "Humedece el rostro, aplica una porción y masajea circularmente. Enjuaga.", tech_ingredients: "Avena coloidal, arcilla blanca, aceites esenciales.", tech_warning: "Uso externo." },
         "jabon-carbon": {
             desc: "Limpiador facial de carbón activado. Regula y controla la grasa del rostro y ayuda a combatir el acné. Ideal para piel mixta a grasa.",
             benefits: ["Controla la grasa", "Combate el acné", "Limpieza profunda", "Ideal piel mixta/grasa"]
-        },
+        , tech_size: "Barra 100g", tech_area: "Rostro (piel grasa)", tech_frequency: "Diaria AM/PM", tech_use: "Haz espuma en las manos y lava el rostro. Enjuaga con agua tibia.", tech_ingredients: "Carbón activado, glicerina vegetal, árbol de té.", tech_warning: "Evitar zona ocular." },
         "mascarilla-aclara": {
             desc: "Aclara zonas de tu piel como codos, rodillas, manos, paño o quemaduras de sol. Regula el sebo y elimina impurezas mediante exfoliación.",
             benefits: ["Aclara manchas y zonas oscuras", "Regula el sebo", "Elimina impurezas", "Exfoliante"]
-        },
+        , tech_size: "Envase 100g", tech_area: "Zonas localizadas", tech_frequency: "2-3 veces por semana", tech_use: "Aplica en la zona deseada, deja actuar 15 min y enjuaga exfoliando suavemente.", tech_ingredients: "Arcilla, extracto de regaliz, aceites naturales.", tech_warning: "Puede causar leve cosquilleo." },
         "mascarilla-detox": {
             desc: "Con arcilla y carbón activado. Combate y elimina granitos y puntos negros, además ayuda a regular el exceso de grasa en la piel.",
             benefits: ["Elimina granitos", "Elimina puntos negros", "Regula exceso de grasa", "Limpieza profunda"]
-        },
+        , tech_size: "Envase 100g", tech_area: "Rostro (zona T)", tech_frequency: "1-2 veces por semana", tech_use: "Aplica una capa uniforme, deja secar y enjuaga con agua tibia.", tech_ingredients: "Carbón activado, arcilla bentonita, aloe vera.", tech_warning: "Suspender si causa mucha sequedad." },
         "bloqueador": {
             desc: "Bloqueador solar natural SPF 50. Refleja y dispersa los rayos UV, efectivo para prevenir quemaduras y envejecimiento prematuro.",
             benefits: ["SPF 50", "Previene quemaduras", "Previene envejecimiento", "Ingredientes naturales"]
-        },
+        , tech_size: "Tubo 60g", tech_area: "Rostro y cuello", tech_frequency: "Replicar cada 3-4 hrs", tech_use: "Aplica uniformemente como último paso de tu rutina de día.", tech_ingredients: "Óxido de zinc no nano, manteca de cacao.", tech_warning: "Uso externo." },
         "rollon-lineas": {
             desc: "Adiós Líneas de Expresión. Con Colágeno y Ácido Hialurónico. Disminuye arrugas, previene signos de envejecimiento y mejora el tono de la piel.",
             benefits: ["Disminuye arrugas", "Retrasa envejecimiento", "Mejora tono de piel", "Hidratación localizada"]
-        },
+        , tech_size: "Roll-on 10ml", tech_area: "Contorno de ojos y labios", tech_frequency: "Diaria AM/PM", tech_use: "Desliza el roll-on suavemente sobre las líneas de expresión.", tech_ingredients: "Colágeno vegetal, Ácido Hialurónico.", tech_warning: "Uso externo." },
         "contorno-ojos": {
             desc: "Con aceites esenciales de Café y almendras. Elimina bolsas y ojeras, mejorando la apariencia y el tono de la piel en la zona de los ojos.",
             benefits: ["Elimina bolsas", "Elimina ojeras", "Mejora tono de piel", "Mirada descansada"]
-        },
+        , tech_size: "Envase 15g", tech_area: "Ojeras", tech_frequency: "Noche", tech_use: "Aplica a toques suaves en la zona de la ojera con el dedo anular.", tech_ingredients: "Aceite de café, aceite de almendras, cera de abejas.", tech_warning: "No aplicar dentro del ojo." },
         "serum-pestanas": {
             desc: "Promueve el crecimiento de pestañas y cejas. Su conjunto de aceites fortalece el folículo y evita la caída.",
             benefits: ["Promueve crecimiento", "Fortalece folículo", "Evita caída", "Para cejas y pestañas"]
-        },
+        , tech_size: "Cepillo aplicador", tech_area: "Pestañas y cejas", tech_frequency: "Noche", tech_use: "Aplica como si fuera un rímel, desde la raíz a las puntas.", tech_ingredients: "Aceite de ricino, vitamina E, aceites botánicos.", tech_warning: "Si entra al ojo, enjuagar con agua." },
         "pomada-cejas": {
             desc: "Logra cejas naturales y definidas por más tiempo. Color café oscuro. Con aceite de ricino para mayor cuidado y crecimiento.",
             benefits: ["Cejas definidas", "Acabado natural", "Promueve crecimiento", "Larga duración"]
-        },
+        , tech_size: "Tarro 10g", tech_area: "Cejas", tech_frequency: "Diario o al maquillar", tech_use: "Toma un poco con una brocha biselada y peina dando forma.", tech_ingredients: "Ceras naturales, pigmentos minerales, ricino.", tech_warning: "Uso externo." },
         "corrector-base": {
             desc: "Cubre imperfecciones y manchas. Formato en barra. Contiene protección solar SPF 50.",
             benefits: ["Cubre imperfecciones", "SPF 50", "Formato práctico", "Acabado natural"]
-        },
+        , tech_size: "Barra 15g", tech_area: "Rostro", tech_frequency: "Diario", tech_use: "Aplica directamente en imperfecciones o como base ligera y difumina.", tech_ingredients: "Ceras naturales, óxido de zinc, pigmentos.", tech_warning: "Uso externo." },
         "pads": {
             desc: "Pads desmaquillantes reutilizables. Remueven maquillaje e impurezas suavemente gracias a su tela de microfibra y algodón orgánico.",
             benefits: ["Reutilizables", "Microfibra y algodón", "Suaves con la piel", "Ecológicos"]
-        },
+        , tech_size: "Pack x5", tech_area: "Rostro", tech_frequency: "Diario", tech_use: "Aplica desmaquillante o tónico en el pad y pásalo por el rostro.", tech_ingredients: "Microfibra y algodón orgánico.", tech_warning: "Lavar a mano con jabón neutro después de usar." },
         "tonico-capilar": {
             desc: "Con Romero y Ricino. Ayuda al cuero cabelludo a recuperar su fortaleza, elimina la caída y promueve el crecimiento del cabello.",
             benefits: ["Elimina la caída", "Promueve crecimiento", "Fortalece cuero cabelludo", "Ingredientes naturales"]
-        },
+        , tech_size: "Spray 120ml", tech_area: "Cuero cabelludo", tech_frequency: "Post-lavado o diario", tech_use: "Rocía en la raíz del cabello y masajea. No requiere enjuague.", tech_ingredients: "Extracto de romero, aceite de ricino, hidrolatos.", tech_warning: "Uso externo." },
         "cera-peinar": {
             desc: "Barra para peinar a base de cera de abeja. Proporciona un agarre suave y flexible con acabado semi-mate. Para cabello húmedo o seco.",
             benefits: ["Agarre flexible", "Acabado semi-mate", "Sin residuos", "Fácil aplicación"]
-        },
+        , tech_size: "Lata 60g", tech_area: "Cabello", tech_frequency: "Según necesidad", tech_use: "Frota una pequeña cantidad en las manos y moldea el cabello.", tech_ingredients: "Cera de abeja, mantecas vegetales.", tech_warning: "Uso externo." },
         "cepillo-bambu": {
             desc: "Cepillo de bambú para niños. Mango antibacteriano resistente al agua. Cerdas de Nylon libres de BPA con colores.",
             benefits: ["Antibacteriano", "Libre de BPA", "Ecológico", "Diseño para niños"]
-        },
+        , tech_size: "Unidad", tech_area: "Cabello (niños)", tech_frequency: "Diario", tech_use: "Peina suavemente el cabello húmedo o seco.", tech_ingredients: "Mango de bambú, cerdas de nylon libre de BPA.", tech_warning: "Secar bien después de mojar." },
         "deo-spray": {
             desc: "Desodorante en spray de Piedra de Alumbre. Combate sudoración y bacterias. Cierra poros y elimina irritación post-depilación. Variedades: menta, hierba luisa y lavanda.",
             benefits: ["Piedra de Alumbre", "Combate mal olor", "Cierra poros", "Post-afeitado"]
-        },
+        , tech_size: "Spray 100ml", tech_area: "Axilas", tech_frequency: "Diario", tech_use: "Aplica 2-3 atomizaciones en la axila limpia y deja secar.", tech_ingredients: "Piedra de alumbre líquida, aceites esenciales.", tech_warning: "Suspender ante irritación." },
         "deo-crema": {
             desc: "Desodorante cremoso. Evita sudoración excesiva y neutraliza olores. Humecta y repara la piel. Variedades: cítrico y bosque herbal.",
             benefits: ["Neutraliza olores", "Humecta y repara", "Sin aluminio nocivo", "Aceites esenciales"]
-        },
+        , tech_size: "Envase 50g", tech_area: "Axilas", tech_frequency: "Diario", tech_use: "Toma una cantidad del tamaño de una arveja y masajea en la axila.", tech_ingredients: "Bicarbonato de sodio (dosis baja), manteca de coco, almidón.", tech_warning: "No usar en piel recién depilada si hay sensibilidad." },
         "aceite-magnesio": {
             desc: "Reduce riesgos de migrañas, mejora el sueño, alivia síntomas premenstruales, reduce estrés y fatiga muscular. Prepara músculos antes de actividad física.",
             benefits: ["Reduce migrañas", "Mejora el sueño", "Alivia dolor muscular", "Reduce estrés"]
-        },
+        , tech_size: "Spray 120ml", tech_area: "Cuerpo / Músculos", tech_frequency: "Diario o post-entreno", tech_use: "Rocía sobre la piel limpia (piernas, brazos, cuello) y masajea.", tech_ingredients: "Cloruro de magnesio, agua destilada.", tech_warning: "Puede causar leve picor al principio." },
         "aguardiente": {
             desc: "Aguardiente Alcanforado. Poder antibacterial y germicida. Combate estados gripales, dolores de cabeza, mareos, sinusitis y dolores musculares.",
             benefits: ["Antibacterial", "Combate gripe", "Alivia dolores musculares", "Controla mareos"]
-        },
+        , tech_size: "Botella 120ml", tech_area: "Cuerpo", tech_frequency: "Según necesidad", tech_use: "Fricciona en pecho, espalda o zonas con dolor muscular.", tech_ingredients: "Aguardiente macerado con alcanfor y hierbas.", tech_warning: "No ingerir. Evitar mucosas." },
         "vinagre-300": {
             desc: "Vinagre de Sidra de Manzana con Pulpa Madre. Desintoxica, fortalece sistema inmune, promueve pérdida de peso, limpia colon e hígado y regula glucosa.",
             benefits: ["Desintoxica organismo", "Fortalece inmunidad", "Regula glucosa", "Mejora digestión"]
-        },
+        , tech_size: "Botella 300ml", tech_area: "Consumo / Piel", tech_frequency: "Diario", tech_use: "Diluye 1 cda en agua en ayunas. Para piel: diluir 1:3 como tónico.", tech_ingredients: "Vinagre de sidra de manzana con la madre.", tech_warning: "Consultar con médico en caso de gastritis." },
         "vinagre-100": {
             desc: "Versión de viaje (100ml) del Vinagre de Manzana con Pulpa Madre. Mismos beneficios en formato práctico.",
             benefits: ["Formato viaje", "Desintoxica", "Digestivo", "Regula glucosa"]
-        },
+        , tech_size: "Botella 100ml", tech_area: "Consumo / Piel", tech_frequency: "Diario", tech_use: "Diluye 1 cda en agua en ayunas. Para piel: diluir 1:3 como tónico.", tech_ingredients: "Vinagre de sidra de manzana con la madre.", tech_warning: "Consultar con médico en caso de gastritis." },
         "sahumerios": {
             desc: "Purifican profundamente el ambiente, limpiando la energía. Variedades: Romero/Laurel, Lavanda/Caléndula, Salvia/Canela y Pino/Canela.",
             benefits: ["Purifica ambiente", "Limpia energía", "Aromas naturales", "Relajación"]
-        },
+        , tech_size: "Atado", tech_area: "Ambientes", tech_frequency: "Semanal / Mensual", tech_use: "Enciende una punta, apaga la llama y esparce el humo por el espacio.", tech_ingredients: "Hierbas secas atadas artesanalmente.", tech_warning: "Ventilar adecuadamente. Apagar bien." },
         "balsamo-corporal": {
             desc: "Gran humectación gracias a sus mantecas y ceras. Para pieles resecas. Usos: estimulante, relajante, resfriados y picaduras.",
             benefits: ["Hidratación intensa", "Multiusos", "Para piel reseca", "Alivia picaduras"]
-        },
+        , tech_size: "Lata 60g", tech_area: "Cuerpo (zonas secas)", tech_frequency: "Diario", tech_use: "Toma una pequeña porción y derrite con el calor de las manos. Aplica.", tech_ingredients: "Manteca de cacao, karité, aceites esenciales.", tech_warning: "Uso externo." },
         "rollon-capaz": {
             desc: "Soy Capaz. Aceite esencial de menta. Activa concentración, reduce dolores de cabeza y estrés. Relaja y calma el sistema.",
             benefits: ["Activa concentración", "Reduce dolor de cabeza", "Reduce estrés", "Relajante"]
-        },
+        , tech_size: "Roll-on 10ml", tech_area: "Sienes y nuca", tech_frequency: "Según necesidad", tech_use: "Aplica en sienes, nuca o muñecas e inhala profundamente.", tech_ingredients: "Aceite esencial de menta, aceite portador.", tech_warning: "Uso externo." },
         "rollon-paz": {
             desc: "Soy Paz. Aceite esencial de lavanda. Elimina los momentos de ansiedad y estrés. Relaja, equilibra y calma.",
             benefits: ["Calma ansiedad", "Elimina estrés", "Equilibra", "Aceite de Lavanda"]
-        },
+        , tech_size: "Roll-on 10ml", tech_area: "Sienes y nuca", tech_frequency: "Según necesidad", tech_use: "Aplica en sienes, nuca o muñecas e inhala profundamente.", tech_ingredients: "Aceite esencial de lavanda, aceite portador.", tech_warning: "Uso externo." },
         "rollon-feliz": {
             desc: "Soy Feliz. Aceite esencial de mandarina y limón. Aumenta tu estado de ánimo y energía. Olvídate de la tristeza y el decaimiento.",
             benefits: ["Aumenta energía", "Mejora estado de ánimo", "Cítrico estimulante", "Combate tristeza"]
-        },
+        , tech_size: "Roll-on 10ml", tech_area: "Sienes y nuca", tech_frequency: "Según necesidad", tech_use: "Aplica en sienes, nuca o muñecas e inhala profundamente.", tech_ingredients: "Aceite esencial de mandarina y limón, aceite portador.", tech_warning: "Uso externo. Los cítricos pueden ser fotosensibles." },
         "balsamo-rosas": {
             desc: "Bálsamo Labial de Rosas (tono rojo vino). Humecta y protege tus labios frente a agresiones externas.",
             benefits: ["Humectación", "Protección", "Tono rojo vino", "Natural"]
-        },
+        , tech_size: "Envase 15g", tech_area: "Labios", tech_frequency: "Diario", tech_use: "Aplica suavemente en los labios según necesidad.", tech_ingredients: "Manteca de cacao, pigmento natural, esencia de rosas.", tech_warning: "Uso externo." },
         "balsamo-cafe": {
             desc: "Bálsamo Labial de Café. Humecta y protege tus labios con un aroma estimulante.",
             benefits: ["Humectación", "Protección", "Aroma café", "Natural"]
-        },
+        , tech_size: "Envase 15g", tech_area: "Labios", tech_frequency: "Diario", tech_use: "Aplica suavemente en los labios según necesidad.", tech_ingredients: "Manteca de cacao, aceite de café.", tech_warning: "Uso externo." },
         "balsamo-pastel": {
             desc: "Bálsamo Labial Rosa Pastel (sin color). Ideal para hidratación diaria suave.",
             benefits: ["Sin color", "Hidratación", "Protección", "Suave"]
-        },
+        , tech_size: "Envase 15g", tech_area: "Labios", tech_frequency: "Diario", tech_use: "Aplica suavemente en los labios según necesidad.", tech_ingredients: "Manteca de cacao, cera alba.", tech_warning: "Uso externo." },
         "balsamo-vainilla": {
             desc: "Bálsamo Labial Vainilla-Canela (sin color). Aroma cálido y dulce para proteger tus labios.",
             benefits: ["Aroma Vainilla-Canela", "Sin color", "Hidratación", "Protección"]
-        },
+        , tech_size: "Envase 15g", tech_area: "Labios", tech_frequency: "Diario", tech_use: "Aplica suavemente en los labios según necesidad.", tech_ingredients: "Manteca de cacao, extracto de vainilla, canela.", tech_warning: "Uso externo." },
         "balsamo-remolacha": {
             desc: "Bálsamo Labial de Remolacha. Aporta color natural mientras nutre los labios.",
             benefits: ["Color natural", "Nutritivo", "Protección", "Humectante"]
-        }
+        , tech_size: "Envase 15g", tech_area: "Labios", tech_frequency: "Diario", tech_use: "Aplica suavemente en los labios según necesidad.", tech_ingredients: "Manteca de cacao, pigmento de remolacha.", tech_warning: "Uso externo." }
     };
 
     const headerMenuBtn = document.getElementById("header-menu-btn");
@@ -816,8 +861,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (detailPageCounter) detailPageCounter.textContent = index >= 0 ? `${index + 1} de ${cards.length}` : "1 de 1";
         if (detailPager) {
             detailPager.dataset.categoryIndex = String(sectionIndex);
-            detailPager.style.setProperty("--pager-accent", categoryColor.accent);
-            detailPager.style.setProperty("--pager-accent-soft", categoryColor.soft);
+        }
+        const productDetailModal = document.getElementById("product-detail-modal");
+        if (productDetailModal) {
+            productDetailModal.style.setProperty("--pager-accent", categoryColor.accent);
+            productDetailModal.style.setProperty("--pager-accent-soft", categoryColor.soft);
         }
         const hasMultipleProducts = cards.length > 1;
         if (detailPrevProduct) detailPrevProduct.disabled = !hasMultipleProducts;
@@ -1032,11 +1080,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const benefitsList = document.getElementById("detail-benefits");
         benefitsList.innerHTML = "";
-        info.benefits.forEach((benefit) => {
-            const item = document.createElement("li");
-            item.textContent = benefit;
-            benefitsList.appendChild(item);
-        });
+        if(info.benefits) {
+            info.benefits.forEach((benefit) => {
+                const item = document.createElement("li");
+                item.textContent = benefit;
+                benefitsList.appendChild(item);
+            });
+        }
+
+        // Fill technical details
+        const elArea = document.getElementById("detail-tech-area");
+        if(elArea) elArea.textContent = info.tech_area || "—";
+        
+        const elSize = document.getElementById("detail-tech-size");
+        if(elSize) elSize.textContent = info.tech_size || "—";
+        
+        const elFreq = document.getElementById("detail-tech-frequency");
+        if(elFreq) elFreq.textContent = info.tech_frequency || "—";
+        
+        const elIng = document.getElementById("detail-tech-ingredients");
+        if(elIng) elIng.textContent = info.tech_ingredients || "Consulta el listado INCI del envase.";
+        
+        const elUse = document.getElementById("detail-tech-use");
+        if(elUse) elUse.textContent = info.tech_use || "Sigue las indicaciones del envase.";
+        
+        const elWarn = document.getElementById("detail-tech-warning");
+        if(elWarn) elWarn.textContent = info.tech_warning || "Uso externo. Suspende su uso ante irritación.";
 
         currentDetailId = id;
         updateProductDetailPager();
@@ -1271,15 +1340,15 @@ document.addEventListener("DOMContentLoaded", () => {
     function buildPrintableDocument(orderData, totals, embeddedLogo = "") {
         const today = new Date().toLocaleDateString("es-EC", {
             year: "numeric",
-            month: "long",
-            day: "numeric"
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
         });
         const rows = cart.map((item) => `
             <tr>
-                <td><strong>${escapeHtml(item.name)}</strong><br><span>Producto botánico Curativa</span></td>
-                <td class="center">${item.qty}</td>
-                <td class="right">${formatCurrency(item.price)}</td>
-                <td class="right"><strong>${formatCurrency(item.qty * item.price)}</strong></td>
+                <td style="padding: 6px 0;"><strong>${escapeHtml(item.name)}</strong><br><span style="font-size:9px;color:#666;">${item.qty} x ${formatCurrency(item.price)}</span></td>
+                <td style="padding: 6px 0; text-align: right; vertical-align: bottom;"><strong>${formatCurrency(item.qty * item.price)}</strong></td>
             </tr>
         `).join("");
         const shippingValue = totals.shipping == null ? "-" : formatCurrency(totals.shipping);
@@ -1290,33 +1359,45 @@ document.addEventListener("DOMContentLoaded", () => {
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pedido Curativa</title>
 <style>
-  @page { size: A4 portrait; margin: 12mm; }
+  @page { margin: 0; }
+  @media print {
+    @page { size: 80mm 297mm; margin: 0; }
+    body { width: 80mm; margin: 0; padding: 0; }
+    .sheet { max-width: 100%; box-shadow: none; padding: 10px; }
+  }
   * { box-sizing: border-box; }
-  body { margin: 0; padding: 20px; font-family: Arial, sans-serif; color: #352d3d; background: #eee8e1; line-height: 1.55; }
-  .sheet { max-width: 800px; margin: auto; padding: 42px; background: #fff; box-shadow: 0 8px 30px rgba(33,22,47,.08); }
-  .header { display: flex; justify-content: space-between; gap: 30px; padding-bottom: 20px; border-bottom: .75px solid #e7e1da; }
-  .brand { display: flex; align-items: flex-start; gap: 16px; }
-  .brand-logo { width: 76px; height: 76px; object-fit: contain; }
-  .brand h1 { margin: 0; color: #21162f; font-size: 28px; letter-spacing: .12em; }
-  .brand p,.meta p { margin: 3px 0; color: #6f6677; font-size: 12px; }
-  .meta { text-align: right; } .meta h2 { margin: 0; color: #21162f; font-size: 18px; }
-  .status { display: inline-block; margin-top: 8px; padding: 5px 12px; border: .75px solid #ead18e; border-radius: 99px; background: #fff9e8; color: #8f5a13; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-  .notice { margin: 24px 0; padding: 17px 20px; border-left: 2px solid #25a95b; border-radius: 3px; background: #f7f9f8; }
-  .notice h3,.section-title { margin: 0 0 7px; color: #21162f; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
-  .notice p { margin: 0 0 11px; color: #5d5662; font-size: 12px; }
-  .wa-contact { margin: 0; color: #4f4854; font-size: 11px; }
-  .wa-contact a { color: #187a42; font-weight: 800; text-decoration: underline; text-underline-offset: 2px; }
-  .customer { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px; padding: 18px 20px; border-radius: 8px; background: #faf8f5; }
-  .customer p,.bank p { margin: 3px 0; color: #554e5a; font-size: 12px; }
-  table { width: 100%; border-collapse: collapse; } th,td { padding: 11px 8px; border-bottom: .65px solid #e9e3dc; text-align: left; font-size: 12px; }
-  th { color: #746b7d; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; } td span { color: #8b828f; font-size: 10px; }
-  .right { text-align: right; } .center { text-align: center; }
-  .payment { display: grid; grid-template-columns: 1fr .82fr; gap: 24px; align-items: start; margin-top: 25px; }
-  .bank { padding: 17px; border-radius: 8px; background: #faf8f5; } .totals td { padding: 8px; }
-  .totals .grand td { padding-top: 12px; border: 0; color: #21162f; font-size: 15px; font-weight: 800; }
-  .footer { margin-top: 28px; padding-top: 18px; border-top: .75px solid #e7e1da; color: #7b7281; font-size: 11px; text-align: center; } .footer p { margin: 3px; }
+  body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #111; background: #f0f0f0; line-height: 1.4; }
+  .sheet { width: 100%; max-width: 320px; margin: 0 auto; padding: 20px; background: #fff; }
+  .header { text-align: center; padding-bottom: 15px; border-bottom: 1px dashed #ccc; margin-bottom: 15px; }
+  .brand-logo { width: 60px; height: 60px; object-fit: contain; margin-bottom: 10px; }
+  .brand h1 { margin: 0; color: #111; font-size: 22px; letter-spacing: .05em; text-transform: uppercase; }
+  .brand p { margin: 2px 0; color: #444; font-size: 11px; }
+  .meta { margin-top: 15px; text-align: center; } 
+  .meta h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
+  .meta p { margin: 4px 0; font-size: 11px; color: #444; }
+  .status { display: inline-block; margin-top: 6px; padding: 4px 8px; border: 1px solid #111; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+  .notice { margin: 15px 0; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; text-align: center; }
+  .notice h3 { margin: 0 0 5px; font-size: 11px; text-transform: uppercase; }
+  .notice p { margin: 0 0 8px; font-size: 11px; color: #444; }
+  .wa-contact { margin: 0; font-size: 12px; font-weight: bold; }
+  .wa-contact a { color: #000; text-decoration: none; }
+  .customer { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed #ccc; }
+  .section-title { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+  .customer p { margin: 3px 0; font-size: 11px; color: #333; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 15px; } 
+  th { text-align: left; font-size: 10px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 4px; color: #666; }
+  .right { text-align: right; }
+  .totals { border-top: 1px dashed #ccc; padding-top: 10px; margin-bottom: 15px; }
+  .totals table { margin-bottom: 0; }
+  .totals td { padding: 4px 0; font-size: 12px; border: none; }
+  .totals .grand td { padding-top: 8px; font-size: 16px; font-weight: bold; text-transform: uppercase; }
+  .bank { background: #fafafa; padding: 12px; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 15px; }
+  .bank p { margin: 3px 0; font-size: 11px; }
+  .footer { padding-top: 10px; border-top: 1px dashed #ccc; font-size: 10px; text-align: center; color: #666; }
+  .footer p { margin: 3px 0; }
 </style>
 </head>
 <body>
@@ -1324,17 +1405,64 @@ document.addEventListener("DOMContentLoaded", () => {
     <header class="header">
       <div class="brand">
         <img src="${embeddedLogo || "image/logo_curativa_hero.svg"}" alt="Logo Curativa" class="brand-logo">
-        <div><h1>CURATIVA</h1><p>Cosmética botánica artesanal</p><p>Loja, Ecuador</p><p>${escapeHtml(CONTACTS.email)} · ${escapeHtml(CONTACTS.whatsappLabel)}</p></div>
+        <h1>CURATIVA</h1>
+        <p>Cosmética botánica artesanal</p>
+        <p>Loja, Ecuador</p>
+        <p>${escapeHtml(CONTACTS.whatsappLabel)}</p>
       </div>
       <div class="meta">
-        <h2>Pedido ${escapeHtml(orderReference)}</h2><p>Fecha: ${escapeHtml(today)}</p><span class="status">Pendiente de pago</span>
+        <h2>Pedido ${escapeHtml(orderReference)}</h2>
+        <p>${escapeHtml(today)}</p>
+        <div class="status">Pendiente de pago</div>
       </div>
     </header>
-    <section class="notice"><h3>Paso requerido: confirmación de pago</h3><p>Para procesar y despachar tu pedido, envía el comprobante de transferencia por WhatsApp.</p><p class="wa-contact">WhatsApp: <a href="https://wa.me/593963036594?text=${whatsappText}">+593 963 036 594</a></p></section>
-    <section class="customer"><div><h3 class="section-title">Datos del cliente</h3><p><strong>${escapeHtml(orderData.customerFullName)}</strong></p><p>Pedido generado desde el catálogo Curativa</p></div><div><h3 class="section-title">Dirección de entrega</h3><p>${escapeHtml(orderData.customerAddress)}</p><p>${escapeHtml(orderData.province)}, Ecuador</p></div></section>
-    <h3 class="section-title">Detalle de productos</h3><table><thead><tr><th>Descripción</th><th class="center">Cant.</th><th class="right">Precio unitario</th><th class="right">Total</th></tr></thead><tbody>${rows}</tbody></table>
-    <section class="payment"><div class="bank"><h3 class="section-title">Datos para transferencia</h3><p><strong>Banco:</strong> Banco Pichincha</p><p><strong>Tipo:</strong> Cuenta de ahorro transaccional</p><p><strong>Cuenta:</strong> 2210381726</p><p><strong>Confirmación:</strong> WhatsApp ${escapeHtml(CONTACTS.whatsappLabel)}</p></div><table class="totals"><tr><td>Subtotal</td><td class="right">${formatCurrency(totals.subtotal)}</td></tr><tr><td>Envío</td><td class="right">${shippingValue}</td></tr><tr><td>IVA (0%)</td><td class="right">$0.00</td></tr><tr class="grand"><td>Total a pagar</td><td class="right">${formatCurrency(totals.total)}</td></tr></table></section>
-    <footer class="footer"><p><strong>Tu orden permanecerá reservada por 24 horas mientras confirmamos el pago.</strong></p><p>Una vez recibido el comprobante coordinaremos preparación y entrega.</p></footer>
+    
+    <section class="customer">
+      <h3 class="section-title">Cliente</h3>
+      <p><strong>${escapeHtml(orderData.customerFullName)}</strong></p>
+      <p style="margin-top:8px;font-weight:bold;">Envío a:</p>
+      <p>${escapeHtml(orderData.customerAddress)}</p>
+      <p>${escapeHtml(orderData.province)}, EC</p>
+    </section>
+
+    <h3 class="section-title">Productos</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Descripción</th>
+          <th class="right">Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows}
+      </tbody>
+    </table>
+
+    <div class="totals">
+      <table>
+        <tr><td>Subtotal</td><td class="right">${formatCurrency(totals.subtotal)}</td></tr>
+        <tr><td>Envío</td><td class="right">${shippingValue}</td></tr>
+        <tr class="grand"><td>Total</td><td class="right">${formatCurrency(totals.total)}</td></tr>
+      </table>
+    </div>
+
+    <section class="notice">
+      <h3>Confirma tu pago</h3>
+      <p>Envía tu comprobante de transferencia al WhatsApp para despachar.</p>
+      <p class="wa-contact"><a href="https://wa.me/593963036594?text=${whatsappText}">+593 963 036 594</a></p>
+    </section>
+
+    <div class="bank">
+      <h3 class="section-title">Datos Transferencia</h3>
+      <p><strong>Banco:</strong> Pichincha</p>
+      <p><strong>Tipo:</strong> Ahorro transaccional</p>
+      <p><strong>Cuenta:</strong> 2210381726</p>
+    </div>
+    
+    <footer class="footer">
+      <p><strong>Reserva válida por 24h</strong></p>
+      <p>¡Gracias por apoyar la cosmética natural!</p>
+    </footer>
   </div>
 </body>
 </html>`;
@@ -2120,6 +2248,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 totals.shipping == null
                     ? "Selecciona provincia"
                     : (totals.shipping === 0 ? "Gratis (Loja)" : formatCurrency(totals.shipping));
+            
+            if (totals.shipping == null) {
+                summaryShippingEl.style.cursor = "pointer";
+                summaryShippingEl.style.textDecoration = "underline";
+                summaryShippingEl.onclick = () => {
+                    const provinceSelect = document.getElementById("customer-province");
+                    if (provinceSelect) {
+                        provinceSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => provinceSelect.focus(), 300);
+                    }
+                };
+            } else {
+                summaryShippingEl.style.cursor = "default";
+                summaryShippingEl.style.textDecoration = "none";
+                summaryShippingEl.onclick = null;
+            }
         }
         if (summaryGrandTotalEl) summaryGrandTotalEl.textContent = formatCurrency(totals.total);
     }
@@ -2590,10 +2734,10 @@ document.addEventListener("DOMContentLoaded", () => {
             position: "fixed",
             left: "-10000px",
             top: "0",
-            width: "900px",
+            width: "320px",
             minHeight: "1250px",
-            padding: "20px",
-            background: "#eee8e1",
+            padding: "0",
+            background: "#f0f0f0",
             pointerEvents: "none",
             zIndex: "-9999"
         });
@@ -2623,8 +2767,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     image.addEventListener("error", resolve, { once: true });
                 })));
 
+            const pxHeight = sheet.scrollHeight || 1000;
+            const mmHeight = (pxHeight * 25.4) / 96 + 10;
+
             await window.html2pdf().set({
-                margin: [7, 7, 7, 7],
+                margin: [0, 0, 0, 0],
                 filename: fileName,
                 enableLinks: true,
                 image: { type: "jpeg", quality: 0.98 },
@@ -2632,11 +2779,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     scale: 2,
                     useCORS: true,
                     allowTaint: false,
-                    backgroundColor: "#eee8e1",
+                    backgroundColor: "#f0f0f0",
                     logging: false,
-                    windowWidth: 900
+                    windowWidth: 320
                 },
-                jsPDF: { unit: "mm", format: "a4", orientation: "portrait", compress: true },
+                jsPDF: { unit: "mm", format: [80, Math.max(mmHeight, 100)], orientation: "portrait", compress: true },
                 pagebreak: { mode: ["css", "legacy"], avoid: [".header", ".notice", ".customer", ".payment", ".footer", "tr"] }
             }).from(sheet).save();
 
@@ -2865,7 +3012,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ["customer-name", "customer-lastname", "customer-province", "customer-address"].forEach((id) => {
         const field = document.getElementById(id);
-        field?.addEventListener(field.tagName === "SELECT" ? "change" : "input", saveSiteSession);
+        if (field) {
+            field.addEventListener(field.tagName === "SELECT" ? "change" : "input", (e) => {
+                saveSiteSession();
+                if (id === "customer-province") {
+                    updateCartUI();
+                }
+            });
+        }
     });
 
     // Disable right-click, dragging and touch menu for all images globally
