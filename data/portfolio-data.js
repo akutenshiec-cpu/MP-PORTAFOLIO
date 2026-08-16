@@ -168,13 +168,13 @@ window.MPPortfolioData = {
         },
         "saas-multitenant": {
             title: "Plataforma SaaS Multitenant",
-            rubro: "Arquitectura SaaS · Tienda + CRM + POS",
-            summary: "Plataforma que despliega tiendas independientes con dominio propio, panel de administración, roles por operación, POS, caja, fidelización y asistente IA por tenant. Cada cliente opera en un entorno aislado bajo el mismo núcleo."
+            rubro: "Arquitectura SaaS · E-commerce · CRM · IA",
+            summary: "Plataforma propia para desplegar tiendas independientes: cada cliente obtiene dominio propio, catálogo, órdenes, panel de administración, CRM de proyectos, vendedores, fidelización de compradores y asistente IA integrado. Multi-tenant real: datos y configuración completamente aislados por tenant."
         },
         "fnb-pos": {
-            title: "Sistema operativo para F&B",
-            rubro: "Restaurante · Pedidos · Caja · Vitrina",
-            summary: "Sistema completo para locales de comida y servicio: grilla táctil de mesas, pedidos por tipo de servicio, cierre POS por método de pago, comprobantes bancarios obligatorios, ticket imprimible y vitrina pública con carrito persistente."
+            title: "CurArte · Sistema F&B Integral",
+            rubro: "Restaurante · POS · Caja · Vitrina pública",
+            summary: "Sistema de operación para locales de comida: grilla táctil de mesas con estados (libre/ocupada/reservada), pedidos por mesa/local/delivery, POS con cierre por turno y corte por método de pago, repartidor con panel propio, vitrina pública con carrito persistente y checkout con comprobante obligatorio para pagos bancarios."
         },
         elementos: {
             title: "Landing de validación",
@@ -360,13 +360,13 @@ window.MPPortfolioData = {
                 id: "saas-multitenant",
                 galleryId: "saas-multitenant",
                 title: "Plataforma SaaS Multitenant",
-                rubro: "Arquitectura SaaS · Tienda + CRM + POS",
+                rubro: "Arquitectura SaaS · E-commerce · CRM · IA",
                 description:
-                    "Plataforma propia que despliega tiendas con dominio independiente, gestión de clientes, roles por operación, POS, caja por turno, fidelización y asistente IA. Cada tenant opera en un entorno aislado bajo el mismo núcleo.",
+                    "Plataforma para desplegar tiendas con dominio propio, catálogo, órdenes, CRM de proyectos, vendedores, fidelización y asistente IA. Arquitectura multi-tenant real: datos y configuración aislados por cliente.",
                 image: "images/itera_dashboard.png",
                 imageAlt: "Panel de administración de la plataforma SaaS multitenant",
                 badge: "SaaS",
-                tags: ["Multitenant", "E-commerce", "IA", "POS"],
+                tags: ["Multitenant", "E-commerce", "IA", "CRM"],
                 order: 3,
                 visible: true,
                 buyEnabled: false,
@@ -374,14 +374,14 @@ window.MPPortfolioData = {
             {
                 id: "fnb-pos",
                 galleryId: "fnb-pos",
-                title: "Sistema F&B · Pedidos y Caja",
-                rubro: "Restaurante · POS · Vitrina digital",
+                title: "CurArte · Sistema F&B Integral",
+                rubro: "Restaurante · POS táctil · Caja · Delivery",
                 description:
-                    "Sistema completo para locales de comida: mesas con estado, pedidos por tipo de servicio, cierre POS, comprobantes bancarios, ticket imprimible y vitrina pública con carrito persistente.",
+                    "Sistema de operación para locales: mesas con estado en grilla táctil, pedidos por mesa/local/delivery, cierre POS por turno, panel de repartidor, vitrina pública y checkout con comprobante bancario obligatorio.",
                 image: "images/itera_documentos.png",
-                imageAlt: "Sistema de pedidos y caja para restaurante y local de servicio",
+                imageAlt: "Sistema de pedidos y caja para restaurante con POS táctil",
                 badge: "F&B",
-                tags: ["Restaurante", "POS", "Delivery"],
+                tags: ["POS táctil", "Mesas", "Delivery", "Caja"],
                 order: 4,
                 visible: true,
                 buyEnabled: false,
