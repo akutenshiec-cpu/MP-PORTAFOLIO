@@ -283,8 +283,75 @@
             .hero-editorial__stage::before, .hero-editorial__photo, .hero-editorial__dots,
             .hero-editorial__arc, .hero-editorial__stage::after, .hero-editorial__pitch > * { animation: none !important; }
         }
-        .section-block { margin-top: 84px; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; overflow: visible; }
+        .section-block {
+            position: relative;
+            margin-top: 84px; padding: 0; border: 0; border-radius: 0;
+            background: transparent; box-shadow: none; overflow: visible;
+        }
         .section-block::before, #webs::after, #branding::after { display: none; }
+
+        /* Soft chromatic bridges between studio wine/gold and Itera teal */
+        #servicios {
+            --itera-teal: #16b4a9;
+            --itera-teal-soft: rgba(22, 180, 169, .1);
+            --studio-wine-soft: rgba(112, 64, 77, .12);
+            margin-top: 56px;
+            padding: 36px 0 28px;
+        }
+        #servicios::before {
+            content: "";
+            display: block !important;
+            position: absolute;
+            left: -8vw; right: -8vw; top: -48px;
+            height: 120px;
+            background: linear-gradient(
+                180deg,
+                rgba(112, 64, 77, 0) 0%,
+                rgba(112, 64, 77, .1) 28%,
+                rgba(84, 92, 98, .08) 52%,
+                rgba(22, 180, 169, .09) 78%,
+                rgba(22, 180, 169, 0) 100%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+        #servicios::after {
+            content: "";
+            display: block !important;
+            position: absolute;
+            left: -8vw; right: -8vw; bottom: -64px;
+            top: auto; width: auto; height: 110px;
+            border-radius: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(22, 180, 169, 0) 0%,
+                rgba(22, 180, 169, .08) 30%,
+                rgba(120, 90, 78, .07) 62%,
+                rgba(216, 179, 106, .06) 100%
+            ) !important;
+            pointer-events: none;
+            z-index: 0;
+        }
+        #servicios > * { position: relative; z-index: 1; }
+        #webs {
+            margin-top: 72px;
+            padding-top: 18px;
+        }
+        #webs::before {
+            content: "";
+            display: block !important;
+            position: absolute;
+            left: -6vw; right: -6vw; top: -28px;
+            height: 72px;
+            background: linear-gradient(
+                180deg,
+                rgba(22, 180, 169, .05) 0%,
+                rgba(112, 64, 77, .05) 45%,
+                transparent 100%
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
         .section-header { margin-bottom: 24px; }
         .section-title { color: #f4f0e8; font-size: clamp(1.65rem, 3vw, 2.5rem); }
         .section-title i { color: #d8b36a; background: rgba(216,179,106,.09); border-color: rgba(216,179,106,.18); }
@@ -319,23 +386,23 @@
         .buy-btn--itera {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             color: #ffffff !important;
-            border: 1px solid rgba(255,255,255,.22);
-            background: linear-gradient(160deg, #1ab5aa 0%, #128a82 48%, #0b6b65 100%);
-            box-shadow: 0 12px 28px rgba(11, 107, 101, .38), inset 0 1px 0 rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.2);
+            background: linear-gradient(160deg, #1a9f96 0%, #127a74 52%, #0a5854 100%);
+            box-shadow: 0 12px 28px rgba(10, 72, 68, .36), inset 0 1px 0 rgba(255,255,255,.16);
             font-weight: 800; letter-spacing: .04em;
-            text-shadow: 0 1px 1px rgba(0,0,0,.35);
+            text-shadow: 0 1px 1px rgba(0,0,0,.4);
         }
         .buy-btn--itera span { color: #ffffff; }
         .buy-btn--itera:hover {
             color: #ffffff !important;
-            border-color: rgba(255,255,255,.35);
-            background: linear-gradient(160deg, #2bc4b9 0%, #16b4a9 45%, #0e7a72 100%);
-            box-shadow: 0 14px 32px rgba(11, 107, 101, .46), inset 0 1px 0 rgba(255,255,255,.22);
+            border-color: rgba(255,255,255,.32);
+            background: linear-gradient(160deg, #22b3a9 0%, #168f88 48%, #0c6560 100%);
+            box-shadow: 0 14px 32px rgba(10, 72, 68, .42), inset 0 1px 0 rgba(255,255,255,.2);
             filter: none;
         }
         .buy-btn__mark {
             width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto;
-            filter: brightness(1.15) drop-shadow(0 1px 2px rgba(0,0,0,.35));
+            filter: brightness(1.12) drop-shadow(0 1px 2px rgba(0,0,0,.35));
         }
         .card-brand-logo {
             position: absolute; z-index: 3; top: 14px; right: 14px;
@@ -344,42 +411,49 @@
             filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
             pointer-events: none;
         }
+        /* Tempered Itera cards: teal + wine undertone so they sit in the studio palette */
         .trust-card--itera {
-            border-color: rgba(22, 180, 169, .34);
+            border-color: rgba(22, 180, 169, .22);
             background:
-                radial-gradient(circle at 100% 0, rgba(22, 180, 169, .14), transparent 36%),
-                linear-gradient(155deg, #243033, #171c1e);
-            box-shadow: 0 18px 42px rgba(8,9,10,.3), 0 0 0 1px rgba(22,180,169,.1);
+                radial-gradient(circle at 100% 0, rgba(22, 180, 169, .09), transparent 38%),
+                radial-gradient(circle at 0% 100%, rgba(112, 64, 77, .1), transparent 42%),
+                linear-gradient(155deg, #25292c, #171a1d);
+            box-shadow: 0 18px 42px rgba(8,9,10,.28), 0 0 0 1px rgba(22,180,169,.06);
         }
         .trust-card--itera:hover {
-            border-color: rgba(43, 196, 185, .58);
-            box-shadow: 0 22px 46px rgba(8,9,10,.36), 0 0 0 1px rgba(22,180,169,.22);
+            border-color: rgba(22, 180, 169, .4);
+            box-shadow: 0 22px 46px rgba(8,9,10,.34), 0 0 0 1px rgba(22,180,169,.14);
         }
         .trust-card--itera .card-image {
-            background: radial-gradient(circle at 50% 0, rgba(22,180,169,.16), transparent 48%), #12181a;
+            background:
+                radial-gradient(circle at 50% 0, rgba(22,180,169,.1), transparent 50%),
+                radial-gradient(circle at 80% 100%, rgba(112,64,77,.08), transparent 46%),
+                #141719;
         }
         .trust-card--itera .card-badge {
-            color: #e8fffc;
-            background: rgba(11, 107, 101, .88);
-            border-color: rgba(43, 196, 185, .35);
-        }
-        .trust-card--itera .card-kicker { color: #2bc4b9; }
-        .trust-card--itera .card-tag {
-            color: #9af0e8;
-            background: rgba(22, 180, 169, .12);
+            color: #eaf8f6;
+            background: rgba(18, 78, 74, .9);
             border-color: rgba(22, 180, 169, .28);
         }
-        .trust-card--itera .card-info a { color: #2bc4b9; }
-        #servicios::after { background: radial-gradient(circle, rgba(22, 180, 169, 0.18), transparent 72%) !important; }
-        #servicios .section-title i { color: #16b4a9; }
+        .trust-card--itera .card-kicker { color: #6fc9c1; }
+        .trust-card--itera .card-tag {
+            color: #b7e4df;
+            background: rgba(22, 180, 169, .08);
+            border-color: rgba(22, 180, 169, .2);
+        }
+        .trust-card--itera .card-info a { color: #6fc9c1; }
+        #servicios .section-title i { color: #4db8af; }
+        #servicios .section-line {
+            background: linear-gradient(90deg, rgba(112,64,77,0), rgba(22,180,169,.45), rgba(216,179,106,.35), rgba(216,179,106,0)) !important;
+        }
         a[href*="iteraqms.com"] {
-            color: #2bc4b9;
+            color: #6fc9c1;
             text-decoration: none;
-            border-bottom: 1px solid rgba(43, 196, 185, .4);
+            border-bottom: 1px solid rgba(111, 201, 193, .35);
         }
         a[href*="iteraqms.com"]:hover {
-            color: #9af0e8;
-            border-bottom-color: rgba(154, 240, 232, .75);
+            color: #a8e8e1;
+            border-bottom-color: rgba(168, 232, 225, .7);
         }
         #webs .cards-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
         #webs .trust-card:nth-child(-n+3) {
@@ -1517,8 +1591,8 @@
         </div>
     </div>
 
-    <script src="data/portfolio-data.js?v=20261015-itera2" defer></script>
-    <script src="script.js?v=20261015-itera2" defer></script>
+    <script src="data/portfolio-data.js?v=20261015-bridge" defer></script>
+    <script src="script.js?v=20261015-bridge" defer></script>
     <script src="ads-config.js?v=20260814-perf" defer></script>
     <script src="ads-tracking.js?v=20260814-perf" defer></script>
 </body>

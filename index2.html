@@ -232,46 +232,86 @@
       height: 28px; width: auto; max-width: 140px; object-fit: contain;
       filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
     }
-    #itera .section-number { color: #16b4a9; }
+    #itera {
+      position: relative;
+    }
+    #itera::before {
+      content: "";
+      position: absolute;
+      left: -6vw; right: -6vw; top: -40px;
+      height: 100px;
+      background: linear-gradient(
+        180deg,
+        rgba(112, 64, 77, 0) 0%,
+        rgba(112, 64, 77, .08) 35%,
+        rgba(22, 180, 169, .07) 70%,
+        rgba(22, 180, 169, 0) 100%
+      );
+      pointer-events: none;
+    }
+    #itera::after {
+      content: "";
+      position: absolute;
+      left: -6vw; right: -6vw; bottom: -36px;
+      height: 90px;
+      background: linear-gradient(
+        180deg,
+        rgba(22, 180, 169, 0) 0%,
+        rgba(22, 180, 169, .06) 40%,
+        rgba(216, 179, 106, .05) 100%
+      );
+      pointer-events: none;
+    }
+    #itera .section-number { color: #4db8af; }
     #itera .section-head h2 { color: #f2fffd; }
     #itera .service-card {
-      border-color: rgba(22, 180, 169, .28);
+      border-color: rgba(22, 180, 169, .2);
       background:
-        radial-gradient(circle at 100% 0, rgba(22, 180, 169, .12), transparent 34%),
-        linear-gradient(155deg, rgba(36, 48, 51, .96), rgba(23, 28, 30, .94));
+        radial-gradient(circle at 100% 0, rgba(22, 180, 169, .08), transparent 36%),
+        radial-gradient(circle at 0% 100%, rgba(112, 64, 77, .08), transparent 40%),
+        linear-gradient(155deg, rgba(37, 41, 44, .96), rgba(23, 26, 29, .94));
     }
     #itera .service-card:hover {
-      border-color: rgba(43, 196, 185, .5);
-      box-shadow: 0 18px 40px rgba(8,9,10,.32), 0 0 0 1px rgba(22,180,169,.18);
+      border-color: rgba(22, 180, 169, .4);
+      box-shadow: 0 18px 40px rgba(8,9,10,.3), 0 0 0 1px rgba(22,180,169,.12);
     }
-    #itera .service-card__tag { color: #2bc4b9; }
-    #itera .service-card summary::after { color: #16b4a9; }
+    #itera .service-card__tag { color: #6fc9c1; }
+    #itera .service-card summary::after { color: #4db8af; }
     #itera .service-card__cta:not(.service-card__cta--itera) {
-      color: #e8fffc;
-      border-color: rgba(22, 180, 169, .42);
-      background: rgba(22, 180, 169, .12);
+      color: #eaf8f6;
+      border-color: rgba(22, 180, 169, .32);
+      background: rgba(22, 180, 169, .1);
     }
     #itera .service-card__cta:not(.service-card__cta--itera):hover {
-      background: rgba(22, 180, 169, .2);
-      box-shadow: 0 10px 24px rgba(11, 107, 101, .18);
+      background: rgba(22, 180, 169, .16);
+      box-shadow: 0 10px 24px rgba(10, 72, 68, .16);
+    }
+    .service-card__cta--itera {
+      background: linear-gradient(160deg, #1a9f96 0%, #127a74 52%, #0a5854 100%) !important;
+      border-color: rgba(255,255,255,.2) !important;
+      color: #ffffff !important;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+    }
+    .service-card__cta--itera:hover {
+      background: linear-gradient(160deg, #22b3a9 0%, #168f88 48%, #0c6560 100%) !important;
     }
     .solution-route[href="#itera"] {
-      border-color: rgba(22, 180, 169, .32);
-      background: linear-gradient(155deg, rgba(22,180,169,.16), rgba(255,255,255,.02));
+      border-color: rgba(22, 180, 169, .24);
+      background: linear-gradient(155deg, rgba(22,180,169,.1), rgba(112,64,77,.05), rgba(255,255,255,.02));
     }
-    .solution-route[href="#itera"] > span { color: #2bc4b9; }
+    .solution-route[href="#itera"] > span { color: #6fc9c1; }
     .solution-route[href="#itera"]:hover {
-      border-color: rgba(43, 196, 185, .5);
-      background: linear-gradient(155deg, rgba(22,180,169,.22), rgba(255,255,255,.03));
+      border-color: rgba(22, 180, 169, .42);
+      background: linear-gradient(155deg, rgba(22,180,169,.14), rgba(112,64,77,.06), rgba(255,255,255,.03));
     }
     a[href*="iteraqms.com"]:not(.service-card__cta) {
-      color: #2bc4b9;
+      color: #6fc9c1;
       text-decoration: none;
-      border-bottom: 1px solid rgba(43, 196, 185, .4);
+      border-bottom: 1px solid rgba(111, 201, 193, .35);
     }
     a[href*="iteraqms.com"]:not(.service-card__cta):hover {
-      color: #9af0e8;
-      border-bottom-color: rgba(154, 240, 232, .75);
+      color: #a8e8e1;
+      border-bottom-color: rgba(168, 232, 225, .7);
     }
     details { border-top: 1px solid var(--line); padding-top: 16px; }
     summary { display: flex; justify-content: space-between; color: #d9dee1; cursor: pointer; font-size: .74rem; font-weight: 700; list-style: none; }
