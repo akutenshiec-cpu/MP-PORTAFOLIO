@@ -232,9 +232,7 @@ function renderHomeSections() {
     const sectionMap = [
         { sectionKey: "servicios", gridId: "servicios-grid" },
         { sectionKey: "webs", gridId: "webs-grid" },
-        { sectionKey: "branding", gridId: "branding-grid" },
-        { sectionKey: "promo", gridId: "promo-grid" },
-        { sectionKey: "ciencia", gridId: "ciencia-grid" }
+        { sectionKey: "branding", gridId: "branding-grid" }
     ];
 
     sectionMap.forEach(({ sectionKey, gridId }) => {
@@ -580,7 +578,9 @@ function applySectionLayout() {
 
     Object.values(sectionMap).forEach((section) => {
         const key = section.dataset.sectionKey;
-        section.style.display = hidden.has(key) ? "none" : "";
+        const meta = sectionMeta[key] || {};
+        const shouldHide = hidden.has(key) || meta.enabled === false;
+        if (shouldHide) section.style.display = "none";
     });
 }
 
@@ -1186,7 +1186,13 @@ document.addEventListener('DOMContentLoaded', () => {
         portfolioHeaderBrand.insertAdjacentElement('afterend', sectionWheel);
     }
     const ferrisMedia = window.matchMedia('(min-width: 900px) and (min-height: 560px)');
-    const ferrisSections = Array.from(document.querySelectorAll('.grid-container > section[data-section-key]'));
+    const ferrisSections = Array.from(document.querySelectorAll('.grid-container > section[data-section-key]')).filter((section) => {
+        if (section.style.display === 'none') return false;
+        const key = section.dataset.sectionKey;
+        const hidden = new Set(Array.isArray(pageConfig.hiddenSections) ? pageConfig.hiddenSections : []);
+        const meta = sectionMeta[key] || {};
+        return !hidden.has(key) && meta.enabled !== false;
+    });
     const ferrisLinks = Array.from(sectionWheel?.querySelectorAll('.section-wheel__window') || []);
     const ferrisOrbit = sectionWheel?.querySelector('.section-wheel__orbit');
     const ferrisCounter = sectionWheel?.querySelector('.section-wheel__counter');
