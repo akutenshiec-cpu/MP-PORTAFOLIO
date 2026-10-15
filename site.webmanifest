@@ -1,18 +1,27 @@
 {
+  "id": "/",
   "name": "MP Dev Studio",
   "short_name": "MP Studio",
-  "description": "Development, design y sistemas a medida.",
+  "description": "Diseño y software para marcas que fabrican bajo norma: QMS, packaging y web comercial.",
   "lang": "es-EC",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "background_color": "#1c2023",
-  "theme_color": "#1c2023",
+  "theme_color": "#15110f",
   "icons": [
     {
       "src": "/images/mp-dev-studio-mark-light.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
+    },
+    {
+      "src": "/images/mp-dev-studio-mark-light.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }

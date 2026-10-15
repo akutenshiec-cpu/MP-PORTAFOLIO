@@ -913,6 +913,7 @@ function bootPortfolioUI() {
     initHeroCarousel();
     initRevealOnScroll();
     initMobileSectionMotion();
+    initPwaInstallExperience();
 }
 
 if (document.readyState === "loading") {
@@ -1433,3 +1434,201 @@ if (document.readyState === 'loading') {
 } else {
     initHeroPointerComposition();
 }
+
+/* =========================================
+   PWA INSTALL SUGGESTION (custom modal)
+   ========================================= */
+const PWA_DISMISS_KEY = "mp-pwa-install-dismissed-at";
+const PWA_DISMISS_DAYS = 21;
+let deferredPwaPrompt = null;
+let pwaModalOpen = false;
+
+function isPwaStandalone() {
+    return window.matchMedia("(display-mode: standalone)").matches
+        || window.navigator.standalone === true
+        || document.referrer.includes("android-app://");
+}
+
+function isIosDevice() {
+    const ua = window.navigator.userAgent || "";
+    const iOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    return iOS;
+}
+
+function wasPwaDismissedRecently() {
+    try {
+        const raw = localStorage.getItem(PWA_DISMISS_KEY);
+        if (!raw) return false;
+        const then = Number(raw);
+        if (!Number.isFinite(then)) return false;
+        return Date.now() - then < PWA_DISMISS_DAYS * 24 * 60 * 60 * 1000;
+    } catch (_) {
+        return false;
+    }
+}
+
+function rememberPwaDismiss() {
+    try {
+        localStorage.setItem(PWA_DISMISS_KEY, String(Date.now()));
+    } catch (_) { /* ignore */ }
+}
+
+function syncPwaModalCopy() {
+    const iosBlock = document.getElementById("pwa-install-ios");
+    const primaryBtn = document.getElementById("pwa-install-primary");
+    const shareBtn = document.getElementById("pwa-install-share");
+    const ios = isIosDevice();
+    if (iosBlock) iosBlock.hidden = !ios;
+    if (primaryBtn) {
+        if (ios) {
+            primaryBtn.textContent = typeof navigator.share === "function"
+                ? "Compartir y añadir al escritorio"
+                : "Ver pasos en Safari";
+            primaryBtn.hidden = false;
+        } else if (deferredPwaPrompt) {
+            primaryBtn.textContent = "Instalar app";
+            primaryBtn.hidden = false;
+        } else {
+            primaryBtn.textContent = "Abrir como app";
+            primaryBtn.hidden = false;
+        }
+    }
+    if (shareBtn) {
+        // On iOS the primary already opens the share sheet; keep a secondary share on others.
+        shareBtn.hidden = ios || typeof navigator.share !== "function";
+    }
+}
+
+function openPwaInstallModal(options = {}) {
+    const modal = document.getElementById("pwa-install-modal");
+    if (!modal || pwaModalOpen || isPwaStandalone()) return;
+    syncPwaModalCopy();
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    requestAnimationFrame(() => modal.classList.add("is-open"));
+    document.body.classList.add("modal-open");
+    pwaModalOpen = true;
+    if (typeof closeFab === "function") closeFab();
+    if (options.manual) return;
+}
+
+function closePwaInstallModal(persistDismiss = false) {
+    const modal = document.getElementById("pwa-install-modal");
+    if (!modal || !pwaModalOpen) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    window.setTimeout(() => {
+        if (!modal.classList.contains("is-open")) modal.hidden = true;
+    }, 360);
+    document.body.classList.remove("modal-open");
+    pwaModalOpen = false;
+    if (persistDismiss) rememberPwaDismiss();
+}
+
+async function triggerNativePwaInstall() {
+    if (isIosDevice()) {
+        const iosBlock = document.getElementById("pwa-install-ios");
+        if (iosBlock) {
+            iosBlock.hidden = false;
+            iosBlock.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+        // iOS: the share sheet is the real path to “Añadir a pantalla de inicio”.
+        if (typeof navigator.share === "function") {
+            await sharePortfolioLink();
+        }
+        return;
+    }
+    if (!deferredPwaPrompt) {
+        if (typeof navigator.share === "function") {
+            await sharePortfolioLink();
+        }
+        return;
+    }
+    deferredPwaPrompt.prompt();
+    const choice = await deferredPwaPrompt.userChoice.catch(() => null);
+    deferredPwaPrompt = null;
+    syncPwaModalCopy();
+    if (choice?.outcome === "accepted") {
+        rememberPwaDismiss();
+        closePwaInstallModal(false);
+    }
+}
+
+async function sharePortfolioLink() {
+    const shareData = {
+        title: "MP Dev Studio",
+        text: "Portafolio · QMS, packaging y web comercial",
+        url: window.location.origin + "/"
+    };
+    try {
+        if (typeof navigator.share === "function") {
+            await navigator.share(shareData);
+            return;
+        }
+    } catch (err) {
+        if (err && err.name === "AbortError") return;
+    }
+    try {
+        await navigator.clipboard.writeText(shareData.url);
+        const shareBtn = document.getElementById("pwa-install-share");
+        if (shareBtn) {
+            const prev = shareBtn.textContent;
+            shareBtn.textContent = "Enlace copiado";
+            window.setTimeout(() => { shareBtn.textContent = prev; }, 1800);
+        }
+    } catch (_) { /* ignore */ }
+}
+
+function registerPwaServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    const hostOk = location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    if (!hostOk) return;
+    navigator.serviceWorker.register("./sw.js").catch(() => { /* ignore */ });
+}
+
+function initPwaInstallExperience() {
+    registerPwaServiceWorker();
+    if (isPwaStandalone()) return;
+
+    const modal = document.getElementById("pwa-install-modal");
+    const fabInstall = document.getElementById("fab-install-app");
+    const primaryBtn = document.getElementById("pwa-install-primary");
+    const shareBtn = document.getElementById("pwa-install-share");
+    if (!modal) return;
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredPwaPrompt = event;
+        syncPwaModalCopy();
+        if (!wasPwaDismissedRecently() && !pwaModalOpen) {
+            window.setTimeout(() => openPwaInstallModal(), 4200);
+        }
+    });
+
+    window.addEventListener("appinstalled", () => {
+        deferredPwaPrompt = null;
+        rememberPwaDismiss();
+        closePwaInstallModal(false);
+    });
+
+    modal.querySelectorAll("[data-pwa-dismiss]").forEach((el) => {
+        el.addEventListener("click", () => closePwaInstallModal(true));
+    });
+    primaryBtn?.addEventListener("click", () => { triggerNativePwaInstall(); });
+    shareBtn?.addEventListener("click", () => { sharePortfolioLink(); });
+    fabInstall?.addEventListener("click", () => {
+        openPwaInstallModal({ manual: true });
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && pwaModalOpen) closePwaInstallModal(true);
+    });
+
+    // iPhone / iPad: no beforeinstallprompt — suggest after first engagement.
+    if (isIosDevice() && !wasPwaDismissedRecently()) {
+        window.setTimeout(() => openPwaInstallModal(), 6500);
+    }
+}
+
+window.openPwaInstallModal = openPwaInstallModal;
+window.closePwaInstallModal = closePwaInstallModal;

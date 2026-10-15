@@ -6,6 +6,11 @@
     <script>if ('scrollRestoration' in history) history.scrollRestoration = 'manual';</script>
     <meta name="description" content="MP Dev Studio: landing pages premium, catálogos web, sistemas QMS/ERP y software operativo a medida. Development &amp; design." />
     <meta name="theme-color" content="#15110f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MP Studio" />
+    <link rel="apple-touch-icon" href="images/mp-dev-studio-mark-light.svg" />
     <meta name="author" content="Marco Pérez Celi · MP Dev Studio" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://mpdesigns.xyz/" />
@@ -52,7 +57,7 @@
     <link rel="icon" href="images/mp-dev-studio-mark-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="images/mp-dev-studio-mark-light.svg" type="image/svg+xml" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="style.css?v=20260814-perf" />
+    <link rel="stylesheet" href="style.css?v=20261015-pwa" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
     <script type="application/ld+json">
@@ -495,13 +500,16 @@
                 box-shadow: 0 24px 60px rgba(0,0,0,.52);
                 backdrop-filter: blur(20px);
             }
-            .fab-list a {
+            .fab-list a,
+            .fab-list__btn {
                 min-width: 0; min-height: 54px; margin: 0; padding: 8px 10px;
                 flex-direction: row-reverse; justify-content: flex-end; gap: 8px;
                 border: 1px solid rgba(255,255,255,.07); border-radius: 13px;
                 background: rgba(255,255,255,.035);
+                width: 100%; color: inherit; font: inherit; cursor: pointer;
             }
-            .fab-list a:active { background: rgba(216,179,106,.13); }
+            .fab-list a:active,
+            .fab-list__btn:active { background: rgba(216,179,106,.13); }
             .fab-list span {
                 overflow: hidden; color: #dce4e8; font-size: .67rem;
                 letter-spacing: .04em; text-transform: none; text-overflow: ellipsis; white-space: nowrap;
@@ -808,6 +816,129 @@
             #floating-bio-dock .floating-bio-avatar { width: 40px; height: 40px; }
             .fab-glass-container { bottom: 66px; }
         }
+
+        .fab-list__btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: inherit;
+            font: inherit;
+            text-align: right;
+            cursor: pointer;
+        }
+
+        .pwa-install-overlay {
+            position: fixed; inset: 0; z-index: 2600;
+            display: flex; align-items: flex-end; justify-content: center;
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity .35s ease, visibility .35s ease;
+        }
+        .pwa-install-overlay.is-open {
+            opacity: 1; visibility: visible; pointer-events: auto;
+        }
+        .pwa-install-backdrop {
+            position: absolute; inset: 0;
+            background: rgba(4,5,6,.78);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            cursor: pointer;
+        }
+        .pwa-install-sheet {
+            position: relative; z-index: 2;
+            width: min(100%, 520px); margin: 0 12px;
+            padding: 22px 22px calc(22px + env(safe-area-inset-bottom, 0px));
+            border: 1px solid rgba(216,179,106,.22);
+            border-radius: 24px 24px 18px 18px;
+            background:
+                radial-gradient(circle at 12% 0%, rgba(216,179,106,.12), transparent 42%),
+                linear-gradient(165deg, rgba(28,24,22,.98), rgba(12,14,16,.98));
+            box-shadow: 0 -18px 48px rgba(0,0,0,.55);
+            transform: translateY(110%);
+            transition: transform .4s cubic-bezier(.32,.94,.6,1);
+        }
+        .pwa-install-overlay.is-open .pwa-install-sheet { transform: translateY(0); }
+        .pwa-install-handle {
+            width: 42px; height: 4px; margin: 0 auto 16px;
+            border-radius: 999px; background: rgba(255,255,255,.16);
+        }
+        .pwa-install-close {
+            position: absolute; top: 16px; right: 16px;
+            width: 34px; height: 34px; display: grid; place-items: center;
+            border: 1px solid rgba(255,255,255,.1); border-radius: 50%;
+            background: rgba(255,255,255,.04); color: #aaa99f; cursor: pointer;
+        }
+        .pwa-install-brand {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 14px; padding-right: 36px;
+        }
+        .pwa-install-brand img { width: 48px; height: 40px; object-fit: contain; }
+        .pwa-install-kicker {
+            margin: 0 0 4px; color: #d8b36a;
+            font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+        }
+        #pwa-install-title {
+            margin: 0;
+            font: 500 clamp(1.45rem, 4vw, 1.85rem)/1.15 "Cormorant Garamond", Georgia, serif;
+            color: #f4f0e8;
+        }
+        .pwa-install-lead {
+            margin: 0 0 16px; color: #d7d2c8; font-size: .92rem; line-height: 1.55;
+        }
+        .pwa-install-benefits {
+            margin: 0 0 18px; padding: 0; list-style: none; display: grid; gap: 10px;
+        }
+        .pwa-install-benefits li {
+            display: flex; align-items: flex-start; gap: 10px;
+            color: #d7d2c8; font-size: .84rem; line-height: 1.45;
+        }
+        .pwa-install-benefits i { margin-top: 2px; color: #d8b36a; width: 1rem; text-align: center; }
+        .pwa-install-ios {
+            margin: 0 0 18px; padding: 14px 14px 12px;
+            border: 1px solid rgba(232,220,198,.12); border-radius: 16px;
+            background: rgba(255,255,255,.03);
+        }
+        .pwa-install-ios-title {
+            margin: 0 0 10px; color: #d8b36a;
+            font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+        }
+        .pwa-install-steps {
+            margin: 0; padding-left: 1.15rem; color: #d7d2c8; font-size: .84rem; line-height: 1.55;
+        }
+        .pwa-install-steps li + li { margin-top: 8px; }
+        .pwa-install-ios-note {
+            margin: 12px 0 0; color: #aaa99f; font-size: .74rem; line-height: 1.45;
+        }
+        .pwa-install-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pwa-install-btn {
+            min-height: 46px; padding: 0 14px; border-radius: 14px;
+            border: 1px solid transparent; font: 600 .82rem/1 Manrope, system-ui, sans-serif;
+            letter-spacing: .04em; cursor: pointer;
+        }
+        .pwa-install-btn--primary {
+            grid-column: 1 / -1; color: #1c1410;
+            background: linear-gradient(135deg, #f0e6d4, #d8b36a);
+        }
+        .pwa-install-btn--ghost {
+            color: #f4f0e8; border-color: rgba(216,179,106,.28); background: rgba(216,179,106,.08);
+        }
+        .pwa-install-btn--muted {
+            color: #aaa99f; border-color: rgba(255,255,255,.1); background: transparent;
+        }
+        .pwa-install-btn[hidden] { display: none !important; }
+        @media (min-width: 720px) {
+            .pwa-install-overlay { align-items: center; }
+            .pwa-install-sheet {
+                margin: 0; border-radius: 22px;
+                transform: translateY(18px) scale(.98);
+            }
+            .pwa-install-overlay.is-open .pwa-install-sheet { transform: translateY(0) scale(1); }
+            .pwa-install-handle { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -1014,6 +1145,7 @@
                 <a href="#contacto" onclick="closeFab()"><span>Contacto</span><div class="mini-fab"><i class="fas fa-paper-plane"></i></div></a>
                 <hr style="border-color: rgba(255,255,255,0.08); margin: 6px 0; border-width: 1px 0 0 0;">
                 <a href="index2.html"><span>Catálogo</span><div class="mini-fab"><i class="fas fa-briefcase"></i></div></a>
+                <button type="button" id="fab-install-app" class="fab-list__btn"><span>Añadir al escritorio</span><div class="mini-fab"><i class="fas fa-mobile-screen-button"></i></div></button>
                 <a href="https://www.instagram.com/neckarc" target="_blank" onclick="closeFab()"><span>Instagram</span><div class="mini-fab"><i class="fab fa-instagram"></i></div></a>
             </div>
         </div>
@@ -1234,8 +1366,44 @@
             </div>
         </div>
     </div>
-    <script src="data/portfolio-data.js?v=20260814-perf" defer></script>
-    <script src="script.js?v=20260814-perf" defer></script>
+
+    <div class="pwa-install-overlay no-print" id="pwa-install-modal" role="dialog" aria-modal="true" aria-labelledby="pwa-install-title" aria-hidden="true" hidden>
+        <div class="pwa-install-backdrop" data-pwa-dismiss></div>
+        <div class="pwa-install-sheet">
+            <div class="pwa-install-handle" aria-hidden="true"></div>
+            <button type="button" class="pwa-install-close" data-pwa-dismiss aria-label="Cerrar"><i class="fas fa-xmark"></i></button>
+            <div class="pwa-install-brand">
+                <img src="images/mp-dev-studio-mark-light.svg" alt="" width="48" height="40">
+                <div>
+                    <p class="pwa-install-kicker">Experiencia enfocada</p>
+                    <h2 id="pwa-install-title">Abrir MP Dev Studio como app</h2>
+                </div>
+            </div>
+            <p class="pwa-install-lead">Sugerencia para una experiencia más enriquecedora, sin pestañas ni distracciones del navegador: ventana propia, acceso rápido desde el escritorio y lectura más limpia.</p>
+            <ul class="pwa-install-benefits">
+                <li><i class="fas fa-window-maximize" aria-hidden="true"></i> Se abre en una ventana de concentración</li>
+                <li><i class="fas fa-thumbtack" aria-hidden="true"></i> Acceso rápido desde el escritorio o la pantalla de inicio</li>
+                <li><i class="fas fa-share-nodes" aria-hidden="true"></i> Comparte el portafolio desde el dispositivo</li>
+            </ul>
+            <div class="pwa-install-ios" id="pwa-install-ios" hidden>
+                <p class="pwa-install-ios-title">En iPhone / iPad (Safari)</p>
+                <ol class="pwa-install-steps">
+                    <li>Toca el botón <strong>Compartir</strong> <i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i> en la barra inferior.</li>
+                    <li>Desplázate y elige <strong>Añadir a pantalla de inicio</strong>.</li>
+                    <li>Confirma con <strong>Añadir</strong>. El icono queda en tu escritorio.</li>
+                </ol>
+                <p class="pwa-install-ios-note">Si usas Chrome en iPhone, abre este sitio en Safari para poder añadirlo al escritorio.</p>
+            </div>
+            <div class="pwa-install-actions">
+                <button type="button" class="pwa-install-btn pwa-install-btn--primary" id="pwa-install-primary">Instalar</button>
+                <button type="button" class="pwa-install-btn pwa-install-btn--ghost" id="pwa-install-share">Compartir</button>
+                <button type="button" class="pwa-install-btn pwa-install-btn--muted" data-pwa-dismiss>Ahora no</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data/portfolio-data.js?v=20261015-pwa" defer></script>
+    <script src="script.js?v=20261015-pwa" defer></script>
     <script src="ads-config.js?v=20260814-perf" defer></script>
     <script src="ads-tracking.js?v=20260814-perf" defer></script>
 </body>
