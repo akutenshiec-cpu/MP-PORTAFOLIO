@@ -342,6 +342,7 @@ window.MPPortfolioData = {
                 visible: true,
                 buyEnabled: false,
                 brandLogo: "images/branding/itera/iteraqms-logo.png",
+                brandLogoAlt: "Itera QMS",
                 externalUrl: "https://iteraqms.com/",
                 ctaLabel: "Abrir IteraQMS.com"
             },
@@ -360,6 +361,7 @@ window.MPPortfolioData = {
                 visible: true,
                 buyEnabled: false,
                 brandLogo: "images/branding/itera/iteraqms-logo.png",
+                brandLogoAlt: "Itera QMS",
                 externalUrl: "https://iteraqms.com/",
                 ctaLabel: "Abrir IteraQMS.com"
             },

@@ -266,7 +266,7 @@ function renderHomeSections() {
                 ? `
                     <div class="card-commerce">
                         <a class="buy-btn${isIteraCta ? " buy-btn--itera" : ""}" href="${externalUrl}" target="_blank" rel="noopener noreferrer">
-                            ${isIteraCta ? '<img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22">' : ""}
+                            ${isIteraCta ? '<img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22" aria-hidden="true">' : ""}
                             <span>${repairText(card.ctaLabel || (isIteraCta ? "Abrir IteraQMS.com" : "Visitar sitio"))}</span>
                         </a>
                     </div>
@@ -279,8 +279,9 @@ function renderHomeSections() {
                 `
                 : "";
             const brandLogo = typeof card.brandLogo === "string" ? card.brandLogo.trim() : "";
+            const brandLogoAlt = repairText(card.brandLogoAlt || card.brandName || (brandLogo.includes("itera") ? "Itera QMS" : "Logo de marca"));
             const brandLogoHtml = brandLogo
-                ? `<img class="card-brand-logo" src="${brandLogo}" alt="" width="96" height="40" loading="lazy" decoding="async">`
+                ? `<img class="card-brand-logo" src="${brandLogo}" alt="${brandLogoAlt}" width="96" height="40" loading="lazy" decoding="async">`
                 : "";
             const safeAlt = repairText(card.imageAlt || card.title || "");
             const imageStyle = card.imageStyle || "";

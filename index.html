@@ -220,9 +220,9 @@
             max-width: 185px; padding: 14px 0 0; border: 0; border-top: 1px solid rgba(96,48,57,.42);
             color: #352026; background: transparent;
         }
-        .hero-editorial__identity small { color: #603039; font-size: .6rem; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
-        .hero-editorial__identity strong { display: block; margin-top: 7px; font-family: "Cormorant Garamond",serif; font-size: 1.35rem; font-weight: 500; line-height: 1.05; }
-        .hero-editorial__identity span { display: block; margin-top: 7px; color: #6b5a55; font-size: .7rem; line-height: 1.45; }
+        .hero-editorial__identity small { color: #4f2830; font-size: .6rem; font-weight: 750; letter-spacing: .16em; text-transform: uppercase; }
+        .hero-editorial__identity strong { display: block; margin-top: 7px; font-family: "Cormorant Garamond",serif; font-size: 1.35rem; font-weight: 500; line-height: 1.05; color: #2a181c; }
+        .hero-editorial__identity span { display: block; margin-top: 7px; color: #534540; font-size: .7rem; line-height: 1.45; }
         .hero-editorial__stage.is-pointer-active .hero-editorial__photo { filter: saturate(.94) contrast(1.025) drop-shadow(0 25px 32px rgba(42,31,28,.25)); }
         @media (prefers-reduced-motion: reduce) {
             .hero-editorial__stage::before, .hero-editorial__stage::after,
@@ -241,10 +241,13 @@
             width: 76px; height: auto; color: #f4e8dc; opacity: .04;
             filter: brightness(0) invert(1); pointer-events: none; transition: opacity .25s ease;
         }
-        .hero-editorial__pitch .hero-kicker-new { color: #d8b36a; }
-        .hero-editorial__pitch .hero-brand-title { max-width: 540px; font-size: clamp(3rem,4.6vw,4.75rem); line-height: .98; color: #fff; }
-        .hero-editorial__pitch .hero-brand-title em { color: #d8b36a; }
-        .hero-editorial__pitch .hero-desc { max-width: 460px; color: rgba(255,255,255,.78); }
+        .hero-editorial__pitch .hero-kicker-new { color: #e0c078; }
+        .hero-editorial__pitch .hero-brand-title {
+            max-width: 540px; font-size: clamp(3rem,4.6vw,4.75rem); line-height: .98; color: #fff;
+            text-shadow: 0 1px 0 rgba(53,32,38,.35), 0 10px 28px rgba(20,10,12,.28);
+        }
+        .hero-editorial__pitch .hero-brand-title em { color: #e6c98f; }
+        .hero-editorial__pitch .hero-desc { max-width: 460px; color: rgba(255,248,240,.9); }
         .hero-editorial__pitch .btn-hero--primary {
             color: #352026;
             border-color: #d8b36a;
@@ -617,7 +620,7 @@
             .hero-editorial__pitch { order: 1; min-height: 470px; }
             .hero-editorial__stage { order: 2; min-height: 460px; }
             .hero-editorial__photo { width: min(430px, 82vw); bottom: 0; }
-            .hero-editorial__stage::before { width: 330px; left: 52%; top: 30%; }
+            .hero-editorial__stage::before { width: 330px; left: 52%; top: 46%; }
             .hero-inner-card { min-height: auto; }
             .trust-card { grid-column: span 6; }
             .fab-wrapper {
@@ -703,7 +706,7 @@
             .hero-editorial__watermark { width: 86px; right: 14px; bottom: 12px; }
             .hero-editorial__stage { min-height: 410px; }
             .hero-editorial__photo { width: min(360px, 94vw); max-height: 94%; bottom: 0; }
-            .hero-editorial__stage::before { width: 280px; left: 54%; top: 28%; }
+            .hero-editorial__stage::before { width: 280px; left: 54%; top: 46%; }
             .hero-editorial__stage::after { width: 72px; height: 72px; top: 8%; }
             .hero-editorial__dots { right: 5%; top: 19%; }
             .hero-editorial__arc { width: 260px; height: 130px; left: 18%; bottom: 27%; }
@@ -818,11 +821,12 @@
             .hero-editorial {
                 display: flex;
                 flex-direction: column;
+                gap: 0;
             }
             .hero-editorial__pitch {
                 order: 1;
                 min-height: 0;
-                padding: 34px clamp(22px, 6vw, 38px) 30px;
+                padding: 34px clamp(22px, 6vw, 38px) 22px;
                 justify-content: flex-start;
             }
             .hero-editorial__pitch .hero-kicker-new {
@@ -852,7 +856,8 @@
             }
             .hero-editorial__stage {
                 order: 2;
-                min-height: clamp(390px, 112vw, 520px);
+                min-height: clamp(440px, 120vw, 560px);
+                margin-top: 0;
                 background:
                     linear-gradient(90deg, transparent 49.92%, rgba(96,48,57,.075) 50%, transparent 50.08%),
                     linear-gradient(0deg, transparent 49.92%, rgba(195,151,79,.075) 50%, transparent 50.08%),
@@ -860,6 +865,9 @@
                     linear-gradient(145deg, #f0ece3 0%, #dfd9cc 62%, #cec8b9 100%);
             }
             .hero-editorial__stage::before {
+                width: min(74vw, 320px);
+                left: 50%;
+                top: 46%;
                 border-width: 1px;
                 box-shadow: 0 18px 38px rgba(104,73,34,.2), 0 0 0 4px rgba(216,179,106,.07), inset 0 1px rgba(255,248,224,.55);
             }
@@ -908,7 +916,7 @@
             }
             .hero-editorial__pitch {
                 min-height: 0;
-                padding: 30px 22px 26px;
+                padding: 28px 22px 18px;
             }
             .hero-editorial__pitch .hero-brand-title {
                 font-size: clamp(2.65rem, 12.8vw, 3.55rem);
@@ -920,11 +928,12 @@
                 min-height: 50px;
             }
             .hero-editorial__stage {
-                min-height: clamp(370px, 108vw, 455px);
+                min-height: clamp(430px, 118vw, 520px);
             }
             .hero-editorial__stage::before {
-                width: min(76vw, 300px);
-                top: 31%;
+                width: min(78vw, 300px);
+                left: 50%;
+                top: 47%;
             }
             .hero-editorial__stage::after {
                 width: 62px;
@@ -1133,7 +1142,7 @@
     <header class="portfolio-nav">
         <div class="portfolio-nav__inner">
             <a class="portfolio-nav__brand" href="#hero" aria-label="MP Dev Studio, inicio">
-                <img src="images/mp-dev-studio-mark.svg" alt="">
+                <img src="images/mp-dev-studio-mark.svg" alt="" width="52" height="40" aria-hidden="true">
                 <span class="portfolio-nav__brand-copy">
                     <strong>DEV STUDIO</strong>
                     <span>QMS · Packaging · Web</span>
@@ -1170,7 +1179,7 @@
         <div class="page-loading-card">
             <div class="mp-brand mp-brand--loading mp-brand--accent-gold" data-mp-brand-slot="loading" aria-hidden="true">
                 <span class="mp-brand__mark">
-                    <img src="images/mp-dev-studio-mark.svg" alt="" width="52" height="40" />
+                    <img src="images/mp-dev-studio-mark.svg" alt="" width="52" height="40" aria-hidden="true" />
                 </span>
                 <span class="mp-brand__divider" aria-hidden="true"></span>
                 <span class="mp-brand__text">
@@ -1205,8 +1214,8 @@
     <main class="grid-container">
         <section id="hero" class="hero-section anim-up" data-section-key="hero">
             <div class="hero-inner-card hero-editorial-wrap" id="hero-card-container">
-                <canvas id="hero-canvas"></canvas>
-                <div class="hero-overlay"></div>
+                <canvas id="hero-canvas" aria-hidden="true"></canvas>
+                <div class="hero-overlay" aria-hidden="true"></div>
 
                 <div class="hero-editorial">
                     <div class="hero-editorial__stage" aria-label="Marco Pérez, diseñador y desarrollador">
@@ -1342,7 +1351,7 @@
     <button type="button" id="floating-bio-dock" class="no-print" aria-label="Abrir currículum interactivo" aria-controls="pane-bio" aria-expanded="false">
         <span class="floating-bio-avatar-glow" aria-hidden="true"></span>
         <span class="floating-bio-avatar">
-            <img src="images/foto-hq.jpg?v=9" alt="" width="56" height="56" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256'">
+            <img src="images/foto-hq.jpg?v=9" alt="Marco Pérez" width="56" height="56" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=256'">
         </span>
         <span class="floating-bio-label">CV</span>
         <span class="pulse-dot-bio" aria-hidden="true"></span>
@@ -1560,7 +1569,7 @@
             <div class="pwa-install-handle" aria-hidden="true"></div>
             <button type="button" class="pwa-install-close" data-pwa-dismiss aria-label="Cerrar"><i class="fas fa-xmark"></i></button>
             <div class="pwa-install-brand">
-                <img src="images/mp-dev-studio-mark-light.svg" alt="" width="48" height="40">
+                <img src="images/mp-dev-studio-mark-light.svg" alt="" width="48" height="40" aria-hidden="true">
                 <div>
                     <p class="pwa-install-kicker">Experiencia enfocada</p>
                     <h2 id="pwa-install-title">Abrir como app</h2>
