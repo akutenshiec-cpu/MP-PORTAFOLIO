@@ -79,10 +79,37 @@ function initHeroCarousel() {
    1. DATA
    ========================================= */
 const sharedData = window.MPPortfolioData || {};
+/** Prefer existing .webp siblings to avoid multi‑MB PNG gallery slides. */
+const WEBP_READY = new Set([
+    "images/gallery-victoria-formatos",
+    "images/gallery-victoria-evento",
+    "images/gallery-documental-revista",
+    "images/gallery-documental-reportaje",
+    "images/gallery-finca-aplicaciones",
+    "images/gallery-merch-3d-brands",
+    "images/gallery-merch-aplicaciones",
+    "images/gallery-campana-aplicaciones",
+    "images/gallery-editorial-manual",
+    "images/gallery-encuentros-aplicaciones",
+    "images/gallery-prototyp3d-aplicaciones",
+    "images/card-itera-lite-editorial",
+    "images/card-itera-erp-editorial",
+    "images/card-web-editorial"
+]);
+
+function toOptimizedImage(src) {
+    if (!src || typeof src !== "string" || /\.webp$/i.test(src)) return src;
+    const base = src.replace(/\.(png|jpe?g)$/i, "");
+    return WEBP_READY.has(base) ? `${base}.webp` : src;
+}
+
 const imgDB = Object.fromEntries(
     Object.entries(sharedData.galleries || {}).map(([key, value]) => [
         key,
-        { title: value.title, imgs: value.images || [] }
+        {
+            title: value.title,
+            imgs: (value.images || []).map(toOptimizedImage)
+        }
     ])
 );
 const webDB = sharedData.webs || {};
@@ -266,11 +293,12 @@ function renderHomeSections() {
                        )}" class="card-gallery-link" data-gallery-link target="_blank" rel="noopener noreferrer">Vista galería HD <i class="fas fa-images"></i></a>`
                     : "";
 
+            const cardImage = toOptimizedImage(card.image || "");
             return `
                 <div class="trust-card${cardClass}${isClickable ? "" : " no-link"}"${actionAttrs}>
                     <div class="card-image${imageClass}">
                         ${badge}
-                        <img src="${card.image}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async">
+                        <img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">
                         ${overlay}
                     </div>
                     <div class="card-info">
@@ -626,17 +654,30 @@ function openGallery(key, startIndex = 0) {
     document.body.classList.add('modal-open');
 }
 
+function prefetchGalleryNeighbor(offset) {
+    if (!currentImgs.length) return;
+    const nextIdx = (idx + offset + currentImgs.length) % currentImgs.length;
+    const src = currentImgs[nextIdx];
+    if (!src) return;
+    const link = document.createElement("link");
+    link.rel = "prefetch";
+    link.as = "image";
+    link.href = src;
+    document.head.appendChild(link);
+}
+
 function updateImage() {
     // Cada imagen entra siempre en su estado canónico: 100% y sin desplazamiento.
     resetTransform();
     lbImg.style.opacity = 0.5; lbImg.style.transition = 'opacity 0.2s';
     lbImg.decoding = 'async';
     lbImg.fetchPriority = 'high';
-    lbImg.src = currentImgs[idx]; lbCounter.innerText = (idx + 1) + " / " + currentImgs.length;
+    lbImg.src = toOptimizedImage(currentImgs[idx]); lbCounter.innerText = (idx + 1) + " / " + currentImgs.length;
     lbImg.onload = () => {
         resetTransform();
         lbImg.style.opacity = 1;
         lbImg.style.transition = 'none';
+        prefetchGalleryNeighbor(1);
     };
 }
 
@@ -856,7 +897,7 @@ document.addEventListener("click", (event) => {
 /* =========================================
    9. HERO ANIMATION (Sin cambios, las partículas verdes se verán bien sobre blanco)
    ========================================= */
-window.addEventListener('load', function() {
+function bootPortfolioUI() {
     applyContentCustomization();
     initStudioBrand();
     renderHomeSections();
@@ -865,13 +906,23 @@ window.addEventListener('load', function() {
     initHeroCarousel();
     initRevealOnScroll();
     initMobileSectionMotion();
+}
 
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootPortfolioUI, { once: true });
+} else {
+    bootPortfolioUI();
+}
+
+window.addEventListener('load', function() {
     const canvas = document.getElementById('hero-canvas');
     const container = document.getElementById('hero-card-container'); 
     
     if (!canvas || !container) return;
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Skip particle loop when the canvas is hidden (current hero design)
+    const canvasHidden = getComputedStyle(canvas).display === "none" || canvas.offsetParent === null;
+    if (canvasHidden || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         canvas.style.display = "none";
         return;
     }

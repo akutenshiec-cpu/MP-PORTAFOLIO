@@ -870,14 +870,35 @@
     </button>
   </div>
 
-  <script src="data/portfolio-data.js?v=20260813e"></script>
-  <script src="ads-config.js?v=20260813a"></script>
-  <script src="ads-tracking.js?v=20260813a"></script>
+  <script src="data/portfolio-data.js?v=20260814-perf"></script>
+  <script src="ads-config.js?v=20260814-perf" defer></script>
+  <script src="ads-tracking.js?v=20260814-perf" defer></script>
   <script>
     /* ========= DATOS REUTILIZADOS (FUENTE COMPARTIDA) ========= */
     const sharedData = window.MPPortfolioData || {};
     const db = sharedData.galleries || {};
     const galleryGroups = sharedData.galleryGroups || [];
+    const WEBP_READY = new Set([
+      "images/gallery-victoria-formatos",
+      "images/gallery-victoria-evento",
+      "images/gallery-documental-revista",
+      "images/gallery-documental-reportaje",
+      "images/gallery-finca-aplicaciones",
+      "images/gallery-merch-3d-brands",
+      "images/gallery-merch-aplicaciones",
+      "images/gallery-campana-aplicaciones",
+      "images/gallery-editorial-manual",
+      "images/gallery-encuentros-aplicaciones",
+      "images/gallery-prototyp3d-aplicaciones",
+      "images/card-itera-lite-editorial",
+      "images/card-itera-erp-editorial",
+      "images/card-web-editorial"
+    ]);
+    function toOptimizedImage(src) {
+      if (!src || typeof src !== "string" || /\.webp$/i.test(src)) return src;
+      const base = src.replace(/\.(png|jpe?g)$/i, "");
+      return WEBP_READY.has(base) ? `${base}.webp` : src;
+    }
 
     /* ========= VARIABLES GLOBALES (RESTO DEL SCRIPT DE GALERÍA) ========= */
     let currentSlide = 0;
@@ -1043,7 +1064,7 @@
         }
       }
 
-      images = project.images;
+      images = (project.images || []).map(toOptimizedImage);
       totalSlides = images.length;
       track.innerHTML = "";
       pagination.innerHTML = "";

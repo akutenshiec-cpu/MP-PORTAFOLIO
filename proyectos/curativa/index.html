@@ -6,8 +6,13 @@
     <meta name="description" content="Alúa: cosmética natural. Catálogo por categorías con carrito y pedido por WhatsApp." />
     <title>ALÚA · Catálogo 2026</title>
     <link rel="stylesheet" href="styles.css?v=20260815-modal-gestures" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600&family=Jost:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Poiret+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Jost:wght@500;600&family=Manrope:wght@400;600;700&family=Poiret+One&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600&family=Jost:wght@500;600&family=Manrope:wght@400;600;700&family=Poiret+One&display=swap" rel="stylesheet"></noscript>
 </head>
 <body>
     <div id="category-color-overlay"></div>
@@ -610,10 +615,27 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="script.js?v=20260815-session-category-index"></script>
+    <script src="script.js?v=20260814-perf" defer></script>
+    <script>
+      // PDF libs only when the user exports (keeps first paint light)
+      window.loadCurativaPdfLibs = function loadCurativaPdfLibs() {
+        if (window.__curativaPdfLibs) return window.__curativaPdfLibs;
+        const urls = [
+          "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js",
+          "https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js",
+          "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        ];
+        window.__curativaPdfLibs = urls.reduce((chain, src) => chain.then(() => new Promise((resolve, reject) => {
+          const s = document.createElement("script");
+          s.src = src;
+          s.async = true;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        })), Promise.resolve());
+        return window.__curativaPdfLibs;
+      };
+    </script>
 </body>
 </html>
 

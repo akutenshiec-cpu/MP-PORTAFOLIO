@@ -333,7 +333,7 @@ window.MPPortfolioData = {
                 rubro: "Sistema operativo · QMS",
                 description:
                     "Sistema QMS base para equipos que inician trazabilidad, control documental y gestión de lotes.",
-                image: "images/itera_dashboard.png",
+                image: "images/card-itera-lite-editorial.webp",
                 imageAlt: "Dashboard actual de ITERA con alertas operativas y estado de lotes",
                 badge: "QMS Base",
                 tags: ["Trazabilidad", "Lotes", "QMS"],
@@ -348,7 +348,7 @@ window.MPPortfolioData = {
                 rubro: "Arquitectura empresarial · ERP",
                 description:
                     "Gestión total de inventarios, ventas, documentos y reportes para operaciones B2B y B2C con criterio industrial.",
-                image: "images/itera_ventas_crm.png",
+                image: "images/card-itera-erp-editorial.webp",
                 imageAlt: "Vista actual de ventas y pedidos en ITERA ERP Premium",
                 badge: "Full Suite",
                 tags: ["ERP", "Operación", "Industrial"],
@@ -363,7 +363,7 @@ window.MPPortfolioData = {
                 rubro: "Arquitectura SaaS · E-commerce · CRM · IA",
                 description:
                     "Plataforma para desplegar tiendas con dominio propio, catálogo, órdenes, CRM de proyectos, vendedores, fidelización y asistente IA. Arquitectura multi-tenant real: datos y configuración aislados por cliente.",
-                image: "images/itera_dashboard.png",
+                image: "images/card-itera-lite-editorial.webp",
                 imageAlt: "Panel de administración de la plataforma SaaS multitenant",
                 badge: "SaaS",
                 tags: ["Multitenant", "E-commerce", "IA", "CRM"],
@@ -378,7 +378,7 @@ window.MPPortfolioData = {
                 rubro: "Restaurante · POS táctil · Caja · Delivery",
                 description:
                     "Sistema de operación para locales: mesas con estado en grilla táctil, pedidos por mesa/local/delivery, cierre POS por turno, panel de repartidor, vitrina pública y checkout con comprobante bancario obligatorio.",
-                image: "images/itera_documentos.png",
+                image: "images/card-web-editorial.webp",
                 imageAlt: "Sistema de pedidos y caja para restaurante con POS táctil",
                 badge: "F&B",
                 tags: ["POS táctil", "Mesas", "Delivery", "Caja"],
@@ -396,7 +396,7 @@ window.MPPortfolioData = {
                 rubro: "Producto digital · Lanzamiento",
                 description:
                     "Conversión rápida, narrativa visual y una estructura precisa para captar leads o validar un producto sin fricción.",
-                image: "images/5elementos-real.png",
+                image: "images/5elementos-thumb.jpg",
                 imageAlt: "Landing de validación",
                 overlayText: "Ver demo",
                 overlayIcon: "fa-play-circle",
@@ -414,7 +414,7 @@ window.MPPortfolioData = {
                 rubro: "Comercio digital · Conversión",
                 description:
                     "Inventario dinámico, carrito y cierre por chat para marcas que necesitan vender con claridad y velocidad.",
-                image: "images/curativa-real.png",
+                image: "images/curativa-thumb.png",
                 imageAlt: "Catálogo Pro WhatsApp",
                 overlayText: "Ver web",
                 overlayIcon: "fa-shopping-bag",
@@ -515,7 +515,7 @@ window.MPPortfolioData = {
                 rubro: "Diseño regulatorio · Impreso",
                 description:
                     "Sistemas gráficos para líneas de producto con consistencia visual y salida a imprenta.",
-                image: "images/etiqueta1.png",
+                image: "images/Manual6-thumb.png",
                 imageAlt: "Etiquetas y packaging técnico",
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",

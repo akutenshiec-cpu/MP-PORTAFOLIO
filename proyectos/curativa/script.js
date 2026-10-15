@@ -2022,7 +2022,18 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
+    async function ensurePdfLibs() {
+        if (typeof window.loadCurativaPdfLibs === "function") {
+            try {
+                await window.loadCurativaPdfLibs();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
     async function downloadOrderPdf(orderData, totals) {
+        await ensurePdfLibs();
         if (typeof window.html2pdf !== "function") {
             alert("No se pudo cargar el generador PDF.");
             return null;
@@ -2484,6 +2495,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function downloadOrderPdfFromMockup(orderData, totals) {
+        await ensurePdfLibs();
         const jspdfNs = window.jspdf;
         if (!jspdfNs || typeof jspdfNs.jsPDF !== "function") {
             alert("No se pudo cargar el generador PDF.");
@@ -2721,6 +2733,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function downloadOrderPdfFromTemplate(orderData, totals) {
+        await ensurePdfLibs();
         if (typeof window.html2pdf !== "function") {
             alert("No se pudo cargar el generador visual del PDF.");
             return null;
