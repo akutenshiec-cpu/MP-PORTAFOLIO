@@ -287,7 +287,7 @@ function renderHomeSections() {
                           .join("")}</div>`
                     : "";
             const galleryLink =
-                galleryTarget
+                pageConfig.showGalleryHdLinks === true && galleryTarget
                     ? `<a href="galerial.html?id=${encodeURIComponent(
                           galleryTarget
                        )}" class="card-gallery-link" data-gallery-link target="_blank" rel="noopener noreferrer">Vista galería HD <i class="fas fa-images"></i></a>`

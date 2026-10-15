@@ -16,7 +16,7 @@ El sitio está construido en HTML, CSS y JavaScript vanilla, sin frameworks ni d
 |---------|-------------|
 | `index.html` | Portada principal con hero, secciones de servicios, proyectos, branding y contacto |
 | `index2.html` | Catálogo de servicios detallado con carrusel de soluciones |
-| `galerial.html` | Visor independiente de proyectos |
+| `galerial.html` | Visor HD (archivo; fuera del flujo público / noindex) |
 | `proyectos/` | Demos front-end de proyectos para clientes (Curativa, Curarte, 5 Elementos) |
 
 ### Archivos clave

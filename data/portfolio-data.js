@@ -4,28 +4,28 @@ window.MPPortfolioData = {
         variants: [
             {
                 name: "MP DEV STUDIO",
-                tagline: "DEVELOPMENT | DESIGN",
+                tagline: "De la etiqueta al lote",
                 accent: "gold",
                 nameScale: 1,
                 tagScale: 1
             },
             {
                 name: "MP DEV STUDIO",
-                tagline: "Sistemas · Web · Branding premium",
+                tagline: "QMS · Packaging · Web comercial",
                 accent: "copper",
                 nameScale: 1,
                 tagScale: 1
             },
             {
                 name: "MP DEV · STUDIO",
-                tagline: "Visual Architect · Development & design",
+                tagline: "Marcas que fabrican bajo norma",
                 accent: "split",
                 nameScale: 1,
                 tagScale: 1
             },
             {
                 name: "MP DEV STUDIO",
-                tagline: "ARCSA & ACESS · Packaging · Sistemas",
+                tagline: "ARCSA & ACESS · Trazabilidad",
                 accent: "wine",
                 nameScale: 1,
                 tagScale: 1
@@ -33,33 +33,34 @@ window.MPPortfolioData = {
         ]
     },
     pageConfig: {
-        sectionOrder: ["hero", "servicios", "webs", "branding", "promo", "ciencia", "planes", "contacto"],
-        hiddenSections: [],
+        sectionOrder: ["hero", "servicios", "webs", "branding", "planes", "contacto"],
+        hiddenSections: ["promo", "ciencia"],
+        showGalleryHdLinks: false,
         heroStatusText: ""
     },
     contentBlocks: {
         planes: {
-            title: "Soluciones para crecer con criterio",
+            title: "Rutas claras según el problema",
             description:
-                "Web, marca y sistemas articulados según el problema, la operación y la etapa real de cada negocio.",
-            ctaText: "Explorar catálogo de servicios",
+                "Sistemas para planta regulada, web comercial y marca/packaging listo para operar. Elige la ruta; el alcance se define con diagnóstico.",
+            ctaText: "Ver catálogo de soluciones",
             ctaLink: "index2.html"
         },
         contacto: {
-            title: "Contacto profesional",
+            title: "Diagnóstico profesional",
             description:
-                "Cuéntame si necesitas una landing premium, un catálogo de conversión o un sistema empresarial a medida. Respondo con una ruta clara y un alcance realista.",
+                "Si fabricas bajo norma, necesitas trazabilidad, packaging o un canal digital que venda sin romper la operación, conversemos con alcance realista.",
             whatsapp: "https://wa.me/593963036594",
             email: "mailto:marcod.pc2021@gmail.com",
             instagram: "https://www.instagram.com/neckarc"
         },
         footer: {
             brandDescription:
-                "MP Dev Studio — desarrollo web premium, sistemas empresariales a medida, branding y diseño editorial con criterio técnico.",
+                "MP Dev Studio — diseño y software para marcas que fabrican bajo norma: de la etiqueta al lote, del catálogo al despacho.",
             services: [
-                { text: "Landings premium", href: "#webs" },
-                { text: "Catálogos web", href: "#webs" },
                 { text: "Sistemas QMS / ERP", href: "#servicios" },
+                { text: "Web comercial", href: "#webs" },
+                { text: "Marca y packaging", href: "#branding" },
                 { text: "Contacto", href: "#contacto" }
             ],
             contacts: [
@@ -67,57 +68,57 @@ window.MPPortfolioData = {
                 { text: "marcod.pc2021@gmail.com", href: "mailto:marcod.pc2021@gmail.com" },
                 { text: "@neckarc", href: "https://www.instagram.com/neckarc" }
             ],
-            copy: "© 2026 MP Dev Studio · Loja, Ecuador. Development, design y sistemas para negocios que necesitan valor real."
+            copy: "© 2026 MP Dev Studio · Loja, Ecuador. QMS, packaging y web para operaciones reguladas."
         }
     },
     sectionMeta: {
         servicios: {
-            title: "Sistemas empresariales a medida",
+            title: "Sistemas para operación regulada",
             icon: "fa-briefcase",
             enabled: true,
             subtitle:
-                "QMS, ERP, control de mermas y software operativo diseñado alrededor del flujo real del negocio, no de una plantilla genérica."
+                "QMS y ERP construidos alrededor de lotes, liberación técnica, trazabilidad y evidencia — no plantillas genéricas."
         },
         webs: {
-            title: "Experiencias web premium",
+            title: "Web comercial que convierte",
             icon: "fa-code",
             enabled: true,
             subtitle:
-                "Tres escalones claros para validar, convertir y elevar la percepción de marca sin sacrificar claridad comercial."
+                "Landings y catálogos conectados a WhatsApp para validar oferta, captar pedidos y sostener la venta."
         },
         branding: {
-            title: "Casos de marca",
+            title: "Marca y packaging técnico",
             icon: "fa-layer-group",
             enabled: true,
             subtitle:
-                "Branding, packaging y sistemas visuales desarrollados como piezas editoriales de alto valor percibido."
+                "Identidad y etiquetas listas para retail e imprenta, alineadas a criterios de etiquetado y coherencia de línea."
         },
         promo: {
             title: "Narrativa visual",
             icon: "fa-bullhorn",
-            enabled: true,
+            enabled: false,
             subtitle:
-                "Campañas, piezas promocionales y recursos editoriales que sostienen la historia de la marca en digital e impreso."
+                "Campañas y piezas editoriales (archivo de craft)."
         },
         ciencia: {
             title: "Ilustración científica",
             icon: "fa-microscope",
-            enabled: true,
+            enabled: false,
             subtitle:
-                "Precisión morfológica, observación y criterio editorial para divulgación, docencia y documentación técnica."
+                "Precisión morfológica (archivo de craft)."
         },
         planes: {
-            title: "Servicios y soluciones",
+            title: "Soluciones",
             icon: "fa-compass",
             enabled: true,
             subtitle:
-                "Un catálogo de capacidades para entender qué resuelve cada servicio, su alcance y los entregables que puede integrar."
+                "Tres rutas: sistemas, web comercial y marca/packaging."
         },
         contacto: {
             title: "Contacto profesional",
             icon: "fa-paper-plane",
             enabled: true,
-            subtitle: "Canales directos para nuevos proyectos, soporte o conversaciones de diagnóstico."
+            subtitle: "Diagnóstico breve para definir alcance y prioridad."
         }
     },
     heroCarousel: {
@@ -126,23 +127,23 @@ window.MPPortfolioData = {
             {
                 brandVariant: 0,
                 description:
-                    "Diseño experiencias web de alto valor y construyo sistemas operativos a medida para negocios que necesitan claridad, control y presencia premium.",
+                    "Diseño y software para marcas que fabrican bajo norma: packaging técnico, web comercial y sistemas QMS/ERP con trazabilidad real.",
                 image: "images/foto-hq.jpg",
                 imageAlt: "MP Dev Studio",
-                ctaPrimaryText: "Explorar portafolio",
-                ctaPrimaryLink: "#webs",
-                ctaSecondaryText: "Ver sistemas",
-                ctaSecondaryLink: "#servicios"
+                ctaPrimaryText: "Ver sistemas",
+                ctaPrimaryLink: "#servicios",
+                ctaSecondaryText: "Ver servicios",
+                ctaSecondaryLink: "index2.html"
             },
             {
                 brandVariant: 2,
                 description:
-                    "Desde una landing de validación hasta un ERP enfocado en calidad, ventas y trazabilidad: el stack cambia, la exigencia de diseño no.",
+                    "De la etiqueta al lote y del catálogo al despacho: una sola lógica de calidad, marca y conversión.",
                 image: "images/curativa-thumb.png",
-                imageAlt: "Proyecto premium",
-                ctaPrimaryText: "Ver casos",
+                imageAlt: "Caso Cosmética / packaging",
+                ctaPrimaryText: "Ver marca",
                 ctaPrimaryLink: "#branding",
-                ctaSecondaryText: "Ver cat?logo",
+                ctaSecondaryText: "Ver catálogo",
                 ctaSecondaryLink: "index2.html"
             }
         ]
@@ -368,7 +369,7 @@ window.MPPortfolioData = {
                 badge: "SaaS",
                 tags: ["Multitenant", "E-commerce", "IA", "CRM"],
                 order: 3,
-                visible: true,
+                visible: false,
                 buyEnabled: false,
             },
             {
@@ -383,7 +384,7 @@ window.MPPortfolioData = {
                 badge: "F&B",
                 tags: ["POS táctil", "Mesas", "Delivery", "Caja"],
                 order: 4,
-                visible: true,
+                visible: false,
                 buyEnabled: false,
             }
         ],

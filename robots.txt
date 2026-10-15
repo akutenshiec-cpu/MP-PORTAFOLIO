@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /galerial.html
 
 Sitemap: https://mpdesigns.xyz/sitemap.xml

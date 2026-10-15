@@ -7,27 +7,8 @@ Abrir Portafolio Local.bat
 *.bat
 
 # ─── Scripts de parche / utilidades de sesión ────────────────────────────────
-patch.py
-patch2.py
-patch3.py
-patch4.py
-patch5.py
-patch6.py
-patch7.py
-patch8.py
-patch9.py
-patch10.py
-patch11.py
-patch12.py
-patch13.py
-patch14.py
-patch_header.py
-patch_header_safe.py
-fix_css.py
-fix_encoding.py
-fix_html.py
-fix_html2.py
-fix_html3.py
+patch*.py
+fix_*.py
 compact_similar.py
 revert_padding.py
 check_html.py
@@ -35,9 +16,13 @@ update_fab.js
 
 # ─── Backups de archivos fuente ───────────────────────────────────────────────
 script_backup.js
+/styles.css
+
+# ─── Proyectos / carpetas fuera del portafolio público ────────────────────────
+proyectos/curarte_menu/
+temp_screenshot/
 
 # ─── Herramientas y dependencias temporales ───────────────────────────────────
-temp_screenshot/
 node_modules/
 
 # ─── Configuración publicitaria con IDs reales (llenar localmente) ────────────
