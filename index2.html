@@ -19,6 +19,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg">
   <title>Soluciones · MP Dev Studio</title>
+  <link rel="icon" href="images/mp-dev-studio-icon-light-fg.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -92,7 +94,8 @@
     }
     .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .brand img {
-      width: 34px; height: 34px; object-fit: contain;
+      width: 34px; height: auto; aspect-ratio: 292 / 245;
+      object-fit: contain; object-position: center; flex: 0 0 auto;
       filter: brightness(0) saturate(100%) invert(77%) sepia(35%) saturate(700%) hue-rotate(358deg) brightness(91%) contrast(87%);
     }
     .brand__copy { display: grid; line-height: 1.1; }
@@ -682,7 +685,7 @@
   <header class="topbar">
     <div class="shell topbar__inner">
       <a class="brand" href="index.html" aria-label="MP Dev Studio, inicio">
-        <img src="images/mp-dev-studio-mark.svg" alt="" width="52" height="40" aria-hidden="true">
+        <img src="images/mp-dev-studio-mark.svg" alt="" width="56" height="47" aria-hidden="true">
         <span class="brand__copy"><strong>DEV STUDIO</strong><span>Development · Design</span></span>
       </a>
       <nav class="service-section-tab" aria-label="Sección activa">

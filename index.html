@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="MP Studio" />
-    <link rel="apple-touch-icon" href="images/mp-dev-studio-mark-light.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
     <meta name="author" content="Marco Pérez Celi · MP Dev Studio" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <link rel="canonical" href="https://mpdesigns.xyz/" />
@@ -53,11 +53,13 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
     <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet" /></noscript>
-    <link rel="icon" href="images/mp-dev-studio-mark-light.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" href="images/mp-dev-studio-mark-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
-    <link rel="icon" href="images/mp-dev-studio-mark-light.svg" type="image/svg+xml" />
+    <link rel="icon" href="images/mp-dev-studio-icon-light-fg.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="images/mp-dev-studio-icon-dark-fg.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
+    <link rel="icon" href="images/mp-dev-studio-icon-light-fg.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/mp-dev-studio-icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="images/mp-dev-studio-icon-512.png" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="style.css?v=20261015-pwa" />
+    <link rel="stylesheet" href="style.css?v=20261015-icons" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
     <script type="application/ld+json">
@@ -69,7 +71,7 @@
           "@id": "https://mpdesigns.xyz/#studio",
           "name": "MP Dev Studio",
           "url": "https://mpdesigns.xyz/",
-          "logo": "https://mpdesigns.xyz/images/mp-dev-studio-mark.svg",
+          "logo": "https://mpdesigns.xyz/images/mp-dev-studio-icon-512.png",
           "image": "https://mpdesigns.xyz/images/mp-dev-studio-hero-share-2026.jpg",
           "description": "Desarrollo web premium, sistemas empresariales QMS y ERP a medida, branding y diseño editorial.",
           "telephone": "+593963036594",
@@ -110,8 +112,9 @@
             display: flex; align-items: center; justify-content: space-between; gap: 24px;
         }
         .portfolio-nav__brand { display: flex; align-items: center; gap: 11px; color: #eef2f4; text-decoration: none; }
-        .portfolio-nav__brand img { width: 32px; height: 32px; }
         .portfolio-nav__brand img {
+            width: 34px; height: auto; aspect-ratio: 292 / 245;
+            object-fit: contain; object-position: center; flex: 0 0 auto;
             filter: brightness(0) saturate(100%) invert(77%) sepia(35%) saturate(700%) hue-rotate(358deg) brightness(91%) contrast(87%);
             opacity: 1;
         }
@@ -528,7 +531,7 @@
         #planes .banner-card::after {
             content: ""; position: absolute; right: clamp(24px,5vw,66px); bottom: 26px;
             width: clamp(70px,10vw,118px); aspect-ratio: 1;
-            background: url("images/mp-dev-studio-mark.svg") center/contain no-repeat;
+            background: url("images/mp-dev-studio-icon.svg") center/contain no-repeat;
             filter: brightness(0) invert(1); opacity: .045; pointer-events: none;
         }
         #planes .banner-content { position: relative; z-index: 1; max-width: 760px; }
@@ -610,7 +613,7 @@
             }
             .portfolio-nav { width: 100%; }
             .portfolio-nav__inner { min-height: 62px; gap: 12px; }
-            .portfolio-nav__brand img { width: 28px; height: 28px; }
+            .portfolio-nav__brand img { width: 30px; height: auto; }
             .portfolio-nav__links a:not(.portfolio-nav__cta) { display: none; }
             .portfolio-nav__links, .portfolio-nav__cta { display: inline-flex; align-items: center; }
             .hero-content { grid-template-columns: 1fr; }
@@ -1044,7 +1047,10 @@
             display: flex; align-items: center; gap: 14px;
             margin-bottom: 14px; padding-right: 36px;
         }
-        .pwa-install-brand img { width: 48px; height: 40px; object-fit: contain; }
+        .pwa-install-brand img {
+            width: 44px; height: auto; aspect-ratio: 1 / 1;
+            object-fit: contain; object-position: center; flex: 0 0 auto;
+        }
         .pwa-install-kicker {
             margin: 0 0 4px; color: #d8b36a;
             font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
@@ -1179,7 +1185,7 @@
         <div class="page-loading-card">
             <div class="mp-brand mp-brand--loading mp-brand--accent-gold" data-mp-brand-slot="loading" aria-hidden="true">
                 <span class="mp-brand__mark">
-                    <img src="images/mp-dev-studio-mark.svg" alt="" width="52" height="40" aria-hidden="true" />
+                    <img src="images/mp-dev-studio-mark.svg" alt="" width="56" height="47" aria-hidden="true" />
                 </span>
                 <span class="mp-brand__divider" aria-hidden="true"></span>
                 <span class="mp-brand__text">
@@ -1569,7 +1575,7 @@
             <div class="pwa-install-handle" aria-hidden="true"></div>
             <button type="button" class="pwa-install-close" data-pwa-dismiss aria-label="Cerrar"><i class="fas fa-xmark"></i></button>
             <div class="pwa-install-brand">
-                <img src="images/mp-dev-studio-mark-light.svg" alt="" width="48" height="40" aria-hidden="true">
+                <img src="images/mp-dev-studio-icon-light.svg" alt="" width="48" height="48" aria-hidden="true">
                 <div>
                     <p class="pwa-install-kicker">Experiencia enfocada</p>
                     <h2 id="pwa-install-title">Abrir como app</h2>
