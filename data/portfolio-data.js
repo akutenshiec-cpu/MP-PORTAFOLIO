@@ -158,13 +158,13 @@ window.MPPortfolioData = {
         "itera-lite": {
             title: "ITERA LITE · Sistema QMS",
             rubro: "Producto digital y documentación operativa",
-            summary: "Presentación editorial y vistas reales de trazabilidad, documentos, lotes y operación de calidad.",
+            summary: "Presentación editorial y vistas reales de trazabilidad, documentos, lotes y operación de calidad. Producto en IteraQMS.com.",
             images: ["images/card-itera-lite-editorial.webp", "images/itera_dashboard.png", "images/itera_documentos.png", "images/itera_trazabilidad.png"]
         },
         "itera-premium": {
             title: "ITERA ERP Premium",
             rubro: "Arquitectura empresarial",
-            summary: "Sistema multiplataforma para ventas, inventario, calidad, documentos y lectura ejecutiva de la operación.",
+            summary: "Sistema multiplataforma para ventas, inventario, calidad, documentos y lectura ejecutiva. Producto en IteraQMS.com.",
             images: ["images/card-itera-erp-editorial.webp", "images/itera_ventas_crm.png", "images/itera_dashboard.png", "images/itera_documentos.png"]
         },
         "saas-multitenant": {
@@ -333,14 +333,16 @@ window.MPPortfolioData = {
                 title: "Implementación ITERA LITE",
                 rubro: "Sistema operativo · QMS",
                 description:
-                    "Sistema QMS base para equipos que inician trazabilidad, control documental y gestión de lotes.",
+                    "Sistema QMS base para equipos que inician trazabilidad, control documental y gestión de lotes. Producto en IteraQMS.com.",
                 image: "images/card-itera-lite-editorial.webp",
                 imageAlt: "Dashboard actual de ITERA con alertas operativas y estado de lotes",
                 badge: "QMS Base",
                 tags: ["Trazabilidad", "Lotes", "QMS"],
                 order: 1,
                 visible: true,
-                buyEnabled: true,
+                buyEnabled: false,
+                externalUrl: "https://iteraqms.com/",
+                ctaLabel: "Visitar IteraQMS.com"
             },
             {
                 id: "itera-premium",
@@ -348,14 +350,16 @@ window.MPPortfolioData = {
                 title: "ITERA ERP Premium",
                 rubro: "Arquitectura empresarial · ERP",
                 description:
-                    "Gestión total de inventarios, ventas, documentos y reportes para operaciones B2B y B2C con criterio industrial.",
+                    "Gestión total de inventarios, ventas, documentos y reportes para operaciones B2B y B2C. Producto en IteraQMS.com.",
                 image: "images/card-itera-erp-editorial.webp",
                 imageAlt: "Vista actual de ventas y pedidos en ITERA ERP Premium",
                 badge: "Full Suite",
                 tags: ["ERP", "Operación", "Industrial"],
                 order: 2,
                 visible: true,
-                buyEnabled: true,
+                buyEnabled: false,
+                externalUrl: "https://iteraqms.com/",
+                ctaLabel: "Visitar IteraQMS.com"
             },
             {
                 id: "saas-multitenant",

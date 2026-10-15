@@ -259,8 +259,15 @@ function renderHomeSections() {
             const overlay = card.overlayText
                 ? `<div class="hover-overlay"><i class="fas ${card.overlayIcon || "fa-arrow-right"}"></i> ${card.overlayText}</div>`
                 : "";
+            const externalUrl = typeof card.externalUrl === "string" ? card.externalUrl.trim() : "";
             const hasInterestCTA = card.buyEnabled === true;
-            const commerce = hasInterestCTA
+            const commerce = externalUrl
+                ? `
+                    <div class="card-commerce">
+                        <a class="buy-btn" href="${externalUrl}" target="_blank" rel="noopener noreferrer">${repairText(card.ctaLabel || "Visitar sitio")}</a>
+                    </div>
+                `
+                : hasInterestCTA
                 ? `
                     <div class="card-commerce">
                         <button class="buy-btn" data-interest="${card.id}">Consultar por WhatsApp</button>
@@ -1022,7 +1029,7 @@ window.addEventListener('load', function() {
 const CV_DATA_MARCO = {
     "1": {
         title: "Arquitectura QMS & ERP",
-        desc: "<strong>Sistemas a medida.</strong><br><br>Desarrollo backend y bases de datos relacionales para operaciones industriales reales. Control documental estricto, flujos de inventario y trazabilidad bajo normativas de calidad (ITERA)."
+        desc: "<strong>Sistemas a medida.</strong><br><br>Desarrollo backend y bases de datos relacionales para operaciones industriales reales. Control documental estricto, flujos de inventario y trazabilidad bajo normativas de calidad (<a href=\"https://iteraqms.com/\" target=\"_blank\" rel=\"noopener noreferrer\">ITERA QMS</a>)."
     },
     "2": {
         title: "Ecosistemas Web Premium",

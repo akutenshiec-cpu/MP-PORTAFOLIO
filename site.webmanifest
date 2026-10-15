@@ -9,7 +9,7 @@
   "theme_color": "#1c2023",
   "icons": [
     {
-      "src": "/images/mp-dev-studio-mark.svg",
+      "src": "/images/mp-dev-studio-mark-light.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

@@ -79,7 +79,7 @@ window.MPAdsConfig = Object.freeze({
 
 | Proyecto | Tipo | Demo |
 |----------|------|------|
-| ITERA QMS | Sistema de gestión de calidad y trazabilidad para fabricantes de cosmética | *privado* |
+| ITERA QMS | Sistema de gestión de calidad y trazabilidad para fabricantes de cosmética | [iteraqms.com](https://iteraqms.com/) |
 | Curativa Herbal | E-commerce + identidad de marca para cosmética artesanal | `proyectos/curativa/` |
 | Curarte Menú | Carta digital interactiva para restaurante | `proyectos/curarte_menu/` |
 | 5 Elementos | Identidad y packaging editorial | `proyectos/5elementos/` |
