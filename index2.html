@@ -167,7 +167,16 @@
     .service-card:hover { border-color: rgba(194,154,114,.45); transform: translateY(-3px); }
     .service-card__image { aspect-ratio: 16 / 9; overflow: hidden; background: #202428; }
     .service-card__image img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .5s; }
-    .service-card:hover img { transform: scale(1.03); }
+    .service-card__image { position: relative; overflow: hidden; }
+    .service-card__image > img:first-child { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+    .service-card:hover .service-card__image > img:first-child { transform: scale(1.03); }
+    .service-card__brand {
+      position: absolute; z-index: 2; top: 12px; right: 12px;
+      width: auto !important; height: 34px !important; max-width: 44%;
+      object-fit: contain; transform: none !important;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+      pointer-events: none;
+    }
     .service-card__body { padding: 24px; }
     .service-card__tag { color: var(--sage); font-size: .62rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
     h3 { margin: 10px 0 12px; font-family: var(--serif); font-size: 1.75rem; font-weight: 500; line-height: 1.05; }
@@ -194,6 +203,39 @@
     .service-card__cta::after { content: "→"; flex: 0 0 auto; font-size: 1rem; transition: transform .2s ease; }
     .service-card__cta:hover { transform: translateY(-2px); background: linear-gradient(135deg,#f0d493,#dfb965); box-shadow: 0 10px 24px rgba(216,179,106,.18); }
     .service-card__cta:hover::after { transform: translateX(3px); }
+    .service-card__cta--itera {
+      justify-content: center;
+      gap: 10px;
+      color: #031617;
+      border-color: rgba(47, 212, 197, .55);
+      background: linear-gradient(135deg, #34d6c8 0%, #1aa89c 55%, #128f85 100%);
+      box-shadow: 0 10px 24px rgba(26, 168, 156, .28), inset 0 1px 0 rgba(255,255,255,.28);
+    }
+    .service-card__cta--itera::after { content: none; }
+    .service-card__cta--itera:hover {
+      background: linear-gradient(135deg, #5ee4d7 0%, #22c1b4 55%, #17a297 100%);
+      box-shadow: 0 12px 28px rgba(26, 168, 156, .34);
+    }
+    .service-card__cta--itera img {
+      width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
+    }
+    .itera-heading {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .itera-heading img {
+      height: 36px; width: auto; max-width: 140px; object-fit: contain;
+      filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+    }
+    a[href*="iteraqms.com"]:not(.service-card__cta) {
+      color: #3ad2c4;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(58, 210, 196, .35);
+    }
+    a[href*="iteraqms.com"]:not(.service-card__cta):hover {
+      color: #7aefe4;
+      border-bottom-color: rgba(122, 239, 228, .7);
+    }
     details { border-top: 1px solid var(--line); padding-top: 16px; }
     summary { display: flex; justify-content: space-between; color: #d9dee1; cursor: pointer; font-size: .74rem; font-weight: 700; list-style: none; }
     summary::-webkit-details-marker { display: none; }
@@ -616,7 +658,7 @@
           <div><h2>Operación hecha software.</h2><p>Diseñamos alrededor del proceso real. <a href="https://iteraqms.com/" target="_blank" rel="noopener noreferrer">ITERA QMS</a> es el caso de producto: una plataforma para plantas reguladas, no un ERP contable genérico.</p></div>
         </header>
         <div class="service-grid">
-          <article class="service-card"><div class="service-card__image"><img src="images/itera_dashboard.png" alt="Panel real de ITERA QMS con indicadores de planta y centro de alertas" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Caso de producto</span><h3>ITERA QMS</h3><p>Sistema de gestión de calidad, producción y trazabilidad para fabricantes de cosmética y cuidado personal que operan bajo exigencias sanitarias.</p><a class="service-card__cta" href="https://iteraqms.com/" target="_blank" rel="noopener noreferrer">Ir a IteraQMS.com</a><details><summary>Conocer el caso de producto</summary><ul><li>Arquitectura SaaS con información aislada por empresa.</li><li>Paneles y permisos según administración, operación y representación técnica.</li><li>Indicadores, alertas, auditoría y evidencia vinculados al trabajo diario.</li><li>Configuración, incorporación de datos y capacitación por planta.</li></ul></details></div></article>
+          <article class="service-card"><div class="service-card__image"><img src="images/itera_dashboard.png" alt="Panel real de ITERA QMS con indicadores de planta y centro de alertas" loading="lazy"><img class="service-card__brand" src="images/branding/itera/iteraqms-logo.png" alt="Itera QMS" width="120" height="40" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Caso de producto</span><h3 class="itera-heading"><img src="images/branding/itera/iteraqms-mark.png" alt="" width="28" height="28"> ITERA QMS</h3><p>Sistema de gestión de calidad, producción y trazabilidad para fabricantes de cosmética y cuidado personal que operan bajo exigencias sanitarias.</p><a class="service-card__cta service-card__cta--itera" href="https://iteraqms.com/" target="_blank" rel="noopener noreferrer"><img src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22"><span>Abrir IteraQMS.com</span></a><details><summary>Conocer el caso de producto</summary><ul><li>Arquitectura SaaS con información aislada por empresa.</li><li>Paneles y permisos según administración, operación y representación técnica.</li><li>Indicadores, alertas, auditoría y evidencia vinculados al trabajo diario.</li><li>Configuración, incorporación de datos y capacitación por planta.</li></ul></details></div></article>
           <article class="service-card"><div class="service-card__image"><img src="images/itera_trazabilidad.png" alt="Ficha real de un lote en ITERA QMS con estado sanitario, recepción de origen y trazabilidad" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Núcleo regulatorio</span><h3>Calidad y trazabilidad</h3><p>Conecta proveedor, recepción, materia prima, fórmula, fabricación, liberación técnica y despacho para reconstruir el recorrido de cada lote.</p><a class="service-card__cta" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20necesito%20mejorar%20la%20calidad%20y%20trazabilidad%20de%20mi%20operaci%C3%B3n." target="_blank" rel="noopener">Revisar mi trazabilidad</a><details><summary>Ver el flujo cubierto</summary><ul><li>Cuarentena, aprobación o rechazo con bloqueos sanitarios.</li><li>Validación exclusiva del Representante Técnico y evidencia auditable.</li><li>SKU, lotes, caducidades, consumos, mermas y producto terminado.</li><li>Centro documental ligado a recepciones, proveedores, insumos y lotes.</li></ul></details></div></article>
           <article class="service-card"><div class="service-card__image"><img src="images/itera_ventas_crm.png" alt="Módulo real de ventas y despacho de ITERA QMS conectado con clientes y trazabilidad" loading="lazy"></div><div class="service-card__body"><span class="service-card__tag">Flujo integrado</span><h3>De planta a despacho</h3><p>Recepción, producción, inventario, documentos, clientes y ventas comparten el mismo dato operativo para evitar registros paralelos y decisiones a ciegas.</p><a class="service-card__cta" href="https://wa.me/593963036594?text=Hola%20MP%20Dev%20Studio%2C%20quiero%20integrar%20producci%C3%B3n%2C%20inventario%2C%20ventas%20y%20despacho." target="_blank" rel="noopener">Integrar mi operación</a><details><summary>Explorar capacidades</summary><ul><li>Fórmulas versionadas, producción guiada y etiquetado BPM.</li><li>Inventario FIFO/FEFO, capacidad y alertas de caducidad o stock mínimo.</li><li>Ventas, proformas, selección de lotes y actas de despacho.</li><li>Tienda y portal mayorista opcionales conectados al stock de planta.</li></ul></details></div></article>
         </div>

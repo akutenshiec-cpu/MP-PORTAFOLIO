@@ -341,8 +341,9 @@ window.MPPortfolioData = {
                 order: 1,
                 visible: true,
                 buyEnabled: false,
+                brandLogo: "images/branding/itera/iteraqms-logo.png",
                 externalUrl: "https://iteraqms.com/",
-                ctaLabel: "Visitar IteraQMS.com"
+                ctaLabel: "Abrir IteraQMS.com"
             },
             {
                 id: "itera-premium",
@@ -358,8 +359,9 @@ window.MPPortfolioData = {
                 order: 2,
                 visible: true,
                 buyEnabled: false,
+                brandLogo: "images/branding/itera/iteraqms-logo.png",
                 externalUrl: "https://iteraqms.com/",
-                ctaLabel: "Visitar IteraQMS.com"
+                ctaLabel: "Abrir IteraQMS.com"
             },
             {
                 id: "saas-multitenant",

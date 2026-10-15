@@ -315,6 +315,47 @@
             box-shadow: 0 9px 20px rgba(16,18,20,.16);
         }
         .buy-btn:hover { color: #352026; border-color: #fffaf1; background: #fffaf1; }
+        .buy-btn--itera {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            color: #031617;
+            border: 1px solid rgba(47, 212, 197, .55);
+            background: linear-gradient(135deg, #34d6c8 0%, #1aa89c 55%, #128f85 100%);
+            box-shadow: 0 10px 24px rgba(26, 168, 156, .28), inset 0 1px 0 rgba(255,255,255,.28);
+            font-weight: 700; letter-spacing: .03em;
+        }
+        .buy-btn--itera:hover {
+            color: #021212;
+            border-color: rgba(160, 245, 236, .7);
+            background: linear-gradient(135deg, #5ee4d7 0%, #22c1b4 55%, #17a297 100%);
+            filter: none;
+        }
+        .buy-btn__mark {
+            width: 22px; height: 22px; object-fit: contain; flex: 0 0 auto;
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
+        }
+        .card-brand-logo {
+            position: absolute; z-index: 3; top: 14px; right: 14px;
+            width: auto; height: 34px; max-width: 42%;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,.45));
+            pointer-events: none;
+        }
+        .trust-card--itera {
+            border-color: rgba(34, 179, 167, .28);
+        }
+        .trust-card--itera:hover {
+            border-color: rgba(47, 212, 197, .48);
+            box-shadow: 0 22px 46px rgba(8,9,10,.34), 0 0 0 1px rgba(34,179,167,.16);
+        }
+        a[href*="iteraqms.com"] {
+            color: #3ad2c4;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(58, 210, 196, .35);
+        }
+        a[href*="iteraqms.com"]:hover {
+            color: #7aefe4;
+            border-bottom-color: rgba(122, 239, 228, .7);
+        }
         #webs .cards-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
         #webs .trust-card:nth-child(-n+3) {
             grid-column: span 1; display: flex; min-width: 0; flex-direction: column;
@@ -1450,8 +1491,8 @@
         </div>
     </div>
 
-    <script src="data/portfolio-data.js?v=20261015-pwa2" defer></script>
-    <script src="script.js?v=20261015-pwa2" defer></script>
+    <script src="data/portfolio-data.js?v=20261015-itera" defer></script>
+    <script src="script.js?v=20261015-itera" defer></script>
     <script src="ads-config.js?v=20260814-perf" defer></script>
     <script src="ads-tracking.js?v=20260814-perf" defer></script>
 </body>

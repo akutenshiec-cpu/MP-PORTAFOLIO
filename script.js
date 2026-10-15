@@ -260,11 +260,15 @@ function renderHomeSections() {
                 ? `<div class="hover-overlay"><i class="fas ${card.overlayIcon || "fa-arrow-right"}"></i> ${card.overlayText}</div>`
                 : "";
             const externalUrl = typeof card.externalUrl === "string" ? card.externalUrl.trim() : "";
+            const isIteraCta = /iteraqms\.com/i.test(externalUrl);
             const hasInterestCTA = card.buyEnabled === true;
             const commerce = externalUrl
                 ? `
                     <div class="card-commerce">
-                        <a class="buy-btn" href="${externalUrl}" target="_blank" rel="noopener noreferrer">${repairText(card.ctaLabel || "Visitar sitio")}</a>
+                        <a class="buy-btn${isIteraCta ? " buy-btn--itera" : ""}" href="${externalUrl}" target="_blank" rel="noopener noreferrer">
+                            ${isIteraCta ? '<img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22">' : ""}
+                            <span>${repairText(card.ctaLabel || (isIteraCta ? "Abrir IteraQMS.com" : "Visitar sitio"))}</span>
+                        </a>
                     </div>
                 `
                 : hasInterestCTA
@@ -273,6 +277,10 @@ function renderHomeSections() {
                         <button class="buy-btn" data-interest="${card.id}">Consultar por WhatsApp</button>
                     </div>
                 `
+                : "";
+            const brandLogo = typeof card.brandLogo === "string" ? card.brandLogo.trim() : "";
+            const brandLogoHtml = brandLogo
+                ? `<img class="card-brand-logo" src="${brandLogo}" alt="" width="96" height="40" loading="lazy" decoding="async">`
                 : "";
             const safeAlt = repairText(card.imageAlt || card.title || "");
             const imageStyle = card.imageStyle || "";
@@ -300,9 +308,10 @@ function renderHomeSections() {
 
             const cardImage = toOptimizedImage(card.image || "");
             return `
-                <div class="trust-card${cardClass}${isClickable ? "" : " no-link"}"${actionAttrs}>
+                <div class="trust-card${cardClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}>
                     <div class="card-image${imageClass}">
                         ${badge}
+                        ${brandLogoHtml}
                         <img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">
                         ${overlay}
                     </div>
