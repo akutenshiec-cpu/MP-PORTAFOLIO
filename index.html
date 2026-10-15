@@ -446,6 +446,69 @@
         #servicios .section-line {
             background: linear-gradient(90deg, rgba(112,64,77,0), rgba(22,180,169,.45), rgba(216,179,106,.35), rgba(216,179,106,0)) !important;
         }
+
+        /* B · typographic product pause before Itera */
+        .product-divider {
+            display: grid;
+            grid-template-columns: minmax(24px, 1fr) auto minmax(24px, 1fr);
+            align-items: center;
+            gap: 18px;
+            margin: 0 0 28px;
+            padding: 8px 0 4px;
+        }
+        .product-divider__rule {
+            height: 1px;
+            border: 0;
+            background: linear-gradient(90deg, transparent, rgba(112,64,77,.35), rgba(22,180,169,.28), transparent);
+        }
+        .product-divider__rule--end {
+            background: linear-gradient(90deg, transparent, rgba(22,180,169,.28), rgba(216,179,106,.28), transparent);
+        }
+        .product-divider__label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            color: #c9d4d2;
+            font-family: "Cormorant Garamond", Georgia, serif;
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+            font-weight: 500;
+            letter-spacing: .04em;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+        .product-divider__label img {
+            width: 22px; height: 22px; object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+        }
+        .product-divider__label em {
+            font-style: normal;
+            color: #6fc9c1;
+            font-weight: 600;
+        }
+        .product-divider__label:hover em { color: #a8e8e1; }
+        .product-divider__meta {
+            display: block;
+            margin-top: 4px;
+            color: #8a9391;
+            font-family: Manrope, system-ui, sans-serif;
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .product-divider__cluster {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        @media (max-width: 640px) {
+            .product-divider { gap: 12px; margin-bottom: 22px; }
+            .product-divider__label { font-size: 1rem; gap: 8px; }
+            .product-divider__label img { width: 18px; height: 18px; }
+        }
         a[href*="iteraqms.com"] {
             color: #6fc9c1;
             text-decoration: none;
@@ -1225,6 +1288,17 @@
         </section>
 
         <section id="servicios" class="section-block anim-up" data-section-key="servicios">
+            <div class="product-divider" aria-label="Producto Itera QMS">
+                <hr class="product-divider__rule" />
+                <div class="product-divider__cluster">
+                    <a class="product-divider__label" href="https://iteraqms.com/" target="_blank" rel="noopener noreferrer">
+                        <img src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22">
+                        Producto · <em>IteraQMS</em>
+                    </a>
+                    <span class="product-divider__meta">Pausa · caso de producto</span>
+                </div>
+                <hr class="product-divider__rule product-divider__rule--end" />
+            </div>
             <div class="section-header"><h3 class="section-title"><i class="fas fa-briefcase"></i> Sistemas a medida</h3><div class="section-line"></div></div>
             <div class="cards-grid" id="servicios-grid"></div>
         </section>
