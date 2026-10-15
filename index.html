@@ -340,21 +340,34 @@
             content: none !important;
             display: none !important;
         }
-        /* Ferris keeps sections inside the wheel frame — no full-bleed breakout */
+        /*
+          Ferris/desktop wheel: section itself is the scrollport.
+          Full-bleed breakout must not override overflow:auto or content can't scroll
+          (body is locked with .ferris-scroll-lock).
+        */
         body.ferris-mode #servicios {
-            width: auto;
-            max-width: none;
-            margin-left: 0;
-            margin-right: 0;
-            padding-left: 0;
-            padding-right: 0;
+            width: auto !important;
+            max-width: none !important;
+            margin: 0 0 0 12px !important;
+            padding: 0 !important;
+            overflow: auto !important;
+            overscroll-behavior: contain !important;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(112, 64, 77, .08) 0%,
+                    rgba(22, 180, 169, .07) 45%,
+                    rgba(120, 90, 78, .05) 100%
+                ) !important;
         }
         body.ferris-mode #servicios .section-header,
         body.ferris-mode #servicios .cards-grid,
-        body.ferris-mode #servicios .section-intro {
-            width: auto;
-            margin-left: 0;
-            margin-right: 0;
+        body.ferris-mode #servicios .section-intro,
+        body.ferris-mode #servicios .ferris-section-content {
+            width: auto !important;
+            max-width: none !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
         }
         .section-header { margin-bottom: 24px; }
         .section-title { color: #f4f0e8; font-size: clamp(1.65rem, 3vw, 2.5rem); }
@@ -1596,8 +1609,8 @@
         </div>
     </div>
 
-    <script src="data/portfolio-data.js?v=20261015-bleed" defer></script>
-    <script src="script.js?v=20261015-bleed" defer></script>
+    <script src="data/portfolio-data.js?v=20261015-scroll" defer></script>
+    <script src="script.js?v=20261015-scroll" defer></script>
     <script src="ads-config.js?v=20260814-perf" defer></script>
     <script src="ads-tracking.js?v=20260814-perf" defer></script>
 </body>
