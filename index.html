@@ -897,34 +897,62 @@
             color: #d7d2c8; font-size: .84rem; line-height: 1.45;
         }
         .pwa-install-benefits i { margin-top: 2px; color: #d8b36a; width: 1rem; text-align: center; }
-        .pwa-install-ios {
-            margin: 0 0 18px; padding: 14px 14px 12px;
+        .pwa-install-more-wrap { margin: 0 0 14px; }
+        .pwa-install-more {
+            display: inline; padding: 0; border: 0; background: none;
+            color: #d8b36a; font: 600 .84rem/1.4 Manrope, system-ui, sans-serif;
+            text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+        }
+        .pwa-install-more[aria-expanded="true"] { color: #f0e6d4; }
+        .pwa-install-guide {
+            margin: 0 0 16px; padding: 12px;
             border: 1px solid rgba(232,220,198,.12); border-radius: 16px;
             background: rgba(255,255,255,.03);
         }
-        .pwa-install-ios-title {
-            margin: 0 0 10px; color: #d8b36a;
-            font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+        .pwa-install-guide-note {
+            margin: 0 0 12px; color: #aaa99f; font-size: .74rem; line-height: 1.45;
         }
-        .pwa-install-steps {
-            margin: 0; padding-left: 1.15rem; color: #d7d2c8; font-size: .84rem; line-height: 1.55;
+        .pwa-tutorial__frame { display: none; margin: 0; }
+        .pwa-tutorial__frame.is-active { display: block; }
+        .pwa-tutorial__frame img {
+            display: block; width: 100%; height: auto;
+            border-radius: 14px; border: 1px solid rgba(255,255,255,.08);
         }
-        .pwa-install-steps li + li { margin-top: 8px; }
-        .pwa-install-ios-note {
-            margin: 12px 0 0; color: #aaa99f; font-size: .74rem; line-height: 1.45;
+        .pwa-tutorial__frame figcaption {
+            display: flex; align-items: center; gap: 10px;
+            margin-top: 10px; color: #d7d2c8; font-size: .82rem; line-height: 1.4;
         }
-        .pwa-install-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .pwa-tutorial__frame figcaption span {
+            flex: 0 0 26px; height: 26px; display: grid; place-items: center;
+            border-radius: 50%; border: 1px solid rgba(216,179,106,.45);
+            color: #d8b36a; font-size: .72rem; font-weight: 700;
+        }
+        .pwa-tutorial__nav {
+            display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px;
+            align-items: center; margin-top: 12px;
+        }
+        .pwa-tutorial__dots { display: flex; gap: 7px; justify-content: center; }
+        .pwa-tutorial__dots button {
+            width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%;
+            background: rgba(255,255,255,.22); cursor: pointer;
+        }
+        .pwa-tutorial__dots button.is-active { background: #d8b36a; }
+        #pwa-tutorial-prev { justify-self: start; }
+        #pwa-tutorial-next { justify-self: end; }
+        .pwa-install-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
         .pwa-install-btn {
-            min-height: 46px; padding: 0 14px; border-radius: 14px;
+            min-height: 44px; padding: 0 14px; border-radius: 14px;
             border: 1px solid transparent; font: 600 .82rem/1 Manrope, system-ui, sans-serif;
             letter-spacing: .04em; cursor: pointer;
         }
         .pwa-install-btn--primary {
-            grid-column: 1 / -1; color: #1c1410;
+            color: #1c1410;
             background: linear-gradient(135deg, #f0e6d4, #d8b36a);
         }
         .pwa-install-btn--ghost {
-            color: #f4f0e8; border-color: rgba(216,179,106,.28); background: rgba(216,179,106,.08);
+            min-height: 38px; color: #f4f0e8;
+            border-color: rgba(216,179,106,.28); background: rgba(216,179,106,.08);
+            font-size: .74rem;
         }
         .pwa-install-btn--muted {
             color: #aaa99f; border-color: rgba(255,255,255,.1); background: transparent;
@@ -933,7 +961,7 @@
         @media (min-width: 720px) {
             .pwa-install-overlay { align-items: center; }
             .pwa-install-sheet {
-                margin: 0; border-radius: 22px;
+                margin: 0; border-radius: 22px; max-height: min(88vh, 760px); overflow: auto;
                 transform: translateY(18px) scale(.98);
             }
             .pwa-install-overlay.is-open .pwa-install-sheet { transform: translateY(0) scale(1); }
@@ -1376,28 +1404,48 @@
                 <img src="images/mp-dev-studio-mark-light.svg" alt="" width="48" height="40">
                 <div>
                     <p class="pwa-install-kicker">Experiencia enfocada</p>
-                    <h2 id="pwa-install-title">Abrir MP Dev Studio como app</h2>
+                    <h2 id="pwa-install-title">Abrir como app</h2>
                 </div>
             </div>
-            <p class="pwa-install-lead">Sugerencia para una experiencia más enriquecedora, sin pestañas ni distracciones del navegador: ventana propia, acceso rápido desde el escritorio y lectura más limpia.</p>
+            <p class="pwa-install-lead">Ventana propia, sin pestañas ni ruido del navegador. Acceso directo desde el escritorio.</p>
             <ul class="pwa-install-benefits">
-                <li><i class="fas fa-window-maximize" aria-hidden="true"></i> Se abre en una ventana de concentración</li>
-                <li><i class="fas fa-thumbtack" aria-hidden="true"></i> Acceso rápido desde el escritorio o la pantalla de inicio</li>
-                <li><i class="fas fa-share-nodes" aria-hidden="true"></i> Comparte el portafolio desde el dispositivo</li>
+                <li><i class="fas fa-window-maximize" aria-hidden="true"></i> Concentración en pantalla completa</li>
+                <li><i class="fas fa-thumbtack" aria-hidden="true"></i> Icono en el escritorio / inicio</li>
             </ul>
-            <div class="pwa-install-ios" id="pwa-install-ios" hidden>
-                <p class="pwa-install-ios-title">En iPhone / iPad (Safari)</p>
-                <ol class="pwa-install-steps">
-                    <li>Toca el botón <strong>Compartir</strong> <i class="fas fa-arrow-up-from-bracket" aria-hidden="true"></i> en la barra inferior.</li>
-                    <li>Desplázate y elige <strong>Añadir a pantalla de inicio</strong>.</li>
-                    <li>Confirma con <strong>Añadir</strong>. El icono queda en tu escritorio.</li>
-                </ol>
-                <p class="pwa-install-ios-note">Si usas Chrome en iPhone, abre este sitio en Safari para poder añadirlo al escritorio.</p>
+            <p class="pwa-install-more-wrap">
+                <button type="button" class="pwa-install-more" id="pwa-install-more" aria-expanded="false" aria-controls="pwa-install-guide">
+                    Cómo hacerlo en el celular · leer más
+                </button>
+            </p>
+            <div class="pwa-install-guide" id="pwa-install-guide" hidden>
+                <p class="pwa-install-guide-note">Usa la barra de Safari (no el menú de compartir de la página). En Chrome de iPhone abre el sitio en Safari.</p>
+                <div class="pwa-tutorial" id="pwa-tutorial" data-step="0">
+                    <figure class="pwa-tutorial__frame is-active">
+                        <img src="images/pwa-tutorial/ios-1-share.jpg" alt="Paso 1: toca el icono de compartir en la barra de Safari" width="640" height="545" loading="lazy">
+                        <figcaption><span>1</span> Toca <strong>Compartir</strong> en la barra de Safari</figcaption>
+                    </figure>
+                    <figure class="pwa-tutorial__frame">
+                        <img src="images/pwa-tutorial/ios-2-menu.jpg" alt="Paso 2: elige Compartir en el menú" width="640" height="684" loading="lazy">
+                        <figcaption><span>2</span> Elige <strong>Compartir</strong></figcaption>
+                    </figure>
+                    <figure class="pwa-tutorial__frame">
+                        <img src="images/pwa-tutorial/ios-3-home.jpg" alt="Paso 3: Agregar a Inicio" width="640" height="663" loading="lazy">
+                        <figcaption><span>3</span> Elige <strong>Agregar a Inicio</strong></figcaption>
+                    </figure>
+                    <div class="pwa-tutorial__nav">
+                        <button type="button" class="pwa-install-btn pwa-install-btn--ghost" id="pwa-tutorial-prev" aria-label="Paso anterior">Anterior</button>
+                        <div class="pwa-tutorial__dots" aria-hidden="true">
+                            <button type="button" data-pwa-step="0" class="is-active" aria-label="Paso 1"></button>
+                            <button type="button" data-pwa-step="1" aria-label="Paso 2"></button>
+                            <button type="button" data-pwa-step="2" aria-label="Paso 3"></button>
+                        </div>
+                        <button type="button" class="pwa-install-btn pwa-install-btn--ghost" id="pwa-tutorial-next" aria-label="Paso siguiente">Siguiente</button>
+                    </div>
+                </div>
             </div>
             <div class="pwa-install-actions">
-                <button type="button" class="pwa-install-btn pwa-install-btn--primary" id="pwa-install-primary">Instalar</button>
-                <button type="button" class="pwa-install-btn pwa-install-btn--ghost" id="pwa-install-share">Compartir</button>
-                <button type="button" class="pwa-install-btn pwa-install-btn--muted" data-pwa-dismiss>Ahora no</button>
+                <button type="button" class="pwa-install-btn pwa-install-btn--primary" id="pwa-install-primary" hidden>Instalar app</button>
+                <button type="button" class="pwa-install-btn pwa-install-btn--muted" data-pwa-dismiss>Cerrar</button>
             </div>
         </div>
     </div>
