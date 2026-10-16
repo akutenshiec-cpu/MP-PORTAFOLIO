@@ -814,7 +814,7 @@
       let wheelLocked = false;
       let resizeTimer = 0;
 
-      window.scrollTo(0, 0);
+      if (!location.hash) window.scrollTo(0, 0);
 
       pages.forEach(page => {
         const content = document.createElement('div');
@@ -826,7 +826,6 @@
       const render = (next, updateHash = true) => {
         const count = pages.length;
         current = (next + count) % count;
-        window.scrollTo(0,0);
         pages.forEach((page,index) => {
           const raw = index - current;
           const delta = ((raw + count / 2) % count + count) % count - count / 2;
@@ -847,7 +846,6 @@
       };
 
       const setMode = () => {
-        window.scrollTo(0, 0);
         document.documentElement.classList.toggle('services-carousel-lock',media.matches);
         document.body.classList.toggle('services-carousel',media.matches);
         if (media.matches) render(current,false);
