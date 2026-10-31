@@ -1,0 +1,147 @@
+/* PROPUESTA (prototipo local): galería ligera de capturas reales para tarjetas con `showcase` (ITERA). */
+(function () {
+    "use strict";
+    let dlg, stage, captionEl, counterEl, thumbsEl, titleEl, siteLink, current = 0, slides = [], opener = null, lastScrollY = 0;
+
+    function findCard(id) {
+        const data = window.MPPortfolioData || {};
+        const sections = data.homeSections || data.sections || {};
+        for (const list of Object.values(sections)) {
+            const hit = (Array.isArray(list) ? list : []).find((c) => c && c.id === id);
+            if (hit) return hit;
+        }
+        return null;
+    }
+
+    function build() {
+        dlg = document.createElement("div");
+        dlg.className = "pc-lightbox";
+        dlg.setAttribute("role", "dialog");
+        dlg.setAttribute("aria-modal", "true");
+        dlg.setAttribute("aria-labelledby", "pc-lightbox-title");
+        dlg.hidden = true;
+        dlg.innerHTML = `
+            <div class="pc-lightbox__backdrop" data-close></div>
+            <div class="pc-lightbox__panel">
+                <header class="pc-lightbox__head">
+                    <div>
+                        <p class="pc-lightbox__kicker">Capturas reales <span class="pc-lightbox__counter" aria-live="polite"></span></p>
+                        <h3 id="pc-lightbox-title" class="pc-lightbox__title"></h3>
+                    </div>
+                    <button type="button" class="pc-lightbox__close" data-close aria-label="Cerrar galería">×</button>
+                </header>
+                <div class="pc-lightbox__stage" aria-roledescription="carrusel">
+                    <button type="button" class="pc-lightbox__nav pc-lightbox__nav--prev" data-prev aria-label="Captura anterior">‹</button>
+                    <figure class="pc-lightbox__figure"></figure>
+                    <button type="button" class="pc-lightbox__nav pc-lightbox__nav--next" data-next aria-label="Captura siguiente">›</button>
+                </div>
+                <p class="pc-lightbox__caption"></p>
+                <footer class="pc-lightbox__foot">
+                    <div class="pc-lightbox__thumbs" role="tablist" aria-label="Elegir captura"></div>
+                    <a class="pc-lightbox__cta" target="_blank" rel="noopener noreferrer">
+                        <img src="images/branding/itera/iteraqms-mark.png" alt="" width="20" height="20" aria-hidden="true">
+                        <span>Visitar IteraQMS.com</span><span aria-hidden="true">↗</span>
+                    </a>
+                </footer>
+                <p class="pc-lightbox__note">Datos de demostración. Nombres de producto, proveedor y usuario difuminados.</p>
+            </div>`;
+        document.body.appendChild(dlg);
+        stage = dlg.querySelector(".pc-lightbox__figure");
+        captionEl = dlg.querySelector(".pc-lightbox__caption");
+        counterEl = dlg.querySelector(".pc-lightbox__counter");
+        thumbsEl = dlg.querySelector(".pc-lightbox__thumbs");
+        titleEl = dlg.querySelector(".pc-lightbox__title");
+        siteLink = dlg.querySelector(".pc-lightbox__cta");
+
+        dlg.addEventListener("click", (e) => {
+            if (e.target.closest("[data-close]")) close();
+            else if (e.target.closest("[data-prev]")) go(current - 1);
+            else if (e.target.closest("[data-next]")) go(current + 1);
+            const t = e.target.closest("[data-thumb]");
+            if (t) go(Number(t.dataset.thumb));
+        });
+        dlg.addEventListener("keydown", onKey);
+
+        // Deslizar en móvil
+        let x0 = null, y0 = null;
+        const area = dlg.querySelector(".pc-lightbox__stage");
+        area.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+        area.addEventListener("touchend", (e) => {
+            if (x0 === null) return;
+            const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) go(current + (dx < 0 ? 1 : -1));
+            x0 = y0 = null;
+        });
+    }
+
+    function focusables() {
+        return [...dlg.querySelectorAll("button, a[href]")].filter((el) => !el.disabled && el.offsetParent !== null);
+    }
+
+    function onKey(e) {
+        if (e.key === "Escape") { e.preventDefault(); close(); }
+        else if (e.key === "ArrowRight") { e.preventDefault(); go(current + 1); }
+        else if (e.key === "ArrowLeft") { e.preventDefault(); go(current - 1); }
+        else if (e.key === "Tab") {
+            const f = focusables(); if (!f.length) return;
+            const first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+    }
+
+    function go(i) {
+        current = (i + slides.length) % slides.length;
+        const s = slides[current];
+        stage.classList.toggle("is-portrait", !!s.portrait);
+        stage.innerHTML = `<picture><source srcset="${s.src}.webp" type="image/webp"><img src="${s.src}.jpg" alt="${s.alt}" width="${s.w}" height="${s.h}" decoding="async"></picture>`;
+        captionEl.textContent = s.caption || "";
+        counterEl.textContent = `${current + 1} / ${slides.length}`;
+        thumbsEl.querySelectorAll("[data-thumb]").forEach((b, bi) => {
+            b.setAttribute("aria-selected", bi === current ? "true" : "false");
+            b.tabIndex = bi === current ? 0 : -1;
+        });
+        // precarga la siguiente
+        const n = slides[(current + 1) % slides.length];
+        if (n) { const im = new Image(); im.src = `${n.src}.webp`; }
+    }
+
+    function open(card, index, trigger) {
+        if (!dlg) build();
+        slides = card.showcase.slides;
+        opener = trigger || document.activeElement;
+        titleEl.textContent = card.showcase.title || card.displayTitle || card.title || "";
+        if (card.externalUrl) { siteLink.href = card.externalUrl; siteLink.hidden = false; } else siteLink.hidden = true;
+        thumbsEl.innerHTML = slides.map((s, i) => `<button type="button" role="tab" class="pc-lightbox__thumb${s.portrait ? " is-portrait" : ""}" data-thumb="${i}" aria-label="Captura ${i + 1}: ${s.alt}"><picture><source srcset="${s.src}.webp" type="image/webp"><img src="${s.src}.jpg" alt="" loading="lazy"></picture></button>`).join("");
+        dlg.hidden = false;
+        lastScrollY = window.scrollY;
+        document.documentElement.classList.add("pc-lightbox-open");
+        requestAnimationFrame(() => dlg.classList.add("is-open"));
+        go(index || 0);
+        dlg.querySelector(".pc-lightbox__close").focus({ preventScroll: true });
+    }
+
+    function close() {
+        if (!dlg || dlg.hidden) return;
+        dlg.classList.remove("is-open");
+        dlg.hidden = true;
+        document.documentElement.classList.remove("pc-lightbox-open");
+        if (opener && typeof opener.focus === "function") opener.focus({ preventScroll: true });
+        window.scrollTo(0, lastScrollY);
+    }
+
+    function trigger(e) {
+        const el = e.target.closest("[data-showcase-open]");
+        if (!el) return false;
+        const card = findCard(el.dataset.showcaseOpen);
+        if (!card || !card.showcase) return false;
+        e.preventDefault(); e.stopPropagation();
+        open(card, Number(el.dataset.showcaseIndex || 0), el);
+        return true;
+    }
+    document.addEventListener("click", trigger, true);
+    document.addEventListener("keydown", (e) => {
+        if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches('[data-showcase-open][role="button"]')) trigger(e);
+    }, true);
+    window.MPShowcase = { open: (id, i) => { const c = findCard(id); if (c) open(c, i || 0); }, close };
+})();

@@ -359,8 +359,23 @@ window.MPPortfolioData = {
                 rubro: "Producción, calidad y despacho · Edición completa",
                 description:
                     "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
-                image: "images/card-itera-erp-editorial.webp",
-                imageAlt: "Vista actual de ventas y pedidos en ITERA Premium",
+                image: "images/itera/itera-panel.webp",
+                imageAlt: "Panel real de ITERA con centro de alertas de calidad, lotes y recepciones",
+                // PROPUESTA: capturas reales del sistema (datos de demostración; nombres de producto, proveedor e iniciales difuminados)
+                showcase: {
+                    title: "ITERA, del panel al celular",
+                    devicesLine: "Diseñado para escritorio, tableta y celular",
+                    devices: [
+                        { kind: "desktop", src: "images/itera/itera-panel-thumb", label: "Panel · escritorio" },
+                        { kind: "phone", src: "images/itera/itera-sitio-movil-thumb", label: "Sitio · celular" }
+                    ],
+                    slides: [
+                        { src: "images/itera/itera-panel", w: 1600, h: 1000, alt: "Panel de ITERA con indicadores de planta y centro de alertas de calidad", caption: "Panel de planta: alertas de validación sanitaria y materia prima por caducar, con el estado de cada lote." },
+                        { src: "images/itera/itera-lote", w: 1600, h: 1000, alt: "Ficha de un lote en ITERA con estado sanitario y recepción de origen", caption: "Ficha de lote: estado comercial y sanitario, insumo base y recepción de origen, a un clic de la trazabilidad completa." },
+                        { src: "images/itera/itera-documentos", w: 1600, h: 989, alt: "Centro documental de ITERA organizado por proceso y entidad", caption: "Centro documental: lo que falta emitir, cargar o revisar, vinculado a su recepción, insumo o lote." },
+                        { src: "images/itera/itera-sitio-movil", w: 780, h: 1688, alt: "Sitio público de ITERA en un celular", caption: "IteraQMS.com en celular.", portrait: true }
+                    ]
+                },
                 badge: "Full Suite",
                 tags: ["Producción", "Operación", "Industrial"],
                 order: 2,

@@ -270,7 +270,18 @@ function renderHomeSections() {
             const externalUrl = typeof card.externalUrl === "string" ? card.externalUrl.trim() : "";
             const isIteraCta = /iteraqms\.com/i.test(externalUrl);
             const hasInterestCTA = card.buyEnabled === true;
-            const commerce = externalUrl
+            const showcase = card.showcase && Array.isArray(card.showcase.slides) && card.showcase.slides.length ? card.showcase : null;
+            const commerce = showcase
+                ? `
+                    <div class="card-commerce pc-showcase-actions">
+                        <button type="button" class="buy-btn buy-btn--itera" data-showcase-open="${card.id}" aria-haspopup="dialog">
+                            <img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22" aria-hidden="true">
+                            <span>Ver el sistema por dentro</span>
+                        </button>
+                        ${externalUrl ? `<a class="pc-site-link" href="${externalUrl}" target="_blank" rel="noopener noreferrer">IteraQMS.com<span aria-hidden="true"> ↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>` : ""}
+                    </div>
+                `
+                : externalUrl
                 ? `
                     <div class="card-commerce">
                         <a class="buy-btn${isIteraCta ? " buy-btn--itera" : ""}" href="${externalUrl}" target="_blank" rel="noopener noreferrer">
@@ -339,17 +350,18 @@ function renderHomeSections() {
                    </dl>`
                 : "";
             const indexHtml = `<span class="card-index" aria-hidden="true">${String(cardIndex + 1).padStart(2, "0")} / ${total}</span>`;
-            const roleClass = isFeature ? " pc-feature" : " pc-secondary";
+            const roleClass = (isFeature ? " pc-feature" : " pc-secondary") + (card.showcase ? " pc-has-showcase" : "");
             const cardImage = toOptimizedImage(card.image || "");
             return `
                 <div class="trust-card${cardClass}${roleClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}${isClickable ? ' tabindex="0"' : ""}>
-                    <div class="card-image${imageClass}">
+                    <div class="card-image${imageClass}"${card.showcase ? ` data-showcase-open="${card.id}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ver capturas reales de ${titleText}"` : ""}>
                         ${badge}
                         ${brandLogoHtml}
                         ${card.placeholderImage
                             ? `<div class="pc-img-ph" role="img" aria-label="Imagen pendiente"><span>[${repairText(card.placeholderImage)}]</span><small>Imagen pendiente · prototipo</small></div>`
                             : `<img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">`}
                         ${overlay}
+                        ${card.showcase ? `<span class="pc-showcase-hint" aria-hidden="true">Capturas reales · ${card.showcase.slides.length}</span>` : ""}
                     </div>
                     <div class="card-info">
                         ${indexHtml}
@@ -357,6 +369,17 @@ function renderHomeSections() {
                         <h4>${titleText}</h4>
                         <p class="card-desc">${repairText(card.displayDescription || card.description)}</p>
                         ${specHtml || deliverablesHtml}
+                        ${showcase && Array.isArray(showcase.devices) ? `
+                        <div class="pc-devices">
+                            <div class="pc-devices__thumbs">
+                                ${showcase.devices.map((d, di) => `
+                                <button type="button" class="pc-device pc-device--${d.kind}" data-showcase-open="${card.id}" data-showcase-index="${d.kind === "phone" ? showcase.slides.length - 1 : 0}" aria-label="Ver captura: ${repairText(d.label)}">
+                                    <span class="pc-device__screen"><picture><source srcset="${d.src}.webp" type="image/webp"><img src="${d.src}.jpg" alt="" loading="lazy" decoding="async"></picture></span>
+                                    <span class="pc-device__label">${repairText(d.label)}</span>
+                                </button>`).join("")}
+                            </div>
+                            <p class="pc-devices__line">${repairText(showcase.devicesLine || "")}</p>
+                        </div>` : ""}
                         ${galleryLink}
                         ${commerce}
                     </div>
