@@ -343,7 +343,7 @@ function sendInterestToWhatsApp(serviceName) {
     const cleanName = repairText(serviceName || "Servicio");
     const message = `Hola MP Dev Studio, estoy interesado en el proyecto: ${cleanName}. ¿Podemos conversar sobre el alcance?`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank");
+    window.open(url, "_blank", "noopener,noreferrer");
 }
 
 function initHeroCarouselLegacy() {
@@ -422,7 +422,7 @@ function renderLinks(containerId, links = [], targetBlank = false) {
     container.innerHTML = links.map((link) => {
         const href = link.href || "#";
         const text = repairText(link.text || href);
-        const target = targetBlank ? ' target="_blank"' : "";
+        const target = targetBlank ? ' target="_blank" rel="noopener noreferrer"' : "";
         return `<a href="${href}"${target}>${text}</a>`;
     }).join("");
 }
@@ -812,36 +812,6 @@ window.addEventListener('resize', () => {
 });
 
 /* =========================================
-   7. MENÚ FAB
-   ========================================= */
-const fabWrapper = document.getElementById('fabMenu'), fabBtn = document.getElementById('fabBtn');
-if(fabBtn) {
-    fabBtn.addEventListener('click', (e) => { 
-        e.stopPropagation(); 
-        fabWrapper.classList.toggle('active'); 
-        fabBtn.classList.toggle('active'); 
-        fabBtn.setAttribute('aria-expanded', fabWrapper.classList.contains('active') ? 'true' : 'false');
-        const i = fabBtn.querySelector('i');
-        if(fabWrapper.classList.contains('active')) { 
-            i.classList.remove('fa-bars'); i.classList.add('fa-times'); 
-        } else { 
-            i.classList.remove('fa-times'); i.classList.add('fa-bars'); 
-        } 
-    });
-}
-function closeFab() { 
-    if (fabWrapper) fabWrapper.classList.remove('active');
-    if (!fabBtn) return;
-    fabBtn.classList.remove('active');
-    fabBtn.setAttribute('aria-expanded', 'false');
-    const i = fabBtn.querySelector('i');
-    if (i) {
-        i.classList.remove('fa-times');
-        i.classList.add('fa-bars');
-    }
-}
-
-/* =========================================
    8. EVENTOS GLOBALES
    ========================================= */
 document.addEventListener('keydown', (e) => {
@@ -858,7 +828,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 document.addEventListener('click', (e) => {
-    if(fabWrapper && fabWrapper.classList.contains('active') && !fabWrapper.contains(e.target)) closeFab();
     if(lightbox && e.target === lightbox) closeGallery();
 });
 
@@ -883,7 +852,6 @@ window.closeWeb = closeWeb;
 window.changeSlide = changeSlide; 
 window.changeGalleryZoom = changeGalleryZoom;
 window.resetGalleryZoom = resetGalleryZoom;
-window.closeFab = closeFab;
 
 document.addEventListener("click", (event) => {
     if (event.target.closest("a[data-gallery-link]")) return;
@@ -1039,28 +1007,28 @@ window.addEventListener('load', function() {
    ========================================= */
 const CV_DATA_MARCO = {
     "1": {
-        title: "Arquitectura QMS & ERP",
-        desc: "<strong>Sistemas a medida.</strong><br><br>Desarrollo backend y bases de datos relacionales para operaciones industriales reales. Control documental estricto, flujos de inventario y trazabilidad bajo normativas de calidad (<a href=\"https://iteraqms.com/\" target=\"_blank\" rel=\"noopener noreferrer\">ITERA QMS</a>)."
+        title: "Software de producción y calidad",
+        desc: "<a href=\"https://iteraqms.com/\" target=\"_blank\" rel=\"noopener noreferrer\">ITERA</a>: un sistema para plantas reguladas que une calidad y producción. Recepción de insumos, producción por lote, cuarentena y liberación, inventario, catálogo por notificación sanitaria y despacho, todo trazable."
     },
     "2": {
-        title: "Ecosistemas Web Premium",
-        desc: "<strong>Landings & E-commerce de alto rendimiento.</strong><br><br>Interfaces que elevan la percepción de marca con carga veloz y arquitecturas frontend optimizadas. Flujos de conversión sin fricción integrados con ventas."
+        title: "Web premium",
+        desc: "Landings y e-commerce de alto rendimiento que elevan la marca y llevan al cliente hasta la venta sin rodeos."
     },
     "3": {
-        title: "Identidad Visual & Packaging",
-        desc: "<strong>Branding & preparación retail.</strong><br><br>Sistemas visuales completos y maquetación técnica de etiquetas listas para imprenta, garantizando coherencia entre el producto físico y el digital."
+        title: "Identidad y packaging",
+        desc: "Sistemas visuales completos y etiquetas técnicas listas para imprenta, coherentes entre el producto físico y el digital."
     },
     "4": {
-        title: "Ilustración Científica",
-        desc: "<strong>Fauna neotropical & botánica.</strong><br><br>Documentación morfológica precisa de especies silvestres y láminas naturalistas de alta resolución. Enfoque analítico respaldado por mi formación como Biólogo."
+        title: "Ilustración científica",
+        desc: "Fauna neotropical y botánica con precisión morfológica, respaldada por mi formación como biólogo."
     },
     "5": {
-        title: "Diseño Editorial",
-        desc: "<strong>Manuales & publicaciones técnicas.</strong><br><br>Maquetación estructurada de libros, folletos y manuales técnicos. Rigor tipográfico, jerarquía visual y legibilidad para material complejo."
+        title: "Diseño editorial",
+        desc: "Manuales, libros y publicaciones técnicas con jerarquía clara y rigor tipográfico."
     },
     "6": {
-        title: "IA & Tecnologías 3D",
-        desc: "<strong>Automatización & prototipado.</strong><br><br>Modelado 3D e integración de sistemas de Inteligencia Artificial para potenciar flujos de trabajo en código y diseño visual."
+        title: "IA y 3D",
+        desc: "Modelado 3D e inteligencia artificial integrados al flujo de diseño y código."
     }
 };
 
@@ -1088,7 +1056,6 @@ function openMarcoBioDockUI() {
     const trigger = document.getElementById('floating-bio-dock');
     if (trigger) trigger.setAttribute('aria-expanded', 'true');
     document.body.classList.add('cv-modal-open');
-    closeFab();
 }
 
 function closeMarcoBioDock() {
@@ -1194,8 +1161,54 @@ function initCvSwipeGestures() {
     }
 }
 
+// Menú móvil del header: botón con aria-expanded, foco dentro del menú y Esc para cerrar.
+function initPortfolioMobileNav() {
+    const header = document.querySelector('.portfolio-nav');
+    const toggle = header?.querySelector('.portfolio-nav__toggle');
+    const menu = document.getElementById('portfolio-nav-menu');
+    if (!header || !toggle || !menu) return;
+    const mobileMedia = window.matchMedia('(max-width: 820px)');
+    const links = () => Array.from(menu.querySelectorAll('a'));
+    const isOpen = () => toggle.getAttribute('aria-expanded') === 'true';
+
+    const setOpen = (open, { restoreFocus = false } = {}) => {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        const label = toggle.querySelector('.portfolio-nav__toggle-label');
+        if (label) label.textContent = open ? 'Cerrar' : 'Menú';
+        header.classList.toggle('is-menu-open', open);
+        document.documentElement.classList.toggle('portfolio-nav-locked', open);
+        if (open) window.requestAnimationFrame(() => links()[0]?.focus({ preventScroll: true }));
+        else if (restoreFocus) toggle.focus({ preventScroll: true });
+    };
+
+    toggle.addEventListener('click', () => setOpen(!isOpen(), { restoreFocus: isOpen() }));
+    menu.addEventListener('click', (event) => {
+        if (event.target.closest('a, button') && isOpen()) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+        if (!isOpen()) return;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            setOpen(false, { restoreFocus: true });
+            return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusables = [toggle, ...links()];
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
+    document.addEventListener('click', (event) => {
+        if (isOpen() && !header.contains(event.target)) setOpen(false);
+    });
+    mobileMedia.addEventListener('change', () => { if (!mobileMedia.matches && isOpen()) setOpen(false); });
+}
+
 // Register event handlers
 document.addEventListener('DOMContentLoaded', () => {
+    initPortfolioMobileNav();
     window.scrollTo(0, 0);
     const sectionWheel = document.getElementById('section-wheel');
     const portfolioHeaderInner = document.querySelector('.portfolio-nav__inner');
@@ -1259,6 +1272,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cab) cab.style.rotate = `${-ferrisRotation}deg`;
         });
         if (ferrisOrbit) ferrisOrbit.style.rotate = `${ferrisRotation}deg`;
+        const activeHash = `#${ferrisSections[ferrisIndex].id}`;
+        document.querySelectorAll('.portfolio-nav__links a[href^="#"]').forEach((navLink) => {
+            navLink.classList.toggle('is-current', navLink.getAttribute('href') === activeHash);
+        });
         if (ferrisCounter) ferrisCounter.textContent = `${String(ferrisIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
         if (updateHash) history.replaceState(history.state, '', `#${ferrisSections[ferrisIndex].id}`);
         ferrisSections[ferrisIndex].scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -1274,10 +1291,13 @@ document.addEventListener('DOMContentLoaded', () => {
             window.scrollTo(0, 0);
             renderFerris(ferrisIndex, false);
         }
-        else ferrisSections.forEach((section) => {
-            section.classList.remove('ferris-active', 'ferris-prev', 'ferris-next', 'ferris-away-up', 'ferris-away-down');
-            section.removeAttribute('aria-hidden');
-        });
+        else {
+            ferrisSections.forEach((section) => {
+                section.classList.remove('ferris-active', 'ferris-prev', 'ferris-next', 'ferris-away-up', 'ferris-away-down');
+                section.removeAttribute('aria-hidden');
+            });
+            document.querySelectorAll('.portfolio-nav__links a.is-current').forEach((navLink) => navLink.classList.remove('is-current'));
+        }
     };
 
     if (sectionWheel && ferrisSections.length) {
@@ -1504,7 +1524,6 @@ function openPwaInstallModal() {
     requestAnimationFrame(() => modal.classList.add("is-open"));
     document.body.classList.add("modal-open");
     pwaModalOpen = true;
-    if (typeof closeFab === "function") closeFab();
 }
 
 function closePwaInstallModal() {
