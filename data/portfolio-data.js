@@ -329,7 +329,7 @@ window.MPPortfolioData = {
         servicios: [
             {
                 id: "itera-lite",
-                hidden: true, // PROPUESTA: fusionada en la tarjeta única de ITERA
+                hidden: true, // fusionada en la tarjeta única de ITERA
                 galleryId: "itera-lite",
                 title: "ITERA Lite",
                 rubro: "Producción y calidad · Edición base",
@@ -361,7 +361,7 @@ window.MPPortfolioData = {
                     "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
                 image: "images/itera/itera-panel.webp",
                 imageAlt: "Panel real de ITERA con centro de alertas de calidad, lotes y recepciones",
-                // PROPUESTA: capturas reales del sistema (datos de demostración; nombres de producto, proveedor e iniciales difuminados)
+                // capturas reales del sistema (datos de demostración; nombres de producto, proveedor e iniciales difuminados)
                 showcase: {
                     title: "ITERA, del panel al celular",
                     devicesLine: "Diseñado para escritorio, tableta y celular",
@@ -388,6 +388,7 @@ window.MPPortfolioData = {
             },
             {
                 id: "saas-multitenant",
+                hidden: true,
                 galleryId: "saas-multitenant",
                 title: "Plataforma SaaS Multitenant",
                 rubro: "Arquitectura SaaS · E-commerce · CRM · IA",
@@ -417,7 +418,8 @@ window.MPPortfolioData = {
                 buyEnabled: false,
             },
             {
-                id: "saas-pedidos-caja", // PROPUESTA: SaaS de pedidos y caja (nació en CurArte); nombre de marca blanca pendiente
+                id: "saas-pedidos-caja", // Oculta hasta tener nombre y capturas reales
+                hidden: true,
                 title: "[Nombre SaaS] · Pedidos y caja",
                 meta: "Restaurantes · Pedidos, caja y clientes · SaaS",
                 description:
@@ -456,6 +458,7 @@ window.MPPortfolioData = {
                 type: "web",
                 title: "Catálogo Pro WhatsApp",
                 client: "Curativa",
+                hidden: true, // Oculta: la miniatura aún muestra arte de Curativa
                 rubro: "Comercio digital · Conversión",
                 description:
                     "Tu catálogo, tu carrito y el cierre de venta en la conversación que tus clientes ya usan.",
@@ -528,7 +531,8 @@ window.MPPortfolioData = {
         ],
         branding: [
             {
-                id: "liena", // PROPUESTA: marca concepto liena (imagen pendiente; sin arte de Alúa)
+                id: "liena", // Oculta hasta tener las imágenes definitivas
+                hidden: true,
                 title: "liena",
                 meta: "Cosmética natural · Concepto de autor",
                 description: "Una marca imaginada desde el estante: un sistema de etiquetas que mantiene una sola voz en unos 24 productos y sus variantes, listo para imprenta.",
@@ -543,7 +547,7 @@ window.MPPortfolioData = {
                 type: "gallery",
                 title: "Curativa · Identidad y packaging",
                 client: "Curativa",
-                hidden: true, // PROPUESTA: oculta por ahora (datos e imágenes se conservan)
+                hidden: true, // oculta por ahora (datos e imágenes se conservan)
                 rubro: "Cosmética natural · Retail",
                 description:
                     "Brandbook, empaques y sistema visual técnico listos para retail y posicionamiento premium.",
@@ -559,6 +563,7 @@ window.MPPortfolioData = {
             {
                 id: "tiny",
                 type: "gallery",
+                featured: true,
                 title: "Tiny Melts · Sistema visual",
                 client: "Tiny Melts",
                 meta: "Velas artesanales · Identidad",
@@ -597,7 +602,7 @@ window.MPPortfolioData = {
                 type: "gallery",
                 title: "Los Encuentros NET",
                 client: "Los Encuentros NET",
-                hidden: true, // PROPUESTA: oculta por ahora (datos e imágenes se conservan)
+                hidden: true, // oculta por ahora (datos e imágenes se conservan)
             rubro: "Identidad corporativa",
                 description:
                     "Identidad corporativa para ISP local con aplicaciones de señalética y comunicación técnica.",

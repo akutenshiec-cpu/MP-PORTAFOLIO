@@ -250,13 +250,12 @@ function renderHomeSections() {
         }
         sectionEl.style.display = "";
 
-        /* Propuesta tarjetas v2: una protagonista por sección (card.featured) y el resto secundarias. */
+        /* Tarjetas v2: una protagonista por sección (card.featured) y el resto secundarias. */
         const featuredCount = cards.filter((c) => c.featured === true).length;
         if (featuredCount) cards.sort((a, b) => (b.featured === true) - (a.featured === true));
         if (featuredCount > 1) grid.classList.add("cards-v2--duo");
         grid.classList.add("cards-v2", `cards-v2--${sectionKey}`);
         const total = String(cards.length).padStart(2, "0");
-        const ph = (label) => `<span class="ph" title="Dato pendiente: lo completa Marco">[${label}]</span>`;
 
         grid.innerHTML = cards.map((card, cardIndex) => {
             const cardClass = card.cardClass ? ` ${card.cardClass}` : "";
@@ -333,9 +332,9 @@ function renderHomeSections() {
             const metaParts = sectionKey === "servicios"
                 ? [rubroParts[0] || ""]
                 : [
-                    client ? (titleText.includes(client) ? "" : client) : ph("Cliente"),
+                    client && !titleText.includes(client) ? client : "",
                     isFeature ? rubroParts.join(" / ") : (rubroParts[0] || ""),
-                    card.year ? String(card.year) : ph("Año")
+                    card.year ? String(card.year) : ""
                   ];
             const metaSource = card.meta ? repairText(card.meta).split("·").map((x) => x.trim()) : metaParts;
             const metaHtml = `<p class="card-meta">${metaSource.filter(Boolean).join('<span class="sep"> · </span>')}</p>`;

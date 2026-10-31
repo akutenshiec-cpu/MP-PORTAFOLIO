@@ -1,4 +1,4 @@
-/* PROPUESTA (prototipo local): galería ligera de capturas reales para tarjetas con `showcase` (ITERA). */
+/* Galería ligera de capturas reales para tarjetas con `showcase` (ITERA). */
 (function () {
     "use strict";
     let dlg, stage, captionEl, counterEl, thumbsEl, titleEl, siteLink, current = 0, slides = [], opener = null, lastScrollY = 0;

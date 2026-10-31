@@ -1,5 +1,5 @@
 /* =====================================================================
-   PROPUESTA tarjetas v2 (prototipo local, no publicar)
+   Tarjetas v2: una protagonista por sección, formato por disciplina, meta y entregables.
    Una protagonista por sección (8/12) + secundarias; formato por disciplina.
    ===================================================================== */
 .cards-grid.cards-v2 { --pc-radius: 14px; --pc-gold: #d8b36a; --pc-cream: #ece5da; gap: 18px; grid-auto-flow: dense; }
@@ -166,7 +166,7 @@
     .cards-v2--branding .pc-secondary .card-desc, .cards-v2--branding .pc-secondary .card-deliverables { display: none; }
 }
 
-/* ---------- Propuesta 2: Sistemas a dos protagonistas (ITERA 7 + SaaS 5) e imagen pendiente ---------- */
+/* ---------- Sistemas a dos protagonistas e imagen pendiente ---------- */
 .pc-img-ph {
     position: absolute; inset: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
     border: 1.5px dashed rgba(216,179,106,.5); border-radius: 10px; text-align: center; padding: 16px;
@@ -200,7 +200,7 @@
     .cards-v2--branding .pc-rail > .pc-secondary:nth-child(n+3):nth-last-child(-n+2):nth-child(-n+4) { grid-column: span 6 !important; }
 }
 
-/* ---------- Propuesta 3: ITERA con capturas reales, miniaturas por dispositivo y galería ---------- */
+/* ---------- ITERA con capturas reales, miniaturas por dispositivo y galería ---------- */
 .sr-only { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .pc-has-showcase .card-image[data-showcase-open] { cursor: zoom-in; }
 .pc-has-showcase .card-image[data-showcase-open]:focus-visible { outline: 2px solid #d8b36a; outline-offset: -4px; }
@@ -279,7 +279,7 @@ html.pc-lightbox-open, html.pc-lightbox-open body { overflow: hidden !important;
     .pc-has-showcase .card-image { height: clamp(220px, 62vw, 360px) !important; }
 }
 @media (prefers-reduced-motion: reduce) { .pc-lightbox, .pc-device__screen { transition: none; } }
-/* ajustes propuesta 3 */
+/* ajustes ITERA */
 .cards-v2 > .pc-has-showcase .card-image img { object-fit: cover !important; object-position: center top !important; }
 .pc-lightbox .pc-lightbox__cta, .pc-lightbox .pc-lightbox__cta span { color: #1a1012 !important; }
 .pc-devices { display: flex; align-items: center; gap: 18px; }
@@ -289,3 +289,23 @@ html.pc-lightbox-open, html.pc-lightbox-open body { overflow: hidden !important;
 .pc-device__label { white-space: nowrap; }
 @media (max-width: 899px) { .pc-lightbox__nav { top: auto; bottom: -50px; transform: none; } .pc-lightbox__stage { margin-bottom: 50px; } }
 @media (max-width: 899px) { .cards-v2 > .pc-has-showcase .card-image { height: auto !important; aspect-ratio: 16 / 10; } }
+
+/* ---------- Producción: secciones con una sola tarjeta o pocas secundarias ---------- */
+@media (min-width: 900px) {
+    /* Sistemas: ITERA sola, a todo el ancho, captura completa a la izquierda */
+    .cards-v2 > .pc-feature:only-child { grid-column: 1 / -1 !important; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); }
+    .cards-v2--servicios > .pc-has-showcase:only-child .card-image { background: radial-gradient(ellipse at 40% 30%, #1d2224, #101314) !important; }
+    .cards-v2--servicios > .pc-has-showcase:only-child .card-image img { object-fit: contain !important; object-position: center center !important; padding: 28px !important; border-radius: 18px !important; }
+    .cards-v2--servicios > .pc-has-showcase:only-child .card-info { padding: 30px 34px 28px !important; }
+    .cards-v2--servicios > .pc-has-showcase:only-child .card-desc { max-width: none; }
+    /* Web: una sola secundaria acompaña a la protagonista a toda su altura */
+    .cards-v2--webs > .pc-feature + .pc-secondary:last-child { grid-row: span 2; display: flex !important; flex-direction: column; }
+    .cards-v2--webs > .pc-feature + .pc-secondary:last-child .card-image { height: auto !important; flex: 1 1 auto; min-height: 220px; }
+    .cards-v2--webs > .pc-feature + .pc-secondary:last-child .card-image img { position: absolute; inset: 0; height: 100%; object-fit: cover !important; object-position: left center !important; }
+    .cards-v2--webs > .pc-feature + .pc-secondary:last-child .card-desc,
+    .cards-v2--webs > .pc-feature + .pc-secondary:last-child .card-deliverables { display: block !important; }
+}
+@media (min-width: 1200px) {
+    /* Marca con 3 secundarias: la tercera cierra la fila a todo el ancho */
+    .cards-v2.cards-v2--branding .pc-rail > .pc-secondary.pc-secondary:nth-child(3):last-child:nth-last-child(1) { grid-column: 1 / -1 !important; }
+}
