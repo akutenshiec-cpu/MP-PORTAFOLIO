@@ -250,6 +250,13 @@ function renderHomeSections() {
         }
         sectionEl.style.display = "";
 
+        /* Propuesta tarjetas v2: una protagonista por sección (card.featured) y el resto secundarias. */
+        const featuredAt = Math.max(0, cards.findIndex((c) => c.featured === true));
+        if (featuredAt > 0) cards.unshift(cards.splice(featuredAt, 1)[0]);
+        grid.classList.add("cards-v2", `cards-v2--${sectionKey}`);
+        const total = String(cards.length).padStart(2, "0");
+        const ph = (label) => `<span class="ph" title="Dato pendiente: lo completa Marco">[${label}]</span>`;
+
         grid.innerHTML = cards.map((card, cardIndex) => {
             const cardClass = card.cardClass ? ` ${card.cardClass}` : "";
             const imageClass = card.imageClass ? ` ${card.imageClass}` : "";
@@ -307,9 +314,34 @@ function renderHomeSections() {
                        )}" class="card-gallery-link" data-gallery-link target="_blank" rel="noopener noreferrer">Vista galería HD <i class="fas fa-images"></i></a>`
                     : "";
 
+            const isFeature = cardIndex === 0;
+            const rubroParts = repairText(card.rubro || "").split("·").map((x) => x.trim()).filter(Boolean);
+            const titleText = repairText(card.title || "");
+            const client = repairText(card.client || "");
+            const metaParts = sectionKey === "servicios"
+                ? [rubroParts[0] || ""]
+                : [
+                    client ? (titleText.includes(client) ? "" : client) : ph("Cliente"),
+                    isFeature ? rubroParts.join(" / ") : (rubroParts[0] || ""),
+                    card.year ? String(card.year) : ph("Año")
+                  ];
+            const metaHtml = `<p class="card-meta">${metaParts.filter(Boolean).join('<span class="sep"> · </span>')}</p>`;
+            const deliverables = Array.isArray(card.deliverables) && card.deliverables.length ? card.deliverables : (card.tags || []);
+            const deliverablesHtml = deliverables.length
+                ? `<p class="card-deliverables">${deliverables.map(repairText).join('<span class="sep"> · </span>')}</p>`
+                : "";
+            const specHtml = sectionKey === "servicios" && isFeature
+                ? `<dl class="card-spec">
+                        ${rubroParts[0] ? `<div><dt>Cubre</dt><dd>${rubroParts[0]}</dd></div>` : ""}
+                        ${rubroParts[1] ? `<div><dt>Edición</dt><dd>${rubroParts[1]}</dd></div>` : ""}
+                        ${deliverables.length ? `<div><dt>Módulos</dt><dd>${deliverables.map(repairText).join(" · ")}</dd></div>` : ""}
+                   </dl>`
+                : "";
+            const indexHtml = `<span class="card-index" aria-hidden="true">${String(cardIndex + 1).padStart(2, "0")} / ${total}</span>`;
+            const roleClass = isFeature ? " pc-feature" : " pc-secondary";
             const cardImage = toOptimizedImage(card.image || "");
             return `
-                <div class="trust-card${cardClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}>
+                <div class="trust-card${cardClass}${roleClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}${isClickable ? ' tabindex="0"' : ""}>
                     <div class="card-image${imageClass}">
                         ${badge}
                         ${brandLogoHtml}
@@ -317,16 +349,26 @@ function renderHomeSections() {
                         ${overlay}
                     </div>
                     <div class="card-info">
-                        <span class="card-kicker">${kickerLabel}</span>
-                        <h4>${repairText(card.title)}</h4>
-                        <p>${repairText(card.description)}</p>
-                        ${tagsHtml}
+                        ${indexHtml}
+                        ${metaHtml}
+                        <h4>${titleText}</h4>
+                        <p class="card-desc">${repairText(card.description)}</p>
+                        ${specHtml || deliverablesHtml}
                         ${galleryLink}
                         ${commerce}
                     </div>
                 </div>
             `;
         }).join("");
+
+        /* Secundarias envueltas en un riel: display:contents en escritorio, carrusel en móvil (solo Marca). */
+        if (sectionKey === "branding" && grid.children.length > 2) {
+            const rail = document.createElement("div");
+            rail.className = "pc-rail";
+            rail.setAttribute("role", "list");
+            [...grid.querySelectorAll(":scope > .pc-secondary")].forEach((el) => { el.setAttribute("role", "listitem"); rail.appendChild(el); });
+            grid.appendChild(rail);
+        }
     });
 }
 

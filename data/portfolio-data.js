@@ -350,6 +350,7 @@ window.MPPortfolioData = {
                 id: "itera-premium",
                 galleryId: "itera-premium",
                 title: "ITERA Premium",
+                featured: true,
                 rubro: "Producción, calidad y despacho · Edición completa",
                 description:
                     "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
@@ -399,6 +400,7 @@ window.MPPortfolioData = {
         webs: [
             {
                 id: "elementos",
+                client: "Jardín 5 Elementos",
                 galleryId: "elementos",
                 type: "web",
                 title: "Landing de validación",
@@ -420,6 +422,7 @@ window.MPPortfolioData = {
                 galleryId: "curativa-web",
                 type: "web",
                 title: "Catálogo Pro WhatsApp",
+                client: "Curativa",
                 rubro: "Comercio digital · Conversión",
                 description:
                     "Tu catálogo, tu carrito y el cierre de venta en la conversación que tus clientes ya usan.",
@@ -438,6 +441,8 @@ window.MPPortfolioData = {
                 galleryId: "curarte-web",
                 type: "web",
                 title: "Ecosistema premium",
+                client: "CurArte",
+                featured: true,
                 rubro: "Experiencia editorial · Web",
                 description:
                     "Dirección de arte, interfaz cuidada y una experiencia inmersiva para marcas que viven de su valor percibido.",
@@ -489,6 +494,8 @@ window.MPPortfolioData = {
                 id: "curativa",
                 type: "gallery",
                 title: "Curativa · Identidad y packaging",
+                client: "Curativa",
+                featured: true,
                 rubro: "Cosmética natural · Retail",
                 description:
                     "Brandbook, empaques y sistema visual técnico listos para retail y posicionamiento premium.",
@@ -505,6 +512,7 @@ window.MPPortfolioData = {
                 id: "tiny",
                 type: "gallery",
                 title: "Tiny Melts · Sistema visual",
+                client: "Tiny Melts",
                 rubro: "Marca artesanal · Identidad",
                 description:
                     "Logo, dirección cromática y piezas promocionales para una marca artesanal con lenguaje propio.",
@@ -537,6 +545,7 @@ window.MPPortfolioData = {
                 id: "encuentros",
                 type: "gallery",
                 title: "Los Encuentros NET",
+                client: "Los Encuentros NET",
             rubro: "Identidad corporativa",
                 description:
                     "Identidad corporativa para ISP local con aplicaciones de señalética y comunicación técnica.",
@@ -553,6 +562,7 @@ window.MPPortfolioData = {
                 id: "prototype",
                 type: "gallery",
                 title: "PROTOTYP3D",
+                client: "PROTOTYP3D",
             rubro: "Identidad tech",
                 description:
                     "Identidad para marca tecnológica con acento industrial, comercial y de producto.",
@@ -569,6 +579,7 @@ window.MPPortfolioData = {
                 id: "finca",
                 type: "gallery",
                 title: "Finca Pindaca",
+                client: "Finca Pindaca",
             rubro: "Identidad agrícola",
                 description:
                     "Construcción de marca agrícola pensada para origen, confianza y aplicaciones de empaque.",
