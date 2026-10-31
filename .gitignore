@@ -55,3 +55,6 @@ dist/
 build/
 .env
 .venv/
+
+# Notas internas (no publicar)
+PLAN-DE-ACCION.md
