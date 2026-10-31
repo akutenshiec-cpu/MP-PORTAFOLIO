@@ -130,7 +130,7 @@ window.MPPortfolioData = {
                     "Diseñamos marcas, packaging y sistemas para empresas que fabrican bajo norma. Una sola mirada, del primer boceto al último lote despachado.",
                 image: "images/foto-hq.jpg",
                 imageAlt: "MP Dev Studio",
-                ctaPrimaryText: "Conocer el estudio",
+                ctaPrimaryText: "Ver sistemas",
                 ctaPrimaryLink: "#servicios",
                 ctaSecondaryText: "Ver servicios",
                 ctaSecondaryLink: "index2.html"

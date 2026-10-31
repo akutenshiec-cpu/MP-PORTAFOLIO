@@ -59,7 +59,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="images/mp-dev-studio-icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="images/mp-dev-studio-icon-512.png" />
     <link rel="manifest" href="site.webmanifest" />
-    <link rel="stylesheet" href="style.css?v=20261031-reestilo" />
+    <link rel="stylesheet" href="style.css?v=20261031-textos-v3" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
     <script type="application/ld+json">
@@ -1306,6 +1306,12 @@
         }
         .contact-minifooter__links a:hover { color: #f4efe6; }
         .contact-minifooter__links a:focus-visible { outline: 2px solid #d8b36a; outline-offset: 2px; border-radius: 8px; }
+
+        /* Kicker del hero más largo (textos v3): reparto equilibrado en móvil. */
+        @media (max-width: 560px) { .hero-kicker-new { text-wrap: balance; letter-spacing: .14em; } }
+        /* Subtítulo del header en una sola línea; se oculta por debajo de 400px. */
+        @media (max-width: 820px) { .portfolio-nav__brand-copy span { white-space: nowrap; } }
+        @media (max-width: 440px) { .portfolio-nav__brand-copy span { font-size: .52rem; letter-spacing: .05em; } }
     </style>
 </head>
 <body>
@@ -1316,7 +1322,7 @@
                 <img src="images/mp-dev-studio-mark.svg" alt="" width="56" height="47" aria-hidden="true">
                 <span class="portfolio-nav__brand-copy">
                     <strong>DEV STUDIO</strong>
-                    <span>QMS · Packaging · Web</span>
+                    <span>Calidad · Packaging · Web</span>
                 </span>
             </a>
             <nav class="portfolio-nav__links" id="portfolio-nav-menu" aria-label="Navegación principal">
@@ -1363,7 +1369,7 @@
                 <span class="mp-brand__divider" aria-hidden="true"></span>
                 <span class="mp-brand__text">
                     <span class="mp-brand__name" data-mp-brand-name>MP DEV STUDIO</span>
-                    <span class="mp-brand__tagline" data-mp-brand-tagline>DEVELOPMENT | DESIGN</span>
+                    <span class="mp-brand__tagline" data-mp-brand-tagline>DISEÑO | DESARROLLO</span>
                 </span>
             </div>
             <div class="page-loading-spinner"></div>
@@ -1386,7 +1392,7 @@
         <span class="mp-brand__divider" aria-hidden="true"></span>
         <span class="mp-brand__text">
             <span class="mp-brand__name" data-mp-brand-name>MP DEV STUDIO</span>
-            <span class="mp-brand__tagline" data-mp-brand-tagline>DEVELOPMENT | DESIGN</span>
+            <span class="mp-brand__tagline" data-mp-brand-tagline>DISEÑO | DESARROLLO</span>
         </span>
     </a>
 
@@ -1409,7 +1415,7 @@
                     </div>
                     <div class="hero-text hero-editorial__pitch">
                         <img class="hero-editorial__watermark" src="images/mp-dev-studio-mark.svg" alt="" width="76" height="58" loading="lazy" decoding="async" aria-hidden="true">
-                        <p class="hero-kicker-new">QMS · Packaging · Web comercial</p>
+                        <p class="hero-kicker-new">Producción y calidad · Packaging · Web comercial</p>
                         <h1 class="hero-brand-title">De la etiqueta al lote. Del catálogo al <em>despacho.</em></h1>
                         <p class="hero-desc" id="hero-desc">
                             Diseñamos marcas, packaging y sistemas para empresas que fabrican bajo norma. Una sola mirada, del primer boceto al último lote despachado.
@@ -1417,7 +1423,7 @@
                         <div class="hero-btns">
                             <div class="hero-btns-row hero-btns-row--main">
                                 <a href="#servicios" class="btn btn-hero btn-hero--primary" id="hero-cta-primary">
-                                    <span class="btn-hero__label">Conocer el estudio</span>
+                                    <span class="btn-hero__label">Ver sistemas</span>
                                     <i class="fa-solid fa-arrow-right btn-hero__icon" aria-hidden="true"></i>
                                 </a>
                                 <a href="index2.html" class="btn btn-hero btn-hero--ghost" id="hero-cta-secondary">
@@ -1490,7 +1496,7 @@
                     <span class="mp-brand__divider" aria-hidden="true"></span>
                     <span class="mp-brand__text">
                         <span class="mp-brand__name" data-mp-brand-name>MP DEV STUDIO</span>
-                        <span class="mp-brand__tagline" data-mp-brand-tagline>DEVELOPMENT | DESIGN</span>
+                        <span class="mp-brand__tagline" data-mp-brand-tagline>DISEÑO | DESARROLLO</span>
                     </span>
                 </div>
                 <p id="footer-brand-description">Desarrollo experiencias web premium y sistemas operativos a medida para marcas y empresas en crecimiento.</p>
@@ -1790,8 +1796,8 @@
         </div>
     </div>
 
-    <script src="data/portfolio-data.js?v=20261031-textos-v2" defer></script>
-    <script src="script.js?v=20261031-textos-v2" defer></script>
+    <script src="data/portfolio-data.js?v=20261031-textos-v3" defer></script>
+    <script src="script.js?v=20261031-textos-v3" defer></script>
     <script src="ads-config.js?v=20260814-perf" defer></script>
     <script src="ads-tracking.js?v=20260814-perf" defer></script>
 </body>
