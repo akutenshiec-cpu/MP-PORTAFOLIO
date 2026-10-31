@@ -330,3 +330,12 @@ html.pc-lightbox-open, html.pc-lightbox-open body { overflow: hidden !important;
 /* La frase de dispositivos baja a su propia línea cuando no cabe junto a las miniaturas */
 .pc-devices { flex-wrap: wrap; row-gap: 10px; }
 .pc-devices__line { flex: 1 1 10ch; min-width: 10ch; }
+
+/* Sistemas con tres protagonistas (ITERA, Nuestro Sí, CAVIERA): la tercera ocupa la fila completa, captura a un lado y texto al otro */
+@media (min-width: 900px) {
+    .cards-v2--duo > .pc-feature:nth-child(3) {
+        grid-column: 1 / -1 !important; display: grid !important; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    .cards-v2--duo > .pc-feature:nth-child(3) .card-image { height: auto !important; min-height: 400px; }
+    .cards-v2--duo > .pc-feature:nth-child(3) .card-info { justify-content: center; padding: 34px 34px 30px !important; }
+}

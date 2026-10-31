@@ -456,16 +456,43 @@ window.MPPortfolioData = {
                 buyEnabled: false,
             },
             {
-                id: "saas-pedidos-caja", // Oculta hasta tener nombre y capturas reales
-                hidden: true,
-                title: "[Nombre SaaS] · Pedidos y caja",
+                id: "caviera",
+                title: "CAVIERA",
+                displayTitle: "CAVIERA",
+                featured: true,
                 meta: "Restaurantes · Pedidos, caja y clientes · SaaS",
+                rubro: "Restaurantes · SaaS",
                 description:
                     "Todo el servicio en un solo sistema: vitrina con carrito, pedidos en mesa y a domicilio, pagos con comprobante y cierre de caja por turno. Cada persona del equipo ve solo lo que le toca, y cada movimiento queda registrado.",
-                placeholderImage: "Captura del sistema: POS / mesas",
-                deliverables: ["POS con tickets", "Turnos de caja", "CRM de clientes", "KPIs", "Roles y auditoría"],
-                featured: true,
-                order: 5,
+                deliverables: ["POS y caja por turno", "CRM de clientes", "KPIs", "Roles y auditoría"],
+                image: "images/caviera/caviera-pos.webp",
+                imageAlt: "Punto de venta de CAVIERA con la cuenta abierta de una mesa en un restaurante de muestra",
+                // capturas del sistema funcionando con un restaurante de muestra (Casa Olmo) y datos ficticios; sin enlace hasta que caviera.app esté listo
+                showcase: {
+                    title: "CAVIERA, del salón a la caja",
+                    devicesLine: "En caja, en el salón y en el celular",
+                    openLabel: "Ver el sistema por dentro",
+                    openIcon: "fa-cash-register",
+                    btnClass: "buy-btn--ns",
+                    hint: "Capturas del sistema · datos ficticios",
+                    kicker: "Restaurante de muestra · datos ficticios",
+                    note: "Capturas del sistema con datos ficticios (restaurante de muestra).",
+                    devices: [
+                        { kind: "desktop", src: "images/caviera/caviera-pos-thumb", label: "Caja · escritorio" },
+                        { kind: "phone", src: "images/caviera/caviera-movil-thumb", label: "Vitrina · celular" }
+                    ],
+                    slides: [
+                        { src: "images/caviera/caviera-pos", w: 1600, h: 1000, alt: "Punto de venta de CAVIERA con la cuenta abierta de una mesa, categorías y consumo actual", caption: "Punto de venta: la cuenta de cada mesa con su consumo, precuenta y transferencia entre mesas." },
+                        { src: "images/caviera/caviera-cierre", w: 1600, h: 1000, alt: "Ventana de cierre de caja con efectivo físico y propinas retiradas", caption: "Cierre de caja por turno: se cuenta el efectivo del cajón y el sistema calcula la diferencia." },
+                        { src: "images/caviera/caviera-turnos", w: 1600, h: 1000, alt: "Historial de turnos de caja con base, teórico, físico y discrepancia", caption: "Historial de turnos: base, teórico, físico y discrepancia de cada cierre, con su cajero." },
+                        { src: "images/caviera/caviera-kpis", w: 1600, h: 1000, alt: "Panel de indicadores con ingresos, caja neta, tendencia de ventas y estado operativo", caption: "KPIs del día: ingresos, caja neta, ticket promedio, ocupación y comprobantes por verificar." },
+                        { src: "images/caviera/caviera-clientes", w: 1600, h: 1000, alt: "Directorio de clientes con la ficha de un cliente, sus puntos y su actividad", caption: "CRM de clientes: ficha con consumo, puntos, notas internas y quién cambió qué." },
+                        { src: "images/caviera/caviera-roles", w: 1600, h: 1000, alt: "Directorio de personal con roles de administración, caja, mesero y repartidor", caption: "Roles: administración, caja, meseros y repartidores, cada uno con su propio acceso." },
+                        { src: "images/caviera/caviera-vitrina", w: 1600, h: 1000, alt: "Vitrina pública de un restaurante de muestra con la carta y botones para agregar al carrito", caption: "Vitrina del restaurante: la carta con carrito para pedir en la mesa o a domicilio." },
+                        { src: "images/caviera/caviera-movil", w: 780, h: 1688, alt: "La vitrina de un restaurante de muestra hecha con CAVIERA en un celular", caption: "La misma vitrina en el celular.", portrait: true }
+                    ]
+                },
+                order: 4,
                 visible: true,
                 buyEnabled: false
             }
