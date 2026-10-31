@@ -17,13 +17,16 @@ El sitio está construido en HTML, CSS y JavaScript vanilla, sin frameworks ni d
 | `index.html` | Portada principal con hero, secciones de servicios, proyectos, branding y contacto |
 | `index2.html` | Catálogo de servicios detallado con carrusel de soluciones |
 | `galerial.html` | Visor HD (archivo; fuera del flujo público / noindex) |
-| `proyectos/` | Demos front-end de proyectos para clientes (Curativa, Curarte, 5 Elementos) |
+| `proyectos/` | Demos front-end que sí viven en este repo (`curativa`, `5elementos`) y fichas de proyecto generadas (`nuestro-si`). Curarte Menú es otro repositorio y no está aquí |
 
 ### Archivos clave
 
 | Archivo | Función |
 |---------|---------|
-| `data/portfolio-data.js` | Fuente única de contenido compartida por todas las páginas |
+| `data/portfolio-data.js` | Fuente única de contenido compartida por todas las páginas. Los casos nuevos van en `projects` |
+| `data/project-page.js` | Plantilla de la ficha y de la card de catálogo |
+| `proyecto.html` | Ficha de proyecto. Lee `?id=` y no requiere build |
+| `scripts/prerender-projects.mjs` | Opcional. Escribe `proyectos/<slug>/index.html` para SEO |
 | `script.js` | Navegación animada, galerías, cards, hero interactivo |
 | `style.css` | Sistema visual completo, responsive, animaciones y consentimiento |
 | `ads-config.js` | Configuración de IDs publicitarios (ver sección Ads) |
@@ -75,14 +78,26 @@ window.MPAdsConfig = Object.freeze({
 
 ---
 
+## Cómo agregar un proyecto
+
+Hace falta una entrada en `data/portfolio-data.js` y sus imágenes. No hay que editar `index.html`, `index2.html` ni armar una página a mano.
+
+1. Guarda la imagen en `images/` (WebP, liviana; la card del home no debería depender de un PNG de varios MB).
+2. Copia el ejemplo comentado dentro de `projects` en `data/portfolio-data.js` y completa los campos. Con eso la card aparece al final de la sección del home (`section`: `servicios`, `webs` o `branding`) y la ficha responde en `proyecto.html?id=<slug>`.
+3. Si quieres la misma card en el catálogo, pon `catalogSection` en `web`, `marca` o `itera`. Si lo omites, el catálogo no cambia.
+4. Opcional, para una URL estática indexable: `node scripts/prerender-projects.mjs`. Eso escribe `proyectos/<slug>/index.html` y suma la URL al sitemap. Hay que commitear ese HTML. El sitio sigue funcionando si no corres el script: la card apunta a `proyecto.html?id=<slug>` cuando el objeto no trae `page`.
+
+La entrada comentada está justo arriba de `projects`. Los casos que ya estaban en `homeSections` no se mueven: una entrada nueva se agrega después, así que el mosaico actual queda igual.
+
 ## Proyectos en el portafolio
 
-| Proyecto | Tipo | Demo |
-|----------|------|------|
+| Proyecto | Tipo | Dónde verlo |
+|----------|------|-------------|
 | ITERA QMS | Sistema de gestión de calidad y trazabilidad para fabricantes de cosmética | [iteraqms.com](https://iteraqms.com/) |
 | Curativa Herbal | E-commerce + identidad de marca para cosmética artesanal | `proyectos/curativa/` |
-| Curarte Menú | Carta digital interactiva para restaurante | `proyectos/curarte_menu/` |
+| Curarte Menú | Carta digital para restaurante | Repositorio aparte. No existe `proyectos/curarte_menu/` en este repo. La card del portafolio abre [curarteloja.com](https://curarteloja.com) |
 | 5 Elementos | Identidad y packaging editorial | `proyectos/5elementos/` |
+| Nuestro Sí | Plataforma de invitaciones de boda (React, Vite, Node/Express, Postgres) | [nuestrosi.app](https://nuestrosi.app) · ficha `proyectos/nuestro-si/` |
 | Dirección de arte Victoria | Afiche, adaptaciones y piezas de evento | incluido en galería |
 | Revista Escanzel | Narrativa documental editorial | incluido en galería |
 

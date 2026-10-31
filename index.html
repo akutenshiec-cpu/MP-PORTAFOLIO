@@ -405,6 +405,8 @@
             box-shadow: 0 9px 20px rgba(16,18,20,.16);
         }
         .buy-btn:hover { color: #352026; border-color: #fffaf1; background: #fffaf1; }
+        .trust-card .card-info a.buy-btn:not(.buy-btn--itera) { color: #572e35 !important; text-decoration: none; }
+        .trust-card .card-info a.buy-btn:not(.buy-btn--itera):hover { color: #352026 !important; }
         /* IteraQMS brand surface */
         .buy-btn--itera {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -518,6 +520,35 @@
         #webs .trust-card:nth-child(3) .card-tag { color: #e6cba6; background: rgba(216,179,106,.08); border-color: rgba(216,179,106,.2); }
         #webs .trust-card:nth-child(3) .buy-btn { color: #572e35; border-color: #f0ece6; background: #f0ece6; }
         #webs .trust-card:nth-child(3) .buy-btn:hover { background: #fffaf1; }
+        /* Extra data-driven cases sit after the original mosaic. Same chrome as the first web cards. */
+        #webs .trust-card--project {
+            grid-column: span 1; display: flex; min-width: 0; flex-direction: column;
+        }
+        #servicios .trust-card--project { grid-column: span 6; }
+        #branding .trust-card--project { grid-column: span 4; }
+        #webs .trust-card--project .card-image {
+            height: 226px; padding: 28px 12px 12px;
+            background: linear-gradient(145deg, #2b2f32, #1b1e20);
+        }
+        #webs .trust-card--project .card-image::after {
+            content: ""; position: absolute; z-index: 2; top: 12px; left: 14px;
+            width: 6px; height: 6px; border-radius: 50%; background: #d8b36a;
+            box-shadow: 11px 0 rgba(240,236,230,.45), 22px 0 rgba(96,48,57,.9);
+            pointer-events: none;
+        }
+        #webs .trust-card--project .card-image img {
+            border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
+            box-shadow: 0 12px 25px rgba(0,0,0,.25); object-fit: cover; object-position: center top;
+        }
+        #webs .trust-card--project .card-badge { top: 36px; }
+        #webs .trust-card--project .card-info { display: flex; flex: 1; flex-direction: column; gap: 4px; padding: 27px 26px 26px; }
+        #webs .trust-card--project .card-info p { margin-bottom: 4px; }
+        #webs .trust-card--project .card-tags { margin-top: 13px; }
+        #webs .trust-card--project .card-tag {
+            min-height: 25px; padding-inline: 9px; font-size: .61rem; letter-spacing: .045em;
+            color: #e6cba6; background: rgba(216,179,106,.075); border-color: rgba(216,179,106,.18);
+        }
+        #webs .trust-card--project .card-commerce { margin-top: auto; padding-top: 20px; }
         .banner-card, .contact-box { border-radius: 22px; }
         #planes .section-header, #contacto .section-header { margin-bottom: 18px; }
         #planes .banner-card {
@@ -742,6 +773,9 @@
             #webs .trust-card:nth-child(-n+3) { grid-column: 1 / -1; }
             #webs .trust-card:nth-child(-n+3) .card-image { height: clamp(200px,60vw,250px); padding: 27px 10px 10px; }
             #webs .trust-card:nth-child(-n+3) .card-info { padding: 22px 19px 21px; }
+            #webs .trust-card--project { grid-column: 1 / -1; }
+            #webs .trust-card--project .card-image { height: clamp(200px,60vw,250px); padding: 27px 10px 10px; }
+            #webs .trust-card--project .card-info { padding: 22px 19px 21px; }
         }
         @media (max-width: 380px) {
             .portfolio-nav__inner, .grid-container { width: calc(100% - 20px); }
@@ -1679,8 +1713,8 @@
         </div>
     </div>
 
-    <script src="data/portfolio-data.js?v=20261015-scroll" defer></script>
-    <script src="script.js?v=20261015-scroll" defer></script>
+    <script src="data/portfolio-data.js?v=20261031-projects" defer></script>
+    <script src="script.js?v=20261031-projects" defer></script>
     <script src="ads-config.js?v=20260814-perf" defer></script>
     <script src="ads-tracking.js?v=20260814-perf" defer></script>
 </body>

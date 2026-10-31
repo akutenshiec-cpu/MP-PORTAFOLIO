@@ -805,6 +805,13 @@
   </footer>
   <script src="ads-config.js?v=20260813a"></script>
   <script src="ads-tracking.js?v=20260813a"></script>
+  <script src="data/portfolio-data.js?v=20261031-projects"></script>
+  <script src="data/project-page.js?v=20261031-projects"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.MPProjectPage) window.MPProjectPage.mountCatalog();
+    });
+  </script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const media = window.matchMedia('(min-width: 900px) and (min-height: 560px)');
