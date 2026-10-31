@@ -704,5 +704,82 @@ window.MPPortfolioData = {
                 visible: true
             }
         ]
-    }
+    },
+    /*
+      Cómo agregar un proyecto
+      ------------------------
+      Una sola entrada en este array, más sus imágenes. No hace falta editar HTML.
+      La card entra al final de `section` en el home, la ficha vive en
+      proyecto.html?id=<slug> y, si indicas catalogSection, también en el catálogo.
+      Opcional: node scripts/prerender-projects.mjs escribe proyectos/<slug>/index.html
+      para SEO. El sitio funciona sin ese paso.
+
+      Ejemplo (copiar dentro del array; este bloque no se publica):
+
+      {
+          id: "mi-proyecto",
+          slug: "mi-proyecto",
+          section: "webs",                 // servicios | webs | branding
+          catalogSection: "web",           // opcional: web | marca | itera
+          order: 20,                       // solo ordena entre projects; no mueve las cards ya existentes
+          visible: true,
+          title: "Nombre del proyecto",
+          rubro: "Tipo · Contexto",
+          description: "Una o dos frases para la card del home y del catálogo.",
+          image: "images/mi-proyecto.webp",
+          imageAlt: "Descripción concreta de la imagen",
+          badge: "En vivo",
+          tags: ["Etiqueta", "Otra"],
+          overlayText: "Ver caso",
+          externalUrl: "https://ejemplo.com",
+          ctaLabel: "Abrir sitio",
+          // page: "proyectos/mi-proyecto/index.html", // tras correr el prerender
+          lead: "Párrafo de la ficha: qué es, para quién y qué queda funcionando.",
+          role: "Qué hicimos",
+          stack: ["React", "Node.js"],
+          features: [
+              "Entrega uno.",
+              "Entrega dos."
+          ],
+          liveLabel: "Abrir sitio"
+      },
+    */
+    projects: [
+        {
+            id: "nuestro-si",
+            slug: "nuestro-si",
+            section: "webs",
+            catalogSection: "web",
+            order: 10,
+            visible: true,
+            title: "Nuestro Sí",
+            rubro: "Producto digital · Invitaciones",
+            description:
+                "Invitaciones de boda con tema, pase de invitado, confirmación y álbum compartido. La pareja sigue el evento desde su panel.",
+            // Captura de la portada pública de https://nuestrosi.app. No es una boda privada ni datos de invitados.
+            image: "images/nuestro-si.webp",
+            imageAlt: "Página pública de Nuestro Sí, plataforma de invitaciones digitales para bodas",
+            badge: "En vivo",
+            tags: ["Invitaciones", "RSVP", "Álbum"],
+            overlayText: "Ver caso",
+            overlayIcon: "fa-arrow-right",
+            externalUrl: "https://nuestrosi.app",
+            ctaLabel: "Abrir nuestrosi.app",
+            page: "proyectos/nuestro-si/index.html",
+            lead:
+                "Nuestro Sí es la plataforma de invitaciones digitales de MP Dev Studio, publicada en nuestrosi.app. Cada boda tiene su enlace: un tema, pases con código, confirmación de asistencia y un álbum donde los invitados dejan sus fotos. La pareja revisa la invitación y la administra desde su panel, sin montar un sitio aparte.",
+            role: "Producto propio · diseño y desarrollo",
+            stack: ["React", "Vite", "Node.js", "Express", "PostgreSQL"],
+            features: [
+                "Invitaciones digitales con temas, fecha, ceremonia y mapa.",
+                "Pase personal por invitado, con nombre y código de acceso.",
+                "Confirmación de asistencia visible para la pareja.",
+                "Galería de fotos compartida durante la celebración.",
+                "Panel de la pareja para revisar y ajustar la invitación antes de publicarla."
+            ],
+            catalogTag: "Producto en vivo",
+            catalogResult: "Resultado: plataforma publicada en nuestrosi.app",
+            liveLabel: "Abrir nuestrosi.app"
+        }
+    ]
 };

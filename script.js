@@ -204,6 +204,56 @@ function normalizeCards(cards = []) {
         .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 }
 
+function attrEscape(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;");
+}
+
+function projectToCard(project) {
+    const slug = String(project.slug || project.id || "").trim();
+    const page = typeof project.page === "string" ? project.page.trim() : "";
+    const href = page || `proyecto.html?id=${encodeURIComponent(slug)}`;
+    return {
+        id: project.id,
+        slug,
+        href,
+        fromProject: true,
+        type: "case",
+        title: project.title,
+        rubro: project.rubro,
+        description: project.description,
+        image: project.image,
+        imageAlt: project.imageAlt,
+        overlayText: project.overlayText || "Ver caso",
+        overlayIcon: project.overlayIcon || "fa-arrow-right",
+        badge: project.badge,
+        tags: project.tags,
+        order: project.order,
+        visible: project.visible !== false,
+        buyEnabled: project.buyEnabled === true,
+        brandLogo: project.brandLogo,
+        brandLogoAlt: project.brandLogoAlt,
+        externalUrl: project.externalUrl,
+        ctaLabel: project.ctaLabel,
+        cardClass: project.cardClass,
+        imageClass: project.imageClass,
+        imageStyle: project.imageStyle
+    };
+}
+
+function cardsForSection(sectionKey) {
+    const legacyCards = normalizeCards(homeSections[sectionKey] || []);
+    const taken = new Set(legacyCards.map((card) => card.id));
+    const projectCards = normalizeCards(
+        (sharedData.projects || [])
+            .filter((project) => project && project.section === sectionKey && !taken.has(project.id))
+            .map(projectToCard)
+    );
+    return legacyCards.concat(projectCards);
+}
+
 function applySectionMetaToDOM() {
     Object.entries(sectionMeta || {}).forEach(([sectionKey, meta]) => {
         const sectionEl = document.getElementById(sectionKey);
@@ -239,7 +289,7 @@ function renderHomeSections() {
         const grid = document.getElementById(gridId);
         const sectionEl = document.getElementById(sectionKey);
         const meta = sectionMeta[sectionKey] || {};
-        const cards = normalizeCards(homeSections[sectionKey] || []);
+        const cards = cardsForSection(sectionKey);
         if (!grid || !sectionEl) return;
 
         const isEnabled = meta.enabled !== false;
@@ -285,7 +335,8 @@ function renderHomeSections() {
                 : "";
             const safeAlt = repairText(card.imageAlt || card.title || "");
             const imageStyle = card.imageStyle || "";
-            const isClickable = card.type === "web" || card.type === "gallery" || card.type === "bio";
+            const isCase = card.type === "case" && typeof card.href === "string" && card.href;
+            const isClickable = card.type === "web" || card.type === "gallery" || card.type === "bio" || Boolean(isCase);
             const galleryTarget = card.galleryId || (card.type === "gallery" ? card.id : "");
             const galleryIndex =
                 card.type === "gallery" && sectionKey === "ciencia"
@@ -293,7 +344,10 @@ function renderHomeSections() {
                     : (Number.isInteger(card.galleryStartIndex) ? card.galleryStartIndex : null);
             const galleryIndexAttr =
                 Number.isInteger(galleryIndex) ? ` data-gallery-index="${galleryIndex}"` : "";
-            const actionAttrs = isClickable ? ` data-action="${card.type}" data-key="${card.id}"${galleryIndexAttr}` : "";
+            const actionAttrs = isCase
+                ? ` data-action="case" data-key="${attrEscape(card.id)}" data-href="${attrEscape(card.href)}" tabindex="0" role="link"`
+                : (isClickable ? ` data-action="${card.type}" data-key="${card.id}"${galleryIndexAttr}` : "");
+            const projectClass = card.fromProject ? " trust-card--project" : "";
             const tagsHtml =
                 Array.isArray(card.tags) && card.tags.length
                     ? `<div class="card-tags">${card.tags
@@ -309,7 +363,7 @@ function renderHomeSections() {
 
             const cardImage = toOptimizedImage(card.image || "");
             return `
-                <div class="trust-card${cardClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}>
+                <div class="trust-card${cardClass}${projectClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}>
                     <div class="card-image${imageClass}">
                         ${badge}
                         ${brandLogoHtml}
@@ -336,7 +390,8 @@ function findCardById(id) {
         const match = (section || []).find((card) => card.id === id);
         if (match) return match;
     }
-    return null;
+    const project = (sharedData.projects || []).find((card) => card && card.id === id);
+    return project || null;
 }
 
 function sendInterestToWhatsApp(serviceName) {
@@ -886,7 +941,7 @@ window.resetGalleryZoom = resetGalleryZoom;
 window.closeFab = closeFab;
 
 document.addEventListener("click", (event) => {
-    if (event.target.closest("a[data-gallery-link]")) return;
+    if (event.target.closest("a[data-gallery-link], a[href]")) return;
 
     const interestBtn = event.target.closest("[data-interest]");
     if (interestBtn) {
@@ -907,8 +962,20 @@ document.addEventListener("click", (event) => {
         openMarcoBioDock();
         return;
     }
+    if (action === "case") {
+        if (card.dataset.href) window.location.href = card.dataset.href;
+        return;
+    }
     if (action === "web") openWeb(key);
     if (action === "gallery") openGallery(key, galleryIndex);
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const card = event.target.closest?.(".trust-card[data-action='case']");
+    if (!card || event.target !== card) return;
+    event.preventDefault();
+    if (card.dataset.href) window.location.href = card.dataset.href;
 });
 
 /* =========================================

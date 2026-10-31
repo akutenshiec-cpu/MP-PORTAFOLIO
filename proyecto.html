@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Proyecto · MP Dev Studio</title>
+  <meta name="description" content="Ficha de proyecto de MP Dev Studio.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="images/mp-dev-studio-icon-light-fg.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="proyecto.css">
+</head>
+<body>
+  <header class="case-topbar">
+    <a class="case-brand" href="index.html">
+      <img src="images/mp-dev-studio-mark.svg" alt="" width="34" height="28">
+      <span>MP Dev Studio</span>
+    </a>
+  </header>
+  <main id="project-root">
+    <noscript>
+      <a class="case-back" href="index.html">Volver al portafolio</a>
+      <article class="case">
+        <h1>Ficha de proyecto</h1>
+        <p class="case-lead">Esta página arma la ficha desde los datos del portafolio. Activa JavaScript o abre la versión estática en <code>proyectos/&lt;slug&gt;/</code> si ya fue generada.</p>
+      </article>
+    </noscript>
+  </main>
+  <footer class="case-footer">
+    <span>© 2026 MP Dev Studio</span>
+    <span>Loja, Ecuador</span>
+  </footer>
+  <script src="data/portfolio-data.js?v=20261031-projects"></script>
+  <script src="data/project-page.js?v=20261031-projects"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      window.MPProjectPage.mountDetail(document.getElementById("project-root"));
+    });
+  </script>
+</body>
+</html>
