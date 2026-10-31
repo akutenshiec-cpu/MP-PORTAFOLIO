@@ -812,36 +812,6 @@ window.addEventListener('resize', () => {
 });
 
 /* =========================================
-   7. MENÚ FAB
-   ========================================= */
-const fabWrapper = document.getElementById('fabMenu'), fabBtn = document.getElementById('fabBtn');
-if(fabBtn) {
-    fabBtn.addEventListener('click', (e) => { 
-        e.stopPropagation(); 
-        fabWrapper.classList.toggle('active'); 
-        fabBtn.classList.toggle('active'); 
-        fabBtn.setAttribute('aria-expanded', fabWrapper.classList.contains('active') ? 'true' : 'false');
-        const i = fabBtn.querySelector('i');
-        if(fabWrapper.classList.contains('active')) { 
-            i.classList.remove('fa-bars'); i.classList.add('fa-times'); 
-        } else { 
-            i.classList.remove('fa-times'); i.classList.add('fa-bars'); 
-        } 
-    });
-}
-function closeFab() { 
-    if (fabWrapper) fabWrapper.classList.remove('active');
-    if (!fabBtn) return;
-    fabBtn.classList.remove('active');
-    fabBtn.setAttribute('aria-expanded', 'false');
-    const i = fabBtn.querySelector('i');
-    if (i) {
-        i.classList.remove('fa-times');
-        i.classList.add('fa-bars');
-    }
-}
-
-/* =========================================
    8. EVENTOS GLOBALES
    ========================================= */
 document.addEventListener('keydown', (e) => {
@@ -858,7 +828,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 document.addEventListener('click', (e) => {
-    if(fabWrapper && fabWrapper.classList.contains('active') && !fabWrapper.contains(e.target)) closeFab();
     if(lightbox && e.target === lightbox) closeGallery();
 });
 
@@ -883,7 +852,6 @@ window.closeWeb = closeWeb;
 window.changeSlide = changeSlide; 
 window.changeGalleryZoom = changeGalleryZoom;
 window.resetGalleryZoom = resetGalleryZoom;
-window.closeFab = closeFab;
 
 document.addEventListener("click", (event) => {
     if (event.target.closest("a[data-gallery-link]")) return;
@@ -1088,7 +1056,6 @@ function openMarcoBioDockUI() {
     const trigger = document.getElementById('floating-bio-dock');
     if (trigger) trigger.setAttribute('aria-expanded', 'true');
     document.body.classList.add('cv-modal-open');
-    closeFab();
 }
 
 function closeMarcoBioDock() {
@@ -1217,7 +1184,7 @@ function initPortfolioMobileNav() {
 
     toggle.addEventListener('click', () => setOpen(!isOpen(), { restoreFocus: isOpen() }));
     menu.addEventListener('click', (event) => {
-        if (event.target.closest('a') && isOpen()) setOpen(false);
+        if (event.target.closest('a, button') && isOpen()) setOpen(false);
     });
     document.addEventListener('keydown', (event) => {
         if (!isOpen()) return;
@@ -1557,7 +1524,6 @@ function openPwaInstallModal() {
     requestAnimationFrame(() => modal.classList.add("is-open"));
     document.body.classList.add("modal-open");
     pwaModalOpen = true;
-    if (typeof closeFab === "function") closeFab();
 }
 
 function closePwaInstallModal() {
