@@ -1,7 +1,7 @@
-/* Galería ligera de capturas reales para tarjetas con `showcase` (ITERA). */
+/* Galería ligera de capturas reales para tarjetas con `showcase` (ITERA, Nuestro Sí). */
 (function () {
     "use strict";
-    let dlg, stage, captionEl, counterEl, thumbsEl, titleEl, siteLink, current = 0, slides = [], opener = null, lastScrollY = 0;
+    let dlg, stage, captionEl, counterEl, thumbsEl, titleEl, siteLink, altLink, noteEl, current = 0, slides = [], opener = null, lastScrollY = 0;
 
     function findCard(id) {
         const data = window.MPPortfolioData || {};
@@ -25,7 +25,7 @@
             <div class="pc-lightbox__panel">
                 <header class="pc-lightbox__head">
                     <div>
-                        <p class="pc-lightbox__kicker">Capturas reales <span class="pc-lightbox__counter" aria-live="polite"></span></p>
+                        <p class="pc-lightbox__kicker"><span class="pc-lightbox__kicker-text">Capturas reales</span> <span class="pc-lightbox__counter" aria-live="polite"></span></p>
                         <h3 id="pc-lightbox-title" class="pc-lightbox__title"></h3>
                     </div>
                     <button type="button" class="pc-lightbox__close" data-close aria-label="Cerrar galería">×</button>
@@ -38,12 +38,12 @@
                 <p class="pc-lightbox__caption"></p>
                 <footer class="pc-lightbox__foot">
                     <div class="pc-lightbox__thumbs" role="tablist" aria-label="Elegir captura"></div>
-                    <a class="pc-lightbox__cta" target="_blank" rel="noopener noreferrer">
-                        <img src="images/branding/itera/iteraqms-mark.png" alt="" width="20" height="20" aria-hidden="true">
-                        <span>Visitar IteraQMS.com</span><span aria-hidden="true">↗</span>
-                    </a>
+                    <div class="pc-lightbox__links">
+                        <a class="pc-site-link pc-lightbox__alt" target="_blank" rel="noopener noreferrer"></a>
+                        <a class="pc-lightbox__cta" target="_blank" rel="noopener noreferrer"></a>
+                    </div>
                 </footer>
-                <p class="pc-lightbox__note">Datos de demostración. Nombres de producto, proveedor y usuario difuminados.</p>
+                <p class="pc-lightbox__note"></p>
             </div>`;
         document.body.appendChild(dlg);
         stage = dlg.querySelector(".pc-lightbox__figure");
@@ -52,6 +52,8 @@
         thumbsEl = dlg.querySelector(".pc-lightbox__thumbs");
         titleEl = dlg.querySelector(".pc-lightbox__title");
         siteLink = dlg.querySelector(".pc-lightbox__cta");
+        altLink = dlg.querySelector(".pc-lightbox__alt");
+        noteEl = dlg.querySelector(".pc-lightbox__note");
 
         dlg.addEventListener("click", (e) => {
             if (e.target.closest("[data-close]")) close();
@@ -111,7 +113,18 @@
         slides = card.showcase.slides;
         opener = trigger || document.activeElement;
         titleEl.textContent = card.showcase.title || card.displayTitle || card.title || "";
-        if (card.externalUrl) { siteLink.href = card.externalUrl; siteLink.hidden = false; } else siteLink.hidden = true;
+        const sc = card.showcase;
+        const ext = ' <span aria-hidden="true">↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span>';
+        // Botón principal: la muestra en vivo si existe; si no, el sitio del producto.
+        const mainUrl = sc.sampleUrl || card.externalUrl;
+        const mainLabel = sc.sampleUrl ? `Abrir ${(sc.sampleLabel || "el ejemplo").toLowerCase()}` : `Visitar ${sc.siteLabel || "IteraQMS.com"}`;
+        const mark = sc.openIcon
+            ? `<i class="fas ${sc.openIcon}" aria-hidden="true"></i>`
+            : '<img src="images/branding/itera/iteraqms-mark.png" alt="" width="20" height="20" aria-hidden="true">';
+        if (mainUrl) { siteLink.href = mainUrl; siteLink.innerHTML = `${mark}<span>${mainLabel}</span>${ext}`; siteLink.hidden = false; } else siteLink.hidden = true;
+        if (sc.sampleUrl && card.externalUrl) { altLink.href = card.externalUrl; altLink.innerHTML = `${sc.siteLabel || card.externalUrl}${ext}`; altLink.hidden = false; } else altLink.hidden = true;
+        dlg.querySelector(".pc-lightbox__kicker-text").textContent = sc.kicker || "Capturas reales";
+        noteEl.textContent = sc.note || "Datos de demostración. Nombres de producto, proveedor y usuario difuminados.";
         thumbsEl.innerHTML = slides.map((s, i) => `<button type="button" role="tab" class="pc-lightbox__thumb${s.portrait ? " is-portrait" : ""}" data-thumb="${i}" aria-label="Captura ${i + 1}: ${s.alt}"><picture><source srcset="${s.src}.webp" type="image/webp"><img src="${s.src}.jpg" alt="" loading="lazy"></picture></button>`).join("");
         dlg.hidden = false;
         lastScrollY = window.scrollY;

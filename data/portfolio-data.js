@@ -387,6 +387,44 @@ window.MPPortfolioData = {
                 ctaLabel: "Conocer ITERA"
             },
             {
+                id: "nuestrosi",
+                title: "Nuestro Sí",
+                featured: true,
+                meta: "Bodas · Invitaciones y sitios de boda · SaaS",
+                rubro: "Bodas · SaaS",
+                description:
+                    "Cada boda tiene su propio sitio: la pareja elige estilo, diseño y cuenta regresiva, y los invitados confirman con un código y comparten sus fotos en un álbum común. Salones, estudios y wedding planners lo gestionan con su propio acceso.",
+                deliverables: ["Sitio e invitación", "Confirmación con código", "Álbum compartido", "Acceso por roles"],
+                image: "images/nuestrosi/nuestrosi-muestra-tarjeta.webp",
+                imageAlt: "Portada de una invitación de muestra hecha con Nuestro Sí, con monograma y los nombres de la pareja",
+                // capturas de una boda de muestra con datos ficticios, renderizada con Nuestro Sí; sin álbum ni notas de invitados
+                showcase: {
+                    title: "Nuestro Sí, una invitación de muestra",
+                    devicesLine: "Se abre en cualquier teléfono",
+                    openLabel: "Conocer Nuestro Sí",
+                    openIcon: "fa-envelope-open-text",
+                    btnClass: "buy-btn--ns",
+                    siteLabel: "nuestrosi.app",
+                    hint: "Muestra con datos ficticios",
+                    kicker: "Muestra con datos ficticios",
+                    note: "Invitación de muestra con datos ficticios, hecha con Nuestro Sí.",
+                    devices: [
+                        { kind: "desktop", src: "images/nuestrosi/nuestrosi-muestra-portada-thumb", label: "Invitación · escritorio" },
+                        { kind: "phone", src: "images/nuestrosi/nuestrosi-muestra-movil-thumb", label: "Invitación · celular" }
+                    ],
+                    slides: [
+                        { src: "images/nuestrosi/nuestrosi-muestra-portada", w: 1600, h: 1000, alt: "Portada de la invitación de muestra con monograma, nombres, fecha, horarios, lugar y cuenta regresiva", caption: "Portada: monograma, nombres, fecha, horarios y lugar, con la cuenta regresiva." },
+                        { src: "images/nuestrosi/nuestrosi-muestra-detalles", w: 1600, h: 1000, alt: "Tarjeta de ceremonia y recepción con fecha, horarios y lugar", caption: "Ceremonia y recepción: fecha, horarios y lugar en una sola tarjeta." },
+                        { src: "images/nuestrosi/nuestrosi-muestra-pase", w: 1600, h: 1000, alt: "Pase personal del invitado con su nombre, su código y un código QR", caption: "Su pase: con su código, cada invitado ve su nombre, su QR y confirma su asistencia." },
+                        { src: "images/nuestrosi/nuestrosi-muestra-movil", w: 780, h: 1688, alt: "La invitación de muestra de Nuestro Sí en un celular", caption: "La misma invitación en el celular, con la cuenta regresiva y la confirmación a mano.", portrait: true }
+                    ]
+                },
+                order: 3,
+                visible: true,
+                buyEnabled: false,
+                externalUrl: "https://nuestrosi.app/"
+            },
+            {
                 id: "saas-multitenant",
                 hidden: true,
                 galleryId: "saas-multitenant",
@@ -447,6 +485,7 @@ window.MPPortfolioData = {
                 overlayText: "Ver demo",
                 overlayIcon: "fa-play-circle",
                 badge: "Validación",
+                deliverables: ["Landing", "Captación", "Métricas"],
                 tags: ["Landing", "Leads", "Fast-Load"],
                 order: 1,
                 visible: true,
@@ -593,6 +632,7 @@ window.MPPortfolioData = {
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
                 badge: "Normativa",
+                deliverables: ["Etiquetas", "Arte final", "Normativa"],
                 tags: ["Etiquetas", "Print", "ANSI"],
                 order: 3,
                 visible: true
@@ -648,6 +688,7 @@ window.MPPortfolioData = {
                 overlayText: "Ver galería HD",
                 overlayIcon: "fa-images",
                 badge: "Agro",
+                deliverables: ["Identidad", "Origen", "Empaque"],
                 tags: ["Agro", "Origen", "Packaging"],
                 order: 6,
                 visible: true
