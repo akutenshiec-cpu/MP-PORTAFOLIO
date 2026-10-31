@@ -11,21 +11,21 @@ window.MPPortfolioData = {
             },
             {
                 name: "MP DEV STUDIO",
-                tagline: "QMS · Packaging · Web comercial",
+                tagline: "Diseño con rigor. Software con criterio.",
                 accent: "copper",
                 nameScale: 1,
                 tagScale: 1
             },
             {
                 name: "MP DEV · STUDIO",
-                tagline: "Marcas que fabrican bajo norma",
+                tagline: "Para marcas que fabrican bajo norma",
                 accent: "split",
                 nameScale: 1,
                 tagScale: 1
             },
             {
                 name: "MP DEV STUDIO",
-                tagline: "ARCSA & ACESS · Trazabilidad",
+                tagline: "Trazabilidad con estética",
                 accent: "wine",
                 nameScale: 1,
                 tagScale: 1
@@ -40,25 +40,25 @@ window.MPPortfolioData = {
     },
     contentBlocks: {
         planes: {
-            title: "Rutas claras según el problema",
+            title: "Tres caminos, un mismo estándar",
             description:
-                "Sistemas para planta regulada, web comercial y marca/packaging listo para operar. Elige la ruta; el alcance se define con diagnóstico.",
-            ctaText: "Ver catálogo de soluciones",
+                "Sistemas para operación regulada, web comercial y marca lista para retail. Tú eliges la ruta; el diagnóstico define el alcance.",
+            ctaText: "Explorar soluciones",
             ctaLink: "index2.html"
         },
         contacto: {
-            title: "Diagnóstico profesional",
+            title: "Empecemos por un diagnóstico",
             description:
-                "Si fabricas bajo norma, necesitas trazabilidad, packaging o un canal digital que venda sin romper la operación, conversemos con alcance realista.",
+                "Si fabricas bajo norma y necesitas trazabilidad, un packaging a la altura o un canal digital que venda sin desordenar la operación, cuéntanos en qué punto estás. Respondemos con un alcance honesto.",
             whatsapp: "https://wa.me/593963036594",
             email: "mailto:marcod.pc2021@gmail.com",
             instagram: "https://www.instagram.com/neckarc"
         },
         footer: {
             brandDescription:
-                "MP Dev Studio — diseño y software para marcas que fabrican bajo norma: de la etiqueta al lote, del catálogo al despacho.",
+                "MP Dev Studio. Diseño y software para marcas que fabrican bajo norma, de la etiqueta al lote y del catálogo al despacho.",
             services: [
-                { text: "Sistemas QMS / ERP", href: "#servicios" },
+                { text: "Software de producción y calidad", href: "#servicios" },
                 { text: "Web comercial", href: "#webs" },
                 { text: "Marca y packaging", href: "#branding" },
                 { text: "Contacto", href: "#contacto" }
@@ -68,30 +68,30 @@ window.MPPortfolioData = {
                 { text: "marcod.pc2021@gmail.com", href: "mailto:marcod.pc2021@gmail.com" },
                 { text: "@neckarc", href: "https://www.instagram.com/neckarc" }
             ],
-            copy: "© 2026 MP Dev Studio · Loja, Ecuador. QMS, packaging y web para operaciones reguladas."
+            copy: "© 2026 MP Dev Studio · Loja, Ecuador · Diseño, packaging y sistemas para operaciones reguladas."
         }
     },
     sectionMeta: {
         servicios: {
-            title: "Sistemas para operación regulada",
+            title: "Sistemas",
             icon: "fa-briefcase",
             enabled: true,
             subtitle:
-                "QMS y ERP construidos alrededor de lotes, liberación técnica, trazabilidad y evidencia — no plantillas genéricas."
+                "Software de producción y calidad hecho a la medida de tu planta: insumos, lotes, liberación y evidencia, sin plantillas genéricas."
         },
         webs: {
-            title: "Web comercial que convierte",
+            title: "Web comercial",
             icon: "fa-code",
             enabled: true,
             subtitle:
-                "Landings y catálogos conectados a WhatsApp para validar oferta, captar pedidos y sostener la venta."
+                "Sitios y catálogos que elevan la percepción de tu marca y convierten visitas en pedidos por WhatsApp."
         },
         branding: {
-            title: "Marca y packaging técnico",
+            title: "Marca y packaging",
             icon: "fa-layer-group",
             enabled: true,
             subtitle:
-                "Identidad y etiquetas listas para retail e imprenta, alineadas a criterios de etiquetado y coherencia de línea."
+                "Identidades y etiquetas pensadas para la góndola y para la imprenta, coherentes en cada presentación de la línea."
         },
         promo: {
             title: "Narrativa visual",
@@ -108,17 +108,17 @@ window.MPPortfolioData = {
                 "Precisión morfológica (archivo de craft)."
         },
         planes: {
-            title: "Soluciones",
+            title: "Tres caminos",
             icon: "fa-compass",
             enabled: true,
             subtitle:
-                "Tres rutas: sistemas, web comercial y marca/packaging."
+                "Sistemas, web y marca. Empiezas por donde más lo necesitas."
         },
         contacto: {
-            title: "Contacto profesional",
+            title: "Conversemos",
             icon: "fa-paper-plane",
             enabled: true,
-            subtitle: "Diagnóstico breve para definir alcance y prioridad."
+            subtitle: "Un diagnóstico breve para definir alcance, prioridad y tiempos reales."
         }
     },
     heroCarousel: {
@@ -127,10 +127,10 @@ window.MPPortfolioData = {
             {
                 brandVariant: 0,
                 description:
-                    "Diseño y software para marcas que fabrican bajo norma: packaging técnico, web comercial y sistemas QMS/ERP con trazabilidad real.",
+                    "Diseñamos marcas, packaging y sistemas para empresas que fabrican bajo norma. Una sola mirada, del primer boceto al último lote despachado.",
                 image: "images/foto-hq.jpg",
                 imageAlt: "MP Dev Studio",
-                ctaPrimaryText: "Ver sistemas",
+                ctaPrimaryText: "Conocer el estudio",
                 ctaPrimaryLink: "#servicios",
                 ctaSecondaryText: "Ver servicios",
                 ctaSecondaryLink: "index2.html"
@@ -138,7 +138,7 @@ window.MPPortfolioData = {
             {
                 brandVariant: 2,
                 description:
-                    "De la etiqueta al lote y del catálogo al despacho: una sola lógica de calidad, marca y conversión.",
+                    "La etiqueta, la web y el sistema de calidad cuentan la misma historia. Nosotros nos encargamos de que se note.",
                 image: "images/curativa-thumb.png",
                 imageAlt: "Caso Cosmética / packaging",
                 ctaPrimaryText: "Ver marca",
@@ -162,8 +162,8 @@ window.MPPortfolioData = {
             images: ["images/card-itera-lite-editorial.webp", "images/itera_dashboard.png", "images/itera_documentos.png", "images/itera_trazabilidad.png"]
         },
         "itera-premium": {
-            title: "ITERA ERP Premium",
-            rubro: "Arquitectura empresarial",
+            title: "ITERA Premium",
+            rubro: "Producción, calidad y despacho · Edición completa",
             summary: "Sistema multiplataforma para ventas, inventario, calidad, documentos y lectura ejecutiva. Producto en IteraQMS.com.",
             images: ["images/card-itera-erp-editorial.webp", "images/itera_ventas_crm.png", "images/itera_dashboard.png", "images/itera_documentos.png"]
         },
@@ -330,10 +330,10 @@ window.MPPortfolioData = {
             {
                 id: "itera-lite",
                 galleryId: "itera-lite",
-                title: "Implementación ITERA LITE",
-                rubro: "Sistema operativo · QMS",
+                title: "ITERA Lite",
+                rubro: "Producción y calidad · Edición base",
                 description:
-                    "Sistema QMS base para equipos que inician trazabilidad, control documental y gestión de lotes. Producto en IteraQMS.com.",
+                    "El punto de partida para ordenar tu planta: recepción de insumos, lotes con estado de liberación y control documental, con trazabilidad desde el primer día.",
                 image: "images/card-itera-lite-editorial.webp",
                 imageAlt: "Dashboard actual de ITERA con alertas operativas y estado de lotes",
                 badge: "QMS Base",
@@ -344,26 +344,26 @@ window.MPPortfolioData = {
                 brandLogo: "images/branding/itera/iteraqms-logo.png",
                 brandLogoAlt: "Itera QMS",
                 externalUrl: "https://iteraqms.com/",
-                ctaLabel: "Abrir IteraQMS.com"
+                ctaLabel: "Conocer ITERA"
             },
             {
                 id: "itera-premium",
                 galleryId: "itera-premium",
-                title: "ITERA ERP Premium",
-                rubro: "Arquitectura empresarial · ERP",
+                title: "ITERA Premium",
+                rubro: "Producción, calidad y despacho · Edición completa",
                 description:
-                    "Gestión total de inventarios, ventas, documentos y reportes para operaciones B2B y B2C. Producto en IteraQMS.com.",
+                    "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
                 image: "images/card-itera-erp-editorial.webp",
-                imageAlt: "Vista actual de ventas y pedidos en ITERA ERP Premium",
+                imageAlt: "Vista actual de ventas y pedidos en ITERA Premium",
                 badge: "Full Suite",
-                tags: ["ERP", "Operación", "Industrial"],
+                tags: ["Producción", "Operación", "Industrial"],
                 order: 2,
                 visible: true,
                 buyEnabled: false,
                 brandLogo: "images/branding/itera/iteraqms-logo.png",
                 brandLogoAlt: "Itera QMS",
                 externalUrl: "https://iteraqms.com/",
-                ctaLabel: "Abrir IteraQMS.com"
+                ctaLabel: "Conocer ITERA"
             },
             {
                 id: "saas-multitenant",
@@ -404,7 +404,7 @@ window.MPPortfolioData = {
                 title: "Landing de validación",
                 rubro: "Producto digital · Lanzamiento",
                 description:
-                    "Conversión rápida, narrativa visual y una estructura precisa para captar leads o validar un producto sin fricción.",
+                    "Una página precisa para lanzar, medir y decidir. Carga rápida, narrativa clara y cero fricción para captar interesados.",
                 image: "images/5elementos-thumb.jpg",
                 imageAlt: "Landing de validación",
                 overlayText: "Ver demo",
@@ -422,7 +422,7 @@ window.MPPortfolioData = {
                 title: "Catálogo Pro WhatsApp",
                 rubro: "Comercio digital · Conversión",
                 description:
-                    "Inventario dinámico, carrito y cierre por chat para marcas que necesitan vender con claridad y velocidad.",
+                    "Tu catálogo, tu carrito y el cierre de venta en la conversación que tus clientes ya usan.",
                 image: "images/curativa-thumb.png",
                 imageAlt: "Catálogo Pro WhatsApp",
                 overlayText: "Ver web",
@@ -437,10 +437,10 @@ window.MPPortfolioData = {
                 id: "curarte",
                 galleryId: "curarte-web",
                 type: "web",
-                title: "Demo: Ecosistema Premium",
+                title: "Ecosistema premium",
                 rubro: "Experiencia editorial · Web",
                 description:
-                    "Una muestra real de dirección de arte, UI refinada y experiencia inmersiva aplicada a una marca con alto valor percibido.",
+                    "Dirección de arte, interfaz cuidada y una experiencia inmersiva para marcas que viven de su valor percibido.",
                 image: "images/curarte-real.png",
                 imageAlt: "Demo Ecosistema Premium",
                 overlayText: "Ver web",
@@ -472,7 +472,7 @@ window.MPPortfolioData = {
                 type: "bio",
                 title: "Currículum interactivo",
                 description:
-                    "Currículum profesional interactivo: desarrollo de software (QMS & ERP), branding/packaging e ilustración científica con precisión morfológica.",
+                    "Currículum profesional interactivo: desarrollo de software (producción y calidad), branding/packaging e ilustración científica con precisión morfológica.",
                 image: "images/foto-hq.jpg",
                 imageAlt: "Currículum interactivo",
                 overlayText: "Abrir currículum",

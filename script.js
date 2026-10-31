@@ -1007,28 +1007,28 @@ window.addEventListener('load', function() {
    ========================================= */
 const CV_DATA_MARCO = {
     "1": {
-        title: "Arquitectura QMS & ERP",
-        desc: "<strong>Sistemas a medida.</strong><br><br>Desarrollo backend y bases de datos relacionales para operaciones industriales reales. Control documental estricto, flujos de inventario y trazabilidad bajo normativas de calidad (<a href=\"https://iteraqms.com/\" target=\"_blank\" rel=\"noopener noreferrer\">ITERA QMS</a>)."
+        title: "Software de producción y calidad",
+        desc: "<a href=\"https://iteraqms.com/\" target=\"_blank\" rel=\"noopener noreferrer\">ITERA</a>: un sistema para plantas reguladas que une calidad y producción. Recepción de insumos, producción por lote, cuarentena y liberación, inventario, catálogo por notificación sanitaria y despacho, todo trazable."
     },
     "2": {
-        title: "Ecosistemas Web Premium",
-        desc: "<strong>Landings & E-commerce de alto rendimiento.</strong><br><br>Interfaces que elevan la percepción de marca con carga veloz y arquitecturas frontend optimizadas. Flujos de conversión sin fricción integrados con ventas."
+        title: "Web premium",
+        desc: "Landings y e-commerce de alto rendimiento que elevan la marca y llevan al cliente hasta la venta sin rodeos."
     },
     "3": {
-        title: "Identidad Visual & Packaging",
-        desc: "<strong>Branding & preparación retail.</strong><br><br>Sistemas visuales completos y maquetación técnica de etiquetas listas para imprenta, garantizando coherencia entre el producto físico y el digital."
+        title: "Identidad y packaging",
+        desc: "Sistemas visuales completos y etiquetas técnicas listas para imprenta, coherentes entre el producto físico y el digital."
     },
     "4": {
-        title: "Ilustración Científica",
-        desc: "<strong>Fauna neotropical & botánica.</strong><br><br>Documentación morfológica precisa de especies silvestres y láminas naturalistas de alta resolución. Enfoque analítico respaldado por mi formación como Biólogo."
+        title: "Ilustración científica",
+        desc: "Fauna neotropical y botánica con precisión morfológica, respaldada por mi formación como biólogo."
     },
     "5": {
-        title: "Diseño Editorial",
-        desc: "<strong>Manuales & publicaciones técnicas.</strong><br><br>Maquetación estructurada de libros, folletos y manuales técnicos. Rigor tipográfico, jerarquía visual y legibilidad para material complejo."
+        title: "Diseño editorial",
+        desc: "Manuales, libros y publicaciones técnicas con jerarquía clara y rigor tipográfico."
     },
     "6": {
-        title: "IA & Tecnologías 3D",
-        desc: "<strong>Automatización & prototipado.</strong><br><br>Modelado 3D e integración de sistemas de Inteligencia Artificial para potenciar flujos de trabajo en código y diseño visual."
+        title: "IA y 3D",
+        desc: "Modelado 3D e inteligencia artificial integrados al flujo de diseño y código."
     }
 };
 
