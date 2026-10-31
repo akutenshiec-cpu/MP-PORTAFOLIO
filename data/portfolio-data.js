@@ -162,7 +162,7 @@ window.MPPortfolioData = {
             images: ["images/card-itera-lite-editorial.webp", "images/itera_dashboard.png", "images/itera_documentos.png", "images/itera_trazabilidad.png"]
         },
         "itera-premium": {
-            title: "ITERA Premium",
+            title: "ITERA",
             rubro: "Producción, calidad y despacho · Edición completa",
             summary: "Sistema multiplataforma para ventas, inventario, calidad, documentos y lectura ejecutiva. Producto en IteraQMS.com.",
             images: ["images/card-itera-erp-editorial.webp", "images/itera_ventas_crm.png", "images/itera_dashboard.png", "images/itera_documentos.png"]
@@ -190,7 +190,7 @@ window.MPPortfolioData = {
             images: ["images/curativa-real.png", "images/thumb_catalogo_whatsapp_es.jpg"]
         },
         "curarte-web": {
-            title: "CurArte · Ecosistema premium",
+            title: "CurArte",
             rubro: "Experiencia editorial digital",
             summary: "Dirección de arte, composición y presentación responsive de una experiencia cultural inmersiva.",
             images: ["images/curarte-real.png", "images/thumb_ecosistema_premium_es.jpg", "images/og-preview.png"]
@@ -207,7 +207,7 @@ window.MPPortfolioData = {
             ]
         },
         tiny: {
-            title: "Tiny Melts",
+            title: "Tiny Melts · Sistema visual",
             rubro: "Branding de producto",
             summary: "Brand board, logotipo y campaña visual para una marca artesanal con tono cálido y memorable.",
             images: [
@@ -262,7 +262,7 @@ window.MPPortfolioData = {
             images: ["images/ciencia1.jpg", "images/ciencia2.jpg", "images/ciencia3.jpg", "images/caracol-hq.jpg", "images/cangrejo1-hq.jpg", "images/tipula-hq.jpg"]
         },
         etiquetas: {
-            title: "Etiquetas y Packaging",
+            title: "Etiquetas y packaging técnico",
             rubro: "Impresos comerciales",
             summary: "Sistemas de etiquetado listos para imprenta, normativa y consistencia de línea.",
             images: [
@@ -358,7 +358,7 @@ window.MPPortfolioData = {
                 spec: [["Cubre", "Del insumo al despacho"], ["Lotes", "Aprobado · cuarentena · rechazado"], ["Ediciones", "Lite y Premium"]],
                 rubro: "Producción, calidad y despacho · Edición completa",
                 description:
-                    "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
+                    "Empezó para garantizar la trazabilidad documental y normativa, y creció hasta guiar cada fase de la planta, de la materia prima al despacho. Pensado para perfumerías y cosméticas que fabrican bajo norma.",
                 image: "images/itera/itera-panel.webp",
                 imageAlt: "Panel real de ITERA con centro de alertas de calidad, lotes y recepciones",
                 // capturas reales del sistema (datos de demostración; nombres de producto, proveedor e iniciales difuminados)
@@ -441,7 +441,7 @@ window.MPPortfolioData = {
                 title: "Landing de validación",
                 rubro: "Producto digital · Lanzamiento",
                 description:
-                    "Una página precisa para lanzar, medir y decidir. Carga rápida, narrativa clara y cero fricción para captar interesados.",
+                    "Una página para lanzar, medir y decidir rápido: carga ligera, un mensaje claro y un solo paso para dejar el contacto.",
                 image: "images/5elementos-thumb.jpg",
                 imageAlt: "Landing de validación",
                 overlayText: "Ver demo",
@@ -485,9 +485,9 @@ window.MPPortfolioData = {
                 deliverables: ["Menú digital", "Pedidos en mesa", "Domicilios"],
                 rubro: "Experiencia editorial · Web",
                 description:
-                    "Dirección de arte, interfaz cuidada y una experiencia inmersiva para marcas que viven de su valor percibido.",
+                    "Empezó como un menú digital y terminó resolviendo los pedidos en mesa y los domicilios del local, sin fricción para el cliente ni para la cocina.",
                 image: "images/curarte-real.png",
-                imageAlt: "Demo Ecosistema Premium",
+                imageAlt: "CurArte: menú digital y pedidos del restaurante",
                 overlayText: "Ver web",
                 overlayIcon: "fa-external-link-alt",
                 badge: "Premium",
@@ -571,7 +571,7 @@ window.MPPortfolioData = {
                 deliverables: ["Logotipo", "Paleta", "Piezas para redes"],
                 rubro: "Marca artesanal · Identidad",
                 description:
-                    "Logo, dirección cromática y piezas promocionales para una marca artesanal con lenguaje propio.",
+                    "Velas hechas a mano con una marca a su altura: logo, paleta y piezas para redes que transmiten la calidez del producto.",
                 image: "images/tinymeltsbrandboard-thumb.png",
                 imageAlt: "Tiny Melts",
                 overlayText: "Ver galería HD",
@@ -625,7 +625,7 @@ window.MPPortfolioData = {
                 deliverables: ["Identidad", "Aplicaciones de producto", "Proyectos conjuntos"],
             rubro: "Identidad tech",
                 description:
-                    "Identidad para marca tecnológica con acento industrial, comercial y de producto.",
+                    "Nuestro estudio aliado en diseño 3D. Trabajamos en conjunto: su identidad nace del mismo método con el que llevamos las marcas del plano al objeto.",
                 image: "images/prototype.png",
                 imageAlt: "PROTOTYP3D",
                 overlayText: "Ver galería HD",
@@ -642,7 +642,7 @@ window.MPPortfolioData = {
                 client: "Finca Pindaca",
             rubro: "Identidad agrícola",
                 description:
-                    "Construcción de marca agrícola pensada para origen, confianza y aplicaciones de empaque.",
+                    "Una marca agrícola construida desde el origen: que transmita confianza y funcione en el empaque.",
                 image: "images/finca-thumb.jpeg",
                 imageAlt: "Finca Pindaca",
                 overlayText: "Ver galería HD",
