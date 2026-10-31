@@ -309,3 +309,24 @@ html.pc-lightbox-open, html.pc-lightbox-open body { overflow: hidden !important;
     /* Marca con 3 secundarias: la tercera cierra la fila a todo el ancho */
     .cards-v2.cards-v2--branding .pc-rail > .pc-secondary.pc-secondary:nth-child(3):last-child:nth-last-child(1) { grid-column: 1 / -1 !important; }
 }
+
+/* ---------- Nuestro Sí: segunda tarjeta de Sistemas junto a ITERA ---------- */
+.buy-btn__icon { font-size: 1rem; color: currentColor; }
+.pc-lightbox__links { display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; justify-content: flex-end; }
+.pc-lightbox__links [hidden] { display: none !important; }
+@media (max-width: 899px) { .pc-lightbox__links { flex-direction: column-reverse; align-items: stretch; text-align: center; } .pc-lightbox__alt { align-self: center; } }
+.buy-btn.buy-btn--ns {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    color: #f6e7c8 !important; border: 1px solid rgba(216,179,106,.45);
+    background: linear-gradient(160deg, #7c2438 0%, #5e1829 55%, #43101d 100%);
+    box-shadow: 0 12px 28px rgba(60, 12, 26, .4), inset 0 1px 0 rgba(255,255,255,.12);
+    font-weight: 800; letter-spacing: .04em;
+}
+.buy-btn.buy-btn--ns span, .buy-btn.buy-btn--ns .buy-btn__icon { color: #f6e7c8; }
+.buy-btn.buy-btn--ns .buy-btn__icon { color: #d8b36a; }
+.buy-btn.buy-btn--ns:hover, .buy-btn.buy-btn--ns:focus-visible { color: #fff4dc !important; border-color: #d8b36a; background: linear-gradient(160deg, #8e2b42 0%, #6c1d31 55%, #4d1322 100%); }
+.pc-showcase-actions--duo .buy-btn { flex: 1 1 100% !important; }
+.pc-showcase-actions--duo .pc-site-link { flex: 0 0 auto; }
+/* La frase de dispositivos baja a su propia línea cuando no cabe junto a las miniaturas */
+.pc-devices { flex-wrap: wrap; row-gap: 10px; }
+.pc-devices__line { flex: 1 1 10ch; min-width: 10ch; }

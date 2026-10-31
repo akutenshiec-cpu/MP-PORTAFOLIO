@@ -272,12 +272,15 @@ function renderHomeSections() {
             const showcase = card.showcase && Array.isArray(card.showcase.slides) && card.showcase.slides.length ? card.showcase : null;
             const commerce = showcase
                 ? `
-                    <div class="card-commerce pc-showcase-actions">
-                        <button type="button" class="buy-btn buy-btn--itera" data-showcase-open="${card.id}" aria-haspopup="dialog">
-                            <img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22" aria-hidden="true">
-                            <span>Ver el sistema por dentro</span>
+                    <div class="card-commerce pc-showcase-actions${showcase.sampleUrl ? " pc-showcase-actions--duo" : ""}">
+                        <button type="button" class="buy-btn ${showcase.btnClass || "buy-btn--itera"}" data-showcase-open="${card.id}" aria-haspopup="dialog">
+                            ${showcase.openIcon
+                                ? `<i class="fas ${showcase.openIcon} buy-btn__icon" aria-hidden="true"></i>`
+                                : '<img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22" aria-hidden="true">'}
+                            <span>${repairText(showcase.openLabel || "Ver el sistema por dentro")}</span>
                         </button>
-                        ${externalUrl ? `<a class="pc-site-link" href="${externalUrl}" target="_blank" rel="noopener noreferrer">IteraQMS.com<span aria-hidden="true"> ↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>` : ""}
+                        ${showcase.sampleUrl ? `<a class="pc-site-link" href="${showcase.sampleUrl}" target="_blank" rel="noopener noreferrer">${repairText(showcase.sampleLabel || "Ver ejemplo")}<span aria-hidden="true"> ↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>` : ""}
+                        ${externalUrl ? `<a class="pc-site-link" href="${externalUrl}" target="_blank" rel="noopener noreferrer">${repairText(showcase.siteLabel || "IteraQMS.com")}<span aria-hidden="true"> ↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>` : ""}
                     </div>
                 `
                 : externalUrl
@@ -360,7 +363,7 @@ function renderHomeSections() {
                             ? `<div class="pc-img-ph" role="img" aria-label="Imagen pendiente"><span>[${repairText(card.placeholderImage)}]</span><small>Imagen pendiente · prototipo</small></div>`
                             : `<img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">`}
                         ${overlay}
-                        ${card.showcase ? `<span class="pc-showcase-hint" aria-hidden="true">Capturas reales · ${card.showcase.slides.length}</span>` : ""}
+                        ${card.showcase ? `<span class="pc-showcase-hint" aria-hidden="true">${card.showcase.hint || `Capturas reales · ${card.showcase.slides.length}`}</span>` : ""}
                     </div>
                     <div class="card-info">
                         ${indexHtml}
