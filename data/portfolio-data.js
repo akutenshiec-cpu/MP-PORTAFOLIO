@@ -329,6 +329,7 @@ window.MPPortfolioData = {
         servicios: [
             {
                 id: "itera-lite",
+                hidden: true, // fusionada en la tarjeta única de ITERA
                 galleryId: "itera-lite",
                 title: "ITERA Lite",
                 rubro: "Producción y calidad · Edición base",
@@ -350,11 +351,31 @@ window.MPPortfolioData = {
                 id: "itera-premium",
                 galleryId: "itera-premium",
                 title: "ITERA Premium",
+                featured: true,
+                displayTitle: "ITERA",
+                meta: "Perfumería y cosmética · Producción y calidad",
+                deliverables: ["Insumos", "Lotes y liberación", "Producción", "Documentos", "Ventas y despacho"],
+                spec: [["Cubre", "Del insumo al despacho"], ["Lotes", "Aprobado · cuarentena · rechazado"], ["Ediciones", "Lite y Premium"]],
                 rubro: "Producción, calidad y despacho · Edición completa",
                 description:
                     "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
-                image: "images/card-itera-erp-editorial.webp",
-                imageAlt: "Vista actual de ventas y pedidos en ITERA Premium",
+                image: "images/itera/itera-panel.webp",
+                imageAlt: "Panel real de ITERA con centro de alertas de calidad, lotes y recepciones",
+                // capturas reales del sistema (datos de demostración; nombres de producto, proveedor e iniciales difuminados)
+                showcase: {
+                    title: "ITERA, del panel al celular",
+                    devicesLine: "Diseñado para escritorio, tableta y celular",
+                    devices: [
+                        { kind: "desktop", src: "images/itera/itera-panel-thumb", label: "Panel · escritorio" },
+                        { kind: "phone", src: "images/itera/itera-sitio-movil-thumb", label: "Sitio · celular" }
+                    ],
+                    slides: [
+                        { src: "images/itera/itera-panel", w: 1600, h: 1000, alt: "Panel de ITERA con indicadores de planta y centro de alertas de calidad", caption: "Panel de planta: alertas de validación sanitaria y materia prima por caducar, con el estado de cada lote." },
+                        { src: "images/itera/itera-lote", w: 1600, h: 1000, alt: "Ficha de un lote en ITERA con estado sanitario y recepción de origen", caption: "Ficha de lote: estado comercial y sanitario, insumo base y recepción de origen, a un clic de la trazabilidad completa." },
+                        { src: "images/itera/itera-documentos", w: 1600, h: 989, alt: "Centro documental de ITERA organizado por proceso y entidad", caption: "Centro documental: lo que falta emitir, cargar o revisar, vinculado a su recepción, insumo o lote." },
+                        { src: "images/itera/itera-sitio-movil", w: 780, h: 1688, alt: "Sitio público de ITERA en un celular", caption: "IteraQMS.com en celular.", portrait: true }
+                    ]
+                },
                 badge: "Full Suite",
                 tags: ["Producción", "Operación", "Industrial"],
                 order: 2,
@@ -367,6 +388,7 @@ window.MPPortfolioData = {
             },
             {
                 id: "saas-multitenant",
+                hidden: true,
                 galleryId: "saas-multitenant",
                 title: "Plataforma SaaS Multitenant",
                 rubro: "Arquitectura SaaS · E-commerce · CRM · IA",
@@ -394,11 +416,26 @@ window.MPPortfolioData = {
                 order: 4,
                 visible: false,
                 buyEnabled: false,
+            },
+            {
+                id: "saas-pedidos-caja", // Oculta hasta tener nombre y capturas reales
+                hidden: true,
+                title: "[Nombre SaaS] · Pedidos y caja",
+                meta: "Restaurantes · Pedidos, caja y clientes · SaaS",
+                description:
+                    "Todo el servicio en un solo sistema: vitrina con carrito, pedidos en mesa y a domicilio, pagos con comprobante y cierre de caja por turno. Cada persona del equipo ve solo lo que le toca, y cada movimiento queda registrado.",
+                placeholderImage: "Captura del sistema: POS / mesas",
+                deliverables: ["POS con tickets", "Turnos de caja", "CRM de clientes", "KPIs", "Roles y auditoría"],
+                featured: true,
+                order: 5,
+                visible: true,
+                buyEnabled: false
             }
         ],
         webs: [
             {
                 id: "elementos",
+                client: "Jardín 5 Elementos",
                 galleryId: "elementos",
                 type: "web",
                 title: "Landing de validación",
@@ -420,6 +457,8 @@ window.MPPortfolioData = {
                 galleryId: "curativa-web",
                 type: "web",
                 title: "Catálogo Pro WhatsApp",
+                client: "Curativa",
+                hidden: true, // Oculta: la miniatura aún muestra arte de Curativa
                 rubro: "Comercio digital · Conversión",
                 description:
                     "Tu catálogo, tu carrito y el cierre de venta en la conversación que tus clientes ya usan.",
@@ -438,6 +477,12 @@ window.MPPortfolioData = {
                 galleryId: "curarte-web",
                 type: "web",
                 title: "Ecosistema premium",
+                client: "CurArte",
+                featured: true,
+                displayTitle: "CurArte",
+                meta: "Restaurante familiar · Menú digital y pedidos",
+                displayDescription: "Empezó como un menú digital y terminó resolviendo los pedidos en mesa y los domicilios del local, sin fricción para el cliente ni para la cocina.",
+                deliverables: ["Menú digital", "Pedidos en mesa", "Domicilios"],
                 rubro: "Experiencia editorial · Web",
                 description:
                     "Dirección de arte, interfaz cuidada y una experiencia inmersiva para marcas que viven de su valor percibido.",
@@ -486,9 +531,23 @@ window.MPPortfolioData = {
         ],
         branding: [
             {
+                id: "liena", // Oculta hasta tener las imágenes definitivas
+                hidden: true,
+                title: "liena",
+                meta: "Cosmética natural · Concepto de autor",
+                description: "Una marca imaginada desde el estante: un sistema de etiquetas que mantiene una sola voz en unos 24 productos y sus variantes, listo para imprenta.",
+                placeholderImage: "Imagen de liena",
+                deliverables: ["Sistema de etiquetas", "24 productos con variantes", "Arte final"],
+                featured: true,
+                order: 0,
+                visible: true
+            },
+            {
                 id: "curativa",
                 type: "gallery",
                 title: "Curativa · Identidad y packaging",
+                client: "Curativa",
+                hidden: true, // oculta por ahora (datos e imágenes se conservan)
                 rubro: "Cosmética natural · Retail",
                 description:
                     "Brandbook, empaques y sistema visual técnico listos para retail y posicionamiento premium.",
@@ -504,7 +563,12 @@ window.MPPortfolioData = {
             {
                 id: "tiny",
                 type: "gallery",
+                featured: true,
                 title: "Tiny Melts · Sistema visual",
+                client: "Tiny Melts",
+                meta: "Velas artesanales · Identidad",
+                displayDescription: "Velas hechas a mano con una marca a su altura: logo, paleta y piezas para redes que transmiten la calidez del producto.",
+                deliverables: ["Logotipo", "Paleta", "Piezas para redes"],
                 rubro: "Marca artesanal · Identidad",
                 description:
                     "Logo, dirección cromática y piezas promocionales para una marca artesanal con lenguaje propio.",
@@ -537,6 +601,8 @@ window.MPPortfolioData = {
                 id: "encuentros",
                 type: "gallery",
                 title: "Los Encuentros NET",
+                client: "Los Encuentros NET",
+                hidden: true, // oculta por ahora (datos e imágenes se conservan)
             rubro: "Identidad corporativa",
                 description:
                     "Identidad corporativa para ISP local con aplicaciones de señalética y comunicación técnica.",
@@ -553,6 +619,10 @@ window.MPPortfolioData = {
                 id: "prototype",
                 type: "gallery",
                 title: "PROTOTYP3D",
+                client: "PROTOTYP3D",
+                meta: "Diseño 3D · Estudio aliado",
+                displayDescription: "Nuestro estudio aliado en diseño 3D. Trabajamos en conjunto: su identidad nace del mismo método con el que llevamos las marcas del plano al objeto.",
+                deliverables: ["Identidad", "Aplicaciones de producto", "Proyectos conjuntos"],
             rubro: "Identidad tech",
                 description:
                     "Identidad para marca tecnológica con acento industrial, comercial y de producto.",
@@ -569,6 +639,7 @@ window.MPPortfolioData = {
                 id: "finca",
                 type: "gallery",
                 title: "Finca Pindaca",
+                client: "Finca Pindaca",
             rubro: "Identidad agrícola",
                 description:
                     "Construcción de marca agrícola pensada para origen, confianza y aplicaciones de empaque.",

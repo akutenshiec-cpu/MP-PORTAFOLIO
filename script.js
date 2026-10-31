@@ -200,7 +200,7 @@ function repairText(value) {
 
 function normalizeCards(cards = []) {
     return cards
-        .filter((card) => card && card.visible !== false)
+        .filter((card) => card && card.visible !== false && card.hidden !== true)
         .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 }
 
@@ -250,6 +250,13 @@ function renderHomeSections() {
         }
         sectionEl.style.display = "";
 
+        /* Tarjetas v2: una protagonista por sección (card.featured) y el resto secundarias. */
+        const featuredCount = cards.filter((c) => c.featured === true).length;
+        if (featuredCount) cards.sort((a, b) => (b.featured === true) - (a.featured === true));
+        if (featuredCount > 1) grid.classList.add("cards-v2--duo");
+        grid.classList.add("cards-v2", `cards-v2--${sectionKey}`);
+        const total = String(cards.length).padStart(2, "0");
+
         grid.innerHTML = cards.map((card, cardIndex) => {
             const cardClass = card.cardClass ? ` ${card.cardClass}` : "";
             const imageClass = card.imageClass ? ` ${card.imageClass}` : "";
@@ -262,7 +269,18 @@ function renderHomeSections() {
             const externalUrl = typeof card.externalUrl === "string" ? card.externalUrl.trim() : "";
             const isIteraCta = /iteraqms\.com/i.test(externalUrl);
             const hasInterestCTA = card.buyEnabled === true;
-            const commerce = externalUrl
+            const showcase = card.showcase && Array.isArray(card.showcase.slides) && card.showcase.slides.length ? card.showcase : null;
+            const commerce = showcase
+                ? `
+                    <div class="card-commerce pc-showcase-actions">
+                        <button type="button" class="buy-btn buy-btn--itera" data-showcase-open="${card.id}" aria-haspopup="dialog">
+                            <img class="buy-btn__mark" src="images/branding/itera/iteraqms-mark.png" alt="" width="22" height="22" aria-hidden="true">
+                            <span>Ver el sistema por dentro</span>
+                        </button>
+                        ${externalUrl ? `<a class="pc-site-link" href="${externalUrl}" target="_blank" rel="noopener noreferrer">IteraQMS.com<span aria-hidden="true"> ↗</span><span class="sr-only"> (se abre en una pestaña nueva)</span></a>` : ""}
+                    </div>
+                `
+                : externalUrl
                 ? `
                     <div class="card-commerce">
                         <a class="buy-btn${isIteraCta ? " buy-btn--itera" : ""}" href="${externalUrl}" target="_blank" rel="noopener noreferrer">
@@ -307,26 +325,75 @@ function renderHomeSections() {
                        )}" class="card-gallery-link" data-gallery-link target="_blank" rel="noopener noreferrer">Vista galería HD <i class="fas fa-images"></i></a>`
                     : "";
 
+            const isFeature = featuredCount ? card.featured === true : cardIndex === 0;
+            const rubroParts = repairText(card.rubro || "").split("·").map((x) => x.trim()).filter(Boolean);
+            const titleText = repairText(card.displayTitle || card.title || "");
+            const client = repairText(card.client || "");
+            const metaParts = sectionKey === "servicios"
+                ? [rubroParts[0] || ""]
+                : [
+                    client && !titleText.includes(client) ? client : "",
+                    isFeature ? rubroParts.join(" / ") : (rubroParts[0] || ""),
+                    card.year ? String(card.year) : ""
+                  ];
+            const metaSource = card.meta ? repairText(card.meta).split("·").map((x) => x.trim()) : metaParts;
+            const metaHtml = `<p class="card-meta">${metaSource.filter(Boolean).join('<span class="sep"> · </span>')}</p>`;
+            const deliverables = Array.isArray(card.deliverables) && card.deliverables.length ? card.deliverables : (card.tags || []);
+            const deliverablesHtml = deliverables.length
+                ? `<p class="card-deliverables">${deliverables.map(repairText).join('<span class="sep"> · </span>')}</p>`
+                : "";
+            const specHtml = sectionKey === "servicios" && Array.isArray(card.spec)
+                ? `<dl class="card-spec">
+                        ${(card.spec || []).map(([k, v]) => `<div><dt>${k}</dt><dd>${repairText(v)}</dd></div>`).join("")}
+                        ${deliverables.length ? `<div><dt>Módulos</dt><dd>${deliverables.map(repairText).join(" · ")}</dd></div>` : ""}
+                   </dl>`
+                : "";
+            const indexHtml = `<span class="card-index" aria-hidden="true">${String(cardIndex + 1).padStart(2, "0")} / ${total}</span>`;
+            const roleClass = (isFeature ? " pc-feature" : " pc-secondary") + (card.showcase ? " pc-has-showcase" : "");
             const cardImage = toOptimizedImage(card.image || "");
             return `
-                <div class="trust-card${cardClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}>
-                    <div class="card-image${imageClass}">
+                <div class="trust-card${cardClass}${roleClass}${isClickable ? "" : " no-link"}${isIteraCta ? " trust-card--itera" : ""}"${actionAttrs}${isClickable ? ' tabindex="0"' : ""}>
+                    <div class="card-image${imageClass}"${card.showcase ? ` data-showcase-open="${card.id}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Ver capturas reales de ${titleText}"` : ""}>
                         ${badge}
                         ${brandLogoHtml}
-                        <img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">
+                        ${card.placeholderImage
+                            ? `<div class="pc-img-ph" role="img" aria-label="Imagen pendiente"><span>[${repairText(card.placeholderImage)}]</span><small>Imagen pendiente · prototipo</small></div>`
+                            : `<img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">`}
                         ${overlay}
+                        ${card.showcase ? `<span class="pc-showcase-hint" aria-hidden="true">Capturas reales · ${card.showcase.slides.length}</span>` : ""}
                     </div>
                     <div class="card-info">
-                        <span class="card-kicker">${kickerLabel}</span>
-                        <h4>${repairText(card.title)}</h4>
-                        <p>${repairText(card.description)}</p>
-                        ${tagsHtml}
+                        ${indexHtml}
+                        ${metaHtml}
+                        <h4>${titleText}</h4>
+                        <p class="card-desc">${repairText(card.displayDescription || card.description)}</p>
+                        ${specHtml || deliverablesHtml}
+                        ${showcase && Array.isArray(showcase.devices) ? `
+                        <div class="pc-devices">
+                            <div class="pc-devices__thumbs">
+                                ${showcase.devices.map((d, di) => `
+                                <button type="button" class="pc-device pc-device--${d.kind}" data-showcase-open="${card.id}" data-showcase-index="${d.kind === "phone" ? showcase.slides.length - 1 : 0}" aria-label="Ver captura: ${repairText(d.label)}">
+                                    <span class="pc-device__screen"><picture><source srcset="${d.src}.webp" type="image/webp"><img src="${d.src}.jpg" alt="" loading="lazy" decoding="async"></picture></span>
+                                    <span class="pc-device__label">${repairText(d.label)}</span>
+                                </button>`).join("")}
+                            </div>
+                            <p class="pc-devices__line">${repairText(showcase.devicesLine || "")}</p>
+                        </div>` : ""}
                         ${galleryLink}
                         ${commerce}
                     </div>
                 </div>
             `;
         }).join("");
+
+        /* Secundarias envueltas en un riel: display:contents en escritorio, carrusel en móvil (solo Marca). */
+        if (sectionKey === "branding" && grid.children.length > 2) {
+            const rail = document.createElement("div");
+            rail.className = "pc-rail";
+            rail.setAttribute("role", "list");
+            [...grid.querySelectorAll(":scope > .pc-secondary")].forEach((el) => { el.setAttribute("role", "listitem"); rail.appendChild(el); });
+            grid.appendChild(rail);
+        }
     });
 }
 
