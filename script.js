@@ -200,7 +200,7 @@ function repairText(value) {
 
 function normalizeCards(cards = []) {
     return cards
-        .filter((card) => card && card.visible !== false)
+        .filter((card) => card && card.visible !== false && card.hidden !== true)
         .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 }
 
@@ -251,8 +251,9 @@ function renderHomeSections() {
         sectionEl.style.display = "";
 
         /* Propuesta tarjetas v2: una protagonista por sección (card.featured) y el resto secundarias. */
-        const featuredAt = Math.max(0, cards.findIndex((c) => c.featured === true));
-        if (featuredAt > 0) cards.unshift(cards.splice(featuredAt, 1)[0]);
+        const featuredCount = cards.filter((c) => c.featured === true).length;
+        if (featuredCount) cards.sort((a, b) => (b.featured === true) - (a.featured === true));
+        if (featuredCount > 1) grid.classList.add("cards-v2--duo");
         grid.classList.add("cards-v2", `cards-v2--${sectionKey}`);
         const total = String(cards.length).padStart(2, "0");
         const ph = (label) => `<span class="ph" title="Dato pendiente: lo completa Marco">[${label}]</span>`;
@@ -314,9 +315,9 @@ function renderHomeSections() {
                        )}" class="card-gallery-link" data-gallery-link target="_blank" rel="noopener noreferrer">Vista galería HD <i class="fas fa-images"></i></a>`
                     : "";
 
-            const isFeature = cardIndex === 0;
+            const isFeature = featuredCount ? card.featured === true : cardIndex === 0;
             const rubroParts = repairText(card.rubro || "").split("·").map((x) => x.trim()).filter(Boolean);
-            const titleText = repairText(card.title || "");
+            const titleText = repairText(card.displayTitle || card.title || "");
             const client = repairText(card.client || "");
             const metaParts = sectionKey === "servicios"
                 ? [rubroParts[0] || ""]
@@ -325,15 +326,15 @@ function renderHomeSections() {
                     isFeature ? rubroParts.join(" / ") : (rubroParts[0] || ""),
                     card.year ? String(card.year) : ph("Año")
                   ];
-            const metaHtml = `<p class="card-meta">${metaParts.filter(Boolean).join('<span class="sep"> · </span>')}</p>`;
+            const metaSource = card.meta ? repairText(card.meta).split("·").map((x) => x.trim()) : metaParts;
+            const metaHtml = `<p class="card-meta">${metaSource.filter(Boolean).join('<span class="sep"> · </span>')}</p>`;
             const deliverables = Array.isArray(card.deliverables) && card.deliverables.length ? card.deliverables : (card.tags || []);
             const deliverablesHtml = deliverables.length
                 ? `<p class="card-deliverables">${deliverables.map(repairText).join('<span class="sep"> · </span>')}</p>`
                 : "";
-            const specHtml = sectionKey === "servicios" && isFeature
+            const specHtml = sectionKey === "servicios" && Array.isArray(card.spec)
                 ? `<dl class="card-spec">
-                        ${rubroParts[0] ? `<div><dt>Cubre</dt><dd>${rubroParts[0]}</dd></div>` : ""}
-                        ${rubroParts[1] ? `<div><dt>Edición</dt><dd>${rubroParts[1]}</dd></div>` : ""}
+                        ${(card.spec || []).map(([k, v]) => `<div><dt>${k}</dt><dd>${repairText(v)}</dd></div>`).join("")}
                         ${deliverables.length ? `<div><dt>Módulos</dt><dd>${deliverables.map(repairText).join(" · ")}</dd></div>` : ""}
                    </dl>`
                 : "";
@@ -345,14 +346,16 @@ function renderHomeSections() {
                     <div class="card-image${imageClass}">
                         ${badge}
                         ${brandLogoHtml}
-                        <img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">
+                        ${card.placeholderImage
+                            ? `<div class="pc-img-ph" role="img" aria-label="Imagen pendiente"><span>[${repairText(card.placeholderImage)}]</span><small>Imagen pendiente · prototipo</small></div>`
+                            : `<img src="${cardImage}" alt="${safeAlt}" style="${imageStyle}" loading="lazy" decoding="async" width="640" height="480">`}
                         ${overlay}
                     </div>
                     <div class="card-info">
                         ${indexHtml}
                         ${metaHtml}
                         <h4>${titleText}</h4>
-                        <p class="card-desc">${repairText(card.description)}</p>
+                        <p class="card-desc">${repairText(card.displayDescription || card.description)}</p>
                         ${specHtml || deliverablesHtml}
                         ${galleryLink}
                         ${commerce}

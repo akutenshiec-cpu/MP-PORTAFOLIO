@@ -329,6 +329,7 @@ window.MPPortfolioData = {
         servicios: [
             {
                 id: "itera-lite",
+                hidden: true, // PROPUESTA: fusionada en la tarjeta única de ITERA
                 galleryId: "itera-lite",
                 title: "ITERA Lite",
                 rubro: "Producción y calidad · Edición base",
@@ -351,6 +352,10 @@ window.MPPortfolioData = {
                 galleryId: "itera-premium",
                 title: "ITERA Premium",
                 featured: true,
+                displayTitle: "ITERA",
+                meta: "Perfumería y cosmética · Producción y calidad",
+                deliverables: ["Insumos", "Lotes y liberación", "Producción", "Documentos", "Ventas y despacho"],
+                spec: [["Cubre", "Del insumo al despacho"], ["Lotes", "Aprobado · cuarentena · rechazado"], ["Ediciones", "Lite y Premium"]],
                 rubro: "Producción, calidad y despacho · Edición completa",
                 description:
                     "Del insumo al despacho en un solo sistema: producción por lote, inventario que se ajusta solo, catálogo por notificación sanitaria, ventas y documentos vinculados a cada lote y cliente.",
@@ -395,6 +400,19 @@ window.MPPortfolioData = {
                 order: 4,
                 visible: false,
                 buyEnabled: false,
+            },
+            {
+                id: "saas-pedidos-caja", // PROPUESTA: SaaS de pedidos y caja (nació en CurArte); nombre de marca blanca pendiente
+                title: "[Nombre SaaS] · Pedidos y caja",
+                meta: "Restaurantes · Pedidos, caja y clientes · SaaS",
+                description:
+                    "Todo el servicio en un solo sistema: vitrina con carrito, pedidos en mesa y a domicilio, pagos con comprobante y cierre de caja por turno. Cada persona del equipo ve solo lo que le toca, y cada movimiento queda registrado.",
+                placeholderImage: "Captura del sistema: POS / mesas",
+                deliverables: ["POS con tickets", "Turnos de caja", "CRM de clientes", "KPIs", "Roles y auditoría"],
+                featured: true,
+                order: 5,
+                visible: true,
+                buyEnabled: false
             }
         ],
         webs: [
@@ -443,6 +461,10 @@ window.MPPortfolioData = {
                 title: "Ecosistema premium",
                 client: "CurArte",
                 featured: true,
+                displayTitle: "CurArte",
+                meta: "Restaurante familiar · Menú digital y pedidos",
+                displayDescription: "Empezó como un menú digital y terminó resolviendo los pedidos en mesa y los domicilios del local, sin fricción para el cliente ni para la cocina.",
+                deliverables: ["Menú digital", "Pedidos en mesa", "Domicilios"],
                 rubro: "Experiencia editorial · Web",
                 description:
                     "Dirección de arte, interfaz cuidada y una experiencia inmersiva para marcas que viven de su valor percibido.",
@@ -491,11 +513,22 @@ window.MPPortfolioData = {
         ],
         branding: [
             {
+                id: "liena", // PROPUESTA: marca concepto liena (imagen pendiente; sin arte de Alúa)
+                title: "liena",
+                meta: "Cosmética natural · Concepto de autor",
+                description: "Una marca imaginada desde el estante: un sistema de etiquetas que mantiene una sola voz en unos 24 productos y sus variantes, listo para imprenta.",
+                placeholderImage: "Imagen de liena",
+                deliverables: ["Sistema de etiquetas", "24 productos con variantes", "Arte final"],
+                featured: true,
+                order: 0,
+                visible: true
+            },
+            {
                 id: "curativa",
                 type: "gallery",
                 title: "Curativa · Identidad y packaging",
                 client: "Curativa",
-                featured: true,
+                hidden: true, // PROPUESTA: oculta por ahora (datos e imágenes se conservan)
                 rubro: "Cosmética natural · Retail",
                 description:
                     "Brandbook, empaques y sistema visual técnico listos para retail y posicionamiento premium.",
@@ -513,6 +546,9 @@ window.MPPortfolioData = {
                 type: "gallery",
                 title: "Tiny Melts · Sistema visual",
                 client: "Tiny Melts",
+                meta: "Velas artesanales · Identidad",
+                displayDescription: "Velas hechas a mano con una marca a su altura: logo, paleta y piezas para redes que transmiten la calidez del producto.",
+                deliverables: ["Logotipo", "Paleta", "Piezas para redes"],
                 rubro: "Marca artesanal · Identidad",
                 description:
                     "Logo, dirección cromática y piezas promocionales para una marca artesanal con lenguaje propio.",
@@ -546,6 +582,7 @@ window.MPPortfolioData = {
                 type: "gallery",
                 title: "Los Encuentros NET",
                 client: "Los Encuentros NET",
+                hidden: true, // PROPUESTA: oculta por ahora (datos e imágenes se conservan)
             rubro: "Identidad corporativa",
                 description:
                     "Identidad corporativa para ISP local con aplicaciones de señalética y comunicación técnica.",
@@ -563,6 +600,9 @@ window.MPPortfolioData = {
                 type: "gallery",
                 title: "PROTOTYP3D",
                 client: "PROTOTYP3D",
+                meta: "Diseño 3D · Estudio aliado",
+                displayDescription: "Nuestro estudio aliado en diseño 3D. Trabajamos en conjunto: su identidad nace del mismo método con el que llevamos las marcas del plano al objeto.",
+                deliverables: ["Identidad", "Aplicaciones de producto", "Proyectos conjuntos"],
             rubro: "Identidad tech",
                 description:
                     "Identidad para marca tecnológica con acento industrial, comercial y de producto.",
